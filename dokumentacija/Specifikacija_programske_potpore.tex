@@ -28,7 +28,7 @@
 					
 					\item pregledavati i pretraživati oglašene nestale kućne ljubimce i skloništa za životinje
 					\item odabrati nekog od kućnih ljubimaca, čime se otvara mogućnost detaljnijeg pregleda informacija o njemu kao i pregled komunikacije oko potrage za ljubimcem
-					\item registrirati se, stvoriti novi korisnički račun za koji su mu potrebni e-pošta, broj telefona te opcionalno (u slučaju registracije kao sklonište) naziv skloništa
+					\item registrirati se, stvoriti novi korisnički račun za koji su mu potrebni e-pošta, broj telefona, korisničko ime, lozinka te opcionalno (u slučaju registracije kao sklonište) naziv skloništa
 					
 				\end{packed_enum}
 			
@@ -36,17 +36,19 @@
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item sve što može neregistrirani korisnik
+					\item postaviti, izmijeniti i ukloniti oglas o nestalom kućnom ljubimcu
+					\item sudjelovati u komunikaciji oko potrage za ljubimcem
+					\item pretraživati neaktivne oglase
 					
 				\end{packed_enum}
 			
 			\item  \underbar{Sklonište (inicijator) može:}
 				
 				\begin{packed_enum}
-					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+				
+					\item sve što može registrirani korisnik
+					\item oglašavati pronađene životinje koje se nalazi u prostoru skloništa pomoću kategorije oglasa "\textit{u skloništu}"
 					
 				\end{packed_enum}
 			
@@ -54,8 +56,8 @@
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item pohranjuje sve podatke korisnika
+					\item pohranjuje sve podatke vezane uz oglase
 					
 				\end{packed_enum}
 			\end{packed_enum}
@@ -67,40 +69,64 @@
 			\subsection{Obrasci uporabe}
 				
 				\subsubsection{Opis obrazaca uporabe}
-					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
-					
 
-					\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+					\noindent \underbar{\textbf{UC1 - Registracija}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$sudionik$>$
-						\item  \textbf{Cilj:} $<$cilj$>$
-						\item  \textbf{Sudionici:} $<$sudionici$>$
-						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item \textbf{Glavni sudionik:} Neregistrirani korisnik
+						\item  \textbf{Cilj:} Stvoriti korisnički račun za pristup sustavu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$opis korak jedan$>$
-							\item $<$opis korak dva$>$
-							\item $<$opis korak tri$>$
-							\item $<$opis korak četiri$>$
-							\item $<$opis korak pet$>$
+							\item Korisnik odabire opciju za registraciju
+							\item Korisnik unosi potrebne korisničke podatke
+							\item Korisnik prima obavijest o uspješnoj registraciji
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila, unos korisničkog podatka u nedozvoljenom formatu ili pružanje neispravnog e-maila
 							\item[] \begin{packed_enum}
 								
-								\item $<$opis rješenja mogućeg scenarija korak 1$>$
-								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								\item Sustav obavještava korisnika o neuspjelom upisu i vraća ga na stranicu za registraciju
+								\item Korisnik mijenja potrebne podatke te završava unos ili odustaje od registracije
 								
 							\end{packed_enum}
-							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC2 - Prijava u sustav}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Neprijavljeni registrirani korisnik
+						\item  \textbf{Cilj:} Dobiti pristup mogućnostima registriranih korisnika
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Registracija
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Unos korisničkog imena i lozinke
+							\item Provjera ispravnosti unesenih podataka
+							\item Pristup korisničkim funkcijama
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Neispravno korisničko ime/lozinka
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika o neuspjeloj prijavi i vraća ga na stranicu za prijavu
+								
+							\end{packed_enum}
 							
 						\end{packed_item}
 					\end{packed_item}
