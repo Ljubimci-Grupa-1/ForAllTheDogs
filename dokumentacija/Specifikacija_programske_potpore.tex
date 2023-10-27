@@ -2,8 +2,6 @@
 		
 	\section{Funkcionalni zahtjevi}
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
 			\textit{Navesti \textbf{dionike} koji imaju \textbf{interes u ovom sustavu} ili  \textbf{su nositelji odgovornosti}. To su prije svega korisnici, ali i administratori sustava, naručitelji, razvojni tim.}\\
 				
 			\textit{Navesti \textbf{aktore} koji izravno \textbf{koriste} ili \textbf{komuniciraju sa sustavom}. Oni mogu imati inicijatorsku ulogu, tj. započinju određene procese u sustavu ili samo sudioničku ulogu, tj. obavljaju određeni posao. Za svakog aktora navesti funkcionalne zahtjeve koji se na njega odnose.}\\
@@ -13,9 +11,10 @@
 			
 			\begin{packed_enum}
 				
-				\item Dionik 1
-				\item Dionik 2				
-				\item ...
+				\item Neregistrirani korisnik
+				\item Registrirani korisnik			
+				\item Sklonište za životinje
+				\item Razvojni tim
 				
 			\end{packed_enum}
 			
@@ -23,23 +22,35 @@
 			
 			
 			\begin{packed_enum}
-				\item  \underbar{Aktor 1 (inicijator) može:}
+				\item  \underbar{Neregistrirani korisnik (inicijator) može:}
+				
+				\begin{packed_enum}
+					
+					\item pregledavati i pretraživati oglašene nestale kućne ljubimce i skloništa za životinje
+					\item odabrati nekog od kućnih ljubimaca, čime se otvara mogućnost detaljnijeg pregleda informacija o njemu kao i pregled komunikacije oko potrage za ljubimcem
+					\item registrirati se, stvoriti novi korisnički račun za koji su mu potrebni e-pošta, broj telefona te opcionalno (u slučaju registracije kao sklonište) naziv skloništa
+					
+				\end{packed_enum}
+			
+				\item  \underbar{Registrirani korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
 					
 					\item funkcionalnost 1
 					\item funkcionalnost 2
-					\begin{packed_enum}
-						
-						\item  podfunkcionalnost 1 
-						\item  podfunkcionalnost 2
-				
-					\end{packed_enum}
-					\item  funkcionalnost 3
 					
 				\end{packed_enum}
 			
-				\item  \underbar{Aktor 2 (sudionik) može:}
+			\item  \underbar{Sklonište (inicijator) može:}
+				
+				\begin{packed_enum}
+					
+					\item funkcionalnost 1
+					\item funkcionalnost 2
+					
+				\end{packed_enum}
+			
+			\item  \underbar{Baza podataka (sudionik):}
 				
 				\begin{packed_enum}
 					
@@ -54,8 +65,6 @@
 			
 				
 			\subsection{Obrasci uporabe}
-				
-				\textbf{\textit{dio 1. revizije}}
 				
 				\subsubsection{Opis obrazaca uporabe}
 					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
@@ -104,16 +113,27 @@
 				
 			\subsection{Sekvencijski dijagrami}
 				
-				\textbf{\textit{dio 1. revizije}}\\
-				
 				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
 				\eject
 	
 		\section{Ostali zahtjevi}
-		
-			\textbf{\textit{dio 1. revizije}}\\
 		 
-			 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
+			 \begin{packed_item}
+			 
+			 \item Sustav treba omogućiti rad više korisnika u stvarnom vremenu
+			 \item Sustav treba funkcionirati ispravno neovisno o web pregledniku ili uređaju
+			 \item Korisničko sučelje i sustav moraju podržavati hrvatsku abecedu (dijakritičke znakove) pri unosu i prikazu tekstualnog sadržaja
+			 \item Učitavanje početne stranice ne smije trajati duže od nekoliko sekundi
+			 \item Izvršavanje dijela programa u kojem se pristupa bazi podataka ne smije trajati duže od nekoliko sekundi
+			 \item Sustav treba biti implementiran kao web aplikacija koristeći objektno-orijentirane jezike
+			 \item Neispravno korištenje korisničkog sučelja ne smije narušiti funkcionalnost i rad sustava
+			 \item Nadogradnja sustava ne smije narušavati postojeće funkcionalnosti sustava
+			 \item Sustav treba biti jednostavan za korištenje, korisnici se moraju znati koristiti sučeljem bez opširnih uputa
+			 \item Veza s bazom mora biti kvalitetno zaštićena, brza i otporna na vanjske greške
+			 \item Pristup sustavu mora biti omogućen iz javne mreže pomoću HTTPS
+			 
+			 
+			 \end{packed_item}
 			 
 			 
 			 
