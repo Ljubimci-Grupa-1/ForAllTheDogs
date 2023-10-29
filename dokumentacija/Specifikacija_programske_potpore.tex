@@ -130,6 +130,106 @@
 							
 						\end{packed_item}
 					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC3 - Pretraživanje i pregled oglasa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item  \textbf{Cilj:} Pregledati oglase nestalih ljubimaca
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisniku se prikazuju oglasi
+							\item Oglasi se mogu filtrirati po relevantnim podacima
+							\item Prikaz filtriranih oglasa
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Ne postoji oglas koji odgovara postavljenom filtru
+							\item[] \begin{packed_enum}
+								
+								\item Sustav korisniku prikazuje odgovarajuću poruku
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC4 - Postavljanje oglasa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik
+						\item  \textbf{Cilj:} Postaviti oglas o nestalom ljubimcu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju postavljanja oglasa
+							\item Korisnik dobiva mogućnost unošenja sljedećih kategorija podataka o ljubimcu:
+								
+								\item[] \begin {packed_enum}
+									\item vrsta
+									\item ime na koje se odaziva
+									\item datum i sat nestanka
+									\item lokacija nestanka
+									\item boja
+									\item starost
+									\item tekstni opis
+									\item do 3 slike
+								\end{packed_enum}
+							
+							\item Ako je korisnik sklonište, postavlja kategoriju oglasa "\textit{u skloništu}"
+							\item Korisnik odabire opciju za objavljivanje i njegov oglas postaje vidljiv drugima
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC5 - Izmjena oglasa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik
+						\item  \textbf{Cilj:} Izmijeniti oglas o nestalom ljubimcu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju izmjene svog oglasa
+							\item Korisnik mijenja željene podatke, dostupna mu je i promjena kategorije oglasa u neku od sljedećih:
+								
+								\item[] \begin{packed_enum}
+									\item za ljubimcem se traga (\textit{pretpostavljeno})
+									\item ljubimac je sretno pronađen
+									\item ljubimac nije pronađen, ali se za njim više aktivno ne traga
+									\item ljubimac je pronađen uz nesretne okolnosti
+								\end{packed_enum}
+							\item Korisnik potvrđuje izmjene
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC6 - Uklanjanje oglasa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik
+						\item  \textbf{Cilj:} Ukloniti oglas o nestalom ljubimcu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju uklanjanja svog oglasa
+							\item Uklonjeni oglas i sva pripadna komunikacija nestaje iz popisa vidljivih oglasa, ali se ne briše iz baze podataka
+						\end{packed_enum}
+					\end{packed_item}
 				
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
