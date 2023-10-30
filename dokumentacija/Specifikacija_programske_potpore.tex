@@ -15,6 +15,7 @@
 				\item Registrirani korisnik			
 				\item Sklonište za životinje
 				\item Razvojni tim
+				\item Naručitelji
 				
 			\end{packed_enum}
 			
@@ -37,6 +38,7 @@
 				\begin{packed_enum}
 					
 					\item sve što može neregistrirani korisnik
+					\item prijaviti se u sustav
 					\item postaviti, izmijeniti i ukloniti oglas o nestalom kućnom ljubimcu
 					\item sudjelovati u komunikaciji oko potrage za ljubimcem
 					\item pretraživati neaktivne oglase
@@ -228,6 +230,29 @@
 	
 							\item Korisnik odabire opciju uklanjanja svog oglasa
 							\item Uklonjeni oglas i sva pripadna komunikacija nestaje iz popisa vidljivih oglasa, ali se ne briše iz baze podataka
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC7 - Komunikacija}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik
+						\item  \textbf{Cilj:} Sudjelovati u komunikaciji oko potrage za ljubimcem
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju komunikacije
+							\item Korisnik unosi poruku koja (uz kontakt podatke korisnika) može sadržavati:
+								\item[] \begin{packed_enum}
+									\item tekst
+									\item sliku
+									\item geolokaciju
+								\end{packed_enum}
+							\item Korisnik potvrđuje poruku koju želi ostaviti na oglasu
+							\item Poruka postaje vidljiva ostalim korisnicima
 						\end{packed_enum}
 					\end{packed_item}
 				

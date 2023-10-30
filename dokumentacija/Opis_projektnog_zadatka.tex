@@ -6,7 +6,32 @@
 		
 		Ova korisna i jednostavna responzivna aplikacija pomoći će u rješavanju ovog problema mnogim korisnicima aplikacije.\\
 		
-		Cilj ovog projekta je razviti programsku potporu za stvaranje web aplikacije „Nestali ljubimci“. U opseg projektnog zadatka ulazi izrada web platforme koja podržava registraciju korisnika/skloništa, postavljanje, pretragu i ažuriranje postojećih oglasa te ima pridruženu bazu podataka koja pohranjuje korisne informacije. Sustav treba podržavati rad više korisnika u stvarnom vremenu. Manipuliranje podacima obavlja se kroz sučelje baze podataka tako da nije potreban administrator.
+		Cilj ovog projekta je razviti programsku potporu za stvaranje web aplikacije „Nestali ljubimci“. U opseg projektnog zadatka ulazi izrada web platforme koja podržava registraciju korisnika/skloništa, postavljanje, pretragu i ažuriranje postojećih oglasa te ima pridruženu bazu podataka koja pohranjuje korisne informacije. Sustav treba podržavati rad više korisnika u stvarnom vremenu. Manipuliranje podacima obavlja se kroz sučelje baze podataka tako da nije potreban administrator.\\
+		
+		Web aplikacija je namijenjena za 3 vrste korisnika; neregistriranog korisnika, registriranog korisnika te skloništima za životinje (specijalni tip registriranog korisnika).
+		
+		\underline{Neregistrirani korisnik} ima mogućnost pregledavanja i pretraživanja nestalih kućnih ljubimaca. Klikom na sliku nestale životinje, znatiželjnom korisniku otvaraju se informacije o njoj: vrsta, ime, datum i sat nestanka, lokacija nestanka, boja, starost, tekstni opis. Uz to dostupne su do 3 slike te životinje kako bi ju tragač lakše pronašao, a ako bi došlo do novih informacija ili pronalaska ljubimca dostupni su i kontakt podaci vlasnika. Neregistrirani korisnik bi se trebao registrirati ako bi poželio sudjelovati u potrazi i ostvariti komunikaciju s dotičnim vlasnikom. Za registraciju su potrebni sljedeći podaci:
+		
+		\begin{packed_item}
+			\item adresa e-pošte
+			\item broj telefona
+			\item korisničko ime
+			\item lozinka
+			\item ime i prezime/naziv skloništa
+		\end{packed_item}
+		
+		\underline{Registrirani korisnik} ima širi spektar mogućnosti unutar aplikacije. On može, uz pregledavanje i pretraživanje, postaviti oglas o nestalom ljubimcu, izmijeniti i ukloniti ga pa i sudjelovati u komunikaciji s drugim registriranim korisnicima.\\
+		
+		Postoje 4 kategorije oglasa:
+		
+		\begin{packed_item}
+			\item Za ljubimcem se traga (početna postavka oglasa)
+			\item Ljubimac je sretno pronađen
+			\item Ljubimac nije nađen, ali se za njim ne traga aktivno
+			\item Ljubimac je pronađen pod nesretnim okolnostima
+		\end{packed_item}
+		
+		\underline{Skloništa za životinje} su vrsta registriranih korisnika koji oglašavaju životinje koje su pronašli te se nalaze kod njih.
 		
 		\eject
 		
@@ -18,15 +43,15 @@
 		
 			\item \textit{PetFinder} je naširoko poznata baza podataka za udomljavanje životinja, a imaju i odjeljak za tražene i pronađene kućne ljubimce.
 		
-			\item \textit{LostMyDoggie.com} je web stranica koja je napravljena specijalno kako bi pomogla ožalošćenim vlasnicima pronaći svoje kućne ljubimce.
+			\item \textit{LostMyDoggie.com} je web stranica koja je napravljena specijalno kako bi pomogla vlasnicima pronaći svoje kućne ljubimce.
 		
-			\item \textit{PawBoost} je platforma koja omogućuje korisnicima da prijave nestanak ljubimca nakon čega stranica stvori oglas na Facebooku čime se širi vijest o nestanku Vašeg ljubimca.
+			\item \textit{PawBoost} je platforma koja omogućuje korisnicima da prijave nestanak ljubimca nakon čega stranica stvori oglas na Facebooku čime se širi vijest o nestanku ljubimca.
 		
 			\item \textit{Petco Love} je web stranica na kojoj se može prijaviti nestanak, ali i pronalazak kućnog ljubimca. Pri tome se šalju i slike ljubimca te se koristi \textit{facial recognition technology} za identificiranje ljubimaca.
 		
 		\end{packed_item}
 		
-		U našoj regiji se ipak nešto više komunicira preko raznih Facebook grupa, lokalnih skloništa za životinje, oglašavanja preko veterinara i lijepljenjem papira s oglasom po ulicama.\\
+		U našoj regiji se trenutno ipak nešto više komunicira preko raznih Facebook grupa, lokalnih skloništa za životinje, oglašavanja preko veterinara i lijepljenjem papira s oglasom po ulicama.\\
 		
 		%unos slike
 		\begin{figure}[H]
@@ -59,42 +84,19 @@
 		
 			\item Lokaliziranjem aplikacije ona bi postala dostupna i korisnicima u zemljama s drugim jezicima, zakonima i običajima.
 			
-			\item Osnovni princip naše aplikacije se može primijeniti i na razne izgubljene predmete. Naša aplikacija je svojevrsni \textit{lost and found} (rekonstrukcija nestanka) primijenjen na ljubimce.
+			\item Osnovni princip naše aplikacije se može primijeniti i na razne izgubljene predmete. Naša aplikacija je svojevrsni \textit{lost and found} (rekonstrukcija nestanka?) primijenjen na ljubimce.
 			
-			\item Nakon početne implementacije, neke od mogućih projektnih nadogradnji uključuju i \textit{real time chat} opciju. Korisnici mogu međusobno privatno komunicirati i dijeliti razne informacije o nestalim ljubimcima. Registrirani korisnik s informacijama koje mogu pomoći vlasniku izgubljenog ljubimca može kontaktirati dotičnog vlasnika koji je objavio oglas.
+			\item Nakon početne implementacije, neke od mogućih projektnih nadogradnji uključuju i \textit{real time chat} opciju. Korisnici bi mogli međusobno privatno komunicirati i dijeliti razne informacije o nestalim ljubimcima. Registrirani korisnik s informacijama koje mogu pomoći vlasniku izgubljenog ljubimca mogao bi privatno kontaktirati vlasnika koji je objavio oglas.
 			
 			\item Uvođenje naprednih algoritama za prepoznavanje životinja putem fotografija olakšalo bi i ubrzalo pronalazak.
 			
-			\item Povezivanjem podataka veterinarskih klinika i baze prijavljenih životinja aplikacije može doći do preklapanja upita u bazi podataka. Time bi se napravio korak dalje u zbližavanju vlasnika i nestalog ljubimca.
+			\item Povezivanje podataka aplikacije, skloništa i veterinarskih klinika dodatno bi poboljšalo potragu.
 			
-			\item Na web aplikaciji bi mogla postojati mogućnost donacije sredstava lokalnim skloništima za životinje.\\
+			\item Na web aplikaciji bi mogla postojati mogućnost donacije sredstava lokalnim skloništima za životinje.
+			
+			\eject
 			
 		\end{packed_item}
-		
-		Web aplikacija je namijenjena za 3 vrste korisnika; neregistriranom korisniku, registriranom te skloništima za životinje (specijalni tip registriranog korisnika).\\
-		
-		\underline{Neregistrirani korisnik} ima mogućnost pregledavanja i pretraživanja nestalih kućnih ljubimaca. Klikom na sliku nestale životinje, znatiželjnom korisniku otvaraju se informacije o njoj: vrsta, ime, datum i sat nestanka, lokacija nestanka, boja, starost, tekstni opis. Uz to dostupne su do 3 slike te životinje kako bi ju tragač lakše pronašao, a ako bi došlo do novih informacija ili pronalaska ljubimca dostupni su i kontakt podaci vlasnika. Neregistrirani korisnik bi se trebao registrirati ako bi poželio sudjelovati u potrazi i ostvariti komunikaciju s dotičnim vlasnikom. Za registraciju su potrebni sljedeći podaci:
-		
-		\begin{packed_item}
-			\item adresa e-pošte
-			\item broj telefona
-			\item korisničko ime
-			\item lozinka
-			\item ime i prezime/naziv skloništa
-		\end{packed_item}
-		
-		\underline{Registrirani korisnik} ima širi spektar mogućnosti unutar aplikacije. On može, uz pregledavanje i pretraživanje, postaviti oglas o nestalom ljubimcu, izmijeniti i ukloniti ga pa i sudjelovati u komunikaciji s drugim registriranim korisnicima.\\
-		
-		Postoje 4 kategorije oglasa:
-		
-		\begin{packed_item}
-			\item Za ljubimcem se traga (početna postavka oglasa)
-			\item Ljubimac je sretno pronađen
-			\item Ljubimac nije nađen, ali se za njim ne traga aktivno
-			\item Ljubimac je pronađen pod nesretnim okolnostima
-		\end{packed_item}
-		
-		\underline{Skloništa za životinje} su vrsta registriranih korisnika koji oglašavaju životinje koje su pronašli te se nalaze kod njih.\\\\
 		
 		\begin{longtblr}[
 			label=none,
