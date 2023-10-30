@@ -20,8 +20,10 @@ class Message(
     @NotNull
     var text: String,
 
+    @NotNull
     var date: Date,
 
+    @NotNull
     var location: String,
 
     @ManyToOne
