@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import "./SignUpForm.css";
 interface Props {
     // Define the type of props (if any)
 }
@@ -14,7 +15,7 @@ const SignUpForm: React.FC<Props> = () => {
     });
     const [error, setError] = useState("");
     const [isChecked, setIsChecked] = useState(false);
-    const handleInputChange = (e) => {
+    const handleInputChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
         // Update the formData state with the new value for the specific input field
@@ -24,8 +25,13 @@ const SignUpForm: React.FC<Props> = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e : React.FormEvent) => {
         e.preventDefault();
+
+        if(formData.telephoneNumber.length !== 9 && formData.telephoneNumber.length !== 10) {
+            setError("Telephone number must be 9 or 10 digits long");
+            return;
+        }
         const newUserType = isChecked ? "skloniste" : "osoba";
         setFormData({
             ...formData,
@@ -51,7 +57,7 @@ const SignUpForm: React.FC<Props> = () => {
                         <label>Username</label>
                         <input
                             type="text"
-                            className="form-control mt-1"
+                            className="form-control"
                             placeholder="Username"
                             name="username"
                             value={formData.username}
@@ -63,7 +69,7 @@ const SignUpForm: React.FC<Props> = () => {
                         <label>Email address</label>
                         <input
                             type="email"
-                            className="form-control mt-1"
+                            className="form-control"
                             placeholder="Email Address"
                             name="email"
                             value={formData.email}
@@ -75,7 +81,7 @@ const SignUpForm: React.FC<Props> = () => {
                         <label>Password</label>
                         <input
                             type="password"
-                            className="form-control mt-1"
+                            className="form-control"
                             placeholder="Password"
                             name="password"
                             value={formData.password}
@@ -87,7 +93,7 @@ const SignUpForm: React.FC<Props> = () => {
                         <label>Name</label>
                         <input
                             type="text"
-                            className="form-control mt-1"
+                            className="form-control"
                             placeholder="Name"
                             name="name"
                             value={formData.name}
@@ -100,7 +106,7 @@ const SignUpForm: React.FC<Props> = () => {
                         <input
                             type="tel"
                             pattern="[0-9]{9,10}"
-                            className={`form-control mt-1 ${error ? "is-invalid" : ""}`}
+                            className={`form-control ${error ? "is-invalid" : ""}`}
                             placeholder="xxx-xxx-xxxx"
                             name="telephoneNumber"
                             value={formData.telephoneNumber}
@@ -121,7 +127,7 @@ const SignUpForm: React.FC<Props> = () => {
                         <p>Checkbox is {isChecked ? "checked" : "unchecked"}</p>
                     </div>
                     <div className="d-grid gap-2 mt-3">
-                        <button type="submit" className="btn btn-primary">
+                        <button type="submit" className="btn-primary">
                             Submit
                         </button>
                     </div>
