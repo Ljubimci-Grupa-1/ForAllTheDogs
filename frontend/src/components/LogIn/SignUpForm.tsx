@@ -28,6 +28,10 @@ const SignUpForm: React.FC<Props> = () => {
     const handleSubmit = (e : React.FormEvent) => {
         e.preventDefault();
 
+        const isConfirmed = window.confirm("Are you sure you want to sign up?");
+        if (!isConfirmed) {
+            return;
+        }
         if(formData.telephoneNumber.length !== 9 && formData.telephoneNumber.length !== 10) {
             setError("Telephone number must be 9 or 10 digits long");
             return;

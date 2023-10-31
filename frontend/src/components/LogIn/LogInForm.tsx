@@ -1,14 +1,34 @@
-// LoginForm.tsx
 import { useState, FC, FormEvent } from 'react';
 import './LoginForm.css';
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
+
+    const validateEmail = (email: string): boolean => {
+        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return regex.test(email);
+    }
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        console.log(`Email: ${email}, Password: ${password}`);
+        setError(null);
+
+        if (!validateEmail(email)) {
+            setError("Invalid email format.");
+            return;
+        }
+        if (password.length < 6) {
+            setError("Password should be at least 6 characters long.");
+            return;
+        }
+
+        const formData = {
+            email: email,
+            password: password
+        };
+        console.log("Form Data in JSON:", JSON.stringify(formData));
     };
 
     return (
@@ -37,6 +57,7 @@ const LoginForm: FC = () => {
                         className="form-input"
                     />
                 </div>
+                {error && <p className="form-error">{error}</p>}
                 <button type="submit" className="login-btn">Login</button>
             </form>
         </div>
