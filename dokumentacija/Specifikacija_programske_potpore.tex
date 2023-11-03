@@ -132,8 +132,75 @@
 							
 						\end{packed_item}
 					\end{packed_item}
+					\pagebreak
 					
-					\noindent \underbar{\textbf{UC3 - Pretraživanje i pregled oglasa}}
+					\noindent \underbar{\textbf{UC3 - Pregled osobnih podataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik, sklonište za životinje
+						\item  \textbf{Cilj:} Pregledati osobne podatke
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za pregled osobnih podataka
+							\item Aplikacije prikazuje osobne podatke korisnika
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC4 - Promjena osobnih podataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik, sklonište za životinje
+						\item  \textbf{Cilj:} Promjena osobnih podataka
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik pregledava osobnih podataka
+							\item Korisnik odabire opciju za promjenu osobnih podataka
+							\item Korisnik mijenja željene podatke
+							\item Baza podataka se ažurira
+						\end{packed_enum}
+						
+						\item \textbf{Opis mogućih odstupanja:} 
+						
+						
+						\item[] \begin{packed_item}
+	
+							\item[3.a] Korisnik je promijenio svoje podatke, ali ih je zaboravio spremiti
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika o neuspjeloj promjeni podataka
+								\item Korisnik sprema izmijenjene podatke registracije
+								
+							\end{packed_enum}
+					\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC5 - Brisanje korisničkog računa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik, sklonište za životinje
+						\item  \textbf{Cilj:} Brisanje korisničkog računa
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik pregledava osobne podatke
+							\item Korisnik odabire opciju za brisanje korisničkog računa
+							\item Baza podataka se ažurira
+						\end{packed_enum}
+					\end{packed_item}
+					\pagebreak
+					
+					\noindent \underbar{\textbf{UC6 - Pretraživanje i pregled oglasa}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik:} Korisnik
@@ -163,7 +230,7 @@
 						\end{packed_item}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC4 - Postavljanje oglasa}}
+					\noindent \underbar{\textbf{UC7 - Postavljanje oglasa}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik:} Registrirani korisnik
@@ -192,8 +259,9 @@
 							\item Korisnik odabire opciju za objavljivanje i njegov oglas postaje vidljiv drugima
 						\end{packed_enum}
 					\end{packed_item}
+					\pagebreak
 					
-					\noindent \underbar{\textbf{UC5 - Izmjena oglasa}}
+					\noindent \underbar{\textbf{UC8 - Izmjena oglasa}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik:} Registrirani korisnik
@@ -217,7 +285,7 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC6 - Uklanjanje oglasa}}
+					\noindent \underbar{\textbf{UC9 - Uklanjanje oglasa}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik:} Registrirani korisnik
@@ -233,7 +301,26 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC7 - Komunikacija}}
+					\noindent \underbar{\textbf{UC10 - Oglašavanje u skloništu}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Sklonište za životinje
+						\item  \textbf{Cilj:} Pronalazak vlasnika životinje koju su radnici skloništa pronašli te se trenutno nalazi u skloništu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Sklonište za životinje je pronašlo životinju te stvara oglas o njoj pod kategorijom "U skloništu"
+							\item Oglas se pohranjuje u bazu podataka
+							\item Oglas se postavlja na web stranicu i vidljiv je drugim korisnicima
+						\end{packed_enum}
+					\end{packed_item}
+					
+					
+					
+					\noindent \underbar{\textbf{UC11 - Komunikacija}}
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik:} Registrirani korisnik
@@ -255,7 +342,10 @@
 							\item Poruka postaje vidljiva ostalim korisnicima
 						\end{packed_enum}
 					\end{packed_item}
-				
+					
+					
+					
+					
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
