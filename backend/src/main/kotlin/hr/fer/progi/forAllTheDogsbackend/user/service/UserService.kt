@@ -20,6 +20,11 @@ class UserService(
         user = userRepository.findByTelephoneNumber(addUserDTO.telephoneNumber)
         if(user != null) throw IllegalArgumentException("Broj mobitela već u uporabi")
 
+        if(addUserDTO.userType == "sklonište") {
+            user = userRepository.findByName(addUserDTO.name)
+            if(user != null) throw IllegalArgumentException("Sklonište ${addUserDTO.name} je već registrirani korisnik")
+        }
+
         return UserDTO(
             userRepository.save(
                 addUserDTO.toUser()

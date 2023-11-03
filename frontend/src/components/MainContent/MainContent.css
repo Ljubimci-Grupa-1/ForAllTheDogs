@@ -1,0 +1,68 @@
+/* MainContent.css */
+
+main {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.lost-pets-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.lost-pet-card {
+    width: 250px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.lost-pet-card:hover {
+    transform: scale(1.05);
+}
+
+.lost-pet-card img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.lost-pet-card h3 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.lost-pet-card p {
+    font-size: 14px;
+    margin: 6px 0;
+}
+
+button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #007BFF;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
