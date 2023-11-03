@@ -1,26 +1,55 @@
 \chapter{Arhitektura i dizajn sustava}
 		
-		\textbf{\textit{dio 1. revizije}}\\
-
-		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
-	\begin{itemize}
-		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
-		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
-		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
-	\end{itemize}
-
-	
+		Arhitektura se može podijeliti na 4 podsustava:
 		
-
+		\begin{packed_item}
 		
+			\item 	Web poslužitelj
+			\item 	Front-end
+			\item 	Back-end		
+			\item   Baza podataka
+		\end{packed_item}
+		
+		\textit{Web preglednik} je program koji omogućuje korisnicima pristupanje internet resursima putem zahtjeva poslanih poslužiteljima. Djeluje kao klijent koji traži te resurse. Dohvaćanje tih resursa odvija se putem API callova koje korisnik obavlja preko frontenda.
+		
+		\textit{Front-end} web aplikacija omogućuje korisniku interakciju s \textit{backend}-om na poslužitelju, koje se omogućuje kroz korisničko sučelje. 
+		\textit{Front-end} aplikacija šalje zahtjeve \textit{back-end} aplikaciji, koja ih prima, obradi, te po potrebi pristupa bazi podataka, šaljući potvrdne ili neuspješne odgovore natrag \textit{front-end} aplikaciji, uključujući dodatne podatke u tijelu odgovora kad je potrebno.\\
+		
+		\section{Programski jezici, razvojni okvir, alati i biblioteke koda}
+		
+		
+		\subsection{Back-end i baza podataka}
+		U okviru backend aplikacije koriste se različni alati i tehnologije kako bi se postigla funkcionalnost web aplikacije. 
+		
+		Sama funkcionalnost backenda ostvarena je koristeći \textit{Kotlin} i \textit{Spring Boot}, koji je popularni Framework za Javu i Kotlin.
+		
+		\textit{Spring Boot} olakšava izradu web aplikacije pružajući razne automatske konfiguracije. To uvelike omogućava integraciju različitih dijelova aplikacije i pruža mnogo gotovih implementacija koje se koriste putem vrlo intuitivnih sučelja.
+		
+		Baza podataka ostvarena je u \textit{PostgreSQL}-u, a za njenu jasnu definiciju korišten je alat \textit{Liquibase}. \textit{Liquibase} omogućava precizno i upravljivo definiranje strukture baze podataka.
+		
+		Za preslikavanje entiteta iz \textit{PostgreSQL} baze podataka na klase u backend aplikaciji korišten je \textit{JPA (Jakarta Persistence API)}, koji značajno olakšava generiranje upita ovisno o pozivima metoda nad klasama entiteta. 
+		
+		Za konfiguracijske datoteke aplikacije koristi se \textit{YAML} format. Upravljanje bazom podataka odvija se preko \textit{H2} konzole, a razvoj kompletne backend aplikacije obavlja se u \textit{IntelliJ IDEA}, popularnom \textit{JetBrains} alatu. 
+		
+		Za izgradnju cijele aplikacije koristi se \textit{Gradle}, alat za automatizaciju izgradnje. 
+\textit{JWT (Json Web Token}) standard korišten je za sigurnost aplikacije, generirajući tokene, koji istovremeno služe za autorizaciju i autentifikaciju korisnika.
 
+
+			\subsection{Front-end}
+			U izradi \textit{Front-end} dijela aplikacije koristimo niz tehnologija kako bismo postigli željene funkcionalnosti i estetski privlačan dizajn. Ključne tehnologije koje se koriste u razvoju uključuju \textit{TypeScript}, \textit{React}, \textit{Bootstrap}, \textit{Vite} i \textit{IntelliJ}.
+			
+\textit{React}, kao glavni okvir, omogućava olakšanu izradu web stranica i pruža širok spektar alata za navigaciju, dohvaćanje i prikazivanje podataka. Koristi se označni kod sličan textit{HTML}-u, obogaćen mogućnostima \textit{TypeScript}-a za definiranje sadržaja stranica, dok se za definiranje stila i izgleda koristi \textit{Bootstrap}.
+
+Za efikasno upravljanje podacima u aplikaciji koristi se \textit{React Query}. \textit{Vite}, alat za brzu izgradnju aplikacija, osigurava optimiziran razvojni proces i ubrzanje vremena učitavanja stranica.
+
+Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moćan razvojni okoliš koji omogućava precizno kodiranje i upravljanje projektom. Ovaj skup tehnologija omogućava nam izradu kvalitetne frontend aplikacije s visokom funkcionalnošću i atraktivnim dizajnom.\\
+		
+		
 				
 		\section{Baza podataka}
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
 		
+
 			\subsection{Opis tablica}
 			
 
