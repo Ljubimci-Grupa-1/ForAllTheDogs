@@ -1,6 +1,7 @@
 package hr.fer.progi.forAllTheDogsbackend.user.controller.dto
 
 import hr.fer.progi.forAllTheDogsbackend.user.entity.User
+import hr.fer.progi.forAllTheDogsbackend.userType.entity.UserType
 
 
 data class UserDTO(
@@ -10,7 +11,7 @@ data class UserDTO(
     val password: String,
     val name: String,
     val telephoneNumber: String,
-    val userType: String
+    val userType: UserType
 
 ){
     constructor(user: User): this (
