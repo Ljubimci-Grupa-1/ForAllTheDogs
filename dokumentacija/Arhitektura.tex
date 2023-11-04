@@ -10,18 +10,18 @@
 			\item   Baza podataka
 		\end{packed_item}
 		
-		\textit{Web preglednik} je program koji omogućuje korisnicima pristupanje internet resursima putem zahtjeva poslanih poslužiteljima. Djeluje kao klijent koji traži te resurse. Dohvaćanje tih resursa odvija se putem API callova koje korisnik obavlja preko frontenda.
+		\textit{Web preglednik} je program koji omogućuje korisnicima pristupanje internet resursima putem zahtjeva poslanih poslužiteljima. Djeluje kao klijent koji traži te resurse. Dohvaćanje tih resursa odvija se putem API poziva koje korisnik obavlja preko \textit{front-enda}.
 		
-		\textit{Front-end} web aplikacija omogućuje korisniku interakciju s \textit{backend}-om na poslužitelju, koje se omogućuje kroz korisničko sučelje. 
+		\textit{Front-end} web aplikacija omogućuje korisniku interakciju s \textit{back-end}-om na poslužitelju, koje se omogućuje kroz korisničko sučelje. 
 		\textit{Front-end} aplikacija šalje zahtjeve \textit{back-end} aplikaciji, koja ih prima, obradi, te po potrebi pristupa bazi podataka, šaljući potvrdne ili neuspješne odgovore natrag \textit{front-end} aplikaciji, uključujući dodatne podatke u tijelu odgovora kad je potrebno.\\
 		
 		\section{Programski jezici, razvojni okvir, alati i biblioteke koda}
 		
 		
 		\subsection{Back-end i baza podataka}
-		U okviru backend aplikacije koriste se različni alati i tehnologije kako bi se postigla funkcionalnost web aplikacije. 
+		U okviru \textit{back-end} aplikacije koriste se različiti alati i tehnologije kako bi se postigla funkcionalnost web aplikacije. 
 		
-		Sama funkcionalnost backenda ostvarena je koristeći \textit{Kotlin} i \textit{Spring Boot}, koji je popularni Framework za Javu i Kotlin.
+		Sama funkcionalnost \textit{back-enda} ostvarena je koristeći \textit{Kotlin} i \textit{Spring Boot}, popularni \textit{framework} za Javu i Kotlin.
 		
 		\textit{Spring Boot} olakšava izradu web aplikacije pružajući razne automatske konfiguracije. To uvelike omogućava integraciju različitih dijelova aplikacije i pruža mnogo gotovih implementacija koje se koriste putem vrlo intuitivnih sučelja.
 		
@@ -29,20 +29,20 @@
 		
 		Za preslikavanje entiteta iz \textit{PostgreSQL} baze podataka na klase u backend aplikaciji korišten je \textit{JPA (Jakarta Persistence API)}, koji značajno olakšava generiranje upita ovisno o pozivima metoda nad klasama entiteta. 
 		
-		Za konfiguracijske datoteke aplikacije koristi se \textit{YAML} format. Upravljanje bazom podataka odvija se preko \textit{H2} konzole, a razvoj kompletne backend aplikacije obavlja se u \textit{IntelliJ IDEA}, popularnom \textit{JetBrains} alatu. 
+		Za konfiguracijske datoteke aplikacije koristi se \textit{YAML} format. Upravljanje bazom podataka odvija se preko \textit{H2} konzole, a razvoj kompletne backend aplikacije obavlja se u \textit{IntelliJ IDEA}, popularnom alatu kompanije \textit{JetBrains}. 
 		
 		Za izgradnju cijele aplikacije koristi se \textit{Gradle}, alat za automatizaciju izgradnje. 
 \textit{JWT (Json Web Token}) standard korišten je za sigurnost aplikacije, generirajući tokene, koji istovremeno služe za autorizaciju i autentifikaciju korisnika.
 
 
 			\subsection{Front-end}
-			U izradi \textit{Front-end} dijela aplikacije koristimo niz tehnologija kako bismo postigli željene funkcionalnosti i estetski privlačan dizajn. Ključne tehnologije koje se koriste u razvoju uključuju \textit{TypeScript}, \textit{React}, \textit{Bootstrap}, \textit{Vite} i \textit{IntelliJ}.
+			U izradi \textit{front-end} dijela aplikacije koristimo niz tehnologija kako bismo postigli željene funkcionalnosti i estetski privlačan dizajn. Ključne tehnologije koje se koriste u razvoju uključuju \textit{TypeScript}, \textit{React}, \textit{Bootstrap}, \textit{Vite} i \textit{IntelliJ}.
 			
-\textit{React}, kao glavni okvir, omogućava olakšanu izradu web stranica i pruža širok spektar alata za navigaciju, dohvaćanje i prikazivanje podataka. Koristi se označni kod sličan textit{HTML}-u, obogaćen mogućnostima \textit{TypeScript}-a za definiranje sadržaja stranica, dok se za definiranje stila i izgleda koristi \textit{Bootstrap}.
+\textit{React}, kao glavni okvir, omogućava olakšanu izradu web stranica i pruža širok spektar alata za navigaciju, dohvaćanje i prikazivanje podataka. Koristi se označni kod sličan \textit{HTML}-u, obogaćen mogućnostima \textit{TypeScript}-a za definiranje sadržaja stranica, dok se za definiranje stila i izgleda koristi \textit{Bootstrap}.
 
 Za efikasno upravljanje podacima u aplikaciji koristi se \textit{React Query}. \textit{Vite}, alat za brzu izgradnju aplikacija, osigurava optimiziran razvojni proces i ubrzanje vremena učitavanja stranica.
 
-Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moćan razvojni okoliš koji omogućava precizno kodiranje i upravljanje projektom. Ovaj skup tehnologija omogućava nam izradu kvalitetne frontend aplikacije s visokom funkcionalnošću i atraktivnim dizajnom.\\
+Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moćno razvojno okruženje koje omogućava precizno kodiranje i upravljanje projektom. Ovaj skup tehnologija omogućava nam izradu kvalitetne \textit{front-end} aplikacije s visokom funkcionalnošću i atraktivnim dizajnom.\\
 		
 		
 				
@@ -53,7 +53,7 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 			\subsection{Opis tablica}
 			
 
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
+				\textbf{APP\_USER} Predstavlja registriranog korisnika aplikacije, u \textit{@ManyToOne} vezi s \textbf{USER\_TYPE} preko \textit{userTypeId}.
 				
 				
 				\begin{longtblr}[
@@ -61,17 +61,155 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{APP\_USER}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}userId & BIGINT	&  	jedinstveni ID korisnika  	\\ \hline
+					username	& VARCHAR &   korisničko ime (jedinstveno)	\\ \hline 
+					email & VARCHAR &   korisnikova e-mail adresa (jedinstvena)	\\ \hline 
+					password & VARCHAR	&  	korisnikova lozinka	\\ \hline 
+					name & VARCHAR	&  	ime korisnika	\\ \hline 
+					telephone\_number & VARCHAR	&  	korisnikov broj telefona (jedinstven)	\\ \hline 
+					\SetCell{LightBlue} userTypeId	& BIGINT &   ID koji označava tip korisnika	\\ \hline 
 				\end{longtblr}
 				
+				\noindent\textbf{USER\_TYPE} Predstavlja popis tipova korisnika aplikacije (userTypeId=1 odgovara osobi, userTypeId=2 skloništu).
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{USER\_TYPE}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}userTypeId & BIGINT	&  	jedinstveni ID tipa korisnika  	\\ \hline
+					name	& VARCHAR &   ime tipa korisnika	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{MESSAGE} Poruka koju korisnici mogu ostavljati u komunikaciji ispod oglasa, u \textit{@ManyToOne} vezi s \textbf{AD} preko \textit{adId}, \textit{@ManyToOne} vezi s \textbf{USER} preko \textit{userId}, \textit{@OneToOne} vezi s \textbf{IMAGE} preko \textit{imageId}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{MESSAGE}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}messageId & BIGINT	&  	jedinstveni ID poruke  	\\ \hline
+					text	& VARCHAR &   sadržaj poruke	\\ \hline 
+					date	& DATE &   datum kada je poruka ostavljena ispod oglasa	\\ \hline 
+					location	& VARCHAR &   lokacija s koje je poruka ostavljena	\\ \hline 
+					\SetCell{LightBlue}adId	& BIGINT &   jedinstveni ID oglasa ispod kojeg je poruka ostavljena	\\ \hline 
+					\SetCell{LightBlue}userId	& BIGINT &   jedinstveni ID korisnika koji je ostavio poruku	\\ \hline 
+					\SetCell{LightBlue}imageId	& BIGINT &   jedinstveni ID slike ostavljene uz poruku	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{IMAGE} Tablica u koju se spremaju slike koje se dohvaćaju preko URL.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{IMAGE}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}imageId & BIGINT	&  	jedinstveni ID slike  	\\ \hline
+					imageUrl	& VARCHAR &   URL slike	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{ACTIVITY} Predstavlja kategoriju oglasa.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{ACTIVITY}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}activityId & BIGINT	&  	jedinstveni ID kategorije  	\\ \hline
+					activityCategory	& VARCHAR &   naziv kategorije	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{AD} Predstavlja oglas, u \textit{@ManyToOne} vezi s \textbf{ACTIVITY}, \textit{@ManyToOne} vezi s \textbf{USER} preko \textit{userId}, \textit{@OneToOne} vezi s \textbf{IMAGE} (moguće 3 slike po oglasu), \textit{@OneToOne} vezi s \textbf{PET}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{AD}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}adId & BIGINT	&  	jedinstveni ID oglasa  	\\ \hline
+					inShelter	& INT &   1 ako je oglas od skloništa, inače 0 	\\ \hline 
+					\SetCell{LightBlue}userId	& BIGINT &   jedinstveni ID korisnika koji je postavio oglas 	\\ \hline 
+					\SetCell{LightBlue}activityId	& BIGINT &   jedinstveni ID kategorije oglasa 	\\ \hline
+					\SetCell{LightBlue}image1Id	& BIGINT &   jedinstveni ID prve slike 	\\ \hline
+					\SetCell{LightBlue}image2Id	& BIGINT &   jedinstveni ID druge slike 	\\ \hline
+					\SetCell{LightBlue}image3Id	& BIGINT &   jedinstveni ID treće slike 	\\ \hline
+					\SetCell{LightBlue}petId	& BIGINT &   jedinstveni ID ljubimca u oglasu 	\\ \hline
+				\end{longtblr}
+				
+				\noindent\textbf{PET} Predstavlja ljubimca, u \textit{@ManyToMany} vezi s \textbf{COLOR}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{PET}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}petId & BIGINT	&  	jedinstveni ID ljubimca  	\\ \hline
+					hourMissing	& INT &   sat nestanka ljubimca	\\ \hline 
+					dateMissing	& DATE &   datum nestanka ljubimca	\\ \hline 
+					age	& INT &   starost ljubimca	\\ \hline 
+					description	& VARCHAR &   opis ljubimca	\\ \hline 
+					petName	& VARCHAR &   ime na koje se ljubimac odaziva	\\ \hline 
+					species	& VARCHAR &   vrsta ljubimca	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{COLOR} Tablica s bojama ljubimaca, u \textit{@ManyToMany} vezi s \textbf{PET}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{COLOR}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}colorId & BIGINT	&  	jedinstveni ID boje  	\\ \hline
+					colorName	& VARCHAR &   naziv boje	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{OF\_COLOR} Tablica veze između \textbf{PET} i \textbf{COLOR}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{OF\_COLOR}}	 \\ \hline[3pt]
+					\SetCell{LightBlue}colorId & BIGINT	&  	jedinstveni ID boje  	\\ \hline
+					\SetCell{LightBlue}petId & BIGINT	&  	jedinstveni ID ljubimca
+				\end{longtblr}
 				
 			
 			\subsection{Dijagram baze podataka}
