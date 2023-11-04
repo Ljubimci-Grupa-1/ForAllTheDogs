@@ -39,9 +39,9 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/auth" element={<SignUpForm />} />
+                <Route path="/signup" element={<SignUpForm />} />
                 <Route path="/login" element={<LoginForm/>} />
-                <Route path={"/"} element={<MainContent lostPets={lostPets}/>} />
+                <Route path={"/home"} element={<MainContent lostPets={lostPets}/>} />
             </Routes>
         </BrowserRouter>
     )

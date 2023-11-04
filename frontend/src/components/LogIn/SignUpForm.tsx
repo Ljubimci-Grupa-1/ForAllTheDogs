@@ -1,10 +1,14 @@
 import React, {useState} from "react";
 import "./SignUpForm.css";
+import { useNavigate } from 'react-router-dom';
+
 interface Props {
     // Define the type of props (if any)
 }
 
 const SignUpForm: React.FC<Props> = () => {
+
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -25,25 +29,45 @@ const SignUpForm: React.FC<Props> = () => {
         });
     };
 
-    const handleSubmit = (e : React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const isConfirmed = window.confirm("Are you sure you want to sign up?");
         if (!isConfirmed) {
             return;
         }
-        if(formData.telephoneNumber.length !== 9 && formData.telephoneNumber.length !== 10) {
+        if (formData.telephoneNumber.length !== 9 && formData.telephoneNumber.length !== 10) {
             setError("Telephone number must be 9 or 10 digits long");
             return;
         }
         const newUserType = isChecked ? "skloniste" : "osoba";
-        setFormData({
+
+        const updatedFormData = {
             ...formData,
             userType: newUserType,
-        });
-        const jsonString = JSON.stringify(formData);
-        console.log(jsonString);
+        };
+
+        try {
+            const response = await fetch('/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedFormData),
+            });
+
+            if (!response.ok) {
+                const responseBody = await response.json();
+                setError(responseBody.message || 'Something went wrong. Please try again.');
+            } else {
+                alert("You have successfully signed up!");
+                navigate("/login");
+            }
+        } catch (error) {
+            setError("Network error. Please try again.");
+        }
     };
+
 
 
     const handleCheckboxChange = () => {
