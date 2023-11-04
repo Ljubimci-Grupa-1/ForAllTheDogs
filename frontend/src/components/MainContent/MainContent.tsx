@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './MainContent.css';
+import PetDetailsModal from './PetDetailsModal';
+import LostPetCard from './LostPetCard';
 
 export interface LostPet {
     id: number;
@@ -15,34 +17,54 @@ interface MainContentProps {
 }
 
 const MainContent: React.FC<MainContentProps> = ({ lostPets = [] }) => {
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    useEffect(() => {
+        document.title = "For All The Dogs";
+    }, []);
+
+    const handleModalClose = () => {
+        setModalOpen(false);
+        setCurrentPet(null);
+    };
+
+    const filteredPets = lostPets.filter(pet =>
+        pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        pet.species.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        pet.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <main>
             <p>Welcome to For All The Dogs, a platform to help find lost pets...</p>
-            <input type="text" placeholder="Search for pets or shelters..." />
+            <input
+                type="text"
+                placeholder="Search for pets or shelters..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
 
             <div className="lost-pets-list">
-                {lostPets.map((pet) => (
-                    <LostPetCard key={pet.id} pet={pet} />
+                {filteredPets.map((pet) => (
+                    <LostPetCard
+                        key={pet.id}
+                        pet={pet}
+                        onDetailsClick={() => {
+                            setCurrentPet(pet);
+                            setModalOpen(true);
+                        }}
+                    />
                 ))}
             </div>
+            {isModalOpen && (
+                <PetDetailsModal
+                    pet={currentPet}
+                    onClose={handleModalClose}
+                />
+            )}
         </main>
-    );
-};
-
-interface LostPetCardProps {
-    pet: LostPet;
-}
-
-const LostPetCard: React.FC<LostPetCardProps> = ({ pet }) => {
-    return (
-        <div className="lost-pet-card">
-            <img src={pet.imageUrl} alt={pet.name} />
-            <h3>{pet.name}</h3>
-            <p>Species: {pet.species}</p>
-            <p>Date Lost: {pet.dateLost}</p>
-            <p>Description: {pet.description}</p>
-            <button>View Details</button>
-        </div>
     );
 };
 

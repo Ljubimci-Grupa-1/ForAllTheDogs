@@ -15,7 +15,7 @@ function App() {
             species: "Dog",
             description: "Golden Retriever, very friendly",
             dateLost: "2023-10-29",
-            imageUrl: "https://example.com/images/buddy.jpg"
+            imageUrl: "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*"
         },
         {
             id: 2,
@@ -23,7 +23,7 @@ function App() {
             species: "Cat",
             description: "White and brown spots, green eyes",
             dateLost: "2023-10-28",
-            imageUrl: "https://example.com/images/whiskers.jpg"
+            imageUrl: "https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_640.jpg"
         },
         {
             id: 3,
@@ -31,7 +31,7 @@ function App() {
             species: "Bird",
             description: "Green Parrot with a red neck",
             dateLost: "2023-10-27",
-            imageUrl: "https://example.com/images/polly.jpg"
+            imageUrl: "https://www.mpg.de/18490336/original-1656406663.jpg?t=eyJ3aWR0aCI6MTIwMCwiaGVpZ2h0IjpudWxsLCJmaXQiOm51bGwsIm9ial9pZCI6MTg0OTAzMzZ9--9fae20441fec6fc549b18c2df95372b99979a919"
         }
     ];
 
@@ -39,9 +39,9 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/auth" element={<SignUpForm />} />
+                <Route path="/signup" element={<SignUpForm />} />
                 <Route path="/login" element={<LoginForm/>} />
-                <Route path={"/"} element={<MainContent lostPets={lostPets}/>} />
+                <Route path={"/home"} element={<MainContent lostPets={lostPets}/>} />
             </Routes>
         </BrowserRouter>
     )
