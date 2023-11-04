@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  postgres_container:
+    image: postgres
+    container_name: postgres_container
+    environment:
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: admin
+        POSTGRES_DB: forAllTheDogs
+
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
