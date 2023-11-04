@@ -11,7 +11,8 @@ import java.util.Date
 class Ad(
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ad_seq")
+    @SequenceGenerator(name = "ad_seq", sequenceName = "ad_seq", allocationSize = 1)
     var adId: Long = 0L,
 
     var inShelter: Int,

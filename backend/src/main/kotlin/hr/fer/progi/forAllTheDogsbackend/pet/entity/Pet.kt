@@ -8,7 +8,8 @@ import java.util.*
 @Entity
 class Pet (
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pet_seq")
+    @SequenceGenerator(name = "pet_seq", sequenceName = "pet_seq", allocationSize = 1)
     var petId: Long = 0L,
 
     @NotNull

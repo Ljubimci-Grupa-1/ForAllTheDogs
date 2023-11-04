@@ -11,7 +11,8 @@ import java.util.Date
 class Message(
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_seq")
+    @SequenceGenerator(name = "message_seq", sequenceName = "message_seq", allocationSize = 1)
     var messageId: Long,
 
     var text: String,

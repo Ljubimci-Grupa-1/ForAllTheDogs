@@ -3,6 +3,30 @@
 
 -- CREATE TABLES
 
+CREATE TABLE IF NOT EXISTS SPECIES
+(
+    speciesId BIGINT NOT NULL,
+    speciesName VARCHAR NOT NULL,
+    PRIMARY KEY (speciesId)
+    );
+
+CREATE SEQUENCE IF NOT EXISTS SPECIES_SEQ;
+
+CREATE TABLE IF NOT EXISTS PET
+(
+    petId BIGINT NOT NULL,
+    petName VARCHAR NOT NULL,
+    petAge INT NOT NULL,
+    dateMissing DATE NOT NULL,
+    hourMissing INT NOT NULL,
+    description VARCHAR NOT NULL,
+    speciesId BIGINT NOT NULL,
+    PRIMARY KEY (petId),
+    FOREIGN KEY (speciesId) REFERENCES SPECIES(speciesId)
+    );
+
+CREATE SEQUENCE IF NOT EXISTS PET_SEQ;
+
 CREATE TABLE IF NOT EXISTS COLOR
 (
     colorId BIGINT NOT NULL,
@@ -11,15 +35,6 @@ CREATE TABLE IF NOT EXISTS COLOR
 );
 
 CREATE SEQUENCE IF NOT EXISTS COLOR_SEQ;
-
-CREATE TABLE IF NOT EXISTS SPECIES
-(
-    speciesId BIGINT NOT NULL,
-    speciesName VARCHAR NOT NULL,
-    PRIMARY KEY (speciesId)
-);
-
-CREATE SEQUENCE IF NOT EXISTS SPECIES_SEQ;
 
 CREATE TABLE IF NOT EXISTS ACTIVITY
 (
@@ -87,21 +102,6 @@ CREATE TABLE IF NOT EXISTS AD
 
 CREATE SEQUENCE IF NOT EXISTS AD_SEQ;
 
-CREATE TABLE IF NOT EXISTS PET
-(
-    petId BIGINT NOT NULL,
-    petName VARCHAR NOT NULL,
-    petAge INT NOT NULL,
-    dateMissing DATE NOT NULL,
-    hourMissing INT NOT NULL,
-    description VARCHAR NOT NULL,
-    speciesId BIGINT NOT NULL,
-    PRIMARY KEY (petId),
-    FOREIGN KEY (speciesId) REFERENCES SPECIES(speciesId)
-);
-
-CREATE SEQUENCE IF NOT EXISTS PET_SEQ;
-
 CREATE TABLE IF NOT EXISTS MESSAGE
 (
     messageId BIGINT NOT NULL,
@@ -132,3 +132,15 @@ CREATE TABLE IF NOT EXISTS of_color
 -- INSERTS
 INSERT INTO USER_TYPE (userTypeId, name) VALUES (1, 'Osoba');
 INSERT INTO USER_TYPE (userTypeId, name) VALUES (2, 'Sklonište');
+
+
+INSERT INTO COLOR (colorId, colorName) VALUES (1, 'Smedja');
+INSERT INTO COLOR (colorId, colorName) VALUES (2, 'Crna');
+INSERT INTO COLOR (colorId, colorName) VALUES (3, 'Bijela');
+INSERT INTO COLOR (colorId, colorName) VALUES (4, 'Zuta');
+INSERT INTO COLOR (colorId, colorName) VALUES (5, 'Narancasta');
+INSERT INTO COLOR (colorId, colorName) VALUES (6, 'Siva');
+INSERT INTO COLOR (colorId, colorName) VALUES (7, 'Crvena');
+INSERT INTO COLOR (colorId, colorName) VALUES (8, 'Plava');
+INSERT INTO COLOR (colorId, colorName) VALUES (9, 'Zelena');
+INSERT INTO COLOR (colorId, colorName) VALUES (10, 'Bez');
