@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS APP_USER
 (
     userId BIGINT NOT NULL,
     username VARCHAR NOT NULL,
-    e-mail VARCHAR NOT NULL,
+    email VARCHAR NOT NULL,
     password VARCHAR NOT NULL,
     name VARCHAR NOT NULL,
     telephone_number VARCHAR NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS APP_USER
     PRIMARY KEY (userId),
     FOREIGN KEY (userTypeId) REFERENCES USER_TYPE(userTypeId),
     UNIQUE (username),
-    UNIQUE (e-mail),
+    UNIQUE (email),
     UNIQUE (telephone_number)
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS AD
     FOREIGN KEY (userId) REFERENCES APP_USER(userId),
     FOREIGN KEY (image1Id) REFERENCES IMAGE(imageId),
     FOREIGN KEY (image2Id) REFERENCES IMAGE(imageId),
-    FOREIGN KEY (image3Id) REFERENCES IMAGE(imageId)
+    FOREIGN KEY (image3Id) REFERENCES IMAGE(imageId),
     FOREIGN KEY (petId) REFERENCES PET(petId)
 );
 
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS PET
     description VARCHAR NOT NULL,
     speciesId BIGINT NOT NULL,
     PRIMARY KEY (petId),
-    FOREIGN KEY (speciesId) REFERENCES SPECIES(speciesId),
+    FOREIGN KEY (speciesId) REFERENCES SPECIES(speciesId)
 );
 
 CREATE SEQUENCE IF NOT EXISTS PET_SEQ;
