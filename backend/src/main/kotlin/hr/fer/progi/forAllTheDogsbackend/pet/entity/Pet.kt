@@ -15,6 +15,7 @@ class Pet (
     var petId: Long = 0L,
 
     @ManyToOne
+    @NotNull
     var species: Species,
 
     var petName: String,
@@ -37,5 +38,11 @@ class Pet (
     var description: String,
 
     @ManyToOne
-    var city: City
+    var city: City,
+
+    @NotNull
+    var longitude: Double,
+
+    @NotNull
+    var latitude: Double
 )

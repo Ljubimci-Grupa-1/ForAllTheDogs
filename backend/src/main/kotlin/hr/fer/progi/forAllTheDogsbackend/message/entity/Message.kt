@@ -1,6 +1,7 @@
 package hr.fer.progi.forAllTheDogsbackend.message.entity
 
 import hr.fer.progi.forAllTheDogsbackend.ad.entity.Ad
+import hr.fer.progi.forAllTheDogsbackend.city.entity.City
 import hr.fer.progi.forAllTheDogsbackend.image.entity.Image
 import hr.fer.progi.forAllTheDogsbackend.user.entity.User
 import jakarta.persistence.*
@@ -20,8 +21,6 @@ class Message(
     @NotNull
     var date: Date,
 
-    var location: String,
-
     @ManyToOne
     var ad: Ad,
 
@@ -29,5 +28,14 @@ class Message(
     var user: User,
 
     @OneToOne
-    var image: Image
+    var image: Image,
+
+    @ManyToOne
+    var city: City,
+
+    @NotNull
+    var longitude: Double,
+
+    @NotNull
+    var latitude: Double
 )
