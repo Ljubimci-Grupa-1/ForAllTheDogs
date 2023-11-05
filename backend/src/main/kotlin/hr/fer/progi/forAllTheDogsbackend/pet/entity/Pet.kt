@@ -1,5 +1,6 @@
 package hr.fer.progi.forAllTheDogsbackend.pet.entity
 
+import hr.fer.progi.forAllTheDogsbackend.city.entity.City
 import hr.fer.progi.forAllTheDogsbackend.color.entity.Color
 import hr.fer.progi.forAllTheDogsbackend.species.entity.Species
 import jakarta.persistence.*
@@ -33,6 +34,8 @@ class Pet (
     var hourMissing: Int,
 
     @NotNull
-    var description: String
+    var description: String,
 
+    @ManyToOne
+    var city: City
 )
