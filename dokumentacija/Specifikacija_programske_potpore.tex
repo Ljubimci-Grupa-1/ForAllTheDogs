@@ -137,7 +137,7 @@
 					\noindent \underbar{\textbf{UC3 - Pregled osobnih podataka}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik:} Registrirani korisnik, sklonište za životinje
+						\item \textbf{Glavni sudionik:} Registrirani korisnik/sklonište za životinje
 						\item  \textbf{Cilj:} Pregledati osobne podatke
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Prijava u sustav
@@ -146,14 +146,14 @@
 						\item[] \begin{packed_enum}
 	
 							\item Korisnik odabire opciju za pregled osobnih podataka
-							\item Aplikacije prikazuje osobne podatke korisnika
+							\item Aplikacija prikazuje osobne podatke korisnika
 						\end{packed_enum}
 					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC4 - Promjena osobnih podataka}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik:} Registrirani korisnik, sklonište za životinje
+						\item \textbf{Glavni sudionik:} Registrirani korisnik/sklonište za životinje
 						\item  \textbf{Cilj:} Promjena osobnih podataka
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Prijava u sustav
@@ -161,9 +161,9 @@
 						
 						\item[] \begin{packed_enum}
 	
-							\item Korisnik pregledava osobnih podataka
+							\item Korisnik pregledava osobne podatke
 							\item Korisnik odabire opciju za promjenu osobnih podataka
-							\item Korisnik mijenja željene podatke
+							\item Korisnik mijenja željene podatke i potvrđuje izmjenu
 							\item Baza podataka se ažurira
 						\end{packed_enum}
 						
@@ -176,7 +176,7 @@
 							\item[] \begin{packed_enum}
 								
 								\item Sustav obavještava korisnika o neuspjeloj promjeni podataka
-								\item Korisnik sprema izmijenjene podatke registracije
+								\item Korisnik sprema izmijenjene podatke
 								
 							\end{packed_enum}
 					\end{packed_item}
@@ -185,7 +185,7 @@
 					\noindent \underbar{\textbf{UC5 - Brisanje korisničkog računa}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik:} Registrirani korisnik, sklonište za životinje
+						\item \textbf{Glavni sudionik:} Registrirani korisnik/sklonište za životinje
 						\item  \textbf{Cilj:} Brisanje korisničkog računa
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Prijava u sustav
@@ -195,6 +195,7 @@
 	
 							\item Korisnik pregledava osobne podatke
 							\item Korisnik odabire opciju za brisanje korisničkog računa
+							\item Korisnik potvrđuje odabir
 							\item Baza podataka se ažurira
 						\end{packed_enum}
 					\end{packed_item}
@@ -305,14 +306,14 @@
 					\begin{packed_item}
 	
 						\item \textbf{Glavni sudionik:} Sklonište za životinje
-						\item  \textbf{Cilj:} Pronalazak vlasnika životinje koju su radnici skloništa pronašli te se trenutno nalazi u skloništu
+						\item  \textbf{Cilj:} Postaviti oglas o nestalom ljubimcu u skloništu radi pronalaska vlasnika
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Prijava u sustav
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item Sklonište za životinje je pronašlo životinju te stvara oglas o njoj pod kategorijom "U skloništu"
+							\item Sklonište za životinje postavlja oglas kategorije "\textit{u skloništu}"
 							\item Oglas se pohranjuje u bazu podataka
 							\item Oglas se postavlja na web stranicu i vidljiv je drugim korisnicima
 						\end{packed_enum}
