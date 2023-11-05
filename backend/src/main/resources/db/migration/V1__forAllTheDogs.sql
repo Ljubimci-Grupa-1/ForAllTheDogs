@@ -33,10 +33,10 @@ CREATE SEQUENCE IF NOT EXISTS SPECIES_SEQ;
 CREATE TABLE IF NOT EXISTS PET
 (
     petId BIGINT NOT NULL,
-    petName VARCHAR NOT NULL,
-    petAge INT NOT NULL,
-    dateMissing DATE NOT NULL,
-    hourMissing INT NOT NULL,
+    petName VARCHAR,
+    petAge INT,
+    dateMissing DATE,
+    hourMissing INT,
     description VARCHAR NOT NULL,
     speciesId BIGINT NOT NULL,
     cityId BIGINT NOT NULL,
