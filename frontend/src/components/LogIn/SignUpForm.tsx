@@ -81,11 +81,11 @@ const SignUpForm: React.FC<Props> = () => {
             <form className="Auth-form" onSubmit={handleSubmit}>
                 <div className="Auth-form-content">
                     <h3 className="Auth-form-title">Sign up</h3>
-                    <div className="form-group mt-3">
+                    <div className="input-container">
                         <label>Username</label>
                         <input
                             type="text"
-                            className="form-control"
+                            className="input"
                             placeholder="Username"
                             name="username"
                             value={formData.username}
@@ -93,11 +93,11 @@ const SignUpForm: React.FC<Props> = () => {
                             required
                         />
                     </div>
-                    <div className="form-group mt-3">
+                    <div className="input-container">
                         <label>Email address</label>
                         <input
                             type="email"
-                            className="form-control"
+                            className="input"
                             placeholder="Email Address"
                             name="email"
                             value={formData.email}
@@ -105,11 +105,11 @@ const SignUpForm: React.FC<Props> = () => {
                             required
                         />
                     </div>
-                    <div className="form-group mt-3">
+                    <div className="input-container">
                         <label>Password</label>
                         <input
                             type="password"
-                            className="form-control"
+                            className="input"
                             placeholder="Password"
                             name="password"
                             value={formData.password}
@@ -117,11 +117,11 @@ const SignUpForm: React.FC<Props> = () => {
                             required
                         />
                     </div>
-                    <div className="form-group mt-3">
+                    <div className="input-container">
                         <label>Name</label>
                         <input
                             type="text"
-                            className="form-control"
+                            className="input"
                             placeholder="Name"
                             name="name"
                             value={formData.name}
@@ -129,30 +129,29 @@ const SignUpForm: React.FC<Props> = () => {
                             required
                         />
                     </div>
-                    <div className="form-group mt-3">
+                    <div className="input-container">
                         <label>Telephone number</label>
                         <input
                             type="tel"
                             pattern="[0-9]{9,10}"
-                            className={`form-control ${error ? "is-invalid" : ""}`}
+                            className="input"
                             placeholder="xxx-xxx-xxxx"
                             name="telephoneNumber"
                             value={formData.telephoneNumber}
                             onChange={handleInputChange}
                             required
                         />
-                        {error && <div className="invalid-feedback">{error}</div>}
                     </div>
                     <div>
                         <label>
+                            Jeste li sklonište?
                             <input
                                 type="checkbox"
                                 checked={isChecked}
                                 onChange={handleCheckboxChange}
                             />
-                            Jeste li sklonište?
                         </label>
-                        <p>Checkbox is {isChecked ? "checked" : "unchecked"}</p>
+
                     </div>
                     <div className="d-grid gap-2 mt-3">
                         <button type="submit" className="btn-primary">

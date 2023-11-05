@@ -1,9 +1,12 @@
-
 .Auth-form-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    width: 100%;
+    height: 93vh;
+    background-image: url("/FATDlogoBG.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 
@@ -21,7 +24,7 @@
 .Auth-form-content {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap:30px;
 }
 
 .Auth-form-title {
@@ -31,21 +34,28 @@
 }
 
 
-.form-group {
+.input-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    height: 100px;
 }
 
 
-.form-control {
+.input {
     width: 100%;
-    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
     font-size: 1rem;
 }
 
+input:not([type="text"]):not([type="checkbox"]){
+    margin-top: 20px;
+    padding: 10px;
+}
+input[type="checkbox"]{
+    margin-left: 10px;
+    margin-top: 4px;
+}
 .is-invalid {
     border-color: #dc3545 !important;
 }

@@ -32,34 +32,36 @@ const LoginForm: FC = () => {
     };
 
     return (
-        <div className="login-form">
-            <h2 className="login-form-title">Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="email" className="form-label">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        required
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password" className="form-label">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                        className="form-input"
-                    />
-                </div>
-                {error && <p className="form-error">{error}</p>}
-                <button type="submit" className="login-btn">Login</button>
-            </form>
+        <div className="login-form-container">
+            <div className="login-form">
+                <h2 className="login-form-title">Login</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="email" className="form-label">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password" className="form-label">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            required
+                            className="form-input"
+                        />
+                    </div>
+                    {error && <p className="form-error">{error}</p>}
+                    <button type="submit" className="login-btn">Login</button>
+                </form>
+            </div>
         </div>
     );
 }
