@@ -15,10 +15,26 @@ class UserController(
     private val userService: UserService
 ) {
 
+    @GetMapping("/register")
+    fun register(): String {
+        return "register"
+    }
+
     @PostMapping("/register")
     fun addUser(@RequestBody user: JsonUserDTO): String {
         val userCreated = userService.addUser(user)
         return "redirect:/login"
+    }
+
+    @GetMapping("/login")
+    fun login(): String {
+        return "login"
+    }
+
+    @PostMapping("/login")
+    fun authorizeUser(@RequestBody user: JsonUserDTO): String {
+//        val userAuthorized = userService.authorizeUser(user)
+        return "redirect:/"
     }
 
 }
