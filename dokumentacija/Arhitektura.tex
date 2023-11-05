@@ -161,7 +161,7 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 					\SetCell{LightBlue}petId	& BIGINT &   jedinstveni ID ljubimca u oglasu 	\\ \hline
 				\end{longtblr}
 				
-				\noindent\textbf{PET} Predstavlja ljubimca, u \textit{@ManyToMany} vezi s \textbf{COLOR}.
+				\noindent\textbf{PET} Predstavlja ljubimca, u \textit{@ManyToMany} vezi s \textbf{COLOR}, \textit{@ManyToOne} vezi sa \textbf{SPECIES}.
 				
 				\begin{longtblr}[
 					label=none,
@@ -178,7 +178,22 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 					age	& INT &   starost ljubimca	\\ \hline 
 					description	& VARCHAR &   opis ljubimca	\\ \hline 
 					petName	& VARCHAR &   ime na koje se ljubimac odaziva	\\ \hline 
-					species	& VARCHAR &   vrsta ljubimca	\\ \hline 
+					\SetCell{LightBlue}speciesId	& BIGINT &   jedinstveni ID vrste ljubimca	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{SPECIES} Tablica vrsta ljubimaca.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{SPECIES}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}speciesId & BIGINT	&  	jedinstveni ID vrste ljubimca  	\\ \hline
+					speciesName	& VARCHAR &   naziv vrste ljubimca	\\ \hline 
 				\end{longtblr}
 				
 				\noindent\textbf{COLOR} Tablica s bojama ljubimaca, u \textit{@ManyToMany} vezi s \textbf{PET}.
