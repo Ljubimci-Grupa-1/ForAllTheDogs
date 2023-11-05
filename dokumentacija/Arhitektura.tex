@@ -1,19 +1,54 @@
 \chapter{Arhitektura i dizajn sustava}
 		
 		Arhitektura se može podijeliti na 4 podsustava:
-		
 		\begin{packed_item}
 		
-			\item 	Web poslužitelj
-			\item 	Front-end
-			\item 	Back-end		
+			\item   Web poslužitelj
+			\item   \textit{Front-end}
+			\item 	\textit{Back-end}
 			\item   Baza podataka
 		\end{packed_item}
 		
-		\textit{Web preglednik} je program koji omogućuje korisnicima pristupanje internet resursima putem zahtjeva poslanih poslužiteljima. Djeluje kao klijent koji traži te resurse. Dohvaćanje tih resursa odvija se putem API poziva koje korisnik obavlja preko \textit{front-enda}.
+		
+		\textit{Web poslužitelj} je program koji omogućuje korisnicima pristupanje internet resursima putem zahtjeva poslanih poslužiteljima. Web preglednik je prevoditelj koji web stranicu
+pisanu u kodu interpretira i prikazuje u klijentu razumljivom obliku. Koristeći web preglednik
+klijent šalje zahtjeve web poslužitelju.
 		
 		\textit{Front-end} web aplikacija omogućuje korisniku interakciju s \textit{back-end}-om na poslužitelju, koje se omogućuje kroz korisničko sučelje. 
-		\textit{Front-end} aplikacija šalje zahtjeve \textit{back-end} aplikaciji, koja ih prima, obradi, te po potrebi pristupa bazi podataka, šaljući potvrdne ili neuspješne odgovore natrag \textit{front-end} aplikaciji, uključujući dodatne podatke u tijelu odgovora kad je potrebno.\\
+		\textit{Front-end} aplikacija šalje zahtjeve \textit{back-end} aplikaciji koja ima ulogu web poslužitelja. Njezin je osnovni zadatak pohrana, obrada i dostava web stranica klijentu te nam ona predstavlja
+centar za razmjenu informacija i pružanje usluga. Sam poslužitelj pokreće web aplikaciju i
+prosljeđuje joj klijentske zahtjeve.\\
+
+		Prednosti odabrane arhitekture su te što se slojevi mogu oblikovati odvojeno te sve
+komponente mogu biti jednostavnije i razumljivije, ostvaruje se podjela brige (\textit{separation of
+concerns}) time što svaki sloj brine o svojoj funkcionalnosti i ne miješa se u brige nekog
+drugog sloja, a njihova međuovisnost ostvaruje se komunikacijom putem sučelja čija se
+implementacija može prilagoditi u određenom sloju.\\
+
+		\pagebreak
+
+		\subsection{MVC stil arhitekture}
+		Arhitektura	je	detaljnije	razrađena	najsličnija	stilu	arhitekture	MVC	(Model-View Controller).\\
+		
+		Osnovna	karakteristika ovog stila je	nezavisan razvoj	pojedinih dijelova aplikacije što omogućuje jednostavnije testiranje	i razvijanje dijelova sustava te	njihove	dorade.	
+Korisničko	sučelje	je	odvojeno od	ostatka	sustava, a kohezija	elemenata se	postiže	kroz	
+tri	sloja, jednog sloja	na klijentskoj strani - pogled (\textit{View}) te dva na	poslužiteljskoj	strani	
+– nadglednik	(\textit{Controller})	i	model	(\textit{Model}).\\
+
+		1. \textit{Model} - predstavlja glavnu komponentu sustava koja sadrži dinamičke strukture podataka odnosno razrede koji opisuju domenu primjene te sadrže pravila i aplikacijsku logiku. Blisko je povezan s bazom podataka aplikacije.\\
+		2. \textit{Pogled (View)} - komponenta koja sadrži niz drugih komponenata koje služe za prikaz podataka modela i interakciju s korisnikom kroz grafičko sučelje.\\
+		3. \textit{Nadglednik (Controller)} - komponenta	koja upravljaja	korisničkim	zahtjevima	prema	
+modelu i odgovorima modela natrag prema pogledima. Omogućuje	poveznicu	
+korisničke	strane	s	poslužiteljskom.\\
+
+		%unos slike
+		\begin{figure}[H]
+			\includegraphics[scale=0.7]{slike/mvc-framework.PNG} 
+			\centering
+			\caption{MVC stil arhitekture}
+			\label{pawBoost}
+		\end{figure}
+	
 		
 		\section{Programski jezici, razvojni okvir, alati i biblioteke koda}
 		
@@ -21,15 +56,15 @@
 		\subsection{Back-end i baza podataka}
 		U okviru \textit{back-end} aplikacije koriste se različiti alati i tehnologije kako bi se postigla funkcionalnost web aplikacije. 
 		
-		Sama funkcionalnost \textit{back-enda} ostvarena je koristeći \textit{Kotlin} i \textit{Spring Boot}, popularni \textit{framework} za Javu i Kotlin.
+		Sama funkcionalnost \textit{back-enda} ostvarena je koristeći \textit{Kotlin} i \textit{Spring Boot}, koji su popularni \textit{framework}-ovi za Javu i Kotlin.
 		
 		\textit{Spring Boot} olakšava izradu web aplikacije pružajući razne automatske konfiguracije. To uvelike omogućava integraciju različitih dijelova aplikacije i pruža mnogo gotovih implementacija koje se koriste putem vrlo intuitivnih sučelja.
 		
-		Baza podataka ostvarena je u \textit{PostgreSQL}-u, a za njenu jasnu definiciju korišten je alat \textit{Liquibase}. \textit{Liquibase} omogućava precizno i upravljivo definiranje strukture baze podataka.
+		Baza podataka ostvarena je u \textit{PostgreSQL}-u, a za njenu jasnu definiciju korišten je alat \textit{Flyway}. \textit{Flyway} omogućava precizno i upravljivo definiranje strukture baze podataka.
 		
-		Za preslikavanje entiteta iz \textit{PostgreSQL} baze podataka na klase u backend aplikaciji korišten je \textit{JPA (Jakarta Persistence API)}, koji značajno olakšava generiranje upita ovisno o pozivima metoda nad klasama entiteta. 
+		Za preslikavanje entiteta iz \textit{PostgreSQL} baze podataka na klase u \textit{backend} aplikaciji korišten je \textit{JPA (Jakarta Persistence API)}, koji značajno olakšava generiranje upita ovisno o pozivima metoda nad klasama entiteta, a za komunikaciju baze i same aplikacije koristi se \textit{JDBC (Java Database Connectivity)}.
 		
-		Za konfiguracijske datoteke aplikacije koristi se \textit{YAML} format. Upravljanje bazom podataka odvija se preko \textit{H2} konzole, a razvoj kompletne backend aplikacije obavlja se u \textit{IntelliJ IDEA}, popularnom alatu kompanije \textit{JetBrains}. 
+		Za konfiguracijske datoteke aplikacije koristi se \textit{YAML} format. Upravljanje bazom podataka odvija se preko \textit{Datagrip}-a, a razvoj kompletne \textit{back-end} aplikacije obavlja se u \textit{IntelliJ IDEA}, popularnom \textit{JetBrains} alatu. 
 		
 		Za izgradnju cijele aplikacije koristi se \textit{Gradle}, alat za automatizaciju izgradnje. 
 \textit{JWT (Json Web Token}) standard korišten je za sigurnost aplikacije, generirajući tokene, koji istovremeno služe za autorizaciju i autentifikaciju korisnika.
