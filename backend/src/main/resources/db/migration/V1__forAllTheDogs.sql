@@ -1,6 +1,5 @@
 -- CREATE USERS
--- CREATE ROLE drizzy WITH LOGIN PASSWORD 'drake' SUPERUSER;
-
+-- CREATE ROLE abc WITH LOGIN PASSWORD 'abc' SUPERUSER;
 -- CREATE TABLES
 
 CREATE TABLE IF NOT EXISTS SPECIES
@@ -144,3 +143,21 @@ INSERT INTO COLOR (colorId, colorName) VALUES (7, 'Crvena');
 INSERT INTO COLOR (colorId, colorName) VALUES (8, 'Plava');
 INSERT INTO COLOR (colorId, colorName) VALUES (9, 'Zelena');
 INSERT INTO COLOR (colorId, colorName) VALUES (10, 'Bez');
+
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (1, 'Pas');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (2, 'Macka');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (3, 'Papiga');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (4, 'Hrcak');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (5, 'Zmija');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (6, 'Luster');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (7, 'Zec');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (8, 'Kornjaca');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (9, 'Konj');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (10, 'Magarac');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (11, 'Kokos');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (12, 'Pijetao');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (13, 'Svinja');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (14, 'Pilic');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (15, 'Mis');
+INSERT INTO SPECIES (speciesId, speciesName) VALUES (16, 'Zamorac');
+

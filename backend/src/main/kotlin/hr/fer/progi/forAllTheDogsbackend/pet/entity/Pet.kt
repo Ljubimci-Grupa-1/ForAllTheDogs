@@ -1,6 +1,7 @@
 package hr.fer.progi.forAllTheDogsbackend.pet.entity
 
 import hr.fer.progi.forAllTheDogsbackend.color.entity.Color
+import hr.fer.progi.forAllTheDogsbackend.species.entity.Species
 import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull
 import java.util.*
@@ -12,8 +13,8 @@ class Pet (
     @SequenceGenerator(name = "pet_seq", sequenceName = "pet_seq", allocationSize = 1)
     var petId: Long = 0L,
 
-    @NotNull
-    var species: String,
+    @ManyToOne
+    var species: Species,
 
     var petName: String,
 
