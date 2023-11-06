@@ -1,13 +1,10 @@
 package hr.fer.progi.forAllTheDogsbackend.user.service
 
-import hr.fer.progi.forAllTheDogsbackend.exceptionHandler.ExceptionHandler
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.AddUserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.JsonUserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.repository.UserRespository
 import hr.fer.progi.forAllTheDogsbackend.userType.repository.UserTypeRepository
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.repository.Repository
 import org.springframework.stereotype.Service
 
 @Service
@@ -47,6 +44,13 @@ class UserService(
             user = userRepository.findByName(addUserDTO.name)
             if(user != null) throw IllegalArgumentException("Sklonište ${addUserDTO.name} je već registrirani korisnik")
         }
+    }
+
+    fun authorizeUser(jsonUserDTO: JsonUserDTO): UserDTO {
+        val user = userRepository.findByEmail(jsonUserDTO.email)
+            ?: throw IllegalArgumentException("Korisnik s tim emailom ne postoji")
+        if(user.password != jsonUserDTO.password) throw IllegalArgumentException("Pogrešna lozinka!")
+        return UserDTO(user)
     }
 
 }

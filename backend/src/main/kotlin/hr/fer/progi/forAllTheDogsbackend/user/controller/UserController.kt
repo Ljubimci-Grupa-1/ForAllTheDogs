@@ -33,7 +33,7 @@ class UserController(
 
     @PostMapping("/login")
     fun authorizeUser(@RequestBody user: JsonUserDTO): String {
-//        val userAuthorized = userService.authorizeUser(user)
+        val userAuthorized = userService.authorizeUser(user)
         return "redirect:/"
     }
 
