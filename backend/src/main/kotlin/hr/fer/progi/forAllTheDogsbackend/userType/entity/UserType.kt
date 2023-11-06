@@ -7,7 +7,8 @@ class UserType (
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_type_seq")
     @SequenceGenerator(name = "user_type_seq", sequenceName = "user_type_seq", allocationSize = 1)
-    var userTypeId: Long,
+    @Column(name = "usertypeid")
+    var userTypeId: Long = 0L,
 
     var name: String
 
