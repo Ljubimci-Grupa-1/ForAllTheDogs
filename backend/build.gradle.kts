@@ -29,7 +29,8 @@ dependencies {
 //	runtimeOnly("com.h2database:h2")
 	runtimeOnly("org.postgresql:postgresql")
 	implementation("org.flywaydb:flyway-core")
-	implementation("org.springframework.boot:spring-boot-starter-security")
+//	implementation("org.springframework.security:spring-security-web")
+	implementation("org.springframework.security:spring-security-crypto:5.6.5")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
