@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull
 class User(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "table_seq")
-    @SequenceGenerator(name = "table_seq", sequenceName = "table_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_user_seq")
+    @SequenceGenerator(name = "app_user_seq", sequenceName = "app_user_seq", allocationSize = 1)
     var userId: Long = 0L,
 
     @Column(unique = true)
