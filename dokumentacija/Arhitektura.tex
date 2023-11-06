@@ -28,17 +28,17 @@ implementacija može prilagoditi u određenom sloju.\\
 		\pagebreak
 
 		\subsection{MVC stil arhitekture}
-		Arhitektura	je	detaljnije	razrađena	najsličnija	stilu	arhitekture	MVC	(Model-View Controller).\\
+		Arhitektura	je	detaljnije	razrađena	najsličnija	stilu	arhitekture	MVC	(Model-view-controller).\\
 		
 		Osnovna	karakteristika ovog stila je	nezavisan razvoj	pojedinih dijelova aplikacije što omogućuje jednostavnije testiranje	i razvijanje dijelova sustava te	njihove	dorade.	
 Korisničko	sučelje	je	odvojeno od	ostatka	sustava, a kohezija	elemenata se	postiže	kroz	
 tri	sloja, jednog sloja	na klijentskoj strani - pogled (\textit{View}) te dva na	poslužiteljskoj	strani	
-– nadglednik	(\textit{Controller})	i	model	(\textit{Model}).
+– upravitelj	(\textit{Controller})	i	model	(\textit{Model}).
 
 		\begin{packed_enum}
 			\item\textit{Model} - predstavlja glavnu komponentu sustava koja sadrži dinamičke strukture podataka odnosno razrede koji opisuju domenu primjene te sadrže pravila i aplikacijsku logiku. Blisko je povezan s bazom podataka aplikacije.
 			\item\textit{Pogled (View)} - komponenta koja sadrži niz drugih komponenata koje služe za prikaz podataka modela i interakciju s korisnikom kroz grafičko sučelje.
-			\item\textit{Nadglednik (Controller)} - komponenta koja upravlja korisničkim zahtjevima prema modelu i odgovorima modela natrag prema pogledima. Omogućuje poveznicu korisničke strane	s poslužiteljskom.
+			\item\textit{Upravitelj (Controller)} - komponenta koja upravlja korisničkim zahtjevima prema modelu i odgovorima modela natrag prema pogledima. Omogućuje poveznicu korisničke strane	s poslužiteljskom.
 		\end{packed_enum}
 
 		%unos slike
@@ -56,18 +56,18 @@ tri	sloja, jednog sloja	na klijentskoj strani - pogled (\textit{View}) te dva na
 		\subsection{Back-end i baza podataka}
 		U okviru \textit{back-end} aplikacije koriste se različiti alati i tehnologije kako bi se postigla funkcionalnost web aplikacije. 
 		
-		Sama funkcionalnost \textit{back-enda} ostvarena je koristeći \textit{Kotlin} i \textit{Spring Boot}, koji su popularni \textit{framework}-ovi za Javu i Kotlin.
+		Sama funkcionalnost \textit{back-enda} ostvarena je koristeći \textit{Kotlin} i \textit{Spring Boot}, popularne \textit{frameworke} za Javu i Kotlin.
 		
 		\textit{Spring Boot} olakšava izradu web aplikacije pružajući razne automatske konfiguracije. To uvelike omogućava integraciju različitih dijelova aplikacije i pruža mnogo gotovih implementacija koje se koriste putem vrlo intuitivnih sučelja.
 		
 		Baza podataka ostvarena je u \textit{PostgreSQL}-u, a za njenu jasnu definiciju korišten je alat \textit{Flyway}. \textit{Flyway} omogućava precizno i upravljivo definiranje strukture baze podataka.
 		
-		Za preslikavanje entiteta iz \textit{PostgreSQL} baze podataka na klase u \textit{backend} aplikaciji korišten je \textit{JPA (Jakarta Persistence API)}, koji značajno olakšava generiranje upita ovisno o pozivima metoda nad klasama entiteta, a za komunikaciju baze i same aplikacije koristi se \textit{JDBC (Java Database Connectivity)}.
+		Za preslikavanje entiteta iz \textit{PostgreSQL} baze podataka na klase u \textit{back-end} aplikaciji korišten je \textit{JPA (Jakarta Persistence API)}, koji značajno olakšava generiranje upita ovisno o pozivima metoda nad klasama entiteta, a za komunikaciju baze i same aplikacije koristi se \textit{JDBC (Java Database Connectivity)}.
 		
-		Za konfiguracijske datoteke aplikacije koristi se \textit{YAML} format. Upravljanje bazom podataka odvija se preko \textit{Datagrip}-a, a razvoj kompletne \textit{back-end} aplikacije obavlja se u \textit{IntelliJ IDEA}, popularnom \textit{JetBrains} alatu. 
+		Za konfiguracijske datoteke aplikacije koristi se \textit{YAML} format. Upravljanje bazom podataka odvija se preko \textit{Datagrip}-a, a razvoj kompletne \textit{back-end} aplikacije obavlja se u \textit{IntelliJ IDEA}, popularnom alatu tvrtke \textit{JetBrains}. 
 		
 		Za izgradnju cijele aplikacije koristi se \textit{Gradle}, alat za automatizaciju izgradnje. 
-\textit{JWT (Json Web Token}) standard korišten je za sigurnost aplikacije, generirajući tokene, koji istovremeno služe za autorizaciju i autentifikaciju korisnika.
+\textit{JWT (JSON Web Token}) standard korišten je za sigurnost aplikacije, generirajući tokene, koji istovremeno služe za autorizaciju i autentifikaciju korisnika.
 
 
 			\subsection{Front-end}
@@ -139,10 +139,12 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 					\SetCell{LightGreen}messageId & BIGINT	&  	jedinstveni ID poruke  	\\ \hline
 					text	& VARCHAR &   sadržaj poruke	\\ \hline 
 					date	& DATE &   datum kada je poruka ostavljena ispod oglasa	\\ \hline 
-					location	& VARCHAR &   lokacija s koje je poruka ostavljena	\\ \hline 
+					latitude	& DOUBLE PRECISION &   geografska širina s koje je poruka ostavljena	\\ \hline 
+					longitude	& DOUBLE PRECISION &   geografska dužina s koje je poruka ostavljena	\\ \hline 
 					\SetCell{LightBlue}adId	& BIGINT &   jedinstveni ID oglasa ispod kojeg je poruka ostavljena	\\ \hline 
 					\SetCell{LightBlue}userId	& BIGINT &   jedinstveni ID korisnika koji je ostavio poruku	\\ \hline 
 					\SetCell{LightBlue}imageId	& BIGINT &   jedinstveni ID slike ostavljene uz poruku	\\ \hline 
+					\SetCell{LightBlue}cityId	& BIGINT &   jedinstveni ID grada u kojem je poruka ostavljena	\\ \hline 
 				\end{longtblr}
 				
 				\noindent\textbf{IMAGE} Tablica u koju se spremaju slike koje se dohvaćaju preko URL.
@@ -212,6 +214,8 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 					dateMissing	& DATE &   datum nestanka ljubimca	\\ \hline 
 					age	& INT &   starost ljubimca	\\ \hline 
 					description	& VARCHAR &   opis ljubimca	\\ \hline 
+					latitude	& DOUBLE PRECISION &   geografska širina lokacije ljubimca	\\ \hline 
+					longitude	& DOUBLE PRECISION &   geografska dužina lokacije ljubimca	\\ \hline 
 					petName	& VARCHAR &   ime na koje se ljubimac odaziva	\\ \hline 
 					\SetCell{LightBlue}speciesId	& BIGINT &   jedinstveni ID vrste ljubimca	\\ \hline 
 					\SetCell{LightBlue}cityId	& BIGINT &   jedinstveni ID grada	\\ \hline 
