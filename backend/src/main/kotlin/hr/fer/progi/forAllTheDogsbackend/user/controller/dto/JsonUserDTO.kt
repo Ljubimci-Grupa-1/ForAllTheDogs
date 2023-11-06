@@ -1,6 +1,6 @@
 package hr.fer.progi.forAllTheDogsbackend.user.controller.dto
 
-class JsonUserDTO (
+data class JsonUserDTO (
     val username: String,
     val email: String,
     val password: String,

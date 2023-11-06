@@ -1,6 +1,7 @@
 package hr.fer.progi.forAllTheDogsbackend.user.controller
 
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.JsonUserDTO
+import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.LoginUserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -17,22 +18,22 @@ class UserController(
 
     @GetMapping("/register")
     fun register(): String {
-        return "register"
+        return "/frontend/src/components/SignUp/SignUpForm.tsx"
     }
 
     @PostMapping("/register")
     fun addUser(@RequestBody user: JsonUserDTO): String {
         val userCreated = userService.addUser(user)
-        return "redirect:/login"
+        return "redirect:localhost:5173/login"
     }
 
     @GetMapping("/login")
     fun login(): String {
-        return "login"
+        return "/frontend/src/components/LogIn/LoginForm.tsx"
     }
 
     @PostMapping("/login")
-    fun authorizeUser(@RequestBody user: JsonUserDTO): String {
+    fun authorizeUser(@RequestBody user: LoginUserDTO): String {
         val userAuthorized = userService.authorizeUser(user)
         return "redirect:/"
     }
