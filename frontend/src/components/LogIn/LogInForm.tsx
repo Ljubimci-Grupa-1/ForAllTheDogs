@@ -1,4 +1,5 @@
 import { useState, FC, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 
 const LoginForm: FC = () => {
@@ -6,12 +7,14 @@ const LoginForm: FC = () => {
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
 
+    const navigate = useNavigate();
+
     const validateEmail = (email: string): boolean => {
         const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         return regex.test(email);
     }
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setError(null);
 
@@ -19,17 +22,36 @@ const LoginForm: FC = () => {
             setError("Invalid email format.");
             return;
         }
-        if (password.length < 6) {
-            setError("Password should be at least 6 characters long.");
-            return;
-        }
 
         const formData = {
             email: email,
             password: password
         };
-        console.log("Form Data in JSON:", JSON.stringify(formData));
+
+        try {
+            const response = await fetch('http://localhost:8080/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                // If the response is okay, navigate to the home page
+                navigate('/home');
+            } else {
+                // If the response is not okay, display the error to the user
+                const errorText = await response.text();
+                setError(errorText);
+            }
+
+        } catch (error) {
+            setError("An error occurred while logging in.");
+            console.error('There was an error!', error);
+        }
     };
+
 
     return (
         <div className="login-form-container">

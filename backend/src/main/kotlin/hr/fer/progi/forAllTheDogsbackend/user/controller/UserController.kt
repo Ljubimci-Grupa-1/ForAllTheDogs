@@ -5,13 +5,10 @@ import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.LoginUserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/user")
-@Controller
+@RestController
 class UserController(
     private val userService: UserService
 ) {
@@ -29,7 +26,7 @@ class UserController(
 
     @GetMapping("/login")
     fun login(): String {
-        return "/frontend/src/components/LogIn/LoginForm.tsx"
+        return "redirect:localhost:5173/home"
     }
 
     @PostMapping("/login")

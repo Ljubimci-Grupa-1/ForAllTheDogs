@@ -15,14 +15,13 @@ const SignUpForm: React.FC<Props> = () => {
         password: "",
         name: "",
         telephoneNumber: "",
-        userType: ""
+        userTypeId: ""
     });
     const [error, setError] = useState("");
     const [isChecked, setIsChecked] = useState(false);
     const handleInputChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
-        // Update the formData state with the new value for the specific input field
         setFormData({
             ...formData,
             [name]: value,
@@ -40,15 +39,15 @@ const SignUpForm: React.FC<Props> = () => {
             setError("Telephone number must be 9 or 10 digits long");
             return;
         }
-        const newUserType = isChecked ? "skloniste" : "osoba";
+        const newUserType = isChecked ? 2 : 1;
 
         const updatedFormData = {
             ...formData,
-            userType: newUserType,
+            userTypeId: newUserType,
         };
 
         try {
-            const response = await fetch('/user', {
+            const response = await fetch('http://localhost:8080/user/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,11 +57,13 @@ const SignUpForm: React.FC<Props> = () => {
 
             if (!response.ok) {
                 const responseBody = await response.json();
+                console.log(responseBody);
                 setError(responseBody.message || 'Something went wrong. Please try again.');
             } else {
                 alert("You have successfully signed up!");
                 navigate("/login");
             }
+            console.log(response);
         } catch (error) {
             setError("Network error. Please try again.");
         }
