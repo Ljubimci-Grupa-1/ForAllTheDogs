@@ -12,12 +12,14 @@ class Pet (
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pet_seq")
     @SequenceGenerator(name = "pet_seq", sequenceName = "pet_seq", allocationSize = 1)
+    @Column(name = "petid")
     var petId: Long = 0L,
 
     @ManyToOne
     @NotNull
     var species: Species,
 
+    @Column(name = "petname")
     var petName: String,
 
     var age: Int,
@@ -30,8 +32,10 @@ class Pet (
     )
     var colors: MutableSet<Color> = mutableSetOf(),
 
+    @Column(name = "datemissing")
     var dateMissing: Date,
 
+    @Column(name = "hourmissing")
     var hourMissing: Int,
 
     @NotNull

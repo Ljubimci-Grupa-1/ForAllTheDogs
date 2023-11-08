@@ -7,8 +7,6 @@ import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.repository.UserRespository
 import hr.fer.progi.forAllTheDogsbackend.userType.repository.UserTypeRepository
 import org.springframework.stereotype.Service
-import org.springframework.security.crypto.factory.PasswordEncoderFactories
-import org.springframework.security.crypto.password.PasswordEncoder
 
 
 @Service
@@ -16,10 +14,6 @@ class UserService(
     private val userRepository: UserRespository,
     private val userTypeRepository: UserTypeRepository
 ) {
-    fun hashPassword(password: String): String {
-        val encoder: PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
-        return encoder.encode(password)
-    }
 
     fun addUser(jsonUserDTO: JsonUserDTO): UserDTO {
         checkIfUserExists(jsonUserDTO)
@@ -27,7 +21,6 @@ class UserService(
         val addUserDTO = AddUserDTO(
             jsonUserDTO.username,
             jsonUserDTO.email,
-//            hashPassword(jsonUserDTO.password),
             jsonUserDTO.password,
             jsonUserDTO.name,
             jsonUserDTO.telephoneNumber,
@@ -58,7 +51,6 @@ class UserService(
     fun authorizeUser(loginUserDTO: LoginUserDTO): UserDTO {
         val user = userRepository.findByEmail(loginUserDTO.email)
             ?: throw IllegalArgumentException("Korisnik s tim emailom ne postoji")
-//        if(user.password != hashPassword(loginUserDTO.password)) throw IllegalArgumentException("Pogrešna lozinka!")
         if(user.password != loginUserDTO.password) throw IllegalArgumentException("Pogrešna lozinka!")
         return UserDTO(user)
     }
