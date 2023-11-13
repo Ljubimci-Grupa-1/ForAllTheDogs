@@ -1,0 +1,27 @@
+.navbar {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+}
+
+.nav-item {
+    display: inline;
+    margin: 0 20px;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.nav-item a:hover {
+    text-decoration: underline;
+}

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './MainContent.css';
 import PetDetailsModal from './PetDetailsModal';
 import LostPetCard from './LostPetCard';
-import FilterBar from "./FilterBar.tsx";
+import FilterBar from "./Bars/FilterBar.tsx";
+import NavigationBar from "./Bars/NavigationBar.tsx";
 
 export interface LostPet {
     id: number;
@@ -67,6 +68,8 @@ const MainContent: React.FC<MainContentProps> = ({ lostPets = [] }) => {
     return (
         <main>
             <p>Welcome to For All The Dogs, a platform to help find lost pets...</p>
+
+            <NavigationBar />
 
             <FilterBar
                 onNameChange={handleNameChange}

@@ -1,7 +1,6 @@
-// PetDetailsModal.tsx
-
+import './PetDetailsModal.css';
 import React from 'react';
-import { LostPet } from './MainContent'; // Ensure this path is correct
+import { LostPet } from './MainContent';
 
 interface PetDetailsModalProps {
     pet: LostPet | null;
