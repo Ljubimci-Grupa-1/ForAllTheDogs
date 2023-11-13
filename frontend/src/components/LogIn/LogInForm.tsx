@@ -8,6 +8,9 @@ const LoginForm: FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
+    const navigateToSignup = () => {
+        navigate('/signup');
+    };
 
     const validateEmail = (email: string): boolean => {
         const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -38,10 +41,8 @@ const LoginForm: FC = () => {
             });
 
             if (response.ok) {
-                // If the response is okay, navigate to the home page
                 navigate('/home');
             } else {
-                // If the response is not okay, display the error to the user
                 const errorText = await response.text();
                 setError(errorText);
             }
@@ -83,6 +84,9 @@ const LoginForm: FC = () => {
                     {error && <p className="form-error">{error}</p>}
                     <button type="submit" className="login-btn">Login</button>
                 </form>
+                <div className="signup-redirect">
+                    <p>Haven't got an account? <button onClick={navigateToSignup} className="signup-btn">Sign up here!</button></p>
+                </div>
             </div>
         </div>
     );

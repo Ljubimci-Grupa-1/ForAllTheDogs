@@ -1,5 +1,6 @@
 import React from "react";
 import {LostPet} from "./MainContent.tsx";
+import "./LostPetCard.css";
 
 interface LostPetCardProps {
     pet: LostPet;

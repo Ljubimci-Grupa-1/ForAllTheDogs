@@ -9,8 +9,10 @@ class Species (
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "species_seq")
     @SequenceGenerator(name = "species_seq", sequenceName = "species_seq", allocationSize = 1)
+    @Column(name = "speciesid")
     var speciesId: Long,
 
     @NotNull
+    @Column(name = "speciesname")
     var speciesName: String
 )

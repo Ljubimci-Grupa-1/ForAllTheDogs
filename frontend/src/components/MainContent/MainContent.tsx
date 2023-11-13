@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './MainContent.css';
 import PetDetailsModal from './PetDetailsModal';
 import LostPetCard from './LostPetCard';
+import FilterBar from "./Bars/FilterBar.tsx";
+import NavigationBar from "./Bars/NavigationBar.tsx";
 
 export interface LostPet {
     id: number;
@@ -19,7 +21,9 @@ interface MainContentProps {
 const MainContent: React.FC<MainContentProps> = ({ lostPets = [] }) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [filterName, setFilterName] = useState('');
+    const [filterSpecies, setFilterSpecies] = useState('');
+    const [filterDateLost, setFilterDateLost] = useState('');
 
     useEffect(() => {
         document.title = "For All The Dogs";
@@ -30,20 +34,49 @@ const MainContent: React.FC<MainContentProps> = ({ lostPets = [] }) => {
         setCurrentPet(null);
     };
 
-    const filteredPets = lostPets.filter(pet =>
-        pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        pet.species.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        pet.description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredPets = lostPets.filter((pet) => {
+        const nameMatch = pet.name.toLowerCase().includes(filterName.toLowerCase());
+        const speciesMatch = pet.species.toLowerCase().includes(filterSpecies.toLowerCase());
+        const dateLostMatch = pet.dateLost.includes(filterDateLost);
+
+        return nameMatch && speciesMatch && dateLostMatch;
+    });
+
+
+    const handleNameChange = (name: string) => {
+        setFilterName(name);
+    };
+
+    const handleSpeciesChange = (species: string) => {
+        setFilterSpecies(species);
+    };
+
+    const handleDateLostChange = (dateLost: string) => {
+        setFilterDateLost(dateLost);
+    };
+
+    const handleApplyFilters = () => {
+        // API call ovdje
+    };
+
+    const handleClearFilters = () => {
+        setFilterName('');
+        setFilterSpecies('');
+        setFilterDateLost('');
+    };
 
     return (
         <main>
             <p>Welcome to For All The Dogs, a platform to help find lost pets...</p>
-            <input
-                type="text"
-                placeholder="Search for pets or shelters..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+
+            <NavigationBar />
+
+            <FilterBar
+                onNameChange={handleNameChange}
+                onSpeciesChange={handleSpeciesChange}
+                onDateLostChange={handleDateLostChange}
+                onApplyFilters={handleApplyFilters}
+                onClearFilters={handleClearFilters}
             />
 
             <div className="lost-pets-list">

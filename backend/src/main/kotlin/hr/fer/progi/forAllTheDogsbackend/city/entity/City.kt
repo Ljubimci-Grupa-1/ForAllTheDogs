@@ -9,8 +9,10 @@ class City(
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "city_seq")
     @SequenceGenerator(name = "city_seq", sequenceName = "city_seq", allocationSize = 1)
+    @Column(name = "cityid")
     var cityId: Long = 0L,
 
+    @Column(name = "cityname")
     var cityName: String,
 
     @ManyToOne
