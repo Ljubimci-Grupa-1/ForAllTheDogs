@@ -1,7 +1,7 @@
 package hr.fer.progi.forAllTheDogsbackend.image.repository
 
+import hr.fer.progi.forAllTheDogsbackend.image.entity.Image
 import org.springframework.data.jpa.repository.JpaRepository
-import java.awt.Image
 
 interface ImageRepository: JpaRepository<Image, Long> {
 }
