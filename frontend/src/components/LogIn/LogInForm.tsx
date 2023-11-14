@@ -1,6 +1,6 @@
 import { useState, FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LoginForm.css';
+import "./LogInForm.css";
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
