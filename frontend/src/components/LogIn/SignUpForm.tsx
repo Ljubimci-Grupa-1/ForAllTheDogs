@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./SignUpForm.css";
 import { useNavigate } from 'react-router-dom';
 
@@ -17,9 +17,8 @@ const SignUpForm: React.FC<Props> = () => {
         telephoneNumber: "",
         userTypeId: ""
     });
-    const [error, setError] = useState("");
     const [isChecked, setIsChecked] = useState(false);
-    const handleInputChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
         setFormData({
@@ -36,7 +35,7 @@ const SignUpForm: React.FC<Props> = () => {
             return;
         }
         if (formData.telephoneNumber.length !== 9 && formData.telephoneNumber.length !== 10) {
-            setError("Telephone number must be 9 or 10 digits long");
+            alert("Telephone number must be 9 or 10 digits long");
             return;
         }
         const newUserType = isChecked ? 2 : 1;
@@ -58,24 +57,20 @@ const SignUpForm: React.FC<Props> = () => {
             if (!response.ok) {
                 const responseBody = await response.json();
                 console.log(responseBody);
-                setError(responseBody.message || 'Something went wrong. Please try again.');
+                alert(responseBody.message || 'Something went wrong. Please try again.');
             } else {
                 alert("You have successfully signed up!");
                 navigate("/login");
             }
             console.log(response);
         } catch (error) {
-            setError("Network error. Please try again.");
+            alert("Network error. Please try again.");
         }
     };
-
-
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
-
-
 
     return (
         <div className="Auth-form-container">
@@ -152,7 +147,6 @@ const SignUpForm: React.FC<Props> = () => {
                                 onChange={handleCheckboxChange}
                             />
                         </label>
-
                     </div>
                     <div className="d-grid gap-2 mt-3">
                         <button type="submit" className="btn-primary">
