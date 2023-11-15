@@ -369,7 +369,8 @@
 			\end{figure}
 			
 			\noindent\textbf{Obrazac uporabe UC6 - Pretraživanje i pregled oglasa o nestalim ljubimcima}\newline
-			\noindent TODO
+			\noindent Korisnik (neregistriran ili registriran) u tražilicu unosi podatke o životinji koja ga zanima. Filter tražilice ispunjava raznim vrijednostima po kojima se životinje razlikuju poput imena, vrste, lokacije nestanka, boji i vremenskom rasponu nestanka. Nakon toga se u bazi podataka traži podudarnost s traženim upitom i vraća se rezultat korisniku ovisno o nađenom. Korisniku će se ili prikazati relevantni događaki ili u slučaju da nema nikakvih podudarnosti prikazati poruka da nema rezultata.
+			
 			
 			\begin{figure}[H]
 				\includegraphics[scale=0.6]{slike/seq_postavljanje_oglasa.PNG} 
@@ -379,7 +380,7 @@
 			\end{figure}
 			
 			\noindent\textbf{Obrazac uporabe UC7 - Postavljanje oglasa o nestalom ljubimcu}\newline
-			\noindent TODO			
+			\noindent Korisnik nakon registracije i/ili prijave u sustav, ima, uz ostalo, i mogućnost postavljanja oglasa. Korisnik na web stranici odabire opciju postavljanja oglasa čime mu se otvara forma za unos podataka kao što su vrsta, ime na koje se životinja odaziva, datum i sat nestanka, lokacija nestanka, boja dlake, starost, tekstni opis pa čak i do 3 fotografije nestalog ljubimca. Ako korisnik nije unio sve potrebne podatke u aplikaciju za prijavu nestale životinje, sustav ga o tome obavještava i navodi na dio forme koji treba biti popunjen. Također, u slučaju da je registrirani korisnik sklonište za životinje, početna postavka kategorije oglasa je „U skloništu“, a inače „Za ljubimcem se traga“. Kad bi korisnik poželio objaviti taj oglas morao bi stisnuti gumb „Objavi“, a ako bi zaboravio aplikacija bi ga porukom na ekranu podsjetila na to. Nakon što je stisnuo gumb za objavu, oglas se pohranjuje u bazu podataka, a korisniku pristiže poruka o uspješnom postavljanju oglasa.		
 			
 			\begin{figure}[H]
 				\includegraphics[scale=0.6]{slike/seq_izmjena_oglasa.PNG} 
@@ -389,7 +390,11 @@
 			\end{figure}
 			
 			\noindent\textbf{Obrasci uporabe UC8 i UC9 - izmjena/uklanjanje oglasa o nestalom ljubimcu}\newline
-			\noindent TODO
+			\noindent Nakon što je objavio oglas, registrirani korisnik može upravljati oglasom – raditi izmjene na njemu ili ga ukloniti. \\
+Ako bi registrirani korisnik odabrao opciju izmjene oglasa otvorila bi mu se forma za izmjenu podataka. Korisnik bi promijenio određene podatke, a mogao bi promijeniti i kategoriju oglasa iz „Za ljubimcem se traga“ u „Ljubimac je sretno pronađen“, „Ljubimac nije pronađen, ali se za njim više aktivno ne traga“ i „Ljubimac je pronađen uz nesretne okolnosti“. Sustav bi nakon toga provjerio jesu li promijenjeni podaci adekvatni te poslao korisniku povratnu informaciju ako nisu. \\
+Ako bi korisnik odabrao opciju za uklanjanje oglasa, sustav bi ga obavijestio o uspješnom uklanjanju oglasa.\\
+Nakon bilo koje od ovih radnji, korisnik bi potvrdio promjenu u sustavu te bi se promjena pohranila u bazu podataka i ona bi se ažurirala. Korisnik bi na kraju dobio poruku kako je uspio izvršiti radnju.
+
 	
 		\section{Ostali zahtjevi}
 		 
