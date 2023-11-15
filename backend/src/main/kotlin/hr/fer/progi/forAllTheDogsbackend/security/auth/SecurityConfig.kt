@@ -21,16 +21,13 @@ class SecurityConfig(
     private val userDetailsService: CustomUserDetailsService,
     private val jwtAuthorizationFilter: JwtAuthorizationFilter
     ) {
-
     @Bean
     fun authenticationManager(http: HttpSecurity, passwordEncoder: BCryptPasswordEncoder): AuthenticationManager {
         val authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder::class.java)
         authenticationManagerBuilder.authenticationProvider(authProvider())
             .userDetailsService(userDetailsService)
-//            .passwordEncoder(passwordEncoder)
         return authenticationManagerBuilder.build()
     }
-
     @Bean
     fun authProvider(): DaoAuthenticationProvider {
         val authProvider = DaoAuthenticationProvider()

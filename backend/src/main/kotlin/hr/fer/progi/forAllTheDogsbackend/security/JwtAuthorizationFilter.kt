@@ -20,7 +20,6 @@ class JwtAuthorizationFilter(
     private val jwtUtil: JwtUtil,
     private val mapper: ObjectMapper
 ) : OncePerRequestFilter() {
-
     @Throws(ServletException::class, IOException::class)
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -44,7 +43,6 @@ class JwtAuthorizationFilter(
                 val authentication = UsernamePasswordAuthenticationToken(email, "", ArrayList())
                 SecurityContextHolder.getContext().authentication = authentication
             }
-
         } catch (e: Exception) {
             errorDetails["message"] = "Authentication Error"
             errorDetails["details"] = "An error occurred: ${e.javaClass.simpleName} - ${e.message}"
