@@ -1,14 +1,3 @@
-.Auth-form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 80vh;
-    background-image: url("/FATDlogoBG.png");
-    background-repeat: no-repeat;
-    background-size: 100%;
-}
-
 
 .Auth-form {
     width: 100%;
@@ -21,12 +10,6 @@
 }
 
 
-.Auth-form-content {
-    display: flex;
-    flex-direction: column;
-    gap:30px;
-}
-
 .Auth-form-title {
     font-size: 1.5rem;
     margin-bottom: 20px;
@@ -37,34 +20,9 @@
 .input-container {
     display: flex;
     flex-direction: column;
-    height: 100px;
+    padding: 5px;
 }
 
-
-.input {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 1rem;
-}
-
-input:not([type="text"]):not([type="checkbox"]){
-    margin-top: 20px;
-    padding: 10px;
-}
-input[type="checkbox"]{
-    margin-left: 10px;
-    margin-top: 4px;
-}
-.is-invalid {
-    border-color: #dc3545 !important;
-}
-
-.invalid-feedback {
-    color: #dc3545;
-    font-size: 0.875rem;
-    margin-top: 5px;
-}
 
 
 label {
@@ -80,15 +38,4 @@ p {
 input[type="checkbox"] {
     margin-right: 5px;
     vertical-align: middle;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 1rem;
-    width: 100%;
 }
