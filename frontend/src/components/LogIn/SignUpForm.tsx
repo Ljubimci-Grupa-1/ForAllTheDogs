@@ -144,8 +144,9 @@ const SignUpForm: React.FC<Props> = () => {
                     </div>
                     <div className="input-container">
                         <label>Telephone number</label>
-                        <input
-                            className="input-md"
+                        <Input
+                            component="input"
+                            size="md"
                             type="tel"
                             pattern="[0-9]{9,10}"
                             placeholder="xxx-xxx-xxxx"
@@ -154,8 +155,6 @@ const SignUpForm: React.FC<Props> = () => {
                             onChange={handleInputChange}
                             required
                         />
-
-
                     </div>
                     <div>
                         <Checkbox
