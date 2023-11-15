@@ -83,7 +83,22 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 				
 		\section{Baza podataka}
 			
-		TODO
+		Između više tipova baza podataka (relacijska, hijerarhijska, objektno-orijentirana), za našu smo web aplikaciju odabrali koristiti relacijsku bazu podataka. Odlučili smo se za tu vrstu baze jer s njom imamo najviše iskustva, a jednostavna je, jasna i praktična za naše potrebe (upravljanje podacima o korisnicima koji postavljaju, izmjenjuju, brišu ili komentiraju oglase za izgubljene odnosno pronađene ljubimce) i implementaciju (klase u Springu su preslikane relacije iz baze) i omogućavaju jednostavan vizualni prikaz točnih međuovisnosti relacija, a time i veću razumljivost. Bazu podataka koristimo za efikasnu pohranu i dohvat podataka za obradu. Elementi baze podataka su relacije, odnosno tablice i njihovi vlastiti atributi. Baza podataka ove aplikacije sadrži 12 tablica:
+		
+		\begin{packed_item}
+			\item User
+			\item UserType
+			\item Ad
+			\item Activity
+			\item Pet
+			\item Color
+			\item Of\_Color
+			\item Species
+			\item Message
+			\item Image
+			\item City
+			\item County
+		\end{packed_item}
 
 			\subsection{Opis tablica}
 			
