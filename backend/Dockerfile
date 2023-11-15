@@ -1,25 +1,33 @@
 # Container za izgradnju (build) aplikacije
 FROM openjdk:17-alpine AS builder
 
-# Kopiranje izvornog koda u container
-COPY gradlew .
-COPY build.gradle.kts .
-COPY settings.gradle.kts .
-COPY src src
+# Set up the working directory
+WORKDIR /app
 
-RUN chmod +x gradlew
+# Kopiranje Gradle Wrapper-a
+COPY gradlew /app/
+COPY gradle /app/gradle
+COPY build.gradle.kts /app/
+COPY settings.gradle.kts /app/
+COPY src /app/src
+
+# Dajemo izvršna prava Gradle Wrapperu
+RUN chmod +x /app/gradlew
+
+# Downloading dependencies
+RUN /app/gradlew --version
 
 # Pokretanje builda
-RUN ./gradlew assemble
+RUN /app/gradlew assemble
 
 # Stvaranje containera u kojem ce se vrtiti aplikacija
 FROM openjdk:17-alpine
 
 # Kopiranje izvrsnog JAR-a iz build containera u izvrsni container
-COPY --from=builder build/*.jar /app.jar
+COPY --from=builder /app/build/libs/*.jar /app/app.jar
 
 # Izlaganje porta
 EXPOSE 8080
 
 # Naredba kojom se pokrece aplikacija
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","/app/app.jar"]
