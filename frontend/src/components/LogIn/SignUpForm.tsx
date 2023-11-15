@@ -144,12 +144,11 @@ const SignUpForm: React.FC<Props> = () => {
                     </div>
                     <div className="input-container">
                         <label>Telephone number</label>
-                        <Input
-                            component="input"
-                            size="md"
-                            type="tel"
+                        <input
+                            type="text"
                             pattern="[0-9]{9,10}"
                             placeholder="xxx-xxx-xxxx"
+                            className="input"
                             name="telephoneNumber"
                             value={formData.telephoneNumber}
                             onChange={handleInputChange}
