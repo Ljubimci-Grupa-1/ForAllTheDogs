@@ -144,19 +144,17 @@ const SignUpForm: React.FC<Props> = () => {
                     </div>
                     <div className="input-container">
                         <label>Telephone number</label>
-                        <Input
-                            size="md"
-                            variant="soft"
-                            color="primary"
+                        <input
+                            className="input-md"
                             type="tel"
                             pattern="[0-9]{9,10}"
-                            className="input"
                             placeholder="xxx-xxx-xxxx"
                             name="telephoneNumber"
                             value={formData.telephoneNumber}
                             onChange={handleInputChange}
-                            required={true}
+                            required
                         />
+
 
                     </div>
                     <div>
