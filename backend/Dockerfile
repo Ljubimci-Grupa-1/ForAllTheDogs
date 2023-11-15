@@ -2,11 +2,11 @@
 FROM openjdk:17-alpine AS builder
 
 # Kopiranje izvornog koda u container
-COPY ../../gradle gradle
-COPY ../../gradlew .
-COPY ../../build.gradle .
-COPY ../../settings.gradle .
-COPY ../../src src
+COPY gradle gradle
+COPY gradlew .
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
 RUN chmod +x gradlew
 
 # Pokretanje builda
@@ -15,11 +15,7 @@ RUN ./gradlew assemble
 # Stvaranje containera u kojem ce se vrtiti aplikacija
 FROM openjdk:17-alpine
 
-## Ovdje je moguce instalirati alate potrebne za rad aplikacije. Vjerojatno vam nece trebati, no dobro je znati.
-## Linux distro koji se koristi je Alpine, stoga se kao package manager koristi apk
-#RUN apk install <nesto>
-
-## Kopiranje izvrsnog JAR-a iz build containera u izvrsni container
+# Kopiranje izvrsnog JAR-a iz build containera u izvrsni container
 COPY --from=builder build/*.jar /app.jar
 
 # Izlaganje porta
