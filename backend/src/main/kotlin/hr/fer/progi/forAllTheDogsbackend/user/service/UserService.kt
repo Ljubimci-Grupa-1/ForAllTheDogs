@@ -20,12 +20,9 @@ class UserService(
     fun addUser(jsonUserDTO: JsonUserDTO): UserDTO {
         checkIfUserExists(jsonUserDTO)
         val userType = userTypeRepository.findByUserTypeId(jsonUserDTO.userTypeId)
-//        println(passwordEncoder.encode(jsonUserDTO.password))
-//        println(passwordEncoder.encode(jsonUserDTO.password))
         val addUserDTO = AddUserDTO(
             jsonUserDTO.username,
             jsonUserDTO.email,
-//            jsonUserDTO.password,
             passwordEncoder.encode(jsonUserDTO.password),
             jsonUserDTO.name,
             jsonUserDTO.telephoneNumber,
