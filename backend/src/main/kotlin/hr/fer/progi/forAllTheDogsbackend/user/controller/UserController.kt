@@ -1,24 +1,59 @@
 package hr.fer.progi.forAllTheDogsbackend.user.controller
 
+import hr.fer.progi.forAllTheDogsbackend.security.auth.JwtUtil
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.JsonUserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.LoginUserDTO
+import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.LoginUserResponseDTO
+import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.service.UserService
+import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/user")
 @RestController
 class UserController(
-    private val userService: UserService
+    private val userService: UserService,
+    private val authenticationManager: AuthenticationManager,
+    private val jwtUtil: JwtUtil
 ) {
     @PostMapping("/register")
-    fun addUser(@RequestBody user: JsonUserDTO): String {
-        userService.addUser(user)
-        return "redirect:localhost:5173/login"
+    fun addUser(@RequestBody user: JsonUserDTO): ResponseEntity<UserDTO> {
+        val registeredUser = userService.addUser(user)
+        return ResponseEntity.ok(registeredUser)
     }
 
     @PostMapping("/login")
-    fun authorizeUser(@RequestBody user: LoginUserDTO): String {
-        userService.authorizeUser(user)
+    fun authorizeUser(@RequestBody user: LoginUserDTO): ResponseEntity<LoginUserResponseDTO> {
+        try {
+            val authentication = authenticationManager.authenticate(
+                UsernamePasswordAuthenticationToken(
+                    user.email,
+                    user.password
+                )
+            )
+
+            val authorizedUser = userService.authorizeUser(user)
+            SecurityContextHolder.getContext().authentication = authentication
+
+            val token = jwtUtil.createToken(authorizedUser)
+            val response = LoginUserResponseDTO(authorizedUser.email, token)
+
+            return ResponseEntity.ok(response)
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Pogrešna lozinka!")
+        }
+    }
+
+    @GetMapping("/login")
+    fun login(@RequestParam("id") id: Long): String {
+        return "redirect:/"
+    }
+
+    @GetMapping("/register")
+    fun register(@RequestParam("id") id: Long): String {
         return "redirect:/"
     }
 

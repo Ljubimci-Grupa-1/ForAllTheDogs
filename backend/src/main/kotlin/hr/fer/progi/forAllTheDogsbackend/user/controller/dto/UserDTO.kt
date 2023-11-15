@@ -3,7 +3,7 @@ package hr.fer.progi.forAllTheDogsbackend.user.controller.dto
 import hr.fer.progi.forAllTheDogsbackend.user.entity.User
 import hr.fer.progi.forAllTheDogsbackend.userType.entity.UserType
 
-
+// objekt koji se vraća u kontroler nakon uspješne registracije korisnika
 data class UserDTO(
     val userId: Long,
     val username: String,
@@ -22,5 +22,15 @@ data class UserDTO(
         user.name,
         user.telephoneNumber,
         user.userType
+    )
+
+    constructor(email: String, password: String): this (
+        0,
+        "",
+        email,
+        password,
+        "",
+        "",
+        UserType(0, "")
     )
 }
