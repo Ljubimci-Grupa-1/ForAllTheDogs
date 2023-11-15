@@ -135,8 +135,9 @@ const SignUpForm: React.FC<Props> = () => {
                             name="telephoneNumber"
                             value={formData.telephoneNumber}
                             onChange={handleInputChange}
-                            required
+                            required={true}
                         />
+
                     </div>
                     <div>
                         <label>
