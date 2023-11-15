@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./SignUpForm.css";
 import { useNavigate } from 'react-router-dom';
+import {Button, Checkbox, Input, Sheet, Stack} from "@mui/joy";
 
 interface Props {
     // Define the type of props (if any)
 }
 
 const SignUpForm: React.FC<Props> = () => {
-
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
@@ -73,28 +73,40 @@ const SignUpForm: React.FC<Props> = () => {
     };
 
     return (
-        <div className="Auth-form-container">
+        <Sheet sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundImage: 'url("/FATDlogoBG.png")',
+            backgroundRepeat: 'repeat',
+            backgroundSize: '10%',
+        }}>
             <form className="Auth-form" onSubmit={handleSubmit}>
-                <div className="Auth-form-content">
+                <Stack spacing={3}>
                     <h3 className="Auth-form-title">Sign up</h3>
                     <div className="input-container">
                         <label>Username</label>
-                        <input
-                            type="text"
+                        <Input
+                            size="md"
+                            placeholder="Enter Username"
+                            variant="soft"
+                            color="primary"
+                            required
                             className="input"
-                            placeholder="Username"
                             name="username"
                             value={formData.username}
                             onChange={handleInputChange}
-                            required
                         />
                     </div>
                     <div className="input-container">
-                        <label>Email address</label>
-                        <input
+                        <label>Email</label>
+                        <Input
+                            size="md"
+                            placeholder="Enter Email Adress"
+                            variant="soft"
+                            color="primary"
                             type="email"
                             className="input"
-                            placeholder="Email Address"
                             name="email"
                             value={formData.email}
                             onChange={handleInputChange}
@@ -103,7 +115,10 @@ const SignUpForm: React.FC<Props> = () => {
                     </div>
                     <div className="input-container">
                         <label>Password</label>
-                        <input
+                        <Input
+                            size="md"
+                            variant="soft"
+                            color="primary"
                             type="password"
                             className="input"
                             placeholder="Password"
@@ -115,8 +130,10 @@ const SignUpForm: React.FC<Props> = () => {
                     </div>
                     <div className="input-container">
                         <label>Name</label>
-                        <input
-                            type="text"
+                        <Input
+                            size="md"
+                            variant="soft"
+                            color="primary"
                             className="input"
                             placeholder="Name"
                             name="name"
@@ -127,7 +144,10 @@ const SignUpForm: React.FC<Props> = () => {
                     </div>
                     <div className="input-container">
                         <label>Telephone number</label>
-                        <input
+                        <Input
+                            size="md"
+                            variant="soft"
+                            color="primary"
                             type="tel"
                             pattern="[0-9]{9,10}"
                             className="input"
@@ -140,23 +160,21 @@ const SignUpForm: React.FC<Props> = () => {
 
                     </div>
                     <div>
-                        <label>
-                            Jeste li sklonište?
-                            <input
-                                type="checkbox"
-                                checked={isChecked}
-                                onChange={handleCheckboxChange}
-                            />
-                        </label>
+                        <Checkbox
+                            color="primary"
+                            label="Jeste li sklonište?"
+                            variant="solid"
+                            onChange={handleCheckboxChange}
+                        />
                     </div>
-                    <div className="d-grid gap-2 mt-3">
-                        <button type="submit" className="btn-primary">
-                            Submit
-                        </button>
+                    <div>
+                        <Button
+                            type="submit"
+                            variant="solid">Sign up</Button>
                     </div>
-                </div>
+                </Stack>
             </form>
-        </div>
+        </Sheet>
     );
 };
 

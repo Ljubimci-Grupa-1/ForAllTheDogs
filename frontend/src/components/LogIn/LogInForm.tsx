@@ -1,6 +1,7 @@
 import { useState, FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./LogInForm.css";
+import {Button, Input, Sheet, Stack} from "@mui/joy";
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
@@ -55,40 +56,60 @@ const LoginForm: FC = () => {
 
 
     return (
-        <div className="login-form-container">
+        <Sheet
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundImage: 'url("/FATD_BG.png")',
+                backgroundRepeat: 'repeat',
+                backgroundSize: '10%',
+            }}>
             <div className="login-form">
-                <h2 className="login-form-title">Login</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="email" className="form-label">Email:</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            required
-                            className="form-input"
-                        />
+                <Stack spacing={3}>
+                    <h2 className="login-form-title">Login</h2>
+                    <form onSubmit={handleSubmit}>
+                        <Stack spacing={3}>
+                            <div className="form-group">
+                                <label htmlFor="email" className="form-label">Email:</label>
+                                <Input
+                                    size="md"
+                                    variant="soft"
+                                    color="primary"
+                                    type="email"
+                                    id="email"
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                    required
+                                    className="form-input"
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="password" className="form-label">Password:</label>
+                                <Input
+                                    size="md"
+                                    variant="soft"
+                                    color="primary"
+                                    type="password"
+                                    id="password"
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                    required
+                                    className="form-input"
+                                />
+                            </div>
+                            {error && <p className="form-error">{error}</p>}
+                            <Button
+                                variant="solid"
+                                type="submit">Login</Button>
+                        </Stack>
+                    </form>
+                    <div className="signup-redirect">
+                        <p>Haven't got an account? <Button onClick={navigateToSignup} variant="outlined">Sign up here!</Button></p>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="password" className="form-label">Password:</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            required
-                            className="form-input"
-                        />
-                    </div>
-                    {error && <p className="form-error">{error}</p>}
-                    <button type="submit" className="login-btn">Login</button>
-                </form>
-                <div className="signup-redirect">
-                    <p>Haven't got an account? <button onClick={navigateToSignup} className="signup-btn">Sign up here!</button></p>
-                </div>
+                </Stack>
             </div>
-        </div>
+        </Sheet>
     );
 }
 
