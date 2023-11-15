@@ -47,14 +47,4 @@ class UserController(
         }
     }
 
-    @GetMapping("/login")
-    fun login(@RequestParam("id") id: Long): String {
-        return "redirect:/"
-    }
-
-    @GetMapping("/register")
-    fun register(@RequestParam("id") id: Long): String {
-        return "redirect:/"
-    }
-
 }
