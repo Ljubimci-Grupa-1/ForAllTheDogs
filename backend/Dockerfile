@@ -2,11 +2,11 @@
 FROM openjdk:17-alpine AS builder
 
 # Kopiranje izvornog koda u container
-COPY gradle gradle
 COPY gradlew .
-COPY build.gradle .
-COPY settings.gradle .
+COPY build.gradle.kts .
+COPY settings.gradle.kts .
 COPY src src
+
 RUN chmod +x gradlew
 
 # Pokretanje builda
