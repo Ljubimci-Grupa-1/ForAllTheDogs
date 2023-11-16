@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm install && npx tsc && vite build",
-    "start-prod": "node app.js",
+    "start-prod": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
