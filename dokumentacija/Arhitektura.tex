@@ -333,24 +333,59 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 			
 			
 		\section{Dijagram razreda}
-		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
-			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
 
 			Na dijagramima su prikazani razredi vezani uz serversku stranu aplikacije.
 			
-			Dijagram na slici \ref{dijagram_razreda_model} prikazuje razrede entitete (modele) koji odgovaraju tablicama u bazi podataka.
+			Dijagram na slici \ref{dijagram_model} prikazuje razrede entitete (modele) koji odgovaraju tablicama u bazi podataka.
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.2]{slike/dijagram_razreda_model.PNG} 
+				\includegraphics[scale=0.3]{slike/dijagram_model.PNG} 
 				\centering
 				\caption{Dijagram razreda entiteta}
-				\label{dijagram_razreda_model}
-			\end{figure}		
-						
+				\label{dijagram_model}
+			\end{figure}
+			
+			Na slici \ref{dijagram_repository} prikazana su sučelja \textit{Repository} (npr. UserRepository, MessageRepository), odgovorna za komuniciranje s bazom podataka. Radi preglednosti je na slici \ref{dijagram_user_service_repository} prikazan samo odnos UserService i UserRepository, ostali se ponašaju analogno.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.2]{slike/dijagram_repository.PNG} 
+				\centering
+				\caption{Dijagram razreda \textit{Repository}}
+				\label{dijagram_repository}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/dijagram_user_service_repository.PNG} 
+				\centering
+				\caption{UserService i UserRepository}
+				\label{dijagram_user_service_repository}
+			\end{figure}
+			
+			Dijagram \ref{dijagram_controller_service_dto} prikazuje odnose između \textit{Controller}, \textit{Service} i \textit{Data Transfer Object} (DTO) razreda. Razredi i pripadne metode, naročito one koje pokrivaju funkcionalnosti van generičkih, podložne su izmjenama.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.18]{slike/dijagram_controller_service_dto.PNG} 
+				\centering
+				\caption{Controller, Service i DTO razredi}
+				\label{dijagram_controller_service_dto}
+			\end{figure}
+			
+			Na \ref{dijagram_exception_handler} i \ref{dijagram_security} prikazani su razredi odgovorni za upravljanje iznimkama te autorizaciju.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.4]{slike/dijagram_exception_handler.PNG} 
+				\centering
+				\caption{Upravljač iznimkama}
+				\label{dijagram_exception_handler}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.2]{slike/dijagram_security.PNG} 
+				\centering
+				\caption{Autorizacija}
+				\label{dijagram_security}
+			\end{figure}
+			
 			\iffalse
 			\textbf{\textit{dio 2. revizije}}\\			
 			
