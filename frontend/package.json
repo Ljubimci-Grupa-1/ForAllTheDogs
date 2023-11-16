@@ -10,6 +10,7 @@
     "dev": "vite",
     "build": "npm install && npx tsc && vite build",
     "start": "node server.js",
+    "start-prod": "node server.js",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
