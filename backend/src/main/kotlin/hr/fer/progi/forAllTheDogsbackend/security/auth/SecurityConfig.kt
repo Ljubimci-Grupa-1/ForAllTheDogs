@@ -1,7 +1,7 @@
 package hr.fer.progi.forAllTheDogsbackend.security.auth
 
-import hr.fer.progi.forAllTheDogsbackend.security.service.CustomUserDetailsService
 import hr.fer.progi.forAllTheDogsbackend.security.JwtAuthorizationFilter
+import hr.fer.progi.forAllTheDogsbackend.user.service.UserService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -18,9 +18,10 @@ import org.springframework.security.web.authentication.session.NullAuthenticated
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val userDetailsService: CustomUserDetailsService,
+    private val userDetailsService: UserService,
     private val jwtAuthorizationFilter: JwtAuthorizationFilter
     ) {
+
     @Bean
     fun authenticationManager(http: HttpSecurity, passwordEncoder: BCryptPasswordEncoder): AuthenticationManager {
         val authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder::class.java)
@@ -28,6 +29,7 @@ class SecurityConfig(
             .userDetailsService(userDetailsService)
         return authenticationManagerBuilder.build()
     }
+
     @Bean
     fun authProvider(): DaoAuthenticationProvider {
         val authProvider = DaoAuthenticationProvider()
@@ -40,7 +42,10 @@ class SecurityConfig(
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/**").permitAll().anyRequest().authenticated()
+                it
+//                    .requestMatchers("/user/test").hasRole("Osoba")  // lucija nemoj brisat pliz <3
+                    .requestMatchers("/**").permitAll()
+                    .anyRequest().authenticated()
             }
             .sessionManagement { session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
