@@ -2,12 +2,15 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const corsOptions = {
-    origin: 'https://forallthedogs-omw5.onrender.com/',
+    origin: 'https://forallthedogs-omw5.onrender.com',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
 };
 const app = express();
 
+app.use(cors(corsOptions));
+
 app.use(express.static(path.join(__dirname, 'dist')));
-app.use(cors());
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
