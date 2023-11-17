@@ -5,11 +5,11 @@ const NavigationBar = () => {
     return (
         <nav className="navbar">
             <Grid container spacing={3} sx={{flexGrow:1, justifyContent:"center"}}>
-                <Grid item xs="auto">
+                <Grid xs="auto">
                     <Button>Login</Button>
                     <Button>Signup</Button>
                 </Grid>
-                <Grid item xs>
+                <Grid xs>
                     <ul className="nav-list">
                         <li className="nav-item">
                             <a href="/map">Map</a>
