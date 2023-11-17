@@ -7,9 +7,9 @@ const NavigationBar = () => {
         <nav className="navbar">
             <Grid container spacing={3} sx={{flexGrow:1}}>
                 <Grid xs>
-                    <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
-                        <Button>Login</Button>
-                        <Button>Signup</Button>
+                    <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)', gap: "5px" }}>
+                        <Button size="lg" component={Link} to="/login">Login</Button>
+                        <Button size="lg" component={Link} to="/signup">Signup</Button>
                     </Sheet>
                 </Grid>
                 <Grid xs={6}>
@@ -31,7 +31,7 @@ const NavigationBar = () => {
                 </Grid>
                 <Grid xs>
                     <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
-                        <Button>Sign out</Button>
+                        <Button size="lg" component={Link} to="/login">Sign out</Button>
                     </Sheet>
                 </Grid>
             </Grid>
