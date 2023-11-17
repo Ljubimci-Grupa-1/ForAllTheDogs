@@ -7,9 +7,11 @@ import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.LoginUserResponseDT
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.service.UserService
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.annotation.Secured
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/user")
@@ -17,10 +19,12 @@ import org.springframework.web.bind.annotation.*
 class UserController(
     private val userService: UserService,
     private val authenticationManager: AuthenticationManager,
-    private val jwtUtil: JwtUtil
+    private val jwtUtil: JwtUtil,
+    private val passwordEncoder: BCryptPasswordEncoder
 ) {
     @PostMapping("/register")
     fun addUser(@RequestBody user: JsonUserDTO): ResponseEntity<UserDTO> {
+        user.password = passwordEncoder.encode(user.password)
         val registeredUser = userService.addUser(user)
         return ResponseEntity.ok(registeredUser)
     }
@@ -43,9 +47,8 @@ class UserController(
 
             return ResponseEntity.ok(response)
         } catch (e: Exception) {
-            throw IllegalArgumentException("Pogrešna lozinka/email")
+            throw IllegalArgumentException("Pogrešni podatci za prijavu!")
         }
     }
-
 
 }

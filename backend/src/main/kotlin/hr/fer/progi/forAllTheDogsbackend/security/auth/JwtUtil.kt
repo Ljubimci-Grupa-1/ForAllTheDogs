@@ -24,6 +24,7 @@ class JwtUtil {
             "email": "email",
             "username": "username",
             "userType": "userTypeId"
+        }
          */
         val claims = mutableMapOf<String, Any>()
         claims["email"] = user.email

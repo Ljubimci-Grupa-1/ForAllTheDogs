@@ -23,14 +23,4 @@ data class UserDTO(
         user.telephoneNumber,
         user.userType
     )
-
-    constructor(email: String, password: String): this (
-        0,
-        "",
-        email,
-        password,
-        "",
-        "",
-        UserType(0, "")
-    )
 }

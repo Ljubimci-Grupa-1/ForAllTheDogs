@@ -6,28 +6,32 @@ import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.LoginUserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.repository.UserRepository
 import hr.fer.progi.forAllTheDogsbackend.userType.repository.UserTypeRepository
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val userTypeRepository: UserTypeRepository,
-    private val passwordEncoder: BCryptPasswordEncoder
-) {
+    private val userTypeRepository: UserTypeRepository
+): UserDetailsService {
 
     fun addUser(jsonUserDTO: JsonUserDTO): UserDTO {
         checkIfUserExists(jsonUserDTO)
         val userType = userTypeRepository.findByUserTypeId(jsonUserDTO.userTypeId)
+            ?: throw IllegalArgumentException("Tip korisnika s ID-jem ${jsonUserDTO.userTypeId} ne postoji")
+
         val addUserDTO = AddUserDTO(
             jsonUserDTO.username,
             jsonUserDTO.email,
-            passwordEncoder.encode(jsonUserDTO.password),
+            jsonUserDTO.password,
             jsonUserDTO.name,
             jsonUserDTO.telephoneNumber,
-            userType!!
+            userType
         )
+
         return UserDTO(
             userRepository.save(
                 addUserDTO.toUser()
@@ -54,6 +58,10 @@ class UserService(
         val user = userRepository.findByEmail(loginUserDTO.email)
             ?: throw IllegalArgumentException("Korisnik s tim emailom ne postoji")
         return UserDTO(user)
+    }
+
+    override fun loadUserByUsername(email: String): UserDetails {
+        return userRepository.findByEmail(email) ?: throw UsernameNotFoundException("User not found")
     }
 
 }
