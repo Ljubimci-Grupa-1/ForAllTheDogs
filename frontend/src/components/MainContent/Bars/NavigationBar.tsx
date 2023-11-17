@@ -24,8 +24,8 @@ const NavigationBar = () => {
                             disabled={false}
                             orientation="horizontal"
                             size="lg"
-                            spacing={3}
                             variant="soft"
+                            sx={{ '--ButtonGroup-radius': '40px' }}
                         >
                             <Button component={Link} to="/map">Map</Button>
                             <Button component={Link} to="/account">Account</Button>
