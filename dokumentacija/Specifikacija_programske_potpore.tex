@@ -2,20 +2,21 @@
 		
 	\section{Funkcionalni zahtjevi}
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
+			\iffalse
 			\textit{Navesti \textbf{dionike} koji imaju \textbf{interes u ovom sustavu} ili  \textbf{su nositelji odgovornosti}. To su prije svega korisnici, ali i administratori sustava, naručitelji, razvojni tim.}\\
 				
 			\textit{Navesti \textbf{aktore} koji izravno \textbf{koriste} ili \textbf{komuniciraju sa sustavom}. Oni mogu imati inicijatorsku ulogu, tj. započinju određene procese u sustavu ili samo sudioničku ulogu, tj. obavljaju određeni posao. Za svakog aktora navesti funkcionalne zahtjeve koji se na njega odnose.}\\
-			
+			\fi
 			
 			\noindent \textbf{Dionici:}
 			
 			\begin{packed_enum}
 				
-				\item Dionik 1
-				\item Dionik 2				
-				\item ...
+				\item Neregistrirani korisnik
+				\item Registrirani korisnik			
+				\item Sklonište za životinje
+				\item Razvojni tim
+				\item Naručitelji
 				
 			\end{packed_enum}
 			
@@ -23,28 +24,43 @@
 			
 			
 			\begin{packed_enum}
-				\item  \underbar{Aktor 1 (inicijator) može:}
+				\item  \underbar{Neregistrirani korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
-					\begin{packed_enum}
-						
-						\item  podfunkcionalnost 1 
-						\item  podfunkcionalnost 2
-				
-					\end{packed_enum}
-					\item  funkcionalnost 3
+					\item pregledavati i pretraživati oglašene nestale kućne ljubimce i skloništa za životinje
+					\item odabrati nekog od kućnih ljubimaca, čime se otvara mogućnost detaljnijeg pregleda informacija o njemu kao i pregled komunikacije oko potrage za ljubimcem
+					\item registrirati se, stvoriti novi korisnički račun za koji su mu potrebni e-pošta, broj telefona, korisničko ime, lozinka te opcionalno (u slučaju registracije kao sklonište) naziv skloništa
 					
 				\end{packed_enum}
 			
-				\item  \underbar{Aktor 2 (sudionik) može:}
+				\item  \underbar{Registrirani korisnik (inicijator) može:}
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item sve što može neregistrirani korisnik
+					\item prijaviti se u sustav
+					\item postaviti, izmijeniti i ukloniti oglas o nestalom kućnom ljubimcu
+					\item sudjelovati u komunikaciji oko potrage za ljubimcem
+					\item pretraživati neaktivne oglase
+					
+				\end{packed_enum}
+			
+			\item  \underbar{Sklonište (inicijator) može:}
+				
+				\begin{packed_enum}
+				
+					\item sve što može registrirani korisnik
+					\item oglašavati pronađene životinje koje se nalazi u prostoru skloništa pomoću kategorije oglasa "\textit{u skloništu}"
+					
+				\end{packed_enum}
+			
+			\item  \underbar{Baza podataka (sudionik):}
+				
+				\begin{packed_enum}
+					
+					\item pohranjuje sve podatke korisnika
+					\item pohranjuje sve podatke vezane uz oglase
 					
 				\end{packed_enum}
 			\end{packed_enum}
@@ -55,65 +71,350 @@
 				
 			\subsection{Obrasci uporabe}
 				
-				\textbf{\textit{dio 1. revizije}}
-				
 				\subsubsection{Opis obrazaca uporabe}
-					\textit{Funkcionalne zahtjeve razraditi u obliku obrazaca uporabe. Svaki obrazac je potrebno razraditi prema donjem predlošku. Ukoliko u nekom koraku može doći do odstupanja, potrebno je to odstupanje opisati i po mogućnosti ponuditi rješenje kojim bi se tijek obrasca vratio na osnovni tijek.}\\
-					
 
-					\noindent \underbar{\textbf{UC$<$broj obrasca$>$ -$<$ime obrasca$>$}}
+					\noindent \underbar{\textbf{UC1 - Registracija}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }$<$sudionik$>$
-						\item  \textbf{Cilj:} $<$cilj$>$
-						\item  \textbf{Sudionici:} $<$sudionici$>$
-						\item  \textbf{Preduvjet:} $<$preduvjet$>$
+						\item \textbf{Glavni sudionik:} Neregistrirani korisnik
+						\item  \textbf{Cilj:} Stvoriti korisnički račun za pristup sustavu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
 						\item  \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
 	
-							\item $<$opis korak jedan$>$
-							\item $<$opis korak dva$>$
-							\item $<$opis korak tri$>$
-							\item $<$opis korak četiri$>$
-							\item $<$opis korak pet$>$
+							\item Korisnik odabire opciju za registraciju
+							\item Korisnik unosi potrebne korisničke podatke
+							\item Korisnik prima obavijest o uspješnoj registraciji
 						\end{packed_enum}
 						
 						\item  \textbf{Opis mogućih odstupanja:}
 						
 						\item[] \begin{packed_item}
 	
-							\item[2.a] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
+							\item[2.a] Odabir već zauzetog korisničkog imena i/ili e-maila, unos korisničkog podatka u nedozvoljenom formatu ili pružanje neispravnog e-maila
 							\item[] \begin{packed_enum}
 								
-								\item $<$opis rješenja mogućeg scenarija korak 1$>$
-								\item $<$opis rješenja mogućeg scenarija korak 2$>$
+								\item Sustav obavještava korisnika o neuspjelom upisu i vraća ga na stranicu za registraciju
+								\item Korisnik mijenja potrebne podatke te završava unos ili odustaje od registracije
 								
 							\end{packed_enum}
-							\item[2.b] $<$opis mogućeg scenarija odstupanja u koraku 2$>$
-							\item[3.a] $<$opis mogućeg scenarija odstupanja  u koraku 3$>$
 							
 						\end{packed_item}
 					\end{packed_item}
-				
+					
+					\noindent \underbar{\textbf{UC2 - Prijava u sustav}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Neprijavljeni registrirani korisnik
+						\item  \textbf{Cilj:} Dobiti pristup mogućnostima registriranih korisnika
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Registracija
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Unos korisničkog imena i lozinke
+							\item Provjera ispravnosti unesenih podataka
+							\item Pristup korisničkim funkcijama
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Neispravno korisničko ime/lozinka
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika o neuspjeloj prijavi i vraća ga na stranicu za prijavu
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC3 - Pregled korisničkih podataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik/sklonište za životinje
+						\item  \textbf{Cilj:} Pregledati korisničke podatke
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju za pregled korisničkih podataka
+							\item Aplikacija prikazuje podatke korisnika
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC4 - Promjena korisničkih podataka}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik/sklonište za životinje
+						\item  \textbf{Cilj:} Promijeniti korisničke podatke
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik pregledava korisničke podatke
+							\item Korisnik odabire opciju za promjenu podataka
+							\item Korisnik mijenja željene podatke i potvrđuje izmjenu
+							\item Baza podataka se ažurira
+						\end{packed_enum}
+						
+						\item \textbf{Opis mogućih odstupanja:} 
+						
+						
+						\item[] \begin{packed_item}
+	
+							\item[3.a] Korisnik je promijenio svoje podatke, ali ih je zaboravio spremiti
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika o neuspjeloj promjeni podataka
+								\item Korisnik sprema izmijenjene podatke
+								
+								\end{packed_enum}
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC5 - Brisanje korisničkog računa}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik/sklonište za životinje
+						\item  \textbf{Cilj:} Obrisati korisnički račun
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik pregledava korisničke podatke
+							\item Korisnik odabire opciju za brisanje korisničkog računa
+							\item Korisnik potvrđuje odabir
+							\item Baza podataka se ažurira
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC6 - Pretraživanje i pregled oglasa o nestalim ljubimcima}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Korisnik
+						\item  \textbf{Cilj:} Pregledati oglase nestalih ljubimaca
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} -
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisniku se prikazuju oglasi o nestalim ljubimcima
+							\item Oglasi se mogu filtrirati po relevantnim podacima, s tim da su neaktivni oglasi vidljivi samo registriranim korisnicima
+							\item Prikaz filtriranih oglasa
+						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+	
+							\item[2.a] Ne postoji oglas koji odgovara postavljenom filtru
+							\item[] \begin{packed_enum}
+								
+								\item Sustav korisniku prikazuje odgovarajuću poruku
+								
+							\end{packed_enum}
+							
+						\end{packed_item}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC7 - Postavljanje oglasa o nestalom ljubimcu}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik
+						\item  \textbf{Cilj:} Postaviti oglas o nestalom ljubimcu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju postavljanja oglasa
+							\item Korisnik dobiva mogućnost unošenja sljedećih kategorija podataka o ljubimcu:
+								
+								\item[] \begin {packed_enum}
+									\item vrsta
+									\item ime na koje se odaziva
+									\item datum i sat nestanka
+									\item lokacija nestanka
+									\item boja
+									\item starost
+									\item tekstni opis
+									\item do 3 slike
+								\end{packed_enum}
+							
+							\item Ako je korisnik sklonište, postavlja kategoriju oglasa "\textit{u skloništu}"
+							\item Korisnik odabire opciju za objavljivanje i njegov oglas postaje vidljiv drugima
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC8 - Izmjena oglasa o nestalom ljubimcu}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik
+						\item  \textbf{Cilj:} Izmijeniti oglas o nestalom ljubimcu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju izmjene svog oglasa
+							\item Korisnik mijenja željene podatke, dostupna mu je i promjena kategorije oglasa u neku od sljedećih:
+								
+								\item[] \begin{packed_enum}
+									\item za ljubimcem se traga (\textit{pretpostavljeno})
+									\item ljubimac je sretno pronađen
+									\item ljubimac nije pronađen, ali se za njim više aktivno ne traga
+									\item ljubimac je pronađen uz nesretne okolnosti
+								\end{packed_enum}
+							\item Korisnik potvrđuje izmjene
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC9 - Uklanjanje oglasa o nestalom ljubimcu}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik
+						\item  \textbf{Cilj:} Ukloniti oglas o nestalom ljubimcu
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju uklanjanja svog oglasa
+							\item Uklonjeni oglas i sva pripadna komunikacija nestaje iz popisa vidljivih oglasa, ali se ne briše iz baze podataka
+						\end{packed_enum}
+					\end{packed_item}
+					
+					\noindent \underbar{\textbf{UC10 - Oglašavanje nestalih ljubimaca u skloništu}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Sklonište za životinje
+						\item  \textbf{Cilj:} Postaviti oglas o nestalom ljubimcu u skloništu radi pronalaska vlasnika
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Sklonište za životinje postavlja oglas kategorije "\textit{u skloništu}"
+							\item Oglas se pohranjuje u bazu podataka
+							\item Oglas se postavlja na web stranicu i vidljiv je drugim korisnicima
+						\end{packed_enum}
+					\end{packed_item}
+					
+					
+					
+					\noindent \underbar{\textbf{UC11 - Komunikacija ispod oglasa o nestalom ljubimcu}}
+					\begin{packed_item}
+	
+						\item \textbf{Glavni sudionik:} Registrirani korisnik
+						\item  \textbf{Cilj:} Sudjelovati u komunikaciji oko potrage za ljubimcem
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Prijava u sustav
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+	
+							\item Korisnik odabire opciju komunikacije
+							\item Korisnik unosi poruku koja (uz kontakt podatke korisnika) može sadržavati:
+								\item[] \begin{packed_enum}
+									\item tekst
+									\item sliku
+									\item geolokaciju
+								\end{packed_enum}
+							\item Korisnik potvrđuje poruku koju želi ostaviti na oglasu
+							\item Poruka postaje vidljiva ostalim korisnicima
+						\end{packed_enum}
+					\end{packed_item}
+					
+					
+					
+					
 					
 				\subsubsection{Dijagrami obrazaca uporabe}
 					
-					\textit{Prikazati odnos aktora i obrazaca uporabe odgovarajućim UML dijagramom. Nije nužno nacrtati sve na jednom dijagramu. Modelirati po razinama apstrakcije i skupovima srodnih funkcionalnosti.}
-				\eject		
+				\begin{figure}[H]
+					\includegraphics[scale=0.45]{slike/uc_mogucnosti_korisnika.PNG} 
+					\centering
+					\caption{Dijagram mogućnosti korisnika}
+					\label{uc_mogucnosti_korisnika}
+				\end{figure}
 				
 			\subsection{Sekvencijski dijagrami}
 				
-				\textbf{\textit{dio 1. revizije}}\\
-				
+				\iffalse
 				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
 				\eject
+				\fi
+				
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{slike/seq_pretrazivanje_pregled_oglasa.PNG} 
+				\centering
+				\caption{Sekvencijski dijagram pretraživanja i pregleda oglasa}
+				\label{seq_pretrazivanje_pregled_oglasa}
+			\end{figure}
+			
+			\noindent\textbf{Obrazac uporabe UC6 - Pretraživanje i pregled oglasa o nestalim ljubimcima}\newline
+			\noindent Korisnik (neregistriran ili registriran) u tražilicu unosi podatke o životinji koja ga zanima. Filter tražilice ispunjava raznim vrijednostima po kojima se životinje razlikuju poput imena, vrste, lokacije nestanka, boji i vremenskom rasponu nestanka. Nakon toga se u bazi podataka traži podudarnost s traženim upitom i vraća se rezultat korisniku ovisno o nađenom. Korisniku će se prikazati relevantni oglasi ili (u slučaju da nema nikakvih podudarnosti) poruka da nema rezultata.
+			
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{slike/seq_postavljanje_oglasa.PNG} 
+				\centering
+				\caption{Sekvencijski dijagram postavljanja oglasa}
+				\label{seq_postavljanje_oglasa}
+			\end{figure}
+			
+			\noindent\textbf{Obrazac uporabe UC7 - Postavljanje oglasa o nestalom ljubimcu}\newline
+			\noindent Korisnik nakon registracije i/ili prijave u sustav ima, između ostalog, i mogućnost postavljanja oglasa. Korisnik na web stranici odabire opciju postavljanja oglasa čime mu se otvara forma za unos podataka kao što su vrsta, ime na koje se životinja odaziva, datum i sat nestanka, lokacija nestanka, boja, starost, tekstni opis te do 3 fotografije nestalog ljubimca. Ako korisnik nije unio sve potrebne podatke u aplikaciju za prijavu nestale životinje, sustav ga o tome obavještava i navodi na dio forme koji treba biti popunjen. Također, u slučaju da je registrirani korisnik sklonište za životinje, početna postavka kategorije oglasa je "U skloništu", a inače "Za ljubimcem se traga". Kad je korisnik spreman objaviti oglas mora stisnuti gumb "Objavi". Nakon što je stisnuo gumb za objavu, oglas se pohranjuje u bazu podataka, a korisniku pristiže poruka o uspješnom postavljanju oglasa.		
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{slike/seq_izmjena_oglasa.PNG} 
+				\centering
+				\caption{Sekvencijski dijagram izmjenjivanja/brisanja oglasa}
+				\label{seq_izmjena_oglasa}
+			\end{figure}
+			
+			\noindent\textbf{Obrasci uporabe UC8 i UC9 - izmjena/uklanjanje oglasa o nestalom ljubimcu}\newline
+			\noindent Nakon što je objavio oglas, registrirani korisnik može upravljati oglasom – raditi izmjene na njemu ili ga ukloniti. \\
+Ako registrirani korisnik odabere opciju izmjene oglasa otvara mu se forma za izmjenu podataka. Korisnik može mijenjati određene podatke, a može promijeniti i kategoriju oglasa iz "Za ljubimcem se traga" u "Ljubimac je sretno pronađen", "Ljubimac nije pronađen, ali se za njim više aktivno ne traga" ili "Ljubimac je pronađen uz nesretne okolnosti". Sustav nakon toga provjerava jesu li promijenjeni podaci adekvatni te šalje korisniku povratnu informaciju.\\
+			\noindent Ako korisnik odabere opciju za uklanjanje oglasa, sustav ga obavještava o uspješnom uklanjanju oglasa.\\
+Nakon bilo koje od ovih radnji, korisnik potvrđuje promjenu u sustavu te se promjena pohranjuje u bazu podataka. Korisnik na kraju dobiva poruku kako je uspio izvršiti radnju.
+
 	
 		\section{Ostali zahtjevi}
-		
-			\textbf{\textit{dio 1. revizije}}\\
 		 
-			 \textit{Nefunkcionalni zahtjevi i zahtjevi domene primjene dopunjuju funkcionalne zahtjeve. Oni opisuju \textbf{kako se sustav treba ponašati} i koja \textbf{ograničenja} treba poštivati (performanse, korisničko iskustvo, pouzdanost, standardi kvalitete, sigurnost...). Primjeri takvih zahtjeva u Vašem projektu mogu biti: podržani jezici korisničkog sučelja, vrijeme odziva, najveći mogući podržani broj korisnika, podržane web/mobilne platforme, razina zaštite (protokoli komunikacije, kriptiranje...)... Svaki takav zahtjev potrebno je navesti u jednoj ili dvije rečenice.}
+			 \begin{packed_item}
+			 
+			 \item Sustav treba omogućiti rad više korisnika u stvarnom vremenu
+			 \item Sustav treba funkcionirati ispravno neovisno o web pregledniku ili uređaju
+			 \item Korisničko sučelje i sustav moraju podržavati hrvatsku abecedu (dijakritičke znakove) pri unosu i prikazu tekstualnog sadržaja
+			 \item Učitavanje početne stranice ne smije trajati duže od nekoliko sekundi
+			 \item Izvršavanje dijela programa u kojem se pristupa bazi podataka ne smije trajati duže od nekoliko sekundi
+			 \item Sustav treba biti implementiran kao (responzivna) web aplikacija koristeći objektno-orijentirane jezike
+			 \item Neispravno korištenje korisničkog sučelja ne smije narušiti funkcionalnost i rad sustava
+			 \item Nadogradnja sustava ne smije narušavati postojeće funkcionalnosti sustava
+			 \item Sustav treba biti jednostavan za korištenje, korisnici se moraju znati koristiti sučeljem bez opširnih uputa
+			 \item Veza s bazom mora biti kvalitetno zaštićena, brza i otporna na vanjske greške
+			 \item Pristup sustavu mora biti omogućen iz javne mreže pomoću HTTPS
+			 
+			 
+			 \end{packed_item}
 			 
 			 
 			 
