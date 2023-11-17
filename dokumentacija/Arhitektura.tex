@@ -20,14 +20,14 @@
 		\pagebreak
 
 		\subsection{MVC stil arhitekture}
-		Arhitektura razrađena u nastavku je najsličnija stilu arhitekture MVC (Model-view-controller).\\
+		Arhitektura razrađena u nastavku prati stil arhitekture MVC (model-view-controller).\\
 		
-		Osnovna	karakteristika ovog stila je	nezavisan razvoj pojedinih dijelova aplikacije što omogućuje jednostavnije testiranje	i razvijanje dijelova sustava te	njihove	dorade. Korisničko sučelje je odvojeno od ostatka sustava, a kohezija elemenata se postiže kroz tri sloja, jednog sloja na klijentskoj strani - pogled (\textit{View}) te dva na	poslužiteljskoj	strani – upravitelj (\textit{Controller}) i model (\textit{Model}).
+		Osnovna	karakteristika ovog stila je	nezavisan razvoj pojedinih dijelova aplikacije što pojednostavljuje testiranje	i razvijanje dijelova sustava te	njihove	dorade. Korisničko sučelje je odvojeno od ostatka sustava, a kohezija elemenata se postiže kroz tri sloja: jedan na klijentskoj strani - pogled (\textit{View}) te dva na serverskoj strani – upravitelj (\textit{Controller}) i model (\textit{Model}).
 
 		\begin{packed_enum}
-			\item\textit{Model} - predstavlja glavnu komponentu sustava koja sadrži dinamičke strukture podataka odnosno razrede koji opisuju domenu primjene te sadrže pravila i aplikacijsku logiku. Blisko je povezan s bazom podataka aplikacije.
-			\item\textit{Pogled (View)} - komponenta koja sadrži niz drugih komponenata koje služe za prikaz podataka modela i interakciju s korisnikom kroz grafičko sučelje.
-			\item\textit{Upravitelj (Controller)} - komponenta koja upravlja korisničkim zahtjevima prema modelu i odgovorima modela natrag prema pogledima. Omogućuje poveznicu korisničke strane	s poslužiteljskom.
+			\item\textit{Model} - Predstavlja glavnu komponentu sustava koja sadrži dinamičke strukture podataka odnosno razrede koji opisuju domenu primjene te sadrže pravila i aplikacijsku logiku. Usko je vezan uz bazu podataka aplikacije.
+			\item\textit{Pogled (View)} - Sadrži komponente koje služe za prikaz podataka modela i interakciju s korisnikom kroz grafičko korisničko sučelje.
+			\item\textit{Upravitelj (Controller)} - Upravlja korisničkim zahtjevima prema modelu i odgovorima modela natrag prema pogledima. Povezuje serversku i korisničku stranu.
 		\end{packed_enum}
 
 		%unos slike
