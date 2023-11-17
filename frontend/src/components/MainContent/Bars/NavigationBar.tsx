@@ -4,12 +4,12 @@ import {Button, Grid} from "@mui/joy";
 const NavigationBar = () => {
     return (
         <nav className="navbar">
-            <Grid container spacing={3} sx={{flexGrow:1, justifyContent:"center"}}>
-                <Grid xs="auto">
+            <Grid container spacing={3} sx={{flexGrow:1}}>
+                <Grid xs>
                     <Button>Login</Button>
                     <Button>Signup</Button>
                 </Grid>
-                <Grid xs>
+                <Grid xs={6}>
                     <ul className="nav-list">
                         <li className="nav-item">
                             <a href="/map">Map</a>
@@ -21,6 +21,9 @@ const NavigationBar = () => {
                             <a href="/inbox">Inbox</a>
                         </li>
                     </ul>
+                </Grid>
+                <Grid>
+                    <Button>Sign out</Button>
                 </Grid>
             </Grid>
         </nav>
