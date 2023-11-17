@@ -1,5 +1,5 @@
 import './NavigationBar.css';
-import {Button, ButtonGroup, Grid, Sheet} from "@mui/joy";
+import {Button, ButtonGroup, Grid, Sheet, Stack} from "@mui/joy";
 import {Link} from "react-router-dom";
 
 const NavigationBar = () => {
@@ -7,10 +7,14 @@ const NavigationBar = () => {
         <nav className="navbar">
             <Grid container spacing={3} sx={{flexGrow:1}}>
                 <Grid xs>
-                    <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)', gap: "5px" }}>
+                    <Stack
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={2}>
                         <Button size="lg" component={Link} to="/login">Login</Button>
                         <Button size="lg" component={Link} to="/signup">Signup</Button>
-                    </Sheet>
+                    </Stack>
                 </Grid>
                 <Grid xs={6}>
                     <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)'}}>
