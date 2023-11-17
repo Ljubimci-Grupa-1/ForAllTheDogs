@@ -1,29 +1,27 @@
 import './NavigationBar.css';
-import {Button, Grid} from "@mui/joy";
+import {Button, Grid, Sheet} from "@mui/joy";
 
 const NavigationBar = () => {
     return (
         <nav className="navbar">
             <Grid container spacing={3} sx={{flexGrow:1}}>
                 <Grid xs>
-                    <Button>Login</Button>
-                    <Button>Signup</Button>
+                    <Sheet>
+                        <Button>Login</Button>
+                        <Button>Signup</Button>
+                    </Sheet>
                 </Grid>
                 <Grid xs={6}>
-                    <ul className="nav-list">
-                        <li className="nav-item">
-                            <a href="/map">Map</a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="/account">Account</a>
-                        </li>
-                        <li className="nav-item">
-                            <a href="/inbox">Inbox</a>
-                        </li>
-                    </ul>
+                    <Sheet>
+                        <a href="/map">Map</a>
+                        <a href="/account">Account</a>
+                        <a href="/inbox">Inbox</a>
+                    </Sheet>
                 </Grid>
-                <Grid>
-                    <Button>Sign out</Button>
+                <Grid xs>
+                    <Sheet>
+                        <Button>Sign out</Button>
+                    </Sheet>
                 </Grid>
             </Grid>
         </nav>
