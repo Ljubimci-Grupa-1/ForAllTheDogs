@@ -2,6 +2,7 @@ import { useState, FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./LogInForm.css";
 import {Button, Input, Sheet, Stack} from "@mui/joy";
+import Typography from '@mui/joy/Typography';
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
@@ -99,7 +100,8 @@ const LoginForm: FC = () => {
                                     className="form-input"
                                 />
                             </div>
-                            {error && <p className="form-error">{error}</p>}
+                            {error && <Typography
+                                color="danger" level="h4" variant="plain">{error}</Typography>}
                             <Button
                                 variant="solid"
                                 type="submit">Login</Button>
