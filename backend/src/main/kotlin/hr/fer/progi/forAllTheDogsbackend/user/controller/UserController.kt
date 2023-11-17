@@ -43,7 +43,7 @@ class UserController(
 
             return ResponseEntity.ok(response)
         } catch (e: Exception) {
-            throw IllegalArgumentException("Pogrešna lozinka!")
+            throw IllegalArgumentException("Pogrešna lozinka/email")
         }
     }
 

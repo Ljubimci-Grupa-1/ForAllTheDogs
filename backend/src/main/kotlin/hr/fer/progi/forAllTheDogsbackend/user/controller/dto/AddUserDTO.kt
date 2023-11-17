@@ -18,5 +18,6 @@ data class AddUserDTO(
         password = password,
         name = name,
         telephoneNumber = telephoneNumber,
-        userType = userType)
+        userType = userType
+    )
 }

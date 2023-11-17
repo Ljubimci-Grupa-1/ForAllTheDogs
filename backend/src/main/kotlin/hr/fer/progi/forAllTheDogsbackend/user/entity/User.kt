@@ -1,5 +1,6 @@
 package hr.fer.progi.forAllTheDogsbackend.user.entity
 
+import hr.fer.progi.forAllTheDogsbackend.ad.entity.Ad
 import hr.fer.progi.forAllTheDogsbackend.userType.entity.UserType
 import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull
@@ -34,5 +35,6 @@ class User(
 
     @ManyToOne
     @JoinColumn(name = "usertypeid")
-    var userType: UserType
+    var userType: UserType,
+
 )
