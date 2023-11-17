@@ -47,7 +47,7 @@ class UserController(
 
             return ResponseEntity.ok(response)
         } catch (e: Exception) {
-            throw IllegalArgumentException("Pogrešni podatci za prijavu!")
+            throw IllegalArgumentException("Wrong credentials!")
         }
     }
 
