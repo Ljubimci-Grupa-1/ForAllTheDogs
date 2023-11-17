@@ -10,30 +10,19 @@
 		\end{packed_item}
 		
 		
-		\textit{Web poslužitelj} je program koji omogućuje korisnicima pristupanje internet resursima putem zahtjeva poslanih poslužiteljima. Web preglednik je prevoditelj koji web stranicu
-pisanu u kodu interpretira i prikazuje u klijentu razumljivom obliku. Koristeći web preglednik
-klijent šalje zahtjeve web poslužitelju.
+		\textit{Web poslužitelj} je program koji omogućuje korisnicima pristupanje internet resursima putem zahtjeva poslanih poslužiteljima. Web preglednik je prevoditelj koji web stranicu pisanu u kodu interpretira i prikazuje u klijentu razumljivom obliku. Koristeći web preglednik klijent šalje zahtjeve web poslužitelju.
 		
 		\textit{Front-end} web aplikacija omogućuje korisniku interakciju s \textit{back-end}-om na poslužitelju, koje se omogućuje kroz korisničko sučelje. 
-		\textit{Front-end} aplikacija šalje zahtjeve \textit{back-end} aplikaciji koja ima ulogu web poslužitelja. Njezin je osnovni zadatak pohrana, obrada i dostava web stranica klijentu te nam ona predstavlja
-centar za razmjenu informacija i pružanje usluga. Sam poslužitelj pokreće web aplikaciju i
-prosljeđuje joj klijentske zahtjeve.\\
+		\textit{Front-end} aplikacija šalje zahtjeve \textit{back-end} aplikaciji koja ima ulogu web poslužitelja. Njezin je osnovni zadatak pohrana, obrada i dostava web stranica klijentu te nam ona predstavlja centar za razmjenu informacija i pružanje usluga. Sam poslužitelj pokreće web aplikaciju i prosljeđuje joj klijentske zahtjeve.\\
 
-		Prednosti odabrane arhitekture su te što se slojevi mogu oblikovati odvojeno te sve
-komponente mogu biti jednostavnije i razumljivije, ostvaruje se podjela brige (\textit{separation of
-concerns}) time što svaki sloj brine o svojoj funkcionalnosti i ne miješa se u brige nekog
-drugog sloja, a njihova međuovisnost ostvaruje se komunikacijom putem sučelja čija se
-implementacija može prilagoditi u određenom sloju.\\
+		Prednosti odabrane arhitekture su te što se slojevi mogu oblikovati odvojeno te sve komponente mogu biti jednostavnije i razumljivije, ostvaruje se podjela brige (\textit{separation of concerns}) time što svaki sloj brine o svojoj funkcionalnosti i ne miješa se u brige nekog drugog sloja, a njihova međuovisnost ostvaruje se komunikacijom putem sučelja čija se implementacija može prilagoditi u određenom sloju.\\
 
 		\pagebreak
 
 		\subsection{MVC stil arhitekture}
-		Arhitektura	je	detaljnije	razrađena	najsličnija	stilu	arhitekture	MVC	(Model-view-controller).\\
+		Arhitektura razrađena u nastavku je najsličnija stilu arhitekture MVC (Model-view-controller).\\
 		
-		Osnovna	karakteristika ovog stila je	nezavisan razvoj	pojedinih dijelova aplikacije što omogućuje jednostavnije testiranje	i razvijanje dijelova sustava te	njihove	dorade.	
-Korisničko	sučelje	je	odvojeno od	ostatka	sustava, a kohezija	elemenata se	postiže	kroz	
-tri	sloja, jednog sloja	na klijentskoj strani - pogled (\textit{View}) te dva na	poslužiteljskoj	strani	
-– upravitelj	(\textit{Controller})	i	model	(\textit{Model}).
+		Osnovna	karakteristika ovog stila je	nezavisan razvoj pojedinih dijelova aplikacije što omogućuje jednostavnije testiranje	i razvijanje dijelova sustava te	njihove	dorade. Korisničko sučelje je odvojeno od ostatka sustava, a kohezija elemenata se postiže kroz tri sloja, jednog sloja na klijentskoj strani - pogled (\textit{View}) te dva na	poslužiteljskoj	strani – upravitelj (\textit{Controller}) i model (\textit{Model}).
 
 		\begin{packed_enum}
 			\item\textit{Model} - predstavlja glavnu komponentu sustava koja sadrži dinamičke strukture podataka odnosno razrede koji opisuju domenu primjene te sadrže pravila i aplikacijsku logiku. Blisko je povezan s bazom podataka aplikacije.
@@ -54,7 +43,7 @@ tri	sloja, jednog sloja	na klijentskoj strani - pogled (\textit{View}) te dva na
 		
 		
 		\subsection{Back-end i baza podataka}
-		U okviru \textit{back-end} aplikacije koriste se različiti alati i tehnologije kako bi se postigla funkcionalnost web aplikacije. 
+		U okviru \textit{back-end} aplikacije koriste se razni alati i tehnologije kako bi se postigla funkcionalnost web aplikacije. 
 		
 		Sama funkcionalnost \textit{back-enda} ostvarena je koristeći \textit{Kotlin} i \textit{Spring Boot}, popularne \textit{frameworke} za Javu i Kotlin.
 		
@@ -62,7 +51,7 @@ tri	sloja, jednog sloja	na klijentskoj strani - pogled (\textit{View}) te dva na
 		
 		Baza podataka ostvarena je u \textit{PostgreSQL}-u, a za njenu jasnu definiciju korišten je alat \textit{Flyway}. \textit{Flyway} omogućava precizno i upravljivo definiranje strukture baze podataka.
 		
-		Za preslikavanje entiteta iz \textit{PostgreSQL} baze podataka na klase u \textit{back-end} aplikaciji korišten je \textit{JPA (Jakarta Persistence API)}, koji značajno olakšava generiranje upita ovisno o pozivima metoda nad klasama entiteta, a za komunikaciju baze i same aplikacije koristi se \textit{JDBC (Java Database Connectivity)}.
+		Za preslikavanje entiteta iz \textit{PostgreSQL} baze podataka u klase \textit{back-end} aplikacije korišten je \textit{JPA (Jakarta Persistence API)}, koji značajno olakšava generiranje upita ovisno o pozivima metoda nad klasama entiteta, a za komunikaciju baze i same aplikacije koristi se \textit{JDBC (Java Database Connectivity)}.
 		
 		Za konfiguracijske datoteke aplikacije koristi se \textit{YAML} format. Upravljanje bazom podataka odvija se preko \textit{Datagrip}-a, a razvoj kompletne \textit{back-end} aplikacije obavlja se u \textit{IntelliJ IDEA}, popularnom alatu tvrtke \textit{JetBrains}. 
 		
@@ -154,8 +143,8 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 					\SetCell{LightGreen}messageId & BIGINT	&  	jedinstveni ID poruke  	\\ \hline
 					text	& VARCHAR &   sadržaj poruke	\\ \hline 
 					date	& DATE &   datum kada je poruka ostavljena ispod oglasa	\\ \hline 
-					latitude	& DOUBLE PRECISION &   geografska širina s koje je poruka ostavljena	\\ \hline 
-					longitude	& DOUBLE PRECISION &   geografska dužina s koje je poruka ostavljena	\\ \hline 
+					latitude	& DOUBLE PRECISION &   geografska širina	\\ \hline 
+					longitude	& DOUBLE PRECISION &   geografska dužina	\\ \hline 
 					\SetCell{LightBlue}adId	& BIGINT &   jedinstveni ID oglasa ispod kojeg je poruka ostavljena	\\ \hline 
 					\SetCell{LightBlue}userId	& BIGINT &   jedinstveni ID korisnika koji je ostavio poruku	\\ \hline 
 					\SetCell{LightBlue}imageId	& BIGINT &   jedinstveni ID slike ostavljene uz poruku	\\ \hline 
@@ -229,8 +218,8 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 					dateMissing	& DATE &   datum nestanka ljubimca	\\ \hline 
 					age	& INT &   starost ljubimca	\\ \hline 
 					description	& VARCHAR &   opis ljubimca	\\ \hline 
-					latitude	& DOUBLE PRECISION &   geografska širina lokacije ljubimca	\\ \hline 
-					longitude	& DOUBLE PRECISION &   geografska dužina lokacije ljubimca	\\ \hline 
+					latitude	& DOUBLE PRECISION &   geografska širina lokacije nestanka ljubimca	\\ \hline 
+					longitude	& DOUBLE PRECISION &   geografska dužina lokacije nestanka ljubimca	\\ \hline 
 					petName	& VARCHAR &   ime na koje se ljubimac odaziva	\\ \hline 
 					\SetCell{LightBlue}speciesId	& BIGINT &   jedinstveni ID vrste ljubimca	\\ \hline 
 					\SetCell{LightBlue}cityId	& BIGINT &   jedinstveni ID grada	\\ \hline 
@@ -366,7 +355,7 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 			\begin{figure}[H]
 				\includegraphics[scale=0.18]{slike/dijagram_controller_service_dto.PNG} 
 				\centering
-				\caption{Controller, Service i DTO razredi}
+				\caption{\textit{Controller}, \textit{Service} i \textit{DTO} razredi}
 				\label{dijagram_controller_service_dto}
 			\end{figure}
 			
