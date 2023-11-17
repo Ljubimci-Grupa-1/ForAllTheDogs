@@ -44,7 +44,7 @@ const LoginForm: FC = () => {
             if (response.ok) {
                 navigate('/home');
             } else {
-                const errorText = await response.text();
+                const errorText = await response.json().message;
                 setError(errorText);
             }
 
