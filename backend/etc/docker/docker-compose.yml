@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  users-database:
+    image: "postgres:13-alpine"
+    ports:
+      - "5433:5432"
+    environment:
+      - "POSTGRES_USER=admin"
+      - "POSTGRES_PASSWORD=admin"
+      - "POSTGRES_DB=forallthedogs"
+    command: ["postgres", "-c", "client_encoding=UTF8"]
