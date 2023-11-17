@@ -13,9 +13,9 @@ const NavigationBar = () => {
                     </Sheet>
                 </Grid>
                 <Grid xs={6}>
-                    <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)',
-                        justifyContent: "space-between"}}>
+                    <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)'}}>
                         <ButtonGroup
+                            buttonFlex={1}
                             color="primary"
                             disabled={false}
                             orientation="horizontal"
