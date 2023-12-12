@@ -3,6 +3,7 @@ package hr.fer.progi.forAllTheDogsbackend.message.entity
 import hr.fer.progi.forAllTheDogsbackend.ad.entity.Ad
 import hr.fer.progi.forAllTheDogsbackend.city.entity.City
 import hr.fer.progi.forAllTheDogsbackend.image.entity.Image
+import hr.fer.progi.forAllTheDogsbackend.location.entity.Location
 import hr.fer.progi.forAllTheDogsbackend.user.entity.User
 import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull
@@ -28,15 +29,6 @@ class Message(
     @ManyToOne
     var user: User,
 
-    @OneToOne
-    var image: Image,
-
     @ManyToOne
-    var city: City,
-
-    @NotNull
-    var longitude: Double,
-
-    @NotNull
-    var latitude: Double
+    var location: Location
 )
