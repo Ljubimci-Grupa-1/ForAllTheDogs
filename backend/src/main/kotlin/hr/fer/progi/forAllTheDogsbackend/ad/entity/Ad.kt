@@ -25,14 +25,5 @@ class Ad(
     var activity: Activity,
 
     @OneToOne
-    var image1: Image,
-
-    @OneToOne
-    var image2: Image,
-
-    @OneToOne
-    var image3: Image,
-
-    @OneToOne
     var pet: Pet
 )
