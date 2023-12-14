@@ -1,5 +1,7 @@
 package hr.fer.progi.forAllTheDogsbackend.image.entity
 
+import hr.fer.progi.forAllTheDogsbackend.ad.entity.Ad
+import hr.fer.progi.forAllTheDogsbackend.message.entity.Message
 import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull
 
@@ -14,5 +16,11 @@ class Image(
 
     @NotNull
     @Column(name = "imageurl")
-    var imageUrl: String
+    var imageUrl: String,
+
+    @ManyToOne
+    var ad: Ad? = null,
+
+    @OneToOne
+    var message: Message? = null
 )

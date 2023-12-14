@@ -2,9 +2,11 @@ package hr.fer.progi.forAllTheDogsbackend.pet.entity
 
 import hr.fer.progi.forAllTheDogsbackend.city.entity.City
 import hr.fer.progi.forAllTheDogsbackend.color.entity.Color
+import hr.fer.progi.forAllTheDogsbackend.location.entity.Location
 import hr.fer.progi.forAllTheDogsbackend.species.entity.Species
 import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull
+import java.time.LocalDateTime
 import java.util.*
 
 @Entity
@@ -32,21 +34,13 @@ class Pet (
     )
     var colors: MutableSet<Color> = mutableSetOf(),
 
-    @Column(name = "datemissing")
-    var dateMissing: Date,
-
-    @Column(name = "hourmissing")
-    var hourMissing: Int,
+    @Column(name = "datetimemissing")
+    var dateTimeMissing: LocalDateTime,
 
     @NotNull
     var description: String,
 
     @ManyToOne
-    var city: City,
-
     @NotNull
-    var longitude: Double,
-
-    @NotNull
-    var latitude: Double
+    var location: Location
 )
