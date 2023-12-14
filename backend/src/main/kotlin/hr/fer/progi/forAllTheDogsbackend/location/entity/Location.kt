@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull
 
 @Entity
 class Location (
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "location_seq")
     @SequenceGenerator(name = "location_seq", sequenceName = "location_seq", allocationSize = 1)
@@ -21,7 +22,4 @@ class Location (
 
     @ManyToOne
     var city: City,
-
-    @ManyToOne
-    var message: Message
 )

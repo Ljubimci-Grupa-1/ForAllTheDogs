@@ -28,4 +28,7 @@ class Message(
 
     @ManyToOne
     var user: User,
+
+    @OneToMany
+    var location: List<Location>
 )
