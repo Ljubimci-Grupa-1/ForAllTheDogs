@@ -1,6 +1,7 @@
 package hr.fer.progi.forAllTheDogsbackend.location.entity
 
 import hr.fer.progi.forAllTheDogsbackend.city.entity.City
+import hr.fer.progi.forAllTheDogsbackend.message.entity.Message
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotNull
 
@@ -19,5 +20,8 @@ class Location (
     var latitude: Double,
 
     @ManyToOne
-    var city: City
+    var city: City,
+
+    @ManyToOne
+    var message: Message
 )
