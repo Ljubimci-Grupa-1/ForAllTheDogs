@@ -16,5 +16,6 @@ class City(
     var cityName: String,
 
     @ManyToOne
+    @JoinColumn(name = "countyid")
     var county: County
 )

@@ -6,15 +6,12 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
-@RequestMapping("/colors")
+@RequestMapping("/color")
 @Controller
 class ColorController(private val colorService: ColorService) {
 
-    @GetMapping
+    @GetMapping("/all")
     fun getAllColors() = ResponseEntity.ok(
         colorService.getAllColors()
     )
-
-
-
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 class SpeciesController(private val speciesService: SpeciesService) {
 
-    @GetMapping
+    @GetMapping("/all")
     fun getAllSpecies() = ResponseEntity.ok(
         speciesService.getAllSpecies()
     )
