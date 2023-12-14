@@ -156,6 +156,11 @@ CREATE TABLE IF NOT EXISTS OF_COLOR
 CREATE SEQUENCE IF NOT EXISTS OF_COLOR_SEQ;
 
 
+-- TEST USER INSERT
+INSERT INTO APP_USER (userId, username, email, password, name, telephone_number, userTypeId)
+VALUES (1, 'Drizzy Drake', 'drizzy.drake@goated.com', 'drizzy', 'Aubrey Drake Graham', '0981234567', 1);
+
+
 -- INSERTS
 INSERT INTO USER_TYPE (userTypeId, name) VALUES (1, 'Osoba');
 INSERT INTO USER_TYPE (userTypeId, name) VALUES (2, 'Sklonište');
