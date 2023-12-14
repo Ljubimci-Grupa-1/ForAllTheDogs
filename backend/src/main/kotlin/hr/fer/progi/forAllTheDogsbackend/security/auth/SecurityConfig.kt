@@ -45,6 +45,7 @@ class SecurityConfig(
                 it
 //                    .requestMatchers("/user/test").hasRole("Osoba")  // lucija nemoj brisat pliz <3
                     .requestMatchers("/user/register").permitAll()
+                    .requestMatchers("/user/login").permitAll()
                     .requestMatchers("/colors").permitAll()
                     .requestMatchers("/species").permitAll()
                     .anyRequest().authenticated()
