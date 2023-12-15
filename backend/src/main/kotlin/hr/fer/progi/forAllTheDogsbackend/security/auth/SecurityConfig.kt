@@ -49,6 +49,7 @@ class SecurityConfig(
                     .requestMatchers("/color/*").permitAll()
                     .requestMatchers("/species/*").permitAll()
                     .requestMatchers("/county/*").permitAll()
+                    .requestMatchers(("/city/*")).permitAll()
                     .anyRequest().authenticated()
             }
             .sessionManagement { session ->
