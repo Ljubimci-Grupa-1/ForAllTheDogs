@@ -46,7 +46,7 @@ const SignUpForm: React.FC<Props> = () => {
         };
 
         try {
-            const response = await fetch('https://forallthedogs.onrender.com/user/register', {
+            const response = await fetch('http://localhost:8080/user/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

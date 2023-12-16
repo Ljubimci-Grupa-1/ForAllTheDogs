@@ -16,7 +16,7 @@ const NavigationBar = () => {
                         <Button size="lg" component={Link} to="/signup">Signup</Button>
                     </Stack>
                 </Grid>
-                <Grid xs={6}>
+                <Grid xs={6} sx={{alignItems: 'center'}}>
                     <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)'}}>
                         <ButtonGroup
                             buttonFlex={1}
@@ -35,6 +35,7 @@ const NavigationBar = () => {
                 </Grid>
                 <Grid xs>
                     <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
+                        <p>Hello,user</p>
                         <Button size="lg" component={Link} to="/login">Sign out</Button>
                     </Sheet>
                 </Grid>

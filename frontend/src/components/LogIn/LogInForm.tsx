@@ -34,7 +34,7 @@ const LoginForm: FC = () => {
         };
 
         try {
-            const response = await fetch('https://forallthedogs.onrender.com/user/login', {
+            const response = await fetch('http://localhost:8080/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ const LoginForm: FC = () => {
             });
 
             if (response.ok) {
-                navigate('/home');
+                navigate('/');
             } else {
                 const errorJson = await response.json() as { message: string };
                 const errorText = errorJson.message;
