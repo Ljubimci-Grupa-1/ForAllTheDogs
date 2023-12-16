@@ -3,7 +3,7 @@ import hr.fer.progi.forAllTheDogsbackend.color.entity.Color
 
 data class ColorDTO(
     val colorId: Long,
-    val coloName: String
+    val colorName: String
 ){
     constructor(color: Color): this (
         color.colorId,
