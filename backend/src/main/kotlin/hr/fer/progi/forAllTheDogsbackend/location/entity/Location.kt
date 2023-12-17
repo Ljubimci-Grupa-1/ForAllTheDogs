@@ -20,6 +20,7 @@ class Location (
     @NotNull
     var latitude: Double,
 
+    @JoinColumn(name = "cityid")
     @ManyToOne
     var city: City,
 )

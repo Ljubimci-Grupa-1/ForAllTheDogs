@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.Query
 interface ColorRepository: JpaRepository<Color, Long> {
     @Query("SELECT MAX(c.colorId) FROM Color c")
     fun findMaxColorId(): Long?
+
+    fun findByColorName(colorName: String): Color?
 }

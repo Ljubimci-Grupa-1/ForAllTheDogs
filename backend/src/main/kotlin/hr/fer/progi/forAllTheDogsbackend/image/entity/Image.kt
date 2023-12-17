@@ -12,11 +12,11 @@ class Image(
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "image_seq")
     @SequenceGenerator(name = "image_seq", sequenceName = "image_seq", allocationSize = 1)
     @Column(name = "imageid")
-    var imageId: Long,
+    var imageId: Long = 0,
 
     @NotNull
     @Column(name = "imageurl")
-    var imageUrl: String,
+    var image: ByteArray,
 
     @ManyToOne
     var ad: Ad? = null,

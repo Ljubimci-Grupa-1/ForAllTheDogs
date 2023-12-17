@@ -19,18 +19,20 @@ class Pet (
 
     @ManyToOne
     @NotNull
+    @JoinColumn(name = "speciesid")
     var species: Species,
 
     @Column(name = "petname")
     var petName: String,
 
+    @Column(name = "petage")
     var age: Int,
 
     @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
     @JoinTable(
         name = "of_color",
-        joinColumns = [JoinColumn(name = "pet_id")],
-        inverseJoinColumns = [JoinColumn(name = "color_id")]
+        joinColumns = [JoinColumn(name = "petid")],
+        inverseJoinColumns = [JoinColumn(name = "colorid")]
     )
     var colors: MutableSet<Color> = mutableSetOf(),
 
@@ -42,5 +44,6 @@ class Pet (
 
     @ManyToOne
     @NotNull
+    @JoinColumn(name = "locationid")
     var location: Location
 )
