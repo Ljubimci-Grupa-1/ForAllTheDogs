@@ -43,6 +43,9 @@ const LoginForm: FC = () => {
             });
 
             if (response.ok) {
+                const responseJson = JSON.parse(await response.text());
+                const jwt = responseJson.token;
+                localStorage.setItem('jwt',jwt);
                 navigate('/');
             } else {
                 const errorJson = await response.json() as { message: string };
