@@ -2,10 +2,12 @@ import './NavigationBar.css';
 import {Button, ButtonGroup, Grid, Sheet, Stack, Typography} from "@mui/joy";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {AddNewModal} from "../AddNewModal";
 
 const NavigationBar = () => {
     const [username, setUsername] = useState('');
     const [isLoggedIn, setLoginState] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     useEffect(() =>{
         const jwt = localStorage.getItem('jwt');
         if(jwt){
@@ -42,7 +44,7 @@ const NavigationBar = () => {
                         <Button size="lg" component={Link} to="/signup">Signup</Button>
                     </Stack>)}
                     {isLoggedIn && (
-                        <Button size="lg">Post new ad</Button>
+                        <Button onClick={()=>setModalOpen(true)} size="lg">Post new ad</Button>
                     )}
                 </Grid>
                 <Grid xs={6} sx={{
@@ -83,6 +85,10 @@ const NavigationBar = () => {
                     )}
                 </Grid>
             </Grid>
+            {modalOpen && (
+                <AddNewModal></AddNewModal>
+            )
+            }
         </nav>
     );
 };

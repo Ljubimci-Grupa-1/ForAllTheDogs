@@ -6,27 +6,44 @@ import FilterBar from "./Bars/FilterBar.tsx";
 import NavigationBar from "./Bars/NavigationBar.tsx";
 
 export interface LostPet {
-    id: number;
-    name: string;
-    species: string;
+    petId: number;
+    petName: string;
+    speciesName: string;
     description: string;
-    dateLost: string;
+    dateTimeMissing: string;
     imageUrl: string;
+    age: number;
+    colors: string[];
+    location: {
+        locationId: number;
+        longitude: number;
+        latitude: number;
+        cityName: string;
+    };
 }
 
-interface MainContentProps {
-    lostPets: LostPet[];
-}
+interface MainContentProps {}
 
-const MainContent: React.FC<MainContentProps> = ({ lostPets = [] }) => {
+const MainContent: React.FC<MainContentProps> = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
     const [filterName, setFilterName] = useState('');
     const [filterSpecies, setFilterSpecies] = useState('');
     const [filterDateLost, setFilterDateLost] = useState('');
+    const [lostPets, setLostPets] = useState<LostPet[]>([]);
 
     useEffect(() => {
         document.title = "For All The Dogs";
+        fetch('http://localhost:8080/ad/all')
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                const petsData = data.map(item => item.pet);
+                setLostPets(petsData);
+            })
+            .catch((error) => {
+                console.error('Error fetching lost pets:', error);
+            });
     }, []);
 
     const handleModalClose = () => {
@@ -34,14 +51,13 @@ const MainContent: React.FC<MainContentProps> = ({ lostPets = [] }) => {
         setCurrentPet(null);
     };
 
-    const filteredPets = lostPets.filter((pet) => {
-        const nameMatch = pet.name.toLowerCase().includes(filterName.toLowerCase());
-        const speciesMatch = pet.species.toLowerCase().includes(filterSpecies.toLowerCase());
-        const dateLostMatch = pet.dateLost.includes(filterDateLost);
+    const filteredPets = lostPets ? lostPets.filter((pet) => {
+        const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
+        const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
+        const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
 
         return nameMatch && speciesMatch && dateLostMatch;
-    });
-
+    }) : [];
 
     const handleNameChange = (name: string) => {
         setFilterName(name);
@@ -82,7 +98,7 @@ const MainContent: React.FC<MainContentProps> = ({ lostPets = [] }) => {
             <div className="lost-pets-list">
                 {filteredPets.map((pet) => (
                     <LostPetCard
-                        key={pet.id}
+                        key={pet.petId}
                         pet={pet}
                         onDetailsClick={() => {
                             setCurrentPet(pet);
