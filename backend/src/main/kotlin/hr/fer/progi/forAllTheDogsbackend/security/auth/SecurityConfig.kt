@@ -50,7 +50,7 @@ class SecurityConfig(
                     .requestMatchers("/species/*").permitAll()
                     .requestMatchers("/county/*").permitAll()
                     .requestMatchers(("/city/*")).permitAll()
-                    .requestMatchers("/ad/*").permitAll()
+                    .requestMatchers("/ad/**").permitAll()
                     .anyRequest().authenticated()
             }
             .sessionManagement { session ->

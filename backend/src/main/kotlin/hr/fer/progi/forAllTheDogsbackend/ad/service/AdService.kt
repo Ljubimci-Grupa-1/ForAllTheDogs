@@ -3,6 +3,7 @@ package hr.fer.progi.forAllTheDogsbackend.ad.service
 import hr.fer.progi.forAllTheDogsbackend.activity.repository.ActivityRepository
 import hr.fer.progi.forAllTheDogsbackend.ad.controller.dto.AdDTO
 import hr.fer.progi.forAllTheDogsbackend.ad.controller.dto.AddAdDTO
+import hr.fer.progi.forAllTheDogsbackend.ad.entity.Ad
 import hr.fer.progi.forAllTheDogsbackend.ad.repository.AdRepository
 import hr.fer.progi.forAllTheDogsbackend.city.repository.CityRepository
 import hr.fer.progi.forAllTheDogsbackend.color.repository.ColorRepository
@@ -15,6 +16,8 @@ import hr.fer.progi.forAllTheDogsbackend.pet.repository.PetRepository
 import hr.fer.progi.forAllTheDogsbackend.species.repository.SpeciesRepository
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserAdDTO
 import hr.fer.progi.forAllTheDogsbackend.user.repository.UserRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.awt.image.BufferedImage
@@ -40,43 +43,9 @@ class AdService(
     private val speciesRepository: SpeciesRepository
 ) {
 
-    fun getAllAds(): List<AdDTO> {
-        val ads = adRepository.findAll()
-        val adDTOs = mutableListOf<AdDTO>()
+    fun getAllAds() = adRepository.findAll().map { ad -> createAdDTO(ad) }
 
-        for(ad in ads) {
-            // getting all the necessary data from the database
-            val user = userRepository.findById(ad.user.userId)
-            val activity = activityRepository.findById(ad.activity.activityId)
-            val pet = petRepository.findById(ad.pet.petId)
-            val city = cityRepository.findById(pet.get().location.city.cityId)
-            val location = locationRepository.findById(pet.get().location.locationId)
-            val species = speciesRepository.findById(pet.get().species.speciesId)
-
-            // mapping the colors to a set of strings with the color names
-            val colors = ad.pet.colors.map { color ->
-                color.colorName
-            }.toMutableSet()
-
-            // mapping the images to a list of ImageDTOs
-            val images = imageRepository.findByAd(ad).toList().map { image ->
-                ImageDTO(image)
-            }
-
-            // adding the ad to the list of DTOs
-            adDTOs.add(
-                AdDTO(ad, UserAdDTO(user.get()),
-                    activity.get().activityCategory,
-                    PetDTO(pet.get(), colors, species.get(),
-                        LocationDTO(location.get(), city.get().cityName)
-                    ),
-                    images
-                )
-            )
-        }
-
-        return adDTOs
-    }
+    fun getAllAds(pageable: Pageable) = adRepository.findAll(pageable).map { ad -> createAdDTO(ad) }
 
     fun addAd(dto: AddAdDTO): AdDTO {
         // getting all the necessary data from the DTO
@@ -124,6 +93,35 @@ class AdService(
 
 
 //    HELPER FUNCTIONS
+
+    private fun createAdDTO(ad: Ad): AdDTO {
+        // getting all the necessary data from the database
+        val user = userRepository.findById(ad.user.userId)
+        val activity = activityRepository.findById(ad.activity.activityId)
+        val pet = petRepository.findById(ad.pet.petId)
+        val city = cityRepository.findById(pet.get().location.city.cityId)
+        val location = locationRepository.findById(pet.get().location.locationId)
+        val species = speciesRepository.findById(pet.get().species.speciesId)
+
+        // mapping the colors to a set of strings with the color names
+        val colors = ad.pet.colors.map { color ->
+            color.colorName
+        }.toMutableSet()
+
+        // mapping the images to a list of ImageDTOs
+        val images = imageRepository.findByAd(ad).toList().map { image ->
+            ImageDTO(image)
+        }
+
+        // returning the DTO
+        return AdDTO(ad, UserAdDTO(user.get()),
+            activity.get().activityCategory,
+            PetDTO(pet.get(), colors, species.get(),
+                LocationDTO(location.get(), city.get().cityName)
+            ),
+            images
+        )
+    }
 
     private fun compressImage(photo: MultipartFile): ByteArray {
         val MAX_SIZE: Long = 5 * 1024 * 1024 // 5 MB
