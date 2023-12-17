@@ -18,9 +18,11 @@ class Image(
     @Column(name = "imageurl")
     var image: ByteArray,
 
+    @JoinColumn(name = "adid")
     @ManyToOne
     var ad: Ad? = null,
 
+    @JoinColumn(name = "messageid")
     @OneToOne
     var message: Message? = null
 )

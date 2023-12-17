@@ -1,5 +1,6 @@
 package hr.fer.progi.forAllTheDogsbackend.pet.controller.dto
 
+import hr.fer.progi.forAllTheDogsbackend.color.controller.dto.ColorDTO
 import hr.fer.progi.forAllTheDogsbackend.color.entity.Color
 import hr.fer.progi.forAllTheDogsbackend.location.controller.dto.LocationDTO
 import hr.fer.progi.forAllTheDogsbackend.pet.entity.Pet
@@ -11,17 +12,17 @@ data class PetDTO (
     val speciesName: String,
     val petName: String,
     val age: Int,
-    val colors: MutableSet<Color>,
+    val colors: MutableSet<String>,
     val dateTimeMissing: LocalDateTime,
     val description: String,
     val location: LocationDTO
 ) {
-    constructor(pet: Pet, species: Species, location: LocationDTO): this(
+    constructor(pet: Pet, colors: MutableSet<String>, species: Species, location: LocationDTO): this(
         pet.petId,
         species.speciesName,
         pet.petName,
         pet.age,
-        pet.colors,
+        colors,
         pet.dateTimeMissing,
         pet.description,
         location
