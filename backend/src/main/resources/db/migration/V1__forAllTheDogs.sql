@@ -360,3 +360,8 @@ INSERT INTO CITY (cityId, cityName, countyId) VALUES (145, 'Ostalo', 17);
 INSERT INTO CITY (cityId, cityName, countyId) VALUES (146, 'Ostalo', 18);
 INSERT INTO CITY (cityId, cityName, countyId) VALUES (147, 'Ostalo', 19);
 INSERT INTO CITY (cityId, cityName, countyId) VALUES (148, 'Ostalo', 20);
+
+INSERT INTO ACTIVITY(activityId, activityCategory) VALUES (1, 'Za ljubimcem se traga');
+INSERT INTO ACTIVITY(activityId, activityCategory) VALUES (2, 'Sretno pronađen');
+INSERT INTO ACTIVITY(activityId, activityCategory) VALUES (3, 'Nije pronađen, potraga nije više u tijeku');
+INSERT INTO ACTIVITY(activityId, activityCategory) VALUES (4, 'Nesretno pronađen');

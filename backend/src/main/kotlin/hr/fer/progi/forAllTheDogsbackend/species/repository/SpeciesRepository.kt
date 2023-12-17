@@ -8,4 +8,6 @@ interface SpeciesRepository: JpaRepository<Species, Long> {
 
     @Query("SELECT MAX(s.speciesId) FROM Species s")
     fun findMaxSpeciesId(): Long?
+
+    fun findBySpeciesName(speciesName: String): Species?
 }

@@ -13,7 +13,7 @@ data class UserDTO(
     val name: String,
     val telephoneNumber: String,
     val userType: UserType
-){
+) {
     constructor(user: User): this (
         user.userId,
         user.username,

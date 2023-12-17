@@ -10,4 +10,6 @@ interface CityRepository: JpaRepository<City, Long> {
 
     @Query("SELECT MAX(c.cityId) FROM City c")
     fun findMaxCityId(): Long?
+
+    fun findByCityName(cityName: String): City?
 }

@@ -18,12 +18,15 @@ class Ad(
     @Column(name = "inshelter")
     var inShelter: Int,
 
+    @JoinColumn(name = "userid")
     @ManyToOne
     var user: User,
 
+    @JoinColumn(name = "activityid")
     @ManyToOne
     var activity: Activity,
 
+    @JoinColumn(name = "petid")
     @OneToOne
     var pet: Pet
 )

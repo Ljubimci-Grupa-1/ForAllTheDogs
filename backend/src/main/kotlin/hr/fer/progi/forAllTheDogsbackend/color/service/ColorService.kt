@@ -8,6 +8,7 @@
 
     @Service
     class ColorService(private val colorRepository: ColorRepository) {
+
         fun getAllColors(): List<ColorDTO> = colorRepository.findAll().map { ColorDTO(it) }
 
         @Transactional
