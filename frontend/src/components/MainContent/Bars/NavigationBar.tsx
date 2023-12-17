@@ -1,23 +1,56 @@
 import './NavigationBar.css';
-import {Button, ButtonGroup, Grid, Sheet, Stack} from "@mui/joy";
+import {Button, ButtonGroup, Grid, Sheet, Stack, Typography} from "@mui/joy";
 import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
 
 const NavigationBar = () => {
+    const [username, setUsername] = useState('');
+    const [isLoggedIn, setLoginState] = useState(false);
+    useEffect(() =>{
+        const jwt = localStorage.getItem('jwt');
+        if(jwt){
+            const decoded = jwt.split(".")[1];
+            try {
+                //parsiraj token
+                const decodedToken = JSON.parse(atob(decoded));
+                //izvuci username iz tokena
+                const user = decodedToken.username;
+                // postavi vrtijednost statea
+                setUsername(user);
+                setLoginState(true);
+            } catch (error) {
+                console.error('Error decoding token:', error);
+            }
+        }
+    })
     return (
         <nav className="navbar">
-            <Grid container spacing={3} sx={{flexGrow:1}}>
+            <Grid container spacing={3} sx={{
+                display:'flex',
+                alignItems:'center',
+                justifyContent:'center',
+            flexGrow:'1'}}>
                 <Grid xs>
+                    {!isLoggedIn && (
                     <Stack
                         direction="row"
                         justifyContent="center"
                         alignItems="center"
                         spacing={2}>
+
                         <Button size="lg" component={Link} to="/login">Login</Button>
                         <Button size="lg" component={Link} to="/signup">Signup</Button>
-                    </Stack>
+                    </Stack>)}
+                    {isLoggedIn && (
+                        <Button size="lg">Post new ad</Button>
+                    )}
                 </Grid>
-                <Grid xs={6} sx={{alignItems: 'center'}}>
-                    <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)'}}>
+                <Grid xs={6} sx={{
+                    display:'flex',
+                    alignItems:'center',
+                    justifyContent:'center'}}>
+                    <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)',
+                    width:'70%'}}>
                         <ButtonGroup
                             buttonFlex={1}
                             color="primary"
@@ -33,11 +66,21 @@ const NavigationBar = () => {
                         </ButtonGroup>
                     </Sheet>
                 </Grid>
-                <Grid xs>
-                    <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
-                        <p>Hello,user</p>
-                        <Button size="lg" component={Link} to="/login">Sign out</Button>
-                    </Sheet>
+                <Grid xs sx={{
+                    display:'flex',
+                    alignItems:'center',
+                justifyContent:'center'}}>
+                    {isLoggedIn && (
+                        <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
+                            <Typography sx={{ width: '100%',
+                            color:"white"}} level="title-lg">Hello, {username}</Typography>
+                            <Button size="lg" component={Link} to="/login">Sign out</Button>
+                        </Sheet>
+                    )}
+                    {!isLoggedIn && (
+                        <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)'}}>
+                            <Typography sx={{ width: '100%', color:"white" }} level="title-lg">Please login or signup</Typography></Sheet>
+                    )}
                 </Grid>
             </Grid>
         </nav>

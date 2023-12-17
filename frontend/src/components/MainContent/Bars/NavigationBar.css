@@ -4,7 +4,7 @@
     padding: 10px 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; /* Add this line to center items vertically */
 }
 
 .nav-list {
@@ -30,3 +30,4 @@
     color: #fff;
     text-decoration: none;
 }
+
