@@ -9,8 +9,8 @@ import {FC} from "react";
 const Map : FC = () => {
 
     const customIcon = new Icon({
-        iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
-        iconSize: [38, 38],
+        iconUrl: "https://cdn0.iconfinder.com/data/icons/creatype-pet-shop-outline/64/1_pin_gps_paw_pet_animal_map-512.png",
+        iconSize: [50, 50],
         iconAnchor: [12.5, 12.5],
         popupAnchor: [0, 0]
     });
@@ -23,34 +23,54 @@ const Map : FC = () => {
         });
     }
 
+    // OVDJE CE BIT PET ARRAY KOJEG PULLAMO IZ BAZE
+    const popups = [
+        {
+            title: "Drake",
+            description: "Champagne Papi",
+            imageUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
+            long: 45.802,
+            lat: 15.975
+        },
+        {
+            title: "Poopboy Farti",
+            description: "Debos",
+            imageUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
+            long: 45.812,
+            lat: 15.975
+        },
+        {
+            title: "Young Thug",
+            description: "u zatvoru",
+            imageUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
+            long: 45.809,
+            lat: 15.969
+        },
+    ];
+
     return (
-        <MapContainer center={[48.8566, 2.3522]} zoom={13}>
+        <MapContainer center={[45.80044256647421, 15.971142980178024]} zoom={13}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
                 url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <MarkerClusterGroup
                 chunkedLoading
-                iconCreateFunction={createClusterCustomIcon}S
+                iconCreateFunction={createClusterCustomIcon}
             >
-                <Marker position={[48.8584, 2.2945]} icon={customIcon}>
-                    <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                </Marker>
-                <Marker position={[48.8606, 2.3376]} icon={customIcon}>
-                    <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                </Marker>
-                <Marker position={[48.8529, 2.3499]} icon={customIcon}>
-                    <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                </Marker>
+                {popups.map((popup, index) => (
+                    <Marker key={index} position={[popup.long, popup.lat]} icon={customIcon}>
+                        <Popup>
+                            <div>
+                                <h2>{popup.title}</h2>
+                                <p>{popup.description}</p>
+                                {popup.imageUrl !== "" && <img src={popup.imageUrl} alt={popup.title} width="200" />}
+                            </div>
+                        </Popup>
+                    </Marker>
+                ))};
             </MarkerClusterGroup>
         </MapContainer>
     );
 }
-
 export default Map;
