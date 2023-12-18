@@ -82,7 +82,7 @@ const MainContent: React.FC<MainContentProps> = () => {
     };
 
     return (
-        <main>
+        <main className="main">
             <p>Welcome to For All The Dogs, a platform to help find lost pets...</p>
 
             <NavigationBar />

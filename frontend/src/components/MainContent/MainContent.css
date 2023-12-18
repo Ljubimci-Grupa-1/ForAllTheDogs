@@ -67,3 +67,8 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.main{
+    width:100%;
+    height:100%;
+}
