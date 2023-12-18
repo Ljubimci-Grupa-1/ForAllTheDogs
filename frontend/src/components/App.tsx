@@ -6,6 +6,7 @@ import SignUpForm from "../components/LogIn/SignUpForm"
 import LoginForm from "./LogIn/LogInForm.tsx";
 import MainContent from "./MainContent/MainContent.tsx";
 import { LostPet } from "./MainContent/MainContent.tsx";
+import Map from "./MainContent/Map/Map.tsx";
 function App() {
 
     const lostPets: LostPet[] = [
@@ -58,6 +59,7 @@ function App() {
                 <Route path="/signup" element={<SignUpForm />} />
                 <Route path="/login" element={<LoginForm/>} />
                 <Route path="/" element={<MainContent lostPets={lostPets}/>} />
+                <Route path="/map" element={<Map/>} />
             </Routes>
         </BrowserRouter>
     )
