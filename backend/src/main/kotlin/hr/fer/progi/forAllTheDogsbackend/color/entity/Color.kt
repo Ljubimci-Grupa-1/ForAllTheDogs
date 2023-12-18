@@ -8,8 +8,6 @@ import org.jetbrains.annotations.NotNull
 class Color (
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "color_seq")
-    @SequenceGenerator(name = "color_seq", sequenceName = "color_seq", allocationSize = 1)
     @Column(name = "colorid")
     var colorId: Long = 0L,
 
@@ -19,5 +17,4 @@ class Color (
 
     @ManyToMany(mappedBy = "colors")
     var pets: MutableSet<Pet> = mutableSetOf()
-
 )

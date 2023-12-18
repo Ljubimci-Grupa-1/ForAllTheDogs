@@ -7,10 +7,8 @@ import org.jetbrains.annotations.NotNull
 class Species (
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "species_seq")
-    @SequenceGenerator(name = "species_seq", sequenceName = "species_seq", allocationSize = 1)
     @Column(name = "speciesid")
-    var speciesId: Long,
+    var speciesId: Long = 0L,
 
     @NotNull
     @Column(name = "speciesname")

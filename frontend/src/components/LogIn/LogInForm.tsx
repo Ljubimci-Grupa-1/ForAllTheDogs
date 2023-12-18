@@ -2,6 +2,7 @@ import { useState, FC, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./LogInForm.css";
 import {Button, Input, Sheet, Stack} from "@mui/joy";
+import Typography from '@mui/joy/Typography';
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
@@ -33,7 +34,7 @@ const LoginForm: FC = () => {
         };
 
         try {
-            const response = await fetch('https://forallthedogs.onrender.com/user/login', {
+            const response = await fetch('http://localhost:8080/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,9 +43,13 @@ const LoginForm: FC = () => {
             });
 
             if (response.ok) {
-                navigate('/home');
+                const responseJson = JSON.parse(await response.text());
+                const jwt = responseJson.token;
+                localStorage.setItem('jwt',jwt);
+                navigate('/');
             } else {
-                const errorText = await response.text();
+                const errorJson = await response.json() as { message: string };
+                const errorText = errorJson.message;
                 setError(errorText);
             }
 
@@ -98,7 +103,8 @@ const LoginForm: FC = () => {
                                     className="form-input"
                                 />
                             </div>
-                            {error && <p className="form-error">{error}</p>}
+                            {error && <Typography
+                                color="danger" level="title-lg" variant="plain">{error}</Typography>}
                             <Button
                                 variant="solid"
                                 type="submit">Login</Button>

@@ -21,7 +21,7 @@ class UserService(
     fun addUser(jsonUserDTO: JsonUserDTO): UserDTO {
         checkIfUserExists(jsonUserDTO)
         val userType = userTypeRepository.findByUserTypeId(jsonUserDTO.userTypeId)
-            ?: throw IllegalArgumentException("Tip korisnika s ID-jem ${jsonUserDTO.userTypeId} ne postoji")
+            ?: throw IllegalArgumentException("User with ID ${jsonUserDTO.userTypeId} doesn't exist")
 
         val addUserDTO = AddUserDTO(
             jsonUserDTO.username,
@@ -41,22 +41,22 @@ class UserService(
 
     private fun checkIfUserExists(jsonUserDTO: JsonUserDTO) {
         var user = userRepository.findByEmail(jsonUserDTO.email)
-        if(user != null) throw IllegalArgumentException("Korisnik s tim emailom već postoji")
+        if(user != null) throw IllegalArgumentException("User with this email already exists")
         user = userRepository.findByUsername(jsonUserDTO.username)
-        if(user != null) throw IllegalArgumentException("Korisnik s tim usernameom već postoji")
+        if(user != null) throw IllegalArgumentException("User with this username already exists")
         user = userRepository.findByTelephoneNumber(jsonUserDTO.telephoneNumber)
-        if(user != null) throw IllegalArgumentException("Broj mobitela već u uporabi")
+        if(user != null) throw IllegalArgumentException("User with this telephone number already exists")
 
         if(jsonUserDTO.userTypeId == 2L) { // Sklonište
             user = userRepository.findByName(jsonUserDTO.name)
-            if(user != null) throw IllegalArgumentException("Sklonište ${jsonUserDTO.name} je već registrirani korisnik")
+            if(user != null) throw IllegalArgumentException("Shelter name ${jsonUserDTO.name} is already in use")
         }
     }
 
     // Autorizacija podataka unesenih u login formu
     fun authorizeUser(loginUserDTO: LoginUserDTO): UserDTO {
         val user = userRepository.findByEmail(loginUserDTO.email)
-            ?: throw IllegalArgumentException("Korisnik s tim emailom ne postoji")
+            ?: throw IllegalArgumentException("User with this email doesn't exist")
         return UserDTO(user)
     }
 

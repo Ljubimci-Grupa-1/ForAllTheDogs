@@ -32,6 +32,22 @@ function App() {
             description: "Green Parrot with a red neck",
             dateLost: "2023-10-27",
             imageUrl: "https://www.mpg.de/18490336/original-1656406663.jpg?t=eyJ3aWR0aCI6MTIwMCwiaGVpZ2h0IjpudWxsLCJmaXQiOm51bGwsIm9ial9pZCI6MTg0OTAzMzZ9--9fae20441fec6fc549b18c2df95372b99979a919"
+        },
+        {
+            id: 4,
+            name: "Polly",
+            species: "Bird",
+            description: "Green Parrot with a red neck",
+            dateLost: "2023-10-27",
+            imageUrl: "https://www.mpg.de/18490336/original-1656406663.jpg?t=eyJ3aWR0aCI6MTIwMCwiaGVpZ2h0IjpudWxsLCJmaXQiOm51bGwsIm9ial9pZCI6MTg0OTAzMzZ9--9fae20441fec6fc549b18c2df95372b99979a919"
+        },
+        {
+            id: 5,
+            name: "Polly",
+            species: "Bird",
+            description: "Green Parrot with a red neck",
+            dateLost: "2023-10-27",
+            imageUrl: "https://www.mpg.de/18490336/original-1656406663.jpg?t=eyJ3aWR0aCI6MTIwMCwiaGVpZ2h0IjpudWxsLCJmaXQiOm51bGwsIm9ial9pZCI6MTg0OTAzMzZ9--9fae20441fec6fc549b18c2df95372b99979a919"
         }
     ];
 
@@ -41,7 +57,7 @@ function App() {
             <Routes>
                 <Route path="/signup" element={<SignUpForm />} />
                 <Route path="/login" element={<LoginForm/>} />
-                <Route path={"/home"} element={<MainContent lostPets={lostPets}/>} />
+                <Route path="/" element={<MainContent lostPets={lostPets}/>} />
             </Routes>
         </BrowserRouter>
     )

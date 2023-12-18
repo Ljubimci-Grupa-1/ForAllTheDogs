@@ -1,30 +1,98 @@
 \chapter{Arhitektura i dizajn sustava}
 		
-		\textbf{\textit{dio 1. revizije}}\\
+		Arhitektura se može podijeliti na 4 podsustava:
+		\begin{packed_item}
+		
+			\item   Web poslužitelj
+			\item   \textit{Front-end}
+			\item 	\textit{Back-end}
+			\item   Baza podataka
+		\end{packed_item}
+		
+		
+		\textit{Web poslužitelj} je program koji omogućuje korisnicima pristupanje internet resursima putem zahtjeva poslanih poslužiteljima. Web preglednik je prevoditelj koji web stranicu pisanu u kodu interpretira i prikazuje u klijentu razumljivom obliku. Koristeći web preglednik klijent šalje zahtjeve web poslužitelju.
+		
+		\textit{Front-end} web aplikacija omogućuje korisniku interakciju s \textit{back-end}-om na poslužitelju, koje se omogućuje kroz korisničko sučelje. 
+		\textit{Front-end} aplikacija šalje zahtjeve \textit{back-end} aplikaciji koja ima ulogu web poslužitelja. Njezin je osnovni zadatak pohrana, obrada i dostava web stranica klijentu te nam ona predstavlja centar za razmjenu informacija i pružanje usluga. Sam poslužitelj pokreće web aplikaciju i prosljeđuje joj klijentske zahtjeve.\\
 
-		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
-	\begin{itemize}
-		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
-		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
-		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
-	\end{itemize}
+		Prednosti odabrane arhitekture su te što se slojevi mogu oblikovati odvojeno te sve komponente mogu biti jednostavnije i razumljivije, ostvaruje se podjela brige (\textit{separation of concerns}) time što svaki sloj brine o svojoj funkcionalnosti i ne miješa se u brige nekog drugog sloja, a njihova međuovisnost ostvaruje se komunikacijom putem sučelja čija se implementacija može prilagoditi u određenom sloju.\\
 
+		\pagebreak
+
+		\subsection{MVC stil arhitekture}
+		Arhitektura razrađena u nastavku prati stil arhitekture MVC (model-view-controller).\\
+		
+		Osnovna	karakteristika ovog stila je	nezavisan razvoj pojedinih dijelova aplikacije što pojednostavljuje testiranje	i razvijanje dijelova sustava te	njihove	dorade. Korisničko sučelje je odvojeno od ostatka sustava, a kohezija elemenata se postiže kroz tri sloja: jedan na klijentskoj strani - pogled (\textit{View}) te dva na serverskoj strani – upravitelj (\textit{Controller}) i model (\textit{Model}).
+
+		\begin{packed_enum}
+			\item\textit{Model} - Predstavlja glavnu komponentu sustava koja sadrži dinamičke strukture podataka odnosno razrede koji opisuju domenu primjene te sadrže pravila i aplikacijsku logiku. Usko je vezan uz bazu podataka aplikacije.
+			\item\textit{Pogled (View)} - Sadrži komponente koje služe za prikaz podataka modela i interakciju s korisnikom kroz grafičko korisničko sučelje.
+			\item\textit{Upravitelj (Controller)} - Upravlja korisničkim zahtjevima prema modelu i odgovorima modela natrag prema pogledima. Povezuje serversku i korisničku stranu.
+		\end{packed_enum}
+
+		%unos slike
+		\begin{figure}[H]
+			\includegraphics[scale=0.7]{slike/mvc-framework.PNG} 
+			\centering
+			\caption{MVC stil arhitekture}
+			\label{mvc-framework}
+		\end{figure}
 	
 		
-
+		\section{Programski jezici, razvojni okviri, alati i biblioteke koda}
 		
+		
+		\subsection{Back-end i baza podataka}
+		U okviru \textit{back-end} aplikacije koriste se razni alati i tehnologije kako bi se postigla funkcionalnost web aplikacije. 
+		
+		Sama funkcionalnost \textit{back-enda} ostvarena je koristeći \textit{Kotlin} i \textit{Spring Boot}, popularne \textit{frameworke} za Javu i Kotlin.
+		
+		\textit{Spring Boot} olakšava izradu web aplikacije pružajući razne automatske konfiguracije. To uvelike omogućava integraciju različitih dijelova aplikacije i pruža mnogo gotovih implementacija koje se koriste putem vrlo intuitivnih sučelja.
+		
+		Baza podataka ostvarena je u \textit{PostgreSQL}-u, a za njenu jasnu definiciju korišten je alat \textit{Flyway}. \textit{Flyway} omogućava precizno i upravljivo definiranje strukture baze podataka.
+		
+		Za preslikavanje entiteta iz \textit{PostgreSQL} baze podataka u klase \textit{back-end} aplikacije korišten je \textit{JPA (Jakarta Persistence API)}, koji značajno olakšava generiranje upita ovisno o pozivima metoda nad klasama entiteta, a za komunikaciju baze i same aplikacije koristi se \textit{JDBC (Java Database Connectivity)}.
+		
+		Za konfiguracijske datoteke aplikacije koristi se \textit{YAML} format. Upravljanje bazom podataka odvija se preko \textit{Datagrip}-a, a razvoj kompletne \textit{back-end} aplikacije obavlja se u \textit{IntelliJ IDEA}, popularnom alatu tvrtke \textit{JetBrains}. 
+		
+		Za izgradnju cijele aplikacije koristi se \textit{Gradle}, alat za automatizaciju izgradnje. 
+\textit{JWT (JSON Web Token}) standard korišten je za sigurnost aplikacije, generirajući tokene, koji istovremeno služe za autorizaciju i autentifikaciju korisnika.
 
+
+			\subsection{Front-end}
+			U izradi \textit{front-end} dijela aplikacije koristimo niz tehnologija kako bismo postigli željene funkcionalnosti i estetski privlačan dizajn. Ključne tehnologije koje se koriste u razvoju uključuju \textit{TypeScript}, \textit{React}, \textit{Bootstrap}, \textit{Vite} i \textit{IntelliJ}.
+			
+\textit{React}, kao glavni okvir, omogućava olakšanu izradu web stranica i pruža širok spektar alata za navigaciju, dohvaćanje i prikazivanje podataka. Koristi se označni kod sličan \textit{HTML}-u, obogaćen mogućnostima \textit{TypeScript}-a za definiranje sadržaja stranica, dok se za definiranje stila i izgleda koristi \textit{Bootstrap}.
+
+Za efikasno upravljanje podacima u aplikaciji koristi se \textit{React Query}. \textit{Vite}, alat za brzu izgradnju aplikacija, osigurava optimiziran razvojni proces i ubrzanje vremena učitavanja stranica.
+
+Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moćno razvojno okruženje koje omogućava precizno kodiranje i upravljanje projektom. Ovaj skup tehnologija omogućava nam izradu kvalitetne \textit{front-end} aplikacije s visokom funkcionalnošću i atraktivnim dizajnom.\\
+		
+		
 				
 		\section{Baza podataka}
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
+		Između više tipova baza podataka (relacijska, hijerarhijska, objektno-orijentirana), za našu smo web aplikaciju odabrali koristiti relacijsku bazu podataka. Odlučili smo se za tu vrstu baze jer s njom imamo najviše iskustva, a jednostavna je, jasna i praktična za naše potrebe (upravljanje podacima o korisnicima koji postavljaju, izmjenjuju, brišu ili komentiraju oglase za izgubljene odnosno pronađene ljubimce) i implementaciju (klase u Springu su preslikane relacije iz baze) i omogućavaju jednostavan vizualni prikaz točnih međuovisnosti relacija, a time i veću razumljivost. Bazu podataka koristimo za efikasnu pohranu i dohvat podataka za obradu. Elementi baze podataka su relacije, odnosno tablice i njihovi vlastiti atributi. Baza podataka ove aplikacije sadrži 12 tablica:
 		
+		\begin{packed_item}
+			\item User
+			\item UserType
+			\item Ad
+			\item Activity
+			\item Pet
+			\item Color
+			\item Of\_Color
+			\item Species
+			\item Message
+			\item Image
+			\item City
+			\item County
+		\end{packed_item}
+
 			\subsection{Opis tablica}
 			
 
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
+				\textbf{APP\_USER} Predstavlja registriranog korisnika aplikacije, u \textit{@ManyToOne} vezi s \textbf{USER\_TYPE} preko \textit{userTypeId}.
 				
 				
 				\begin{longtblr}[
@@ -32,41 +100,291 @@
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{APP\_USER}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}userId & BIGINT	&  	jedinstveni ID korisnika  	\\ \hline
+					username	& VARCHAR &   korisničko ime (jedinstveno)	\\ \hline 
+					email & VARCHAR &   korisnikova e-mail adresa (jedinstvena)	\\ \hline 
+					password & VARCHAR	&  	korisnikova lozinka	\\ \hline 
+					name & VARCHAR	&  	ime korisnika	\\ \hline 
+					telephone\_number & VARCHAR	&  	korisnikov broj telefona (jedinstven)	\\ \hline 
+					\SetCell{LightBlue} userTypeId	& BIGINT &   ID koji označava tip korisnika	\\ \hline 
 				\end{longtblr}
 				
+				\noindent\textbf{USER\_TYPE} Predstavlja popis tipova korisnika aplikacije (userTypeId=1 odgovara osobi, userTypeId=2 skloništu).
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{USER\_TYPE}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}userTypeId & BIGINT	&  	jedinstveni ID tipa korisnika  	\\ \hline
+					name	& VARCHAR &   ime tipa korisnika	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{MESSAGE} Poruka koju korisnici mogu ostavljati u komunikaciji ispod oglasa, u \textit{@ManyToOne} vezi s \textbf{AD} preko \textit{adId}, \textit{@ManyToOne} vezi s \textbf{USER} preko \textit{userId}, \textit{@OneToOne} vezi s \textbf{IMAGE} preko \textit{imageId}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{MESSAGE}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}messageId & BIGINT	&  	jedinstveni ID poruke  	\\ \hline
+					text	& VARCHAR &   sadržaj poruke	\\ \hline 
+					date	& DATE &   datum kada je poruka ostavljena ispod oglasa	\\ \hline 
+					latitude	& DOUBLE PRECISION &   geografska širina	\\ \hline 
+					longitude	& DOUBLE PRECISION &   geografska dužina	\\ \hline 
+					\SetCell{LightBlue}adId	& BIGINT &   jedinstveni ID oglasa ispod kojeg je poruka ostavljena	\\ \hline 
+					\SetCell{LightBlue}userId	& BIGINT &   jedinstveni ID korisnika koji je ostavio poruku	\\ \hline 
+					\SetCell{LightBlue}imageId	& BIGINT &   jedinstveni ID slike ostavljene uz poruku	\\ \hline 
+					\SetCell{LightBlue}cityId	& BIGINT &   jedinstveni ID grada u kojem je poruka ostavljena	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{IMAGE} Tablica u koju se spremaju slike koje se dohvaćaju preko URL.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{IMAGE}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}imageId & BIGINT	&  	jedinstveni ID slike  	\\ \hline
+					imageUrl	& VARCHAR &   URL slike	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{ACTIVITY} Predstavlja kategoriju oglasa.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{ACTIVITY}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}activityId & BIGINT	&  	jedinstveni ID kategorije  	\\ \hline
+					activityCategory	& VARCHAR &   naziv kategorije	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{AD} Predstavlja oglas, u \textit{@ManyToOne} vezi s \textbf{ACTIVITY}, \textit{@ManyToOne} vezi s \textbf{USER} preko \textit{userId}, \textit{@OneToOne} vezi s \textbf{IMAGE} (moguće 3 slike po oglasu), \textit{@OneToOne} vezi s \textbf{PET}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{AD}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}adId & BIGINT	&  	jedinstveni ID oglasa  	\\ \hline
+					inShelter	& INT &   1 ako je oglas od skloništa, inače 0 	\\ \hline 
+					\SetCell{LightBlue}userId	& BIGINT &   jedinstveni ID korisnika koji je postavio oglas 	\\ \hline 
+					\SetCell{LightBlue}activityId	& BIGINT &   jedinstveni ID kategorije oglasa 	\\ \hline
+					\SetCell{LightBlue}image1Id	& BIGINT &   jedinstveni ID prve slike 	\\ \hline
+					\SetCell{LightBlue}image2Id	& BIGINT &   jedinstveni ID druge slike 	\\ \hline
+					\SetCell{LightBlue}image3Id	& BIGINT &   jedinstveni ID treće slike 	\\ \hline
+					\SetCell{LightBlue}petId	& BIGINT &   jedinstveni ID ljubimca u oglasu 	\\ \hline
+				\end{longtblr}
+				
+				\noindent\textbf{PET} Predstavlja ljubimca, u \textit{@ManyToMany} vezi s \textbf{COLOR}, \textit{@ManyToOne} vezi sa \textbf{SPECIES}, \textit{@ManyToOne} vezi sa \textbf{CITY}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{PET}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}petId & BIGINT	&  	jedinstveni ID ljubimca  	\\ \hline
+					hourMissing	& INT &   sat nestanka ljubimca	\\ \hline 
+					dateMissing	& DATE &   datum nestanka ljubimca	\\ \hline 
+					age	& INT &   starost ljubimca	\\ \hline 
+					description	& VARCHAR &   opis ljubimca	\\ \hline 
+					latitude	& DOUBLE PRECISION &   geografska širina lokacije nestanka ljubimca	\\ \hline 
+					longitude	& DOUBLE PRECISION &   geografska dužina lokacije nestanka ljubimca	\\ \hline 
+					petName	& VARCHAR &   ime na koje se ljubimac odaziva	\\ \hline 
+					\SetCell{LightBlue}speciesId	& BIGINT &   jedinstveni ID vrste ljubimca	\\ \hline 
+					\SetCell{LightBlue}cityId	& BIGINT &   jedinstveni ID grada	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{SPECIES} Tablica vrsta ljubimaca.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{SPECIES}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}speciesId & BIGINT	&  	jedinstveni ID vrste ljubimca  	\\ \hline
+					speciesName	& VARCHAR &   naziv vrste ljubimca	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{COLOR} Tablica s bojama ljubimaca, u \textit{@ManyToMany} vezi s \textbf{PET}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{COLOR}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}colorId & BIGINT	&  	jedinstveni ID boje  	\\ \hline
+					colorName	& VARCHAR &   naziv boje	\\ \hline 
+				\end{longtblr}
+				
+				\noindent\textbf{OF\_COLOR} Tablica veze između \textbf{PET} i \textbf{COLOR}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{OF\_COLOR}}	 \\ \hline[3pt]
+					\SetCell{LightBlue}colorId & BIGINT	&  	jedinstveni ID boje  	\\ \hline
+					\SetCell{LightBlue}petId & BIGINT	&  	jedinstveni ID ljubimca	\\ \hline
+				\end{longtblr}
+				
+				\noindent\textbf{COUNTY} Predstavlja županije nestanka/pronalaska ljubimaca.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{COUNTY}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}countyId & BIGINT	&  	jedinstveni ID županije  	\\ \hline
+					countyName & VARCHAR	&  	naziv županije	\\ \hline
+				\end{longtblr}
+				
+				\noindent\textbf{CITY} Predstavlja gradove nestanka/pronalaska ljubimaca, u \textit{@ManyToOne} vezi s \textbf{COUNTY}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{CITY}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}cityId & BIGINT	&  	jedinstveni ID grada  	\\ \hline
+					cityName & VARCHAR	&  	naziv grada	\\ \hline
+					\SetCell{LightBlue}countyId & BIGINT	&  	jedinstveni ID županije  	\\ \hline
+					
+				\end{longtblr}
 				
 			
 			\subsection{Dijagram baze podataka}
-				\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
+			\begin{figure}[H]
+				\includegraphics[scale=0.33]{slike/ER_diagram.PNG} 
+				\centering
+				\caption{ER dijagram baze podataka}
+				\label{ER_diagram}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.34]{slike/relational_diagram.PNG} 
+				\centering
+				\caption{Relacijski dijagram baze podataka}
+				\label{relational_diagram}
+			\end{figure}
 			
 			\eject
 			
 			
 		\section{Dijagram razreda}
-		
-			\textit{Potrebno je priložiti dijagram razreda s pripadajućim opisom. Zbog preglednosti je moguće dijagram razlomiti na više njih, ali moraju biti grupirani prema sličnim razinama apstrakcije i srodnim funkcionalnostima.}\\
+
+			Na dijagramima su prikazani razredi vezani uz serversku stranu aplikacije.
 			
-			\textbf{\textit{dio 1. revizije}}\\
+			Dijagram na slici \ref{dijagram_model} prikazuje razrede entitete (modele) koji odgovaraju tablicama u bazi podataka.
 			
-			\textit{Prilikom prve predaje projekta, potrebno je priložiti potpuno razrađen dijagram razreda vezan uz \textbf{generičku funkcionalnost} sustava. Ostale funkcionalnosti trebaju biti idejno razrađene u dijagramu sa sljedećim komponentama: nazivi razreda, nazivi metoda i vrste pristupa metodama (npr. javni, zaštićeni), nazivi atributa razreda, veze i odnosi između razreda.}\\
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/dijagram_model.PNG} 
+				\centering
+				\caption{Dijagram razreda entiteta}
+				\label{dijagram_model}
+			\end{figure}
 			
+			Na slici \ref{dijagram_repository} prikazana su sučelja \textit{Repository} (npr. UserRepository, MessageRepository), odgovorna za komuniciranje s bazom podataka. Radi preglednosti je na slici \ref{dijagram_user_service_repository} prikazan samo odnos UserService i UserRepository, ostali se ponašaju analogno.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.2]{slike/dijagram_repository.PNG} 
+				\centering
+				\caption{Dijagram razreda \textit{Repository}}
+				\label{dijagram_repository}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/dijagram_user_service_repository.PNG} 
+				\centering
+				\caption{UserService i UserRepository}
+				\label{dijagram_user_service_repository}
+			\end{figure}
+			
+			Dijagram \ref{dijagram_controller_service_dto} prikazuje odnose između \textit{Controller}, \textit{Service} i \textit{Data Transfer Object} (DTO) razreda. Razredi i pripadne metode, naročito one koje pokrivaju funkcionalnosti van generičkih, podložne su izmjenama.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.18]{slike/dijagram_controller_service_dto.PNG} 
+				\centering
+				\caption{\textit{Controller}, \textit{Service} i \textit{DTO} razredi}
+				\label{dijagram_controller_service_dto}
+			\end{figure}
+			
+			Na \ref{dijagram_exception_handler} i \ref{dijagram_security} prikazani su razredi odgovorni za upravljanje iznimkama te autorizaciju.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.4]{slike/dijagram_exception_handler.PNG} 
+				\centering
+				\caption{Upravljač iznimkama}
+				\label{dijagram_exception_handler}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.2]{slike/dijagram_security.PNG} 
+				\centering
+				\caption{Autorizacija}
+				\label{dijagram_security}
+			\end{figure}
+			
+			\iffalse
 			\textbf{\textit{dio 2. revizije}}\\			
 			
 			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
-			
+			\fi
 			
 			
 			\eject
 		
+		\iffalse
 		\section{Dijagram stanja}
 			
 			
@@ -76,7 +394,9 @@
 			
 			
 			\eject 
+		\fi		
 		
+		\iffalse
 		\section{Dijagram aktivnosti}
 			
 			\textbf{\textit{dio 2. revizije}}\\
@@ -84,8 +404,12 @@
 			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
 			
 			\eject
+		\fi
+		
+		\iffalse
 		\section{Dijagram komponenti}
 		
 			\textbf{\textit{dio 2. revizije}}\\
 		
 			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+		\fi
