@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "./AddNewModal.css"
-import {Autocomplete, Button, FormLabel, Input, Option, Select, Sheet, Stack} from "@mui/joy";
-import {Form} from "react-router-dom";
-import {response} from "express";
+import {Box, Chip, Input, Option, Select, Sheet, Stack} from "@mui/joy";
 
 export const AddNewModal = () =>{
     const [colors, setColors] = useState([]);
@@ -59,19 +57,48 @@ export const AddNewModal = () =>{
                             </div>
                             <div className="input-container">
                                 <label htmlFor="color">Color:</label>
-                                <Autocomplete
-                                    sx={{
-                                        "--Chip-minHeight": "5px"
-                                    }}
+                                <Select
                                     multiple
-                                    forcePopupIcon={false}
+                                    placeholder="Select a color"
                                     variant="soft"
                                     color="primary"
-                                    options={colors}
-                                    size="lg"
-                                    getOptionLabel={option => option.colorName}
-                                />
+                                    renderValue={(selected) => (
+                                        <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
+                                            {selected.map((selectedOption) => (
+                                                <Chip variant="solid" color="primary">
+                                                    {selectedOption.label}
+                                                </Chip>
+                                            ))}
+                                        </Box>
+                                    )}
+                                    sx={{
+                                        height:'100%',
+                                        '& .MuiSelect-button': {
+                                            backgroundColor: 'transparent',
+                                            color: 'black',
+                                            '&:focus': {
+                                                backgroundColor: 'transparent',
+                                            },
+                                            marginTop: '0', // Remove top margin
+                                            padding: '0'
+                                        }
+                                    }}
+                                    slotProps={{
+                                        listbox: {
+                                            sx: {
+                                                width: '100%',
+                                            },
+                                        },
+                                    }}
+                                >
+                                    {colors.map((color) => (
+                                        <Option key={color.id} value={color.colorName}>
+                                            {color.colorName}
+                                        </Option>
+                                    ))}
+                                </Select>
                             </div>
+
                         </Stack>
                     </form>
                 </Stack>
