@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './FilterBar.css';
+import {Vrsta} from "../AddNewModal.tsx";
 
 interface FilterBarProps {
     onNameChange: (name: string) => void;
@@ -16,6 +17,21 @@ const FilterBar: React.FC<FilterBarProps> = ({
                                                  onApplyFilters,
                                                  onClearFilters
                                              }) => {
+    const [species, setSpecies]=useState([]);
+
+    useEffect(() => {
+        const fetchSpecies = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/species/all");
+                const data = await response.json();
+                setSpecies(data);
+            } catch (error) {
+                console.error("Error fetching species:", error);
+            }
+        };
+
+        fetchSpecies();
+    }, []);
     return (
         <div className="filter-bar">
             <input
@@ -27,10 +43,12 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 defaultValue=""
                 onChange={(e) => onSpeciesChange(e.target.value)}
             >
-                <option value="">All Species</option>
-                <option value="Dog">Dog</option>
-                <option value="Cat">Cat</option>
-                {/* Add more species as needed */}
+                <option value="" key={-1}>All Species</option>
+                {species.map((spec: Vrsta) => (
+                    <option value={spec.speciesName} key={spec.id}>
+                        {spec.speciesName}
+                    </option>
+                ))}
             </select>
             <input
                 className="filter-date"
