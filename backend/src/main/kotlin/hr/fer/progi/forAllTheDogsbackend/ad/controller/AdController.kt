@@ -2,7 +2,7 @@ package hr.fer.progi.forAllTheDogsbackend.ad.controller
 
 import hr.fer.progi.forAllTheDogsbackend.ad.controller.dto.AdDTO
 import hr.fer.progi.forAllTheDogsbackend.ad.controller.dto.AddAdDTO
-import hr.fer.progi.forAllTheDogsbackend.ad.entity.Ad
+import hr.fer.progi.forAllTheDogsbackend.ad.controller.dto.EditAdDTO
 import hr.fer.progi.forAllTheDogsbackend.ad.service.AdService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -33,5 +33,10 @@ class AdController(private val adService: AdService) {
     @PostMapping("/add")
     fun addAd(@RequestBody addAdDTO: AddAdDTO) = ResponseEntity.ok(
         adService.addAd(addAdDTO)
+    )
+
+    @PutMapping("/edit/{id}")
+    fun editAd(@PathVariable id: Long, @RequestBody editAddDTO: EditAdDTO) = ResponseEntity.ok(
+        adService.editAd(id, editAddDTO)
     )
 }
