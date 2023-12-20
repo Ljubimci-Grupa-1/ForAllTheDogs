@@ -25,6 +25,9 @@ const NavigationBar = () => {
             }
         }
     })
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
     return (
         <nav className="navbar">
             <Grid container spacing={3} sx={{
@@ -86,7 +89,7 @@ const NavigationBar = () => {
                 </Grid>
             </Grid>
             {modalOpen && (
-                <AddNewModal></AddNewModal>
+                <AddNewModal closeModal={handleCloseModal}></AddNewModal>
             )
             }
         </nav>

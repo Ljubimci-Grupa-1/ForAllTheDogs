@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import SignUpForm from "../components/LogIn/SignUpForm"
 import LoginForm from "./LogIn/LogInForm.tsx";
 import MainContent from "./MainContent/MainContent.tsx";
-import { LostPet } from "./MainContent/MainContent.tsx";
 import Map from "./MainContent/Map/Map.tsx";
 function App() {
 

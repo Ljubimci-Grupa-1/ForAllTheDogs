@@ -7,6 +7,8 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { styled } from '@mui/joy';
+
+
 interface Boja{
     id:number;
     colorName:string;
@@ -15,9 +17,13 @@ export interface Vrsta{
     id:number;
     speciesName:string;
 }
-export const AddNewModal = () =>{
+interface AddNewModalProps {
+    closeModal: () => void;
+}
+export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     const [colors, setColors] = useState([]);
     const [species, setSpecies]=useState([]);
+
 
     useEffect(() => {
         const fetchColors = async () => {
@@ -58,25 +64,28 @@ export const AddNewModal = () =>{
   white-space: nowrap;
   width: 1px;
 `;
-
+const handleClose=()=>{
+    closeModal();
+}
     return (
+        <>
         <div className="modal-container">
+
             <Sheet className="modal-content">
+                <i className="bi bi-x-circle"
+                style={{
+                    fontSize: '2em', // Adjust the font size to make the button bigger
+                    position: 'absolute', // Position absolute for custom placement
+                    top: '10px', // Adjust the top position as needed
+                    right: '10px', // Adjust the left position as needed
+                    cursor: 'pointer', // Add cursor pointer for better UX
+                }}
+                   onClick={handleClose}
+                ></i>
                 <Stack spacing={3}>
                     <h2>Post new ad</h2>
                     <form>
                         <Stack spacing={3} direction="row" justifyContent="center" flexWrap="wrap" useFlexGap>
-                            {/*
-                            <div className="input-container">
-                                <label htmlFor="species">Species:</label>
-                                <Input
-                                    color="primary"
-                                    size="lg"
-                                    variant="soft"
-                                    id="species"
-                                />
-                            </div>
-                            */}
                             <div className="input-container">
                                 <label htmlFor="species">Species:</label>
                                 <Select
@@ -259,5 +268,5 @@ export const AddNewModal = () =>{
                 </Stack>
             </Sheet>
         </div>
-    );
+        </>);
 };

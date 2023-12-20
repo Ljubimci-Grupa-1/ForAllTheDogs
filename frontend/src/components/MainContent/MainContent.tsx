@@ -21,7 +21,19 @@ export interface LostPet {
         cityName: string;
     };
 }
-
+interface User{
+    username:string;
+    name:string;
+    email:string;
+    telephoneNumber:string;
+}
+interface PetData{ //kako bi maknula crvenilo
+    pet:LostPet;
+    inShelter:boolean;
+    user:User;
+    activityName:string;
+    images:string[];
+}
 interface MainContentProps {}
 
 const MainContent: React.FC<MainContentProps> = () => {
@@ -38,7 +50,7 @@ const MainContent: React.FC<MainContentProps> = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
-                const petsData = data.map(item => item.pet);
+                const petsData = data.map((item:PetData) => item.pet);
                 setLostPets(petsData);
             })
             .catch((error) => {
