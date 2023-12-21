@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import "./AddNewModal.css"
 import {Box, Button, Chip, Input, Option, Select, Sheet, Stack, SvgIcon} from "@mui/joy";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -23,7 +23,10 @@ interface AddNewModalProps {
 export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     const [colors, setColors] = useState([]);
     const [species, setSpecies]=useState([]);
-
+    const [counter, setCounter]=useState(0);
+    const [selectedFile, setSelectedFile] = useState<string[]>([]);
+    const [image, setImage]=useState('');
+    const [isUploaded, setIsUploaded] = useState(false)
 
     useEffect(() => {
         const fetchColors = async () => {
@@ -67,6 +70,31 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
 const handleClose=()=>{
     closeModal();
 }
+    const handleFileChange = (event:ChangeEvent<HTMLInputElement>) => {
+    if(selectedFile.length<3){
+        if(event.target.files){
+            setImage(URL.createObjectURL(event.target.files[0]));
+            setIsUploaded(true)
+        }
+    }
+    };
+
+    const handleUpload = (event) => {
+        event.preventDefault();
+        // Here, you can save the selectedFile or perform any other action
+        if (selectedFile) {
+            setSelectedFile([...selectedFile, image]);
+            setCounter(counter+1)
+            setIsUploaded(false)
+        } else {
+            console.log('No file selected');
+        }
+    };
+    const handleDeleteImage=(index:number)=>{
+        const updatedFiles = [...selectedFile];
+        updatedFiles.splice(index, 1);
+        setSelectedFile(updatedFiles);
+    };
     return (
         <>
         <div className="modal-container">
@@ -229,6 +257,7 @@ const handleClose=()=>{
 
                                 <div style={{ marginBottom: '1rem' , paddingTop:'8px'}}>
                                     <Button
+                                        disabled={selectedFile.length>=3}
                                         sx={{
                                             display: 'flex',
 
@@ -258,11 +287,24 @@ const handleClose=()=>{
                                         }
                                     >
                                         Browse
-                                        <VisuallyHiddenInput type="file" />
+                                        <VisuallyHiddenInput type="file" onChange={handleFileChange}/>
                                     </Button>
+                                    <button onClick={handleUpload} disabled={!isUploaded}>Upload</button>
+                                    {isUploaded&&<p>!</p>}
                                     </div>
                             </div>
-
+                            {selectedFile.map((_, index) => (
+                                <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                                    <span>Image {index + 1}</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleDeleteImage(index)}
+                                        style={{ marginLeft: '8px', cursor: 'pointer', background: 'none', border: 'none', color: 'blue' }}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            ))}
                         </Stack>
                     </form>
                 </Stack>
