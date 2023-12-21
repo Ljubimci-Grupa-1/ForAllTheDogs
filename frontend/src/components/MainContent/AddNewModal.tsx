@@ -24,8 +24,8 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     const [colors, setColors] = useState([]);
     const [species, setSpecies]=useState([]);
     const [counter, setCounter]=useState(0);
-    const [selectedFile, setSelectedFile] = useState<string[]>([]);
-    const [image, setImage]=useState('');
+    const [selectedFile, setSelectedFile] = useState<File[]>([]);
+    const [image, setImage]=useState<File[]>([]);
     const [isUploaded, setIsUploaded] = useState(false)
 
     useEffect(() => {
@@ -73,17 +73,15 @@ const handleClose=()=>{
     const handleFileChange = (event:ChangeEvent<HTMLInputElement>) => {
     if(selectedFile.length<3){
         if(event.target.files){
-            setImage(URL.createObjectURL(event.target.files[0]));
+            setImage([event.target.files[0]]);
             setIsUploaded(true)
-        }
-    }
-    };
+        }}};
 
     const handleUpload = (event) => {
         event.preventDefault();
         // Here, you can save the selectedFile or perform any other action
         if (selectedFile) {
-            setSelectedFile([...selectedFile, image]);
+            setSelectedFile([...selectedFile, image[0]]);
             setCounter(counter+1)
             setIsUploaded(false)
         } else {
@@ -95,6 +93,71 @@ const handleClose=()=>{
         updatedFiles.splice(index, 1);
         setSelectedFile(updatedFiles);
     };
+    const handleSubmit=async ()=>{
+
+        const formData = new FormData();
+        if (selectedFile.length > 0) {
+
+            selectedFile.forEach((file, index) => {
+                formData.append(`file${index + 1}`, file);
+            });
+            setSelectedFile([]);
+            setCounter(0);
+        } else {
+            console.log('No files to submit');
+        }
+
+        formData.append('inShelter', '0'); // Example value, replace with your actual data
+
+        // Append user details (assuming user is an object)
+        formData.append('user', JSON.stringify({
+            "name": "Aubrey Drake Graham",
+            "email": "drizzy.drake@goated.com",
+            "telephoneNumber": "0981234567"
+        }));
+        formData.append('activityName', 'Za ljubimcem se traga'); // Replace with actual data
+        // Append pet details (assuming pet is an object)
+        formData.append('pet', JSON.stringify({
+            "speciesName": "Pas",
+            "petName": "Marija",
+            "Age": 3,
+            "colors": [
+                {
+                    "colorName": "Plava"
+                },
+                {
+                    "colorName": "Zelena"
+                }
+            ],
+            "dateTimeMissing": "2023-12-16T10:00:00",
+            "description": "Lost dog poop",
+            "location": {
+                "latitude": 123.456789,
+                "longitude": -987.654321,
+                "cityName": "Zagreb"
+            }
+        }));
+
+        // Append each image file
+        formData.append('images', JSON.stringify({selectedFile}));
+
+        try {
+            const response = await fetch('http://localhost:8080/ad/add', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                console.log('Images uploaded successfully');
+                // You can handle the response from the server here
+            } else {
+                console.error('Failed to upload images');
+            }
+        } catch (error) {
+            console.error('Error uploading images:', error);
+        }
+    };
+
     return (
         <>
         <div className="modal-container">
@@ -289,6 +352,7 @@ const handleClose=()=>{
                                         Browse
                                         <VisuallyHiddenInput type="file" onChange={handleFileChange}/>
                                     </Button>
+                                    {(selectedFile.length>=3) && <p style={{color:"red"}}>Maximum of 3 images</p>}
                                     <button onClick={handleUpload} disabled={!isUploaded}>Upload</button>
                                     {isUploaded&&<p>!</p>}
                                     </div>
@@ -305,6 +369,7 @@ const handleClose=()=>{
                                     </button>
                                 </div>
                             ))}
+                            <button type="submit" onSubmit={handleSubmit}>submit</button>
                         </Stack>
                     </form>
                 </Stack>
