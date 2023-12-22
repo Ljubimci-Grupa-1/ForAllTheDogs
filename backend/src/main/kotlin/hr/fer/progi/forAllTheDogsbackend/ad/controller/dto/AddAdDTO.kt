@@ -15,7 +15,7 @@ data class AddAdDTO (
     val user: UserAdDTO,
     val activityName: String,
     val pet: AddPetDTO,
-    val images: List<String>
+    val images: List<MultipartFile>
 ) {
     fun toAd(activity: Activity, pet: Pet, user: User) = Ad(
         inShelter = inShelter,
@@ -24,7 +24,7 @@ data class AddAdDTO (
         pet = pet,
     )
 
-    fun toImage(image: String, ad: Ad?, message: Message?) = Image(
+    fun toImage(image: ByteArray, ad: Ad?, message: Message?) = Image(
         image = image,
         ad = ad,
         message = message

@@ -16,7 +16,7 @@ class Image(
 
     @NotNull
     @Column(name = "imageurl")
-    var image: String,
+    var image: ByteArray,
 
     @JoinColumn(name = "adid")
     @ManyToOne
