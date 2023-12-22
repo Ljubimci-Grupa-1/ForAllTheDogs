@@ -31,9 +31,11 @@ class AdController(private val adService: AdService) {
     }
 
     @PostMapping("/add")
-    fun addAd(@RequestBody addAdDTO: AddAdDTO) = ResponseEntity.ok(
-        adService.addAd(addAdDTO)
-    )
+    fun addAd(@RequestBody addAdDTO: AddAdDTO): ResponseEntity<AdDTO> {
+        println("controller")
+        return ResponseEntity.ok(adService.addAd(addAdDTO))
+    }
+
 
     @PutMapping("/edit/{id}")
     fun editAd(@PathVariable id: Long, @RequestBody editAddDTO: EditAdDTO) = ResponseEntity.ok(
