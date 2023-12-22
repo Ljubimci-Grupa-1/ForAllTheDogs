@@ -9,6 +9,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { styled } from '@mui/joy';
 import React, { Component } from 'react';
 import axios from "axios";
+import DraggableMapForm from "./Map/DraggableMapForm";
 
 
 interface Boja{
@@ -28,8 +29,8 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     const [counter, setCounter]=useState(0);
     const [selectedFile, setSelectedFile] = useState<File[]>([]);
     const [image, setImage]=useState<File[]>([]);
-    const [isUploaded, setIsUploaded] = useState(false)
-
+    const [isUploaded, setIsUploaded] = useState(false);
+    const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
     useEffect(() => {
         const fetchColors = async () => {
             try {
@@ -69,9 +70,17 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
   white-space: nowrap;
   width: 1px;
 `;
-const handleClose=()=>{
-    closeModal();
-}
+
+    const handleClose=()=>{
+        closeModal();
+    }
+    const handleDragEnd = (latlng: L.LatLng) => {
+        setMarkerPosition({
+            latitude: latlng.lat,
+            longitude: latlng.lng,
+        });
+        console.log(markerPosition);
+    };
     const handleFileChange = (event:ChangeEvent<HTMLInputElement>) => {
     if(selectedFile.length<3){
         if(event.target.files){
@@ -134,8 +143,8 @@ const handleClose=()=>{
             "dateTimeMissing": "2023-12-16T10:00:00",
             "description": "Lost dog poop",
             "location": {
-                "latitude": 12.456789,
-                "longitude": -7.654321,
+                "latitude": markerPosition.latitude,
+                "longitude": markerPosition.longitude,
                 "cityName": "Zagreb"
             }
         }));
@@ -392,6 +401,10 @@ const handleClose=()=>{
                                     {isUploaded&&<p>!</p>}
                                     </div>
                             </div>
+                            <div style={{height:'200px'}} className="input-container">
+                                <DraggableMapForm onDragEnd={handleDragEnd}/>
+                            </div>
+                            <div className="input-container">
                             {selectedFile.map((_, index) => (
                                 <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
                                     <span>Image {index + 1}</span>
@@ -404,7 +417,9 @@ const handleClose=()=>{
                                     </button>
                                 </div>
                             ))}
-                            <button type="button" onClick={handleSubmit}>submit</button>
+                                <button type="button" onClick={handleSubmit}>submit</button>
+                            </div>
+
                         </Stack>
                     </form>
                 </Stack>
