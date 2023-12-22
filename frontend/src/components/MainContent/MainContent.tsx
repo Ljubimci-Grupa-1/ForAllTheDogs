@@ -5,37 +5,20 @@ import LostPetCard from './LostPetCard';
 import FilterBar from "./Bars/FilterBar.tsx";
 import NavigationBar from "./Bars/NavigationBar.tsx";
 
-export interface LostPet {
+interface LostPet {
     petId: number;
     petName: string;
     speciesName: string;
-    description: string;
     dateTimeMissing: string;
-    imageUrl: string;
-    age: number;
-    colors: string[];
-    location: {
-        locationId: number;
-        longitude: number;
-        latitude: number;
-        cityName: string;
-    };
+    images: string[];
+    description: string;
+    // Other properties related to a lost pet
 }
-interface User{
-    username:string;
-    name:string;
-    email:string;
-    telephoneNumber:string;
-}
-interface PetData{ //kako bi maknula crvenilo
-    pet:LostPet;
-    inShelter:boolean;
-    user:User;
-    activityName:string;
-    images:string[];
+interface PetData {
+    pet: LostPet;
+    // Other properties from the API response
 }
 interface MainContentProps {}
-
 const MainContent: React.FC<MainContentProps> = () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
@@ -50,8 +33,14 @@ const MainContent: React.FC<MainContentProps> = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
-                const petsData = data.map((item:PetData) => item.pet);
+                const petsData: LostPet[] = data.map((item: PetData) => {
+                    const pet: LostPet = item.pet;
+                    // Assuming images is available in your data, replace 'images' with the actual property name
+                    const images = item.images; // Replace 'images' with the actual property name
+                    return { ...pet, images };
+                });
                 setLostPets(petsData);
+                console.log(petsData[6]);
             })
             .catch((error) => {
                 console.error('Error fetching lost pets:', error);
@@ -128,5 +117,5 @@ const MainContent: React.FC<MainContentProps> = () => {
         </main>
     );
 };
-
+export { LostPet };
 export default MainContent;

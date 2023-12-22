@@ -10,7 +10,7 @@ interface LostPetCardProps {
 const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick }) => {
     return (
         <div className="lost-pet-card">
-            <img src={pet.imageUrl} alt={pet.petName} />
+            {pet.images && pet.images[0] && <img src={pet.images[0].image} alt={pet.petName} />}
             <h3>{pet.petName}</h3>
             <p>Species: {pet.speciesName}</p>
             <p>Date Lost: {pet.dateTimeMissing}</p>

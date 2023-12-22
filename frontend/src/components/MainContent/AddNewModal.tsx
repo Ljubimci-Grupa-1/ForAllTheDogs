@@ -31,6 +31,38 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     const [image, setImage]=useState<File[]>([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
+    const [fileBase64Array, setFileBase64Array] = useState<string[]>([]);
+    const [browsedFile, setBrowsedFile]=useState('');
+    const [formData, setFormData] = useState({
+        inShelter: "1",
+        user: {
+            name: "Aubrey Drake Graham",
+            email: "drizzy.drake@goated.com",
+            telephoneNumber: "0981234567",
+        },
+        activityName: "Za ljubimcem se traga",
+        pet: {
+            speciesName: "Pas",
+            petName: "Allah Krist Bomboclaat",
+            Age: 3,
+            colors: [
+                {
+                    colorName: "Plava",
+                },
+                {
+                    colorName: "Zelena",
+                },
+            ],
+            dateTimeMissing: "2023-12-16T10:00:00",
+            description: "Lost dog poop",
+            location: {
+                latitude: 123.456789,
+                longitude: -987.654321,
+                cityName: "Zagreb",
+            },
+        },
+        images: [],
+    });
     useEffect(() => {
         const fetchColors = async () => {
             try {
@@ -100,13 +132,32 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         }
     };
     const handleDeleteImage=(index:number)=>{
-        const updatedFiles = [...selectedFile];
+        const updatedFiles = [...fileBase64Array];
         updatedFiles.splice(index, 1);
-        setSelectedFile(updatedFiles);
+        setFileBase64Array(updatedFiles);
+    };
+    const convertFile = (files: FileList | null) => {
+        if (files && files.length > 0) {
+            const fileRef = files[0];
+            if (fileRef) {
+                const fileType: string | undefined = fileRef.type;
+                console.log("This file upload is of type:", fileType);
+
+                const reader = new FileReader();
+                reader.readAsBinaryString(fileRef);
+
+                reader.onload = (ev: any) => {
+                    // convert it to base64
+                    const base64String = `data:${fileType || "application/octet-stream"};base64,${btoa(ev.target.result)}`;
+
+                    // Add the new base64 string to the array
+                    setFileBase64Array(prevArray => [...prevArray, base64String]);
+                    console.log(fileBase64Array);
+                };
+            }
+        }
     };
     const handleSubmit=async ()=>{
-        console.log(selectedFile);
-        const formData = new FormData();
         {/*if (selectedFile.length > 0) {
 
             selectedFile.forEach((file, index) => {
@@ -118,85 +169,36 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             console.log('No files to submit');
         }*/}
 
-        formData.append('inShelter', JSON.stringify(0)); // Example value, replace with your actual data
-
-        // Append user details (assuming user is an object)
-        formData.append('user', JSON.stringify({
-            "name": "Aubrey Drake Graham",
-            "email": "drizzy.drake@goated.com",
-            "telephoneNumber": "0981234567"
-        }));
-        formData.append('activityName', JSON.stringify('Za ljubimcem se traga')); // Replace with actual data
-        // Append pet details (assuming pet is an object)
-        formData.append('pet', JSON.stringify({
-            "speciesName": "Pas",
-            "petName": "Marija",
-            "Age": 3,
-            "colors": [
-                {
-                    "colorName": "Plava"
-                },
-                {
-                    "colorName": "Zelena"
-                }
-            ],
-            "dateTimeMissing": "2023-12-16T10:00:00",
-            "description": "Lost dog poop",
-            "location": {
-                "latitude": markerPosition.latitude,
-                "longitude": markerPosition.longitude,
-                "cityName": "Zagreb"
-            }
-        }));
-
-        // Append each image file
         //formData.append('images', JSON.stringify({selectedFile}));
-        if (selectedFile.length > 0) {
-
-            formData.append('images', image[0]);
-            // the image field name should be similar to your api endpoint field name
-            // in my case here the field name is customFile
-
-            axios.post(
-                'http://localhost:8080/ad/add',
-                formData,
-                {
+        //formData.append('images', JSON.stringify([]));
+        if (fileBase64Array) {
+            formData.images=fileBase64Array;
+            try {
+                const response = await fetch('http://localhost:8080/ad/add', {
+                    method: 'POST',
                     headers: {
-                        "Content-type": "multipart/form-data",
+                        'Content-Type': 'application/json',
                     },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    console.log('Images uploaded successfully');
+                    // You can handle the response from the server here
+                } else {
+                    console.error('Failed to upload images');
                 }
-            )
-                .then(res => {
-                    console.log(`Success` + res.data);
-                })
-                .catch(err => {
-                    console.log(err.message);
-                })
+            } catch (error) {
+                console.error('Error uploading images:', error);
+            }
 
             setSelectedFile([]);
             setCounter(0);
         } else {
-            formData.append('images', JSON.stringify([]));
+            //formData.append('images', JSON.stringify([]));
             console.log('No files to submit');
         }
-        for (const pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
-        {/*try {
-            const response = await fetch('http://localhost:8080/ad/add', {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (response.ok) {
-                console.log('Images uploaded successfully');
-                // You can handle the response from the server here
-            } else {
-                console.error('Failed to upload images');
-            }
-        } catch (error) {
-            console.error('Error uploading images:', error);
-        }*/}
+        console.log(formData);
     };
 
     return (
@@ -359,16 +361,15 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                     </DemoContainer>
                                 </LocalizationProvider>
                             </div>
-                            <div className="input-container" >
+                            <div className="input-container">
                                 <label htmlFor="uploadPhoto">Upload photos:</label>
 
-                                <div style={{ marginBottom: '1rem' , paddingTop:'8px'}}>
+                                <div style={{ marginBottom: "1rem", paddingTop: "8px" }}>
                                     <Button
-                                        disabled={selectedFile.length>=3}
+                                        disabled={selectedFile.length >= 3}
                                         sx={{
-                                            display: 'flex',
-
-                                            height:'43px',
+                                            display: "flex",
+                                            height: "43px",
                                         }}
                                         component="label"
                                         role={undefined}
@@ -394,12 +395,22 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                         }
                                     >
                                         Browse
-                                        <VisuallyHiddenInput type="file" onChange={handleFileChange}/>
+                                        <VisuallyHiddenInput
+                                            type="file"
+                                            onChange={(e) => {
+                                                handleFileChange(e);
+                                                convertFile(e.target.files);
+                                            }}
+                                        />
                                     </Button>
-                                    {(selectedFile.length>=3) && <p style={{color:"red"}}>Maximum of 3 images</p>}
-                                    <button onClick={handleUpload} disabled={!isUploaded}>Upload</button>
-                                    {isUploaded&&<p>!</p>}
-                                    </div>
+                                    {(selectedFile.length >= 3) && (
+                                        <p style={{ color: "red" }}>Maximum of 3 images</p>
+                                    )}
+                                    <button onClick={handleUpload} disabled={!isUploaded}>
+                                        Upload
+                                    </button>
+                                    {isUploaded && <p>!</p>}
+                                </div>
                             </div>
                             <div style={{height:'200px'}} className="input-container">
                                 <DraggableMapForm onDragEnd={handleDragEnd}/>
@@ -417,8 +428,13 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                     </button>
                                 </div>
                             ))}
-                                <button type="button" onClick={handleSubmit}>submit</button>
+                                {fileBase64Array.map((base64, index) => (
+                                    <div key={index}>
+                                        <img src={base64} alt={`Uploaded ${index + 1}`} style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                    </div>
+                                ))}
                             </div>
+                            <button type="button" onClick={handleSubmit}>submit</button>
 
                         </Stack>
                     </form>
