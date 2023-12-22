@@ -78,7 +78,7 @@ class AdService(
 
         // saving the compressed images to the database
         dto.images.forEach { image ->
-            imageRepository.save(dto.toImage(compressImage(image), ad, null))
+            imageRepository.save(dto.toImage(/*compressImage*/(image), ad, null))
         }
 
         // returning the DTO with the saved data
@@ -90,7 +90,7 @@ class AdService(
                 LocationDTO(location, city.cityName)
             ),
             // map the images to a list of ImageDTOs
-            dto.images.map { image -> ImageDTO(dto.toImage(compressImage(image), ad, null)) }
+            dto.images.map { image -> ImageDTO(dto.toImage(/*compressImage*/(image), ad, null)) }
         )
     }
 
@@ -166,7 +166,7 @@ class AdService(
         ad.activity = editAdDTO.activityName?.let { activityRepository.findByActivityCategory(it) } ?: ad.activity
         if (editAdDTO.images != null) {
             editAdDTO.images.forEach { image ->
-                imageRepository.save(editAdDTO.toImage(compressImage(image), ad, null))
+                imageRepository.save(editAdDTO.toImage(/*compressImage*/(image), ad, null))
             }
         }
     }

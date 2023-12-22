@@ -12,9 +12,9 @@ data class EditAdDTO(
     val user: UserAdDTO,
     val activityName: String? = null,
     val pet: EditPetDTO? = null,
-    val images: List<MultipartFile>? = null
+    val images: List<String>? = null
 ) {
-    fun toImage(image: ByteArray, ad: Ad?, message: Message?) = Image(
+    fun toImage(image: String, ad: Ad?, message: Message?) = Image(
         image = image,
         ad = ad,
         message = message

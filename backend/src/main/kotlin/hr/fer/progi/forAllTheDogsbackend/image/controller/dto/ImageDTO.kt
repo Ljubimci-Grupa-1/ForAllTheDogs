@@ -4,14 +4,14 @@ import hr.fer.progi.forAllTheDogsbackend.image.entity.Image
 
 data class ImageDTO (
     val imageId: Long,
-    val image: ByteArray
+    val image: String
 ){
     constructor(image: Image): this(
         image.imageId,
         image.image
     )
 
-    override fun equals(other: Any?): Boolean {
+    /*override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
@@ -25,5 +25,5 @@ data class ImageDTO (
         var result = imageId.hashCode()
         result = 31 * result + image.contentHashCode()
         return result
-    }
+    }*/
 }
