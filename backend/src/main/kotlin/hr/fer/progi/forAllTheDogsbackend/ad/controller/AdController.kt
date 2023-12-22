@@ -31,9 +31,9 @@ class AdController(private val adService: AdService) {
     }
 
     @PostMapping("/add")
-    fun addAd(@RequestBody addAdDTO: AddAdDTO): ResponseEntity<AdDTO> {
-        println("controller")
-        return ResponseEntity.ok(adService.addAd(addAdDTO))
+    fun addAd(@RequestBody addAdDTO: Any) {
+        println("bomboclaat")
+//        return ResponseEntity.ok(adService.addAd(addAdDTO))
     }
 
 
