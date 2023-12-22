@@ -7,6 +7,8 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { styled } from '@mui/joy';
+import React, { Component } from 'react';
+import axios from "axios";
 
 
 interface Boja{
@@ -94,9 +96,9 @@ const handleClose=()=>{
         setSelectedFile(updatedFiles);
     };
     const handleSubmit=async ()=>{
-
+        console.log(selectedFile);
         const formData = new FormData();
-        if (selectedFile.length > 0) {
+        {/*if (selectedFile.length > 0) {
 
             selectedFile.forEach((file, index) => {
                 formData.append(`file${index + 1}`, file);
@@ -105,9 +107,9 @@ const handleClose=()=>{
             setCounter(0);
         } else {
             console.log('No files to submit');
-        }
+        }*/}
 
-        formData.append('inShelter', '0'); // Example value, replace with your actual data
+        formData.append('inShelter', JSON.stringify(0)); // Example value, replace with your actual data
 
         // Append user details (assuming user is an object)
         formData.append('user', JSON.stringify({
@@ -115,7 +117,7 @@ const handleClose=()=>{
             "email": "drizzy.drake@goated.com",
             "telephoneNumber": "0981234567"
         }));
-        formData.append('activityName', 'Za ljubimcem se traga'); // Replace with actual data
+        formData.append('activityName', JSON.stringify('Za ljubimcem se traga')); // Replace with actual data
         // Append pet details (assuming pet is an object)
         formData.append('pet', JSON.stringify({
             "speciesName": "Pas",
@@ -132,16 +134,46 @@ const handleClose=()=>{
             "dateTimeMissing": "2023-12-16T10:00:00",
             "description": "Lost dog poop",
             "location": {
-                "latitude": 123.456789,
-                "longitude": -987.654321,
+                "latitude": 12.456789,
+                "longitude": -7.654321,
                 "cityName": "Zagreb"
             }
         }));
 
         // Append each image file
-        formData.append('images', JSON.stringify({selectedFile}));
+        //formData.append('images', JSON.stringify({selectedFile}));
+        if (selectedFile.length > 0) {
 
-        try {
+            formData.append('images', image[0]);
+            // the image field name should be similar to your api endpoint field name
+            // in my case here the field name is customFile
+
+            axios.post(
+                'http://localhost:8080/ad/add',
+                formData,
+                {
+                    headers: {
+                        "Content-type": "multipart/form-data",
+                    },
+                }
+            )
+                .then(res => {
+                    console.log(`Success` + res.data);
+                })
+                .catch(err => {
+                    console.log(err.message);
+                })
+
+            setSelectedFile([]);
+            setCounter(0);
+        } else {
+            formData.append('images', JSON.stringify([]));
+            console.log('No files to submit');
+        }
+        for (const pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+        {/*try {
             const response = await fetch('http://localhost:8080/ad/add', {
                 method: 'POST',
                 body: formData,
@@ -155,7 +187,7 @@ const handleClose=()=>{
             }
         } catch (error) {
             console.error('Error uploading images:', error);
-        }
+        }*/}
     };
 
     return (
@@ -175,7 +207,10 @@ const handleClose=()=>{
                 ></i>
                 <Stack spacing={3}>
                     <h2>Post new ad</h2>
-                    <form>
+                    <form onSubmit={(e) => {
+                        e.preventDefault(); // Prevents the default form submission behavior
+                        handleSubmit();
+                    }}>
                         <Stack spacing={3} direction="row" justifyContent="center" flexWrap="wrap" useFlexGap>
                             <div className="input-container">
                                 <label htmlFor="species">Species:</label>
@@ -369,7 +404,7 @@ const handleClose=()=>{
                                     </button>
                                 </div>
                             ))}
-                            <button type="submit" onSubmit={handleSubmit}>submit</button>
+                            <button type="button" onClick={handleSubmit}>submit</button>
                         </Stack>
                     </form>
                 </Stack>
