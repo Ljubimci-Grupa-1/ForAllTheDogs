@@ -1,4 +1,4 @@
-import {ChangeEvent, useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useRef, useState} from "react";
 import "./AddNewModal.css"
 import {Box, Button, Chip, Input, Option, Select, Sheet, Stack, SvgIcon} from "@mui/joy";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -7,8 +7,6 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { styled } from '@mui/joy';
-import React, { Component } from 'react';
-import axios from "axios";
 import DraggableMapForm from "./Map/DraggableMapForm";
 
 
@@ -33,6 +31,12 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
     const [fileBase64Array, setFileBase64Array] = useState<string[]>([]);
     const [browsedFile, setBrowsedFile]=useState('');
+
+    const [data, setData]=useState({
+        age:0, name:"", species:"", colors:[], latitude:0, longitude:0, hour:0, date:0
+    })
+
+
     const [formData, setFormData] = useState({
         inShelter: "1",
         user: {
@@ -77,6 +81,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         fetchColors();
     }, []);
 
+
     useEffect(() => {
         const fetchSpecies = async () => {
             try {
@@ -91,6 +96,10 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         fetchSpecies();
     }, []);
 
+    useEffect(() => {
+        console.log("hh")
+
+    }, []);
     const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -111,8 +120,16 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             latitude: latlng.lat,
             longitude: latlng.lng,
         });
+        setData({
+            ...data,
+            latitude: latlng.lat,
+            longitude: latlng.lng,
+        });
+        console.log(latlng.lat);
+        console.log(latlng.lng);
         console.log(markerPosition);
     };
+
     const handleFileChange = (event:ChangeEvent<HTMLInputElement>) => {
     if(selectedFile.length<3){
         if(event.target.files){
@@ -157,22 +174,25 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             }
         }
     };
+    const handleChange = (
+        event: React.SyntheticEvent | null,
+        newValue: string | null,
+    ) => {
+        console.log(newValue);
+        if(newValue)
+        setData({...data, species:newValue});
+    };
+
+
     const handleSubmit=async ()=>{
-        {/*if (selectedFile.length > 0) {
-
-            selectedFile.forEach((file, index) => {
-                formData.append(`file${index + 1}`, file);
-            });
-            setSelectedFile([]);
-            setCounter(0);
-        } else {
-            console.log('No files to submit');
-        }*/}
-
-        //formData.append('images', JSON.stringify({selectedFile}));
-        //formData.append('images', JSON.stringify([]));
+        console.log(data);
         if (fileBase64Array) {
             formData.images=fileBase64Array;
+            formData.pet.speciesName=data.species;
+            formData.pet.Age=data.age;
+            formData.pet.petName=data.name;
+            formData.pet.location.latitude=data.latitude;
+            formData.pet.location.longitude=data.longitude;
             try {
                 const response = await fetch('http://localhost:8080/ad/add', {
                     method: 'POST',
@@ -224,20 +244,20 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                     }}>
                         <Stack spacing={3} direction="row" justifyContent="center" flexWrap="wrap" useFlexGap>
                             <div className="input-container">
-                                <label htmlFor="species">Species:</label>
+                                <label htmlFor="species2">Species:</label>
                                 <Select
-                                    multiple
+
                                     placeholder="Select a species"
                                     variant="soft"
                                     color="primary"
-                                    id="species"
+                                    id="species2"
+                                    onChange={handleChange}
                                     renderValue={(selected) => (
                                         <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
-                                            {selected.map((selectedOption) => (
                                                 <Chip variant="solid" color="primary">
-                                                    {selectedOption.label}
+                                                    {selected.label}
                                                 </Chip>
-                                            ))}
+
                                         </Box>
                                     )}
                                     sx={{
@@ -274,6 +294,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                     size="lg"
                                     variant="soft"
                                     id="petName"
+                                    onChange={(event)=>setData({...data, name:event.target.value})}
                                 />
                             </div>
                             <div className="input-container">
@@ -283,6 +304,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                     size="lg"
                                     variant="soft"
                                     id="age"
+                                    onChange={(event)=>setData({...data, age: parseInt(event.target.value) })}
                                 />
                             </div>
                             <div className="input-container">
