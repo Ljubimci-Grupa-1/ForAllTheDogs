@@ -125,7 +125,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     }, []);
 
     useEffect(() => {
-        console.log(validation);
     }, [validation]);
     const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
@@ -152,9 +151,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             latitude: latlng.lat,
             longitude: latlng.lng,
         });
-        console.log(latlng.lat);
-        console.log(latlng.lng);
-        console.log(markerPosition);
     };
 
     const handleFileChange = (event:ChangeEvent<HTMLInputElement>) => {
@@ -196,7 +192,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
 
                     // Add the new base64 string to the array
                     setFileBase64Array(prevArray => [...prevArray, base64String]);
-                    console.log(fileBase64Array);
                 };
             }
         }
@@ -206,7 +201,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         newValue: string | null,
     ) => {
         setChanged({...changed, species:true})
-        console.log(newValue);
         if(newValue)
         setData({...data, species:newValue});
     };
@@ -215,7 +209,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         event: React.SyntheticEvent | null,
         newValue: string[] | null,
     ) => {
-        console.log(newValue);
         if(newValue){
              setData({...data, colors:newValue.map((colorName) => ({
                      colorName: colorName,
@@ -226,9 +219,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
 
     const handleDateTimeChange = (newDateTime) => {
         setSelectedDateTime(newDateTime);
-        console.log(newDateTime);
         const formattedDateTime = dayjs(newDateTime).format('YYYY-MM-DDTHH:mm:ss');
-        console.log(formattedDateTime);
         setData({...data, datetime:formattedDateTime})
     };
 
@@ -239,14 +230,11 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             colors:(data.colors.length!==0), latitude:(data.latitude!==190), longitude:(data.longitude!==190),
             images:(fileBase64Array.length<4)&&(fileBase64Array.length>0)
         }
-        console.log(forma)
         setValidation(forma);
     };
 
     const handleSubmit=async ()=>{
         formValidation();
-        console.log("validacija forme");
-        console.log(validation);
         if (fileBase64Array) {
             formData.images=fileBase64Array;
             formData.pet.speciesName=data.species;
@@ -257,8 +245,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             formData.pet.colors=data.colors;
             formData.pet.dateTimeMissing=data.datetime;
             formData.pet.description=data.description;
-            console.log("ov je formdata")
-            console.log(formData);
 
             try {
                 const response = await fetch('http://localhost:8080/ad/add', {
@@ -291,7 +277,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     return (
         <>
         <div className="modal-container">
-
+{}
             <Sheet className="modal-content">
                 <i className="bi bi-x-circle"
                 style={{
@@ -353,7 +339,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                         </Option>
                                     ))}
                                 </Select>
-                                {!validation.species && <p className="error-message">Species is required</p>}
+                                {!validation.species && <p className="error-message" style={{color:"red"}}>Species is required!</p>}
                             </div>
                             <div className="input-container">
                                 <label htmlFor="petName">Pet name:</label>
@@ -364,7 +350,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                     id="petName"
                                     onChange={(event)=>setData({...data, name:event.target.value})}
                                 />
-                                {!validation.name && <p className="error-message">Name is required</p>}
+                                {!validation.name && <p className="error-message" style={{color:"red"}}>Name is required!</p>}
                             </div>
                             <div className="input-container">
                                 <label htmlFor="age">Age:</label>
@@ -379,6 +365,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                         setData({...data, age: parseInt(event.target.value) });
                                     }}
                                 />
+                                {!validation.age && <p className="error-message" style={{color:"red"}}>Age is required!</p>}
                             </div>
                             <div className="input-container">
                                 <label htmlFor="color">Color:</label>
@@ -424,6 +411,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                         </Option>
                                     ))}
                                 </Select>
+                                {!validation.colors && <p className="error-message" style={{color:"red"}}>At least 1 color!</p>}
                             </div>
                             <div className="input-container">
                                 <label htmlFor="dateandtime">Gone missing:</label>
@@ -459,6 +447,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                         />
                                     </DemoContainer>
                                 </LocalizationProvider>
+                                {!validation.datetime && <p className="error-message" style={{color:"red"}}>Date and time are required!</p>}
                             </div>
                             <div className="input-container">
                                 <label htmlFor="uploadPhoto">Upload photos:</label>
@@ -511,6 +500,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                     {isUploaded && <p>!</p>}
                                 </div>
                             </div>
+                            {!validation.images && <p className="error-message" style={{color:"red"}}>At least 1 image!</p>}
                             <div style={{height:'200px'}} className="input-container">
                                 <DraggableMapForm onDragEnd={handleDragEnd}/>
                             </div>
@@ -527,11 +517,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                     </button>
                                 </div>
                             ))}
-                                {fileBase64Array.map((base64, index) => (
-                                    <div key={index}>
-                                        <img src={base64} alt={`Uploaded ${index + 1}`} style={{ maxWidth: '100%', maxHeight: '200px' }} />
-                                    </div>
-                                ))}
                             </div>
                             <button type="button" onClick={handleSubmit}>submit</button>
                             <div className="input-container">
@@ -539,6 +524,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                 <textarea id="description"
                                           onChange={(event)=>setData({...data, description:event.target.value})}
                                 ></textarea>
+                                {!validation.description && <p className="error-message" style={{color:"red"}}>Description is required!</p>}
                             </div>
                         </Stack>
                     </form>
