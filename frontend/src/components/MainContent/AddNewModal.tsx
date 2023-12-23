@@ -1,4 +1,4 @@
-import {ChangeEvent, useEffect, useRef, useState} from "react";
+import  {ChangeEvent, useEffect, useState} from "react";
 import "./AddNewModal.css"
 import {Box, Button, Chip, Input, Option, Select, Sheet, Stack, SvgIcon} from "@mui/joy";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -8,6 +8,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { styled } from '@mui/joy';
 import DraggableMapForm from "./Map/DraggableMapForm";
+import dayjs from "dayjs";
 
 
 interface Boja{
@@ -21,6 +22,30 @@ export interface Vrsta{
 interface AddNewModalProps {
     closeModal: () => void;
 }
+interface Color {
+    colorName:string;
+}
+interface Data{
+    age:number;
+    name:string;
+    species:string;
+    colors:Color[];
+    latitude:number;
+    longitude:number;
+    datetime:string;
+    description:string;
+}
+interface FormValidation{
+    age:boolean;
+    name:boolean;
+    species:boolean;
+    colors:boolean;
+    latitude:boolean;
+    longitude:boolean;
+    datetime:boolean;
+    description:boolean;
+    images:boolean;
+}
 export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     const [colors, setColors] = useState([]);
     const [species, setSpecies]=useState([]);
@@ -31,10 +56,20 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
     const [fileBase64Array, setFileBase64Array] = useState<string[]>([]);
     const [browsedFile, setBrowsedFile]=useState('');
-
-    const [data, setData]=useState({
-        age:0, name:"", species:"", colors:[], latitude:0, longitude:0, hour:0, date:0
+    const [data, setData]=useState<Data>({
+        age:-1, name:"", species:"", colors:[], latitude:45.813257, longitude:15.976448, datetime:"", description:""
     })
+    const [selectedDateTime, setSelectedDateTime] =useState(null);
+    const [changed, setChanged]=useState<FormValidation>(
+        {
+            age:false, name:false, species:false, colors:false, latitude:false, longitude:false, datetime:false, description:false, images:false
+        }
+    )
+    const [validation, setValidation]=useState<FormValidation>(
+        {
+            age:true, name:true, species:true, colors:true, latitude:true, longitude:true, datetime:true, description:true, images:true
+        }
+    )
 
 
     const [formData, setFormData] = useState({
@@ -46,22 +81,15 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         },
         activityName: "Za ljubimcem se traga",
         pet: {
-            speciesName: "Pas",
-            petName: "Allah Krist Bomboclaat",
-            Age: 3,
-            colors: [
-                {
-                    colorName: "Plava",
-                },
-                {
-                    colorName: "Zelena",
-                },
-            ],
-            dateTimeMissing: "2023-12-16T10:00:00",
-            description: "Lost dog poop",
+            speciesName: "",
+            petName: "",
+            Age: -1,
+            colors: [],
+            dateTimeMissing: "",
+            description: "",
             location: {
-                latitude: 123.456789,
-                longitude: -987.654321,
+                latitude: 45.813257,
+                longitude: 15.976448,
                 cityName: "Zagreb",
             },
         },
@@ -97,9 +125,8 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     }, []);
 
     useEffect(() => {
-        console.log("hh")
-
-    }, []);
+        console.log(validation);
+    }, [validation]);
     const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -178,14 +205,48 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         event: React.SyntheticEvent | null,
         newValue: string | null,
     ) => {
+        setChanged({...changed, species:true})
         console.log(newValue);
         if(newValue)
         setData({...data, species:newValue});
     };
 
+    const handleColorChange = (
+        event: React.SyntheticEvent | null,
+        newValue: string[] | null,
+    ) => {
+        console.log(newValue);
+        if(newValue){
+             setData({...data, colors:newValue.map((colorName) => ({
+                     colorName: colorName,
+                 }))})
+        }
+
+    };
+
+    const handleDateTimeChange = (newDateTime) => {
+        setSelectedDateTime(newDateTime);
+        console.log(newDateTime);
+        const formattedDateTime = dayjs(newDateTime).format('YYYY-MM-DDTHH:mm:ss');
+        console.log(formattedDateTime);
+        setData({...data, datetime:formattedDateTime})
+    };
+
+    const formValidation = ()=>{
+        const forma = {
+            age:changed.age&&(data.age!==-1)&&(!isNaN(data.age)), name:(data.name!==''), species:changed.species&&(data.species!==''),
+            description:(data.description!==''), datetime:(data.datetime!==''),
+            colors:(data.colors.length!==0), latitude:(data.latitude!==190), longitude:(data.longitude!==190),
+            images:(fileBase64Array.length<4)&&(fileBase64Array.length>0)
+        }
+        console.log(forma)
+        setValidation(forma);
+    };
 
     const handleSubmit=async ()=>{
-        console.log(data);
+        formValidation();
+        console.log("validacija forme");
+        console.log(validation);
         if (fileBase64Array) {
             formData.images=fileBase64Array;
             formData.pet.speciesName=data.species;
@@ -193,6 +254,12 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             formData.pet.petName=data.name;
             formData.pet.location.latitude=data.latitude;
             formData.pet.location.longitude=data.longitude;
+            formData.pet.colors=data.colors;
+            formData.pet.dateTimeMissing=data.datetime;
+            formData.pet.description=data.description;
+            console.log("ov je formdata")
+            console.log(formData);
+
             try {
                 const response = await fetch('http://localhost:8080/ad/add', {
                     method: 'POST',
@@ -286,6 +353,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                         </Option>
                                     ))}
                                 </Select>
+                                {!validation.species && <p className="error-message">Species is required</p>}
                             </div>
                             <div className="input-container">
                                 <label htmlFor="petName">Pet name:</label>
@@ -296,6 +364,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                     id="petName"
                                     onChange={(event)=>setData({...data, name:event.target.value})}
                                 />
+                                {!validation.name && <p className="error-message">Name is required</p>}
                             </div>
                             <div className="input-container">
                                 <label htmlFor="age">Age:</label>
@@ -304,7 +373,11 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                     size="lg"
                                     variant="soft"
                                     id="age"
-                                    onChange={(event)=>setData({...data, age: parseInt(event.target.value) })}
+                                    type="number"
+                                    onChange={(event)=>{
+                                        setChanged({...validation, age:true})
+                                        setData({...data, age: parseInt(event.target.value) });
+                                    }}
                                 />
                             </div>
                             <div className="input-container">
@@ -315,6 +388,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                     variant="soft"
                                     color="primary"
                                     id="color"
+                                    onChange={handleColorChange}
                                     renderValue={(selected) => (
                                         <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
                                             {selected.map((selectedOption) => (
@@ -379,7 +453,10 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                             },
                                         }}
                                         components={['DateTimePicker']}>
-                                        <DateTimePicker />
+                                        <DateTimePicker
+                                            value={selectedDateTime}
+                                            onChange={handleDateTimeChange}
+                                        />
                                     </DemoContainer>
                                 </LocalizationProvider>
                             </div>
@@ -457,7 +534,12 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                 ))}
                             </div>
                             <button type="button" onClick={handleSubmit}>submit</button>
-
+                            <div className="input-container">
+                                <label htmlFor="description">Description:</label>
+                                <textarea id="description"
+                                          onChange={(event)=>setData({...data, description:event.target.value})}
+                                ></textarea>
+                            </div>
                         </Stack>
                     </form>
                 </Stack>
