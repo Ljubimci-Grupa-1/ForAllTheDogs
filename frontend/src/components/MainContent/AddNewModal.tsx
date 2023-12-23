@@ -1,4 +1,4 @@
-import  {ChangeEvent, useEffect, useState} from "react";
+import  {useEffect, useState} from "react";
 import "./AddNewModal.css"
 import {Box, Button, Chip, Input, Option, Select, Sheet, Stack, SvgIcon} from "@mui/joy";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -35,6 +35,32 @@ interface Data{
     datetime:string;
     description:string;
 }
+interface locationData{
+    latitude:number;
+    longitude:number;
+    cityName: string;
+}
+interface petData{
+    speciesName:string;
+    petName:string;
+    Age:number;
+    colors:Color[];
+    dateTimeMissing:string;
+    description:string;
+    location:locationData;
+}
+interface adUser{
+    name:string;
+    email:string;
+    telephoneNumber:string;
+}
+interface fdata{
+    inShelter:string;
+    user: adUser;
+    activityName: string;
+    pet: petData;
+    images: string[];
+}
 interface FormValidation{
     age:boolean;
     name:boolean;
@@ -51,7 +77,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     const [species, setSpecies]=useState([]);
     const [counter, setCounter]=useState(0);
     const [selectedFile, setSelectedFile] = useState<File[]>([]);
-    const [image, setImage]=useState<File[]>([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
     const [fileBase64Array, setFileBase64Array] = useState<string[]>([]);
@@ -72,7 +97,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     )
 
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<fdata>({
         inShelter: "1",
         user: {
             name: "Aubrey Drake Graham",
@@ -126,6 +151,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
 
     useEffect(() => {
     }, [validation]);
+
     const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -153,18 +179,56 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         });
     };
 
-    const handleFileChange = (event:ChangeEvent<HTMLInputElement>) => {
-    if(selectedFile.length<3){
-        if(event.target.files){
-            setImage([event.target.files[0]]);
-            setIsUploaded(true)
-        }}};
+    const handleChange = (
+        _: React.SyntheticEvent | null,
+        newValue: string | null,
+    ) => {
+        setChanged({...changed, species:true})
+        if(newValue)
+            setData({...data, species:newValue});
+    };
 
+    const handleColorChange = (
+        _: React.SyntheticEvent | null,
+        newValue: string[] | null,
+    ) => {
+        if(newValue){
+            setData({...data, colors:newValue.map((colorName) => ({
+                    colorName: colorName,
+                }))})
+        }
+    };
+
+    const handleDateTimeChange = (newDateTime) => {
+        setSelectedDateTime(newDateTime);
+        const formattedDateTime = dayjs(newDateTime).format('YYYY-MM-DDTHH:mm:ss');
+        setData({...data, datetime:formattedDateTime})
+    };
+    const convertFile = (files: FileList | null) => {
+        if (files && files.length > 0) {
+            const fileRef = files[0];
+            if (fileRef) {
+                const fileType: string | undefined = fileRef.type;
+
+                const reader = new FileReader();
+                reader.readAsBinaryString(fileRef);
+
+                reader.onload = (ev: any) => {
+                    // convert it to base64
+                    const base64String = `data:${fileType || "application/octet-stream"};base64,${btoa(ev.target.result)}`;
+                    // Add the new base64 string to the array
+                    setBrowsedFile(base64String);
+                    setIsUploaded(true);
+                    //setFileBase64Array(prevArray => [...prevArray, base64String]);
+                };
+            }
+        }
+    };
     const handleUpload = (event) => {
         event.preventDefault();
         // Here, you can save the selectedFile or perform any other action
-        if (selectedFile) {
-            setSelectedFile([...selectedFile, image[0]]);
+        if (fileBase64Array) {
+            setFileBase64Array(prevArray => [...prevArray, browsedFile]);
             setCounter(counter+1)
             setIsUploaded(false)
         } else {
@@ -176,53 +240,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         updatedFiles.splice(index, 1);
         setFileBase64Array(updatedFiles);
     };
-    const convertFile = (files: FileList | null) => {
-        if (files && files.length > 0) {
-            const fileRef = files[0];
-            if (fileRef) {
-                const fileType: string | undefined = fileRef.type;
-                console.log("This file upload is of type:", fileType);
-
-                const reader = new FileReader();
-                reader.readAsBinaryString(fileRef);
-
-                reader.onload = (ev: any) => {
-                    // convert it to base64
-                    const base64String = `data:${fileType || "application/octet-stream"};base64,${btoa(ev.target.result)}`;
-
-                    // Add the new base64 string to the array
-                    setFileBase64Array(prevArray => [...prevArray, base64String]);
-                };
-            }
-        }
-    };
-    const handleChange = (
-        event: React.SyntheticEvent | null,
-        newValue: string | null,
-    ) => {
-        setChanged({...changed, species:true})
-        if(newValue)
-        setData({...data, species:newValue});
-    };
-
-    const handleColorChange = (
-        event: React.SyntheticEvent | null,
-        newValue: string[] | null,
-    ) => {
-        if(newValue){
-             setData({...data, colors:newValue.map((colorName) => ({
-                     colorName: colorName,
-                 }))})
-        }
-
-    };
-
-    const handleDateTimeChange = (newDateTime) => {
-        setSelectedDateTime(newDateTime);
-        const formattedDateTime = dayjs(newDateTime).format('YYYY-MM-DDTHH:mm:ss');
-        setData({...data, datetime:formattedDateTime})
-    };
-
     const formValidation = ()=>{
         const forma = {
             age:changed.age&&(data.age!==-1)&&(!isNaN(data.age)), name:(data.name!==''), species:changed.species&&(data.species!==''),
@@ -245,7 +262,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             formData.pet.colors=data.colors;
             formData.pet.dateTimeMissing=data.datetime;
             formData.pet.description=data.description;
-
             try {
                 const response = await fetch('http://localhost:8080/ad/add', {
                     method: 'POST',
@@ -258,6 +274,8 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                 if (response.ok) {
                     console.log('Images uploaded successfully');
                     // You can handle the response from the server here
+                    setFileBase64Array([]);
+                    setCounter(0);
                 } else {
                     console.error('Failed to upload images');
                 }
@@ -265,8 +283,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                 console.error('Error uploading images:', error);
             }
 
-            setSelectedFile([]);
-            setCounter(0);
         } else {
             //formData.append('images', JSON.stringify([]));
             console.log('No files to submit');
@@ -276,260 +292,257 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
 
     return (
         <>
-        <div className="modal-container">
-{}
-            <Sheet className="modal-content">
-                <i className="bi bi-x-circle"
-                style={{
-                    fontSize: '2em', // Adjust the font size to make the button bigger
-                    position: 'absolute', // Position absolute for custom placement
-                    top: '10px', // Adjust the top position as needed
-                    right: '10px', // Adjust the left position as needed
-                    cursor: 'pointer', // Add cursor pointer for better UX
-                }}
-                   onClick={handleClose}
-                ></i>
-                <Stack spacing={3}>
-                    <h2>Post new ad</h2>
-                    <form onSubmit={(e) => {
-                        e.preventDefault(); // Prevents the default form submission behavior
-                        handleSubmit();
-                    }}>
-                        <Stack spacing={3} direction="row" justifyContent="center" flexWrap="wrap" useFlexGap>
-                            <div className="input-container">
-                                <label htmlFor="species2">Species:</label>
-                                <Select
+            <div className="modal-container">
+                {}
+                <Sheet className="modal-content">
+                    <i className="bi bi-x-circle"
+                       style={{
+                           fontSize: '2em', // Adjust the font size to make the button bigger
+                           position: 'absolute', // Position absolute for custom placement
+                           top: '10px', // Adjust the top position as needed
+                           right: '10px', // Adjust the left position as needed
+                           cursor: 'pointer', // Add cursor pointer for better UX
+                       }}
+                       onClick={handleClose}
+                    ></i>
+                    <Stack spacing={3}>
+                        <h2>Post new ad</h2>
+                        <form onSubmit={handleSubmit}>
+                            <Stack spacing={3} direction="row" justifyContent="center" flexWrap="wrap" useFlexGap>
+                                <div className="input-container">
+                                    <label htmlFor="species2">Species:</label>
+                                    <Select
 
-                                    placeholder="Select a species"
-                                    variant="soft"
-                                    color="primary"
-                                    id="species2"
-                                    onChange={handleChange}
-                                    renderValue={(selected) => (
-                                        <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
+                                        placeholder="Select a species"
+                                        variant="soft"
+                                        color="primary"
+                                        id="species2"
+                                        onChange={handleChange}
+                                        renderValue={(selected) => (
+                                            <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
                                                 <Chip variant="solid" color="primary">
                                                     {selected.label}
                                                 </Chip>
 
-                                        </Box>
-                                    )}
-                                    sx={{
-                                        height:'100%',
-                                        '& .MuiSelect-button': {
-                                            backgroundColor: 'transparent',
-                                            color: 'black',
-                                            '&:focus': {
-                                                backgroundColor: 'transparent',
-                                            },
-                                            marginTop: '0', // Remove top margin
-                                            padding: '0'
-                                        }
-                                    }}
-                                    slotProps={{
-                                        listbox: {
-                                            sx: {
-                                                width: '100%',
-                                            },
-                                        },
-                                    }}
-                                >
-                                    {species.map((spec: Vrsta) => (
-                                        <Option key={spec.id} value={spec.speciesName}>
-                                            {spec.speciesName}
-                                        </Option>
-                                    ))}
-                                </Select>
-                                {!validation.species && <p className="error-message" style={{color:"red"}}>Species is required!</p>}
-                            </div>
-                            <div className="input-container">
-                                <label htmlFor="petName">Pet name:</label>
-                                <Input
-                                    color="primary"
-                                    size="lg"
-                                    variant="soft"
-                                    id="petName"
-                                    onChange={(event)=>setData({...data, name:event.target.value})}
-                                />
-                                {!validation.name && <p className="error-message" style={{color:"red"}}>Name is required!</p>}
-                            </div>
-                            <div className="input-container">
-                                <label htmlFor="age">Age:</label>
-                                <Input
-                                    color="primary"
-                                    size="lg"
-                                    variant="soft"
-                                    id="age"
-                                    type="number"
-                                    onChange={(event)=>{
-                                        setChanged({...validation, age:true})
-                                        setData({...data, age: parseInt(event.target.value) });
-                                    }}
-                                />
-                                {!validation.age && <p className="error-message" style={{color:"red"}}>Age is required!</p>}
-                            </div>
-                            <div className="input-container">
-                                <label htmlFor="color">Color:</label>
-                                <Select
-                                    multiple
-                                    placeholder="Select a color"
-                                    variant="soft"
-                                    color="primary"
-                                    id="color"
-                                    onChange={handleColorChange}
-                                    renderValue={(selected) => (
-                                        <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
-                                            {selected.map((selectedOption) => (
-                                                <Chip variant="solid" color="primary">
-                                                    {selectedOption.label}
-                                                </Chip>
-                                            ))}
-                                        </Box>
-                                    )}
-                                    sx={{
-                                        height:'100%',
-                                        '& .MuiSelect-button': {
-                                            backgroundColor: 'transparent',
-                                            color: 'black',
-                                            '&:focus': {
-                                                backgroundColor: 'transparent',
-                                            },
-                                            marginTop: '0', // Remove top margin
-                                            padding: '0'
-                                        }
-                                    }}
-                                    slotProps={{
-                                        listbox: {
-                                            sx: {
-                                                width: '100%',
-                                            },
-                                        },
-                                    }}
-                                >
-                                    {colors.map((color: Boja) => (
-                                        <Option key={color.id} value={color.colorName}>
-                                            {color.colorName}
-                                        </Option>
-                                    ))}
-                                </Select>
-                                {!validation.colors && <p className="error-message" style={{color:"red"}}>At least 1 color!</p>}
-                            </div>
-                            <div className="input-container">
-                                <label htmlFor="dateandtime">Gone missing:</label>
-                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DemoContainer
+                                            </Box>
+                                        )}
                                         sx={{
-                                            display: 'flex',
-                                            flexDirection: 'column', // Display children in a column
-                                            height: '100px', // Set the height of the container
-                                            '& .MuiPaper-root': {
-                                                // Your styles for the DateTimePicker
-                                            },
-                                            '& .MuiInputBase-input': {
-                                                height: '50%',
-                                                border: '0px',
-                                                margin: '5px 0', // Adjust margin
-                                                backgroundColor: '#e3effb',
-                                                paddingLeft: '15px',
-                                            },
-                                            '& .MuiInputBase-root': {
-                                                height: '90%',
-                                            },
-                                            '& .MuiIconButton-root': {
-                                                height: '40px',
-                                                border: '0px',
-                                                margin: '0px',
+                                            height:'100%',
+                                            '& .MuiSelect-button': {
+                                                backgroundColor: 'transparent',
+                                                color: 'black',
+                                                '&:focus': {
+                                                    backgroundColor: 'transparent',
+                                                },
+                                                marginTop: '0', // Remove top margin
+                                                padding: '0'
+                                            }
+                                        }}
+                                        slotProps={{
+                                            listbox: {
+                                                sx: {
+                                                    width: '100%',
+                                                },
                                             },
                                         }}
-                                        components={['DateTimePicker']}>
-                                        <DateTimePicker
-                                            value={selectedDateTime}
-                                            onChange={handleDateTimeChange}
-                                        />
-                                    </DemoContainer>
-                                </LocalizationProvider>
-                                {!validation.datetime && <p className="error-message" style={{color:"red"}}>Date and time are required!</p>}
-                            </div>
-                            <div className="input-container">
-                                <label htmlFor="uploadPhoto">Upload photos:</label>
-
-                                <div style={{ marginBottom: "1rem", paddingTop: "8px" }}>
-                                    <Button
-                                        disabled={selectedFile.length >= 3}
-                                        sx={{
-                                            display: "flex",
-                                            height: "43px",
-                                        }}
-                                        component="label"
-                                        role={undefined}
-                                        tabIndex={-1}
-                                        variant="outlined"
-                                        color="neutral"
-                                        startDecorator={
-                                            <SvgIcon>
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
-                                                    />
-                                                </svg>
-                                            </SvgIcon>
-                                        }
                                     >
-                                        Browse
-                                        <VisuallyHiddenInput
-                                            type="file"
-                                            onChange={(e) => {
-                                                handleFileChange(e);
-                                                convertFile(e.target.files);
+                                        {species.map((spec: Vrsta) => (
+                                            <Option key={spec.id} value={spec.speciesName}>
+                                                {spec.speciesName}
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                    {!validation.species && <p className="error-message" style={{color:"red"}}>Species is required!</p>}
+                                </div>
+                                <div className="input-container">
+                                    <label htmlFor="petName">Pet name:</label>
+                                    <Input
+                                        color="primary"
+                                        size="lg"
+                                        variant="soft"
+                                        id="petName"
+                                        onChange={(event)=>setData({...data, name:event.target.value})}
+                                    />
+                                    {!validation.name && <p className="error-message" style={{color:"red"}}>Name is required!</p>}
+                                </div>
+                                <div className="input-container">
+                                    <label htmlFor="age">Age:</label>
+                                    <Input
+                                        color="primary"
+                                        size="lg"
+                                        variant="soft"
+                                        id="age"
+                                        type="number"
+                                        onChange={(event)=>{
+                                            setChanged({...validation, age:true})
+                                            setData({...data, age: parseInt(event.target.value) });
+                                        }}
+                                    />
+                                    {!validation.age && <p className="error-message" style={{color:"red"}}>Age is required!</p>}
+                                </div>
+                                <div className="input-container">
+                                    <label htmlFor="color">Color:</label>
+                                    <Select
+                                        multiple
+                                        placeholder="Select a color"
+                                        variant="soft"
+                                        color="primary"
+                                        id="color"
+                                        onChange={handleColorChange}
+                                        renderValue={(selected) => (
+                                            <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
+                                                {selected.map((selectedOption) => (
+                                                    <Chip variant="solid" color="primary">
+                                                        {selectedOption.label}
+                                                    </Chip>
+                                                ))}
+                                            </Box>
+                                        )}
+                                        sx={{
+                                            height:'100%',
+                                            '& .MuiSelect-button': {
+                                                backgroundColor: 'transparent',
+                                                color: 'black',
+                                                '&:focus': {
+                                                    backgroundColor: 'transparent',
+                                                },
+                                                marginTop: '0', // Remove top margin
+                                                padding: '0'
+                                            }
+                                        }}
+                                        slotProps={{
+                                            listbox: {
+                                                sx: {
+                                                    width: '100%',
+                                                },
+                                            },
+                                        }}
+                                    >
+                                        {colors.map((color: Boja) => (
+                                            <Option key={color.id} value={color.colorName}>
+                                                {color.colorName}
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                    {!validation.colors && <p className="error-message" style={{color:"red"}}>At least 1 color!</p>}
+                                </div>
+                                <div className="input-container">
+                                    <label htmlFor="dateandtime">Gone missing:</label>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DemoContainer
+                                            sx={{
+                                                display: 'flex',
+                                                flexDirection: 'column', // Display children in a column
+                                                height: '100px', // Set the height of the container
+                                                '& .MuiPaper-root': {
+                                                    // Your styles for the DateTimePicker
+                                                },
+                                                '& .MuiInputBase-input': {
+                                                    height: '50%',
+                                                    border: '0px',
+                                                    margin: '5px 0', // Adjust margin
+                                                    backgroundColor: '#e3effb',
+                                                    paddingLeft: '15px',
+                                                },
+                                                '& .MuiInputBase-root': {
+                                                    height: '90%',
+                                                },
+                                                '& .MuiIconButton-root': {
+                                                    height: '40px',
+                                                    border: '0px',
+                                                    margin: '0px',
+                                                },
                                             }}
-                                        />
-                                    </Button>
-                                    {(selectedFile.length >= 3) && (
-                                        <p style={{ color: "red" }}>Maximum of 3 images</p>
-                                    )}
-                                    <button onClick={handleUpload} disabled={!isUploaded}>
-                                        Upload
-                                    </button>
-                                    {isUploaded && <p>!</p>}
+                                            components={['DateTimePicker']}>
+                                            <DateTimePicker
+                                                value={selectedDateTime}
+                                                onChange={handleDateTimeChange}
+                                            />
+                                        </DemoContainer>
+                                    </LocalizationProvider>
+                                    {!validation.datetime && <p className="error-message" style={{color:"red"}}>Date and time are required!</p>}
                                 </div>
-                            </div>
-                            {!validation.images && <p className="error-message" style={{color:"red"}}>At least 1 image!</p>}
-                            <div style={{height:'200px'}} className="input-container">
-                                <DraggableMapForm onDragEnd={handleDragEnd}/>
-                            </div>
-                            <div className="input-container">
-                            {selectedFile.map((_, index) => (
-                                <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-                                    <span>Image {index + 1}</span>
-                                    <button
-                                        type="button"
-                                        onClick={() => handleDeleteImage(index)}
-                                        style={{ marginLeft: '8px', cursor: 'pointer', background: 'none', border: 'none', color: 'blue' }}
-                                    >
-                                        Delete
-                                    </button>
+                                <div className="input-container">
+                                    <label htmlFor="uploadPhoto">Upload photos:</label>
+
+                                    <div style={{ marginBottom: "1rem", paddingTop: "8px" }}>
+                                        <Button
+                                            disabled={fileBase64Array.length >= 3}
+                                            sx={{
+                                                display: "flex",
+                                                height: "43px",
+                                            }}
+                                            component="label"
+                                            role={undefined}
+                                            tabIndex={-1}
+                                            variant="outlined"
+                                            color="neutral"
+                                            startDecorator={
+                                                <SvgIcon>
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        strokeWidth={1.5}
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"
+                                                        />
+                                                    </svg>
+                                                </SvgIcon>
+                                            }
+                                        >
+                                            Browse
+                                            <VisuallyHiddenInput
+                                                type="file"
+                                                onChange={(e) => {
+                                                    //handleFileChange(e);
+                                                    convertFile(e.target.files);
+                                                }}
+                                            />
+                                        </Button>
+                                        {(fileBase64Array.length >= 3) && (
+                                            <p style={{ color: "red" }}>Maximum of 3 images</p>
+                                        )}
+                                        <button onClick={handleUpload} disabled={!isUploaded}>
+                                            Upload
+                                        </button>
+                                        {isUploaded && <p style={{color:"red"}}>!</p>}
+                                    </div>
+                                    {!validation.images && <p className="error-message" style={{color:"red"}}>At least 1 image!</p>}
                                 </div>
-                            ))}
-                            </div>
-                            <button type="button" onClick={handleSubmit}>submit</button>
-                            <div className="input-container">
-                                <label htmlFor="description">Description:</label>
-                                <textarea id="description"
-                                          onChange={(event)=>setData({...data, description:event.target.value})}
-                                ></textarea>
-                                {!validation.description && <p className="error-message" style={{color:"red"}}>Description is required!</p>}
-                            </div>
-                        </Stack>
-                    </form>
-                </Stack>
-            </Sheet>
-        </div>
+                                <div className="input-container">
+                                    <label htmlFor="description">Description:</label>
+                                    <textarea id="description"
+                                              onChange={(event)=>setData({...data, description:event.target.value})}
+                                    ></textarea>
+                                    {!validation.description && <p className="error-message" style={{color:"red"}}>Description is required!</p>}
+                                </div>
+                                <div style={{height:'200px'}} className="input-container">
+                                    <DraggableMapForm onDragEnd={handleDragEnd}/>
+                                </div>
+                                <div className="input-container">
+                                    {fileBase64Array.map((_, index) => (
+                                        <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                                            <span>Image {index + 1}</span>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDeleteImage(index)}
+                                                style={{ marginLeft: '8px', cursor: 'pointer', background: 'none', border: 'none', color: 'blue' }}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                                <button type="button" onClick={handleSubmit}>submit</button>
+                            </Stack>
+                        </form>
+                    </Stack>
+                </Sheet>
+            </div>
         </>);
 };

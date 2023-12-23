@@ -32,7 +32,6 @@ const MainContent: React.FC<MainContentProps> = () => {
         fetch('http://localhost:8080/ad/all')
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 const petsData: LostPet[] = data.map((item: PetData) => {
                     const pet: LostPet = item.pet;
                     // Assuming images is available in your data, replace 'images' with the actual property name
@@ -40,7 +39,6 @@ const MainContent: React.FC<MainContentProps> = () => {
                     return { ...pet, images };
                 });
                 setLostPets(petsData);
-                console.log(petsData[6]);
             })
             .catch((error) => {
                 console.error('Error fetching lost pets:', error);
