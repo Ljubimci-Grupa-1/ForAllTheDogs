@@ -108,6 +108,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const [isUploaded, setIsUploaded] = useState(false);
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
     const [fileBase64Array, setFileBase64Array] = useState<string[]>(imagesFill);
+    const [newImages, setNewImages] = useState<string[]>([]);
     const [browsedFile, setBrowsedFile]=useState('');
     const [counter, setCounter]=useState(fileBase64Array.length);
     //problem sa county, oni ga ne salju
@@ -334,6 +335,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         // Here, you can save the selectedFile or perform any other action
         if (fileBase64Array) {
             setFileBase64Array(prevArray => [...prevArray, browsedFile]);
+            setNewImages(prevArray => [...prevArray, browsedFile]);
             setCounter(counter+1)
             setIsUploaded(false)
         } else {
@@ -342,8 +344,11 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     };
     const handleDeleteImage=(index:number)=>{
         const updatedFiles = [...fileBase64Array];
+        const updatedFiles1 = [...newImages];
         updatedFiles.splice(index, 1);
+        updatedFiles1.splice(index-(fileBase64Array.length-newImages.length), 1);
         setFileBase64Array(updatedFiles);
+        setNewImages(updatedFiles1);
     };
     const formValidation = ()=>{
         const forma = {
@@ -360,7 +365,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         console.log(markerPosition);
         if (fileBase64Array) {
             console.log(fileBase64Array)
-            formData.images = fileBase64Array;
             formData.pet.speciesName = data.species;
             formData.pet.Age = data.age;
             formData.pet.petName = data.name;
@@ -370,9 +374,10 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             formData.pet.dateTimeMissing = data.datetime;
             formData.pet.description = data.description;
             formData.pet.location.cityName = data.city;
-            console.log(formData);
             if(speciesFill===''){
             try {
+                formData.images = fileBase64Array;
+                console.log(formData);
                 const response = await fetch('http://localhost:8080/ad/add', {
                     method: 'POST',
                     headers: {
@@ -394,6 +399,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             }}
             else{
                 //radi se o updateu
+                formData.images = newImages;
                 try {
                     const response = await fetch(`http://localhost:8080/ad/edit/${adIdFill}`, {
                         method: 'PUT',

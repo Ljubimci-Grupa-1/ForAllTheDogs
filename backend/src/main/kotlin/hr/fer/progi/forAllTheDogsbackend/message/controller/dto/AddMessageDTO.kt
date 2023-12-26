@@ -1,0 +1,34 @@
+package hr.fer.progi.forAllTheDogsbackend.message.controller.dto
+
+import hr.fer.progi.forAllTheDogsbackend.ad.entity.Ad
+import hr.fer.progi.forAllTheDogsbackend.image.entity.Image
+import hr.fer.progi.forAllTheDogsbackend.location.controller.dto.AddLocationDTO
+import hr.fer.progi.forAllTheDogsbackend.location.entity.Location
+import hr.fer.progi.forAllTheDogsbackend.message.entity.Message
+import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserAdDTO
+import hr.fer.progi.forAllTheDogsbackend.user.entity.User
+import java.util.Date
+
+data class AddMessageDTO (
+    val text: String?,
+    val date: Date,
+    val adId: Long,
+    val user: UserAdDTO,
+    val location: AddLocationDTO?,
+    val image: String?
+){
+
+    fun toMessage(user: User, ad: Ad, location: Location) = Message(
+        text = text,
+        date = date,
+        ad = ad,
+        user = user,
+        location = location
+    )
+
+    fun toImage(image: String, ad: Ad?, message: Message?) = Image(
+        image = image,
+        ad = ad,
+        message = message
+    )
+}
