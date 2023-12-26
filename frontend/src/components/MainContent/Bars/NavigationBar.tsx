@@ -89,7 +89,11 @@ const NavigationBar = () => {
                 </Grid>
             </Grid>
             {modalOpen && (
-                <AddNewModal closeModal={handleCloseModal}></AddNewModal>
+                <AddNewModal
+                    closeModal={handleCloseModal} speciesFill="" nameFill="" ageFill={0}
+                    cityFill="" latitudeFill={45.813257} longitudeFill={15.976448} datetimeFill="" descriptionFill="" colorsFill={[]}
+                    text="Post new ad" imagesFill={[]} adIdFill={0} countyFill=""
+                ></AddNewModal>
             )
             }
         </nav>

@@ -9,8 +9,10 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { styled } from '@mui/joy';
 import DraggableMapForm from "./Map/DraggableMapForm";
 import dayjs from "dayjs";
+import 'dayjs/locale/en'; // Import English locale for dayjs
 
-
+// Set English locale for dayjs
+dayjs.locale('en');
 interface Boja{
     id:number;
     colorName:string;
@@ -27,13 +29,26 @@ export interface City{
     id:number;
     cityName:string;
 }
-interface AddNewModalProps {
-    closeModal: () => void;
-}
-interface Color {
+export interface Color {
     colorName:string;
 }
-interface Data{
+interface AddNewModalProps {
+    closeModal: () => void;
+    text:string;
+    adIdFill:number;
+    speciesFill:string;
+    colorsFill:Color[];
+    ageFill:number;
+    nameFill:string;
+    latitudeFill:number;
+    longitudeFill:number;
+    datetimeFill:string;
+    descriptionFill:string;
+    cityFill:string;
+    countyFill:string;
+    imagesFill:string[];
+}
+export interface Data{
     age:number;
     name:string;
     species:string;
@@ -84,19 +99,23 @@ interface FormValidation{
     county:boolean;
     city:boolean;
 }
-export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
+export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colorsFill, descriptionFill,
+                                latitudeFill, longitudeFill, cityFill, datetimeFill,imagesFill, text, adIdFill }: AddNewModalProps) =>{
     const [colors, setColors] = useState([]);
     const [species, setSpecies]=useState([]);
     const [counties, setCounties] = useState<County[]>([]);
     const [countyCities, setCountyCities] = useState([]);
-    const [counter, setCounter]=useState(0);
     const [isUploaded, setIsUploaded] = useState(false);
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
-    const [fileBase64Array, setFileBase64Array] = useState<string[]>([]);
+    const [fileBase64Array, setFileBase64Array] = useState<string[]>(imagesFill);
     const [browsedFile, setBrowsedFile]=useState('');
+    const [counter, setCounter]=useState(fileBase64Array.length);
+    //problem sa county, oni ga ne salju
     const [data, setData]=useState<Data>({
-        age:-1, name:"", species:"", colors:[], latitude:45.813257, longitude:15.976448, datetime:"", description:"", city:"", county:""
+        age:ageFill, name:nameFill, species:speciesFill, colors:colorsFill,
+        latitude:latitudeFill, longitude:longitudeFill, datetime:datetimeFill, description:descriptionFill, city:cityFill, county:""
     })
+
     const [selectedDateTime, setSelectedDateTime] =useState(null);
     const [changed, setChanged]=useState<FormValidation>(
         {
@@ -171,7 +190,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                 const response = await fetch("http://localhost:8080/county/all");
                 const data = await response.json();
                 setCounties(data);
-                console.log(data);
             } catch (error) {
                 console.error("Error fetching counties:", error);
             }
@@ -232,7 +250,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                     const response = await fetch(`http://localhost:8080/county/${myId}`);
                     const data = await response.json();
                     setCountyCities(data.cities);
-                    console.log(data.cities)
                 } catch (error) {
                     console.error("Error fetching counties:", error);
                 }
@@ -291,6 +308,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         const formattedDateTime = dayjs(newDateTime).format('YYYY-MM-DDTHH:mm:ss');
         setData({...data, datetime:formattedDateTime})
     };
+
     const convertFile = (files: FileList | null) => {
         if (files && files.length > 0) {
             const fileRef = files[0];
@@ -341,17 +359,19 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         formValidation();
         console.log(markerPosition);
         if (fileBase64Array) {
-            formData.images=fileBase64Array;
-            formData.pet.speciesName=data.species;
-            formData.pet.Age=data.age;
-            formData.pet.petName=data.name;
-            formData.pet.location.latitude=data.latitude;
-            formData.pet.location.longitude=data.longitude;
-            formData.pet.colors=data.colors;
-            formData.pet.dateTimeMissing=data.datetime;
-            formData.pet.description=data.description;
-            formData.pet.location.cityName=data.city;
+            console.log(fileBase64Array)
+            formData.images = fileBase64Array;
+            formData.pet.speciesName = data.species;
+            formData.pet.Age = data.age;
+            formData.pet.petName = data.name;
+            formData.pet.location.latitude = data.latitude;
+            formData.pet.location.longitude = data.longitude;
+            formData.pet.colors = data.colors;
+            formData.pet.dateTimeMissing = data.datetime;
+            formData.pet.description = data.description;
+            formData.pet.location.cityName = data.city;
             console.log(formData);
+            if(speciesFill===''){
             try {
                 const response = await fetch('http://localhost:8080/ad/add', {
                     method: 'POST',
@@ -371,6 +391,27 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                 }
             } catch (error) {
                 console.error('Error uploading images:', error);
+            }}
+            else{
+                //radi se o updateu
+                try {
+                    const response = await fetch(`http://localhost:8080/ad/edit/${adIdFill}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    });
+
+                    if (response.ok) {
+                        console.log('Images uploaded successfully');
+                        // You can handle the response from the server here
+                    } else {
+                        console.error('Failed to add the ad');
+                    }
+                } catch (error) {
+                    console.error('Error uploading images:', error);
+                }
             }
 
         } else {
@@ -378,7 +419,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             console.log('No files to submit');
         }
     };
-
     return (
         <>
             <div className="modal-container">
@@ -395,18 +435,18 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                        onClick={handleClose}
                     ></i>
                     <Stack spacing={3}>
-                        <h2>Post new ad</h2>
+                        <h2>{text}</h2>
                         <form onSubmit={handleSubmit}>
                             <Stack spacing={3} direction="row" justifyContent="center" flexWrap="wrap" useFlexGap>
                                 <div className="input-container">
                                     <label htmlFor="species2">Species:</label>
                                     <Select
-
                                         placeholder="Select a species"
                                         variant="soft"
                                         color="primary"
                                         id="species2"
                                         onChange={handleChange}
+                                        value={data.species}
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
                                                 <Chip variant="solid" color="primary">
@@ -450,6 +490,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                         size="lg"
                                         variant="soft"
                                         id="petName"
+                                        value={data.name}
                                         onChange={(event)=>setData({...data, name:event.target.value})}
                                     />
                                     {!validation.name && <p className="error-message" style={{color:"red"}}>Name is required!</p>}
@@ -462,6 +503,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                         variant="soft"
                                         id="age"
                                         type="number"
+                                        value={data.age}
                                         onChange={(event)=>{
                                             setChanged({...validation, age:true})
                                             setData({...data, age: parseInt(event.target.value) });
@@ -477,6 +519,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                         variant="soft"
                                         color="primary"
                                         id="color"
+                                        value={data.colors.map(boja=>boja.colorName)}
                                         onChange={handleColorChange}
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
@@ -605,13 +648,13 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                 </div>
                                 <div className="input-container">
                                     <label htmlFor="description">Description:</label>
-                                    <textarea id="description"
+                                    <textarea id="description" value={data.description}
                                               onChange={(event)=>setData({...data, description:event.target.value})}
                                     ></textarea>
                                     {!validation.description && <p className="error-message" style={{color:"red"}}>Description is required!</p>}
                                 </div>
                                 <div style={{height:'200px'}} className="input-container">
-                                    <DraggableMapForm onDragEnd={handleDragEnd}/>
+                                    <DraggableMapForm onDragEnd={handleDragEnd} center={{lat:latitudeFill, lng:longitudeFill}}/>
                                 </div>
 
 
@@ -708,7 +751,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                     </Select>
                                     {!validation.city && <p className="error-message" style={{color:"red"}}>City is required!</p>}
                                 </div>
-
 
                                 <div className="input-container">
                                     {fileBase64Array.map((_, index) => (

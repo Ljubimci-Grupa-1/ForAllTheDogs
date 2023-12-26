@@ -6,7 +6,8 @@ import FilterBar from "./Bars/FilterBar.tsx";
 import NavigationBar from "./Bars/NavigationBar.tsx";
 import {locationData} from "./AddNewModal.tsx";
 
-interface LostPet {
+export interface LostPet {
+    adId:number;
     petId: number;
     petName: string;
     petAge:number;
@@ -42,6 +43,12 @@ const MainContent: React.FC<MainContentProps> = () => {
                     const images = item.images; // Replace 'images' with the actual property name
                     return { ...pet, images };
                 });
+                for (let i = 0; i < petsData.length; i++) {
+                    if (data[i] && data[i].adId !== undefined) {
+                        petsData[i].adId = data[i].adId;
+                    }
+                }
+                console.log(petsData);
                 setLostPets(petsData);
             })
             .catch((error) => {
@@ -119,5 +126,4 @@ const MainContent: React.FC<MainContentProps> = () => {
         </main>
     );
 };
-export { LostPet };
 export default MainContent;
