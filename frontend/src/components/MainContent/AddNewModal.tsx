@@ -19,6 +19,14 @@ export interface Vrsta{
     id:number;
     speciesName:string;
 }
+export interface County{
+    countyId:number;
+    countyName:string;
+}
+export interface City{
+    id:number;
+    cityName:string;
+}
 interface AddNewModalProps {
     closeModal: () => void;
 }
@@ -34,8 +42,10 @@ interface Data{
     longitude:number;
     datetime:string;
     description:string;
+    city:string;
+    county:string;
 }
-interface locationData{
+export interface locationData{
     latitude:number;
     longitude:number;
     cityName: string;
@@ -71,30 +81,36 @@ interface FormValidation{
     datetime:boolean;
     description:boolean;
     images:boolean;
+    county:boolean;
+    city:boolean;
 }
 export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
     const [colors, setColors] = useState([]);
     const [species, setSpecies]=useState([]);
+    const [counties, setCounties] = useState<County[]>([]);
+    const [countyCities, setCountyCities] = useState([]);
     const [counter, setCounter]=useState(0);
-    const [selectedFile, setSelectedFile] = useState<File[]>([]);
     const [isUploaded, setIsUploaded] = useState(false);
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
     const [fileBase64Array, setFileBase64Array] = useState<string[]>([]);
     const [browsedFile, setBrowsedFile]=useState('');
     const [data, setData]=useState<Data>({
-        age:-1, name:"", species:"", colors:[], latitude:45.813257, longitude:15.976448, datetime:"", description:""
+        age:-1, name:"", species:"", colors:[], latitude:45.813257, longitude:15.976448, datetime:"", description:"", city:"", county:""
     })
     const [selectedDateTime, setSelectedDateTime] =useState(null);
     const [changed, setChanged]=useState<FormValidation>(
         {
-            age:false, name:false, species:false, colors:false, latitude:false, longitude:false, datetime:false, description:false, images:false
+            age:false, name:false, species:false, colors:false, latitude:false, longitude:false, datetime:false, description:false, images:false,
+            county:false, city:false
         }
     )
     const [validation, setValidation]=useState<FormValidation>(
         {
-            age:true, name:true, species:true, colors:true, latitude:true, longitude:true, datetime:true, description:true, images:true
+            age:true, name:true, species:true, colors:true, latitude:true, longitude:true, datetime:true, description:true, images:true, county:true,
+            city:true
         }
     )
+    //const [results, setResults] = useState([]);
 
 
     const [formData, setFormData] = useState<fdata>({
@@ -115,7 +131,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             location: {
                 latitude: 45.813257,
                 longitude: 15.976448,
-                cityName: "Zagreb",
+                cityName: "",
             },
         },
         images: [],
@@ -147,6 +163,21 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         };
 
         fetchSpecies();
+    }, []);
+
+    useEffect(() => {
+        const fetchCounties = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/county/all");
+                const data = await response.json();
+                setCounties(data);
+                console.log(data);
+            } catch (error) {
+                console.error("Error fetching counties:", error);
+            }
+        };
+
+        fetchCounties();
     }, []);
 
     useEffect(() => {
@@ -187,7 +218,36 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
         if(newValue)
             setData({...data, species:newValue});
     };
-
+    const handleChangeCounty = (
+        _: React.SyntheticEvent | null,
+        newValue: string | null,
+    ) => {
+        setChanged({...changed, county:true})
+        if(newValue) {
+            setData({...data, county: newValue});
+            const targetCounty = counties.find(county => county.countyName === newValue);
+            const myId = targetCounty ? targetCounty.countyId : null;
+            const fetchCitiesByCounties = async () => {
+                try {
+                    const response = await fetch(`http://localhost:8080/county/${myId}`);
+                    const data = await response.json();
+                    setCountyCities(data.cities);
+                    console.log(data.cities)
+                } catch (error) {
+                    console.error("Error fetching counties:", error);
+                }
+            };
+            fetchCitiesByCounties();
+        }
+    };
+    const handleChangeCity = (
+        _: React.SyntheticEvent | null,
+        newValue: string | null,
+    ) => {
+        setChanged({...changed, city:true})
+        if(newValue)
+            setData({...data, city:newValue});
+    };
     const handleColorChange = (
         _: React.SyntheticEvent | null,
         newValue: string[] | null,
@@ -198,7 +258,34 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                 }))})
         }
     };
+    {/*const handleSearch = async () => {
+        try {
+            const response = await axios.get(
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${data.latitude}&lon=${data.longitude}`
+            );
+            setResults([response.data]);
+            console.log(response.data);
+            if(('city_district' in response.data.address) || ('city' in response.data.address)) {
+                console.log("ima grad");
+                if('city' in response.data.address){
+                    if(response.data.address.city==="City of Zagreb"){
+                        formData.pet.location.cityName="Zagreb";
+                    }
+                    else formData.pet.location.cityName=response.data.address.city;
+                }
+                else{
+                    formData.pet.location.cityName=response.data.address.city_district;
+                }
+            }
+            else {
+                console.log("nema");
+                formData.pet.location.cityName="Ostalo";
 
+            }
+        } catch (error) {
+            console.error('Error fetching data from Nominatim:', error);
+        }
+    };*/}
     const handleDateTimeChange = (newDateTime) => {
         setSelectedDateTime(newDateTime);
         const formattedDateTime = dayjs(newDateTime).format('YYYY-MM-DDTHH:mm:ss');
@@ -224,7 +311,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             }
         }
     };
-    const handleUpload = (event) => {
+    const handleUpload :React.MouseEventHandler<HTMLButtonElement>= (event) => {
         event.preventDefault();
         // Here, you can save the selectedFile or perform any other action
         if (fileBase64Array) {
@@ -245,13 +332,14 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             age:changed.age&&(data.age!==-1)&&(!isNaN(data.age)), name:(data.name!==''), species:changed.species&&(data.species!==''),
             description:(data.description!==''), datetime:(data.datetime!==''),
             colors:(data.colors.length!==0), latitude:(data.latitude!==190), longitude:(data.longitude!==190),
-            images:(fileBase64Array.length<4)&&(fileBase64Array.length>0)
+            images:(fileBase64Array.length<4)&&(fileBase64Array.length>0), county:(data.county!==''), city:(data.city!=='')
         }
         setValidation(forma);
     };
 
     const handleSubmit=async ()=>{
         formValidation();
+        console.log(markerPosition);
         if (fileBase64Array) {
             formData.images=fileBase64Array;
             formData.pet.speciesName=data.species;
@@ -262,6 +350,8 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             formData.pet.colors=data.colors;
             formData.pet.dateTimeMissing=data.datetime;
             formData.pet.description=data.description;
+            formData.pet.location.cityName=data.city;
+            console.log(formData);
             try {
                 const response = await fetch('http://localhost:8080/ad/add', {
                     method: 'POST',
@@ -277,7 +367,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                     setFileBase64Array([]);
                     setCounter(0);
                 } else {
-                    console.error('Failed to upload images');
+                    console.error('Failed to add the ad');
                 }
             } catch (error) {
                 console.error('Error uploading images:', error);
@@ -287,7 +377,6 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
             //formData.append('images', JSON.stringify([]));
             console.log('No files to submit');
         }
-        console.log(formData);
     };
 
     return (
@@ -321,7 +410,7 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
                                                 <Chip variant="solid" color="primary">
-                                                    {selected.label}
+                                                    {(selected!==null)&&selected.label}
                                                 </Chip>
 
                                             </Box>
@@ -524,6 +613,103 @@ export const AddNewModal = ({ closeModal }: AddNewModalProps) =>{
                                 <div style={{height:'200px'}} className="input-container">
                                     <DraggableMapForm onDragEnd={handleDragEnd}/>
                                 </div>
+
+
+
+
+                                <div className="input-container">
+                                    <label htmlFor="counties">County:</label>
+                                    <Select
+
+                                        placeholder="Select a county"
+                                        variant="soft"
+                                        color="primary"
+                                        id="counties"
+                                        onChange={handleChangeCounty}
+                                        renderValue={(selected) => (
+                                            <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
+                                                <Chip variant="solid" color="primary">
+                                                    {(selected!==null)&&selected.label}
+                                                </Chip>
+
+                                            </Box>
+                                        )}
+                                        sx={{
+                                            height:'100%',
+                                            '& .MuiSelect-button': {
+                                                backgroundColor: 'transparent',
+                                                color: 'black',
+                                                '&:focus': {
+                                                    backgroundColor: 'transparent',
+                                                },
+                                                marginTop: '0', // Remove top margin
+                                                padding: '0'
+                                            }
+                                        }}
+                                        slotProps={{
+                                            listbox: {
+                                                sx: {
+                                                    width: '100%',
+                                                },
+                                            },
+                                        }}
+                                    >
+                                        {counties.map((spec: County) => (
+                                            <Option key={spec.countyId} value={spec.countyName}>
+                                                {spec.countyName}
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                    {!validation.county && <p className="error-message" style={{color:"red"}}>County is required!</p>}
+                                </div>
+
+                                <div className="input-container">
+                                    <label htmlFor="cities">City:</label>
+                                    <Select
+                                        disabled={data.county===''}
+                                        placeholder="Select a city from your county"
+                                        variant="soft"
+                                        color="primary"
+                                        id="cities"
+                                        onChange={handleChangeCity}
+                                        renderValue={(selected) => (
+                                            <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
+                                                <Chip variant="solid" color="primary">
+                                                    {(selected!==null)&&selected.label}
+                                                </Chip>
+
+                                            </Box>
+                                        )}
+                                        sx={{
+                                            height:'100%',
+                                            '& .MuiSelect-button': {
+                                                backgroundColor: 'transparent',
+                                                color: 'black',
+                                                '&:focus': {
+                                                    backgroundColor: 'transparent',
+                                                },
+                                                marginTop: '0', // Remove top margin
+                                                padding: '0'
+                                            }
+                                        }}
+                                        slotProps={{
+                                            listbox: {
+                                                sx: {
+                                                    width: '100%',
+                                                },
+                                            },
+                                        }}
+                                    >
+                                        {countyCities.map((spec: City) => (
+                                            <Option key={spec.id} value={spec.cityName}>
+                                                {spec.cityName}
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                    {!validation.city && <p className="error-message" style={{color:"red"}}>City is required!</p>}
+                                </div>
+
+
                                 <div className="input-container">
                                     {fileBase64Array.map((_, index) => (
                                         <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>

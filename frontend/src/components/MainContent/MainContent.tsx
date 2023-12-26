@@ -4,14 +4,18 @@ import PetDetailsModal from './PetDetailsModal';
 import LostPetCard from './LostPetCard';
 import FilterBar from "./Bars/FilterBar.tsx";
 import NavigationBar from "./Bars/NavigationBar.tsx";
+import {locationData} from "./AddNewModal.tsx";
 
 interface LostPet {
     petId: number;
     petName: string;
+    petAge:number;
     speciesName: string;
     dateTimeMissing: string;
+    colors:string[];
     images: string[];
     description: string;
+    location:locationData;
     // Other properties related to a lost pet
 }
 interface PetData {
@@ -94,7 +98,7 @@ const MainContent: React.FC<MainContentProps> = () => {
                 onClearFilters={handleClearFilters}
             />
 
-            <div className="lost-pets-list">
+            <div className="lost-pets-list" >
                 {filteredPets.map((pet) => (
                     <LostPetCard
                         key={pet.petId}
