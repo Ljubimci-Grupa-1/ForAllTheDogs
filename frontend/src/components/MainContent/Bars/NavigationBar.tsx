@@ -4,7 +4,11 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {AddNewModal} from "../AddNewModal";
 
-const NavigationBar = () => {
+interface NavigationBarProps{
+    handleLoggedIn:()=>void;
+    handleLoggedOut:()=>void;
+}
+const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => {
     const [username, setUsername] = useState('');
     const [isLoggedIn, setLoginState] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
@@ -20,6 +24,7 @@ const NavigationBar = () => {
                 // postavi vrtijednost statea
                 setUsername(user);
                 setLoginState(true);
+                handleLoggedIn();
             } catch (error) {
                 console.error('Error decoding token:', error);
             }
@@ -27,6 +32,11 @@ const NavigationBar = () => {
     })
     const handleCloseModal = () => {
         setModalOpen(false);
+    };
+    const handleSignOut=()=>{
+        setLoginState(false);
+        localStorage.removeItem('jwt');
+        handleLoggedOut();
     };
     return (
         <nav className="navbar">
@@ -79,7 +89,7 @@ const NavigationBar = () => {
                         <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
                             <Typography sx={{ width: '100%',
                             color:"white"}} level="title-lg">Hello, {username}</Typography>
-                            <Button size="lg" component={Link} to="/login">Sign out</Button>
+                            <Button size="lg" component={Link} to="/" onClick={handleSignOut}>Sign out</Button>
                         </Sheet>
                     )}
                     {!isLoggedIn && (
@@ -92,7 +102,7 @@ const NavigationBar = () => {
                 <AddNewModal
                     closeModal={handleCloseModal} speciesFill="" nameFill="" ageFill={0}
                     cityFill="" latitudeFill={45.813257} longitudeFill={15.976448} datetimeFill="" descriptionFill="" colorsFill={[]}
-                    text="Post new ad" imagesFill={[]} adIdFill={0} countyFill=""
+                    text="Post new ad" imagesFill={[]} adIdFill={0} countyFill="" isLoggedIn={isLoggedIn}
                 ></AddNewModal>
             )
             }

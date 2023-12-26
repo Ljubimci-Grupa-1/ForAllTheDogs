@@ -6,16 +6,22 @@ import SignUpForm from "../components/LogIn/SignUpForm"
 import LoginForm from "./LogIn/LogInForm.tsx";
 import MainContent from "./MainContent/MainContent.tsx";
 import Map from "./MainContent/Map/Map.tsx";
+import {useState} from "react";
 function App() {
 
-
-
+const [isLoggedIn, setIsLoggedIn] =useState(false);
+const handleLoggedIn=()=>{
+    setIsLoggedIn(true);
+};
+    const handleLoggedOut=()=>{
+        setIsLoggedIn(false);
+    };
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/signup" element={<SignUpForm />} />
                 <Route path="/login" element={<LoginForm/>} />
-                <Route path="/" element={<MainContent/>} />
+                <Route path="/" element={<MainContent isLoggedIn={isLoggedIn}/>} />
                 <Route path="/map" element={<Map/>} />
             </Routes>
         </BrowserRouter>

@@ -47,6 +47,7 @@ interface AddNewModalProps {
     cityFill:string;
     countyFill:string;
     imagesFill:string[];
+    isLoggedIn:boolean;
 }
 export interface Data{
     age:number;
@@ -100,7 +101,7 @@ interface FormValidation{
     city:boolean;
 }
 export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colorsFill, descriptionFill,
-                                latitudeFill, longitudeFill, cityFill, datetimeFill,imagesFill, text, adIdFill }: AddNewModalProps) =>{
+                                latitudeFill, longitudeFill, cityFill, datetimeFill,imagesFill, text, adIdFill, isLoggedIn }: AddNewModalProps) =>{
     const [colors, setColors] = useState([]);
     const [species, setSpecies]=useState([]);
     const [counties, setCounties] = useState<County[]>([]);
@@ -140,7 +141,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             email: "drizzy.drake@goated.com",
             telephoneNumber: "0981234567",
         },
-        activityName: "Za ljubimcem se traga",
+        activityName: "Sretno pronađen",
         pet: {
             speciesName: "",
             petName: "",
@@ -276,34 +277,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 }))})
         }
     };
-    {/*const handleSearch = async () => {
-        try {
-            const response = await axios.get(
-                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${data.latitude}&lon=${data.longitude}`
-            );
-            setResults([response.data]);
-            console.log(response.data);
-            if(('city_district' in response.data.address) || ('city' in response.data.address)) {
-                console.log("ima grad");
-                if('city' in response.data.address){
-                    if(response.data.address.city==="City of Zagreb"){
-                        formData.pet.location.cityName="Zagreb";
-                    }
-                    else formData.pet.location.cityName=response.data.address.city;
-                }
-                else{
-                    formData.pet.location.cityName=response.data.address.city_district;
-                }
-            }
-            else {
-                console.log("nema");
-                formData.pet.location.cityName="Ostalo";
-
-            }
-        } catch (error) {
-            console.error('Error fetching data from Nominatim:', error);
-        }
-    };*/}
     const handleDateTimeChange = (newDateTime) => {
         setSelectedDateTime(newDateTime);
         const formattedDateTime = dayjs(newDateTime).format('YYYY-MM-DDTHH:mm:ss');

@@ -6,9 +6,10 @@ import {AddNewModal} from "./AddNewModal.tsx";
 interface LostPetCardProps {
     pet: LostPet;
     onDetailsClick: () => void;
+    isLoggedIn:boolean;
 }
 
-const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick }) => {
+const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn }) => {
     const [isMenuVisible, setMenuVisible] = useState(false);
     const [updateVisibility, setUpdateVisibility] = useState(false);
     const handleMore=()=>{
@@ -68,6 +69,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick }) => {
                     colorsFill={pet.colors.map(colorName => ({ colorName }))}
                     countyFill={""}
                     imagesFill={pet.images.map(image=>image.image)} adIdFill={pet.adId}
+                    isLoggedIn={isLoggedIn}
                 ></AddNewModal>
             )
             }
