@@ -16,9 +16,9 @@ class Message(
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_seq")
     @SequenceGenerator(name = "message_seq", sequenceName = "message_seq", allocationSize = 1)
     @Column(name = "messageid")
-    var messageId: Long,
+    var messageId: Long = 0L,
 
-    var text: String,
+    var text: String? = null,
 
     @NotNull
     var date: Date,
@@ -29,6 +29,6 @@ class Message(
     @ManyToOne
     var user: User,
 
-    @OneToMany
-    var location: List<Location>
+    @ManyToOne
+    var location: Location? = null
 )

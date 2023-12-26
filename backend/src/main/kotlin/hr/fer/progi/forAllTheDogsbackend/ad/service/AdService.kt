@@ -171,35 +171,4 @@ class AdService(
         }
     }
 
-    private fun compressImage(photo: MultipartFile): ByteArray {
-        val MAX_SIZE: Long = 5 * 1024 * 1024 // 5 MB
-        val compressionQuality = if (photo.size > MAX_SIZE) 0.5f else 0.75f // More compression if larger than 5MB
-
-        // Read the MultipartFile into a BufferedImage
-        val inputFileStream: InputStream = photo.inputStream
-        val inputImage: BufferedImage = ImageIO.read(inputFileStream)
-
-        // Compress the image
-        val compressedOutputStream = ByteArrayOutputStream()
-        val formatName = Objects.requireNonNull(photo.contentType)?.split("/")?.get(1)
-        val writers: Iterator<ImageWriter> = ImageIO.getImageWritersByFormatName(formatName ?: "unknown")
-
-        if (formatName == null) {
-            throw IllegalArgumentException("Invalid or missing content type for the photo. Cannot determine image format.")
-        }
-
-        val writer: ImageWriter = writers.next()
-        val imageOutputStream: ImageOutputStream = ImageIO.createImageOutputStream(compressedOutputStream)
-        writer.output = imageOutputStream
-        val params: ImageWriteParam = writer.defaultWriteParam
-        params.compressionMode = ImageWriteParam.MODE_EXPLICIT
-        params.compressionQuality = compressionQuality // Adjust the compression quality
-        writer.write(null, IIOImage(inputImage, null, null), params)
-        writer.dispose()
-        imageOutputStream.close()
-
-        // Convert the compressed image to a byte array
-        return compressedOutputStream.toByteArray()
-    }
-
 }
