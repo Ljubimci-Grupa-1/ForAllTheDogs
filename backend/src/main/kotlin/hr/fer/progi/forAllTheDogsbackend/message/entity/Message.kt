@@ -24,11 +24,14 @@ class Message(
     var date: Date,
 
     @ManyToOne
+    @JoinColumn(name = "adid")
     var ad: Ad,
 
     @ManyToOne
+    @JoinColumn(name = "userid")
     var user: User,
 
     @ManyToOne
+    @JoinColumn(name = "locationid")
     var location: Location? = null
 )

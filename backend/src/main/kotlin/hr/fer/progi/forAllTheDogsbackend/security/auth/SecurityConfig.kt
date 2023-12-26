@@ -46,11 +46,12 @@ class SecurityConfig(
 //                    .requestMatchers("/user/test").hasRole("Osoba")  // lucija nemoj brisat pliz <3
                     .requestMatchers("/user/register").permitAll()
                     .requestMatchers("/user/login").permitAll()
-                    .requestMatchers("/color/*").permitAll()
-                    .requestMatchers("/species/*").permitAll()
-                    .requestMatchers("/county/*").permitAll()
-                    .requestMatchers(("/city/*")).permitAll()
+                    .requestMatchers("/color/**").permitAll()
+                    .requestMatchers("/species/**").permitAll()
+                    .requestMatchers("/county/**").permitAll()
+                    .requestMatchers(("/city/**")).permitAll()
                     .requestMatchers("/ad/**").permitAll()
+                    .requestMatchers("/message/**").permitAll()
                     .anyRequest().authenticated()
             }
             .sessionManagement { session ->
