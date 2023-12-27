@@ -132,10 +132,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             city:true
         }
     )
-    //const [results, setResults] = useState([]);
-
-
-    const [formData, setFormData] = useState<fdata>({
+    const formData :fdata={
         inShelter: "1",
         user: {
             name: user.name,
@@ -157,7 +154,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             },
         },
         images: [],
-    });
+    };
     useEffect(() => {
         const fetchColors = async () => {
             try {
