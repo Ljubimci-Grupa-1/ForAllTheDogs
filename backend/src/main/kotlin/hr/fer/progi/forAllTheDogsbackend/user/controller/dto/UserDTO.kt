@@ -16,7 +16,7 @@ data class UserDTO(
 ) {
     constructor(user: User): this (
         user.userId,
-        user.username,
+        user.username(),
         user.email,
         user.password,
         user.name,

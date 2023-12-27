@@ -57,4 +57,6 @@ class User(
 
     override fun isEnabled() = true
 
+    fun username() = username
+
 }
