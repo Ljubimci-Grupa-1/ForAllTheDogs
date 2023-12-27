@@ -12,4 +12,6 @@ interface CityRepository: JpaRepository<City, Long> {
     fun findMaxCityId(): Long?
 
     fun findByCityName(cityName: String): City?
+
+    fun findByCityNameAndCounty(cityName: String, county: County): City?
 }

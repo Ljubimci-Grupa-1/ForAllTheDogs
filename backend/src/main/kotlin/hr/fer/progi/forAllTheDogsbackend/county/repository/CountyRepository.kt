@@ -8,4 +8,6 @@ import java.util.*
 interface CountyRepository: JpaRepository<County, Long> {
     @Query("SELECT MAX(c.countyId) FROM County c")
     fun findMaxCountyId(): Long?
+
+    fun findByCountyName(countyName: String): County?
 }

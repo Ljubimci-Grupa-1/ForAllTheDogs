@@ -8,6 +8,7 @@ import hr.fer.progi.forAllTheDogsbackend.ad.entity.Ad
 import hr.fer.progi.forAllTheDogsbackend.ad.repository.AdRepository
 import hr.fer.progi.forAllTheDogsbackend.city.repository.CityRepository
 import hr.fer.progi.forAllTheDogsbackend.color.repository.ColorRepository
+import hr.fer.progi.forAllTheDogsbackend.county.repository.CountyRepository
 import hr.fer.progi.forAllTheDogsbackend.image.controller.dto.ImageDTO
 import hr.fer.progi.forAllTheDogsbackend.image.repository.ImageRepository
 import hr.fer.progi.forAllTheDogsbackend.location.controller.dto.LocationDTO
@@ -43,7 +44,8 @@ class AdService(
     private val locationRepository: LocationRepository,
     private val cityRepository: CityRepository,
     private val colorRepository: ColorRepository,
-    private val speciesRepository: SpeciesRepository
+    private val speciesRepository: SpeciesRepository,
+    private val countyRepository: CountyRepository
 ) {
 
     fun getAllAds() = adRepository.findAll().map { ad -> createAdDTO(ad) }
@@ -58,8 +60,19 @@ class AdService(
         val user = userRepository.findByEmail(dto.user.email) ?:
             throw IllegalArgumentException("Ne postoji korisnik s emailom ${dto.user.email}!")
 
-        val city = cityRepository.findByCityName(dto.pet.location.cityName) ?:
-            throw IllegalArgumentException("Ne postoji grad ${dto.pet.location.cityName}!")
+
+        val city = if (dto.pet.location.cityName == "Ostalo") {
+            // if the city is "Ostalo", we need to check which county it belongs to
+            val county = countyRepository.findByCountyName(dto.pet.location.countyName)
+                ?: throw IllegalArgumentException("Ne postoji županija ${dto.pet.location.countyName}!")
+
+            cityRepository.findByCityNameAndCounty(dto.pet.location.cityName, county)
+                ?: throw IllegalArgumentException("Ne postoji grad ${dto.pet.location.cityName}!")
+        } else {
+            // else we just find the city by its name
+            cityRepository.findByCityName(dto.pet.location.cityName)
+                ?: throw IllegalArgumentException("Ne postoji grad ${dto.pet.location.cityName}!")
+        }
 
         val colors = dto.pet.colors.map { color ->
             colorRepository.findByColorName(color.colorName)
@@ -144,7 +157,22 @@ class AdService(
         if(editPetDTO.location != null) {
             val longitude = editPetDTO.location.longitude ?: pet.location.longitude
             val latitude = editPetDTO.location.latitude ?: pet.location.latitude
-            val city = editPetDTO.location.cityName?.let { cityRepository.findByCityName(it) } ?: pet.location.city
+            val city = if (editPetDTO.location.cityName != null) {  // if the city is not null, it means it was changed
+                if (editPetDTO.location.cityName == "Ostalo") {
+                    // if the city is "Ostalo", we need to check which county it belongs to
+                    val county = editPetDTO.location.countyName?.let { countyRepository.findByCountyName(it) }
+                        ?: throw IllegalArgumentException("Ne postoji županija ${editPetDTO.location.countyName}!")
+
+                    cityRepository.findByCityNameAndCounty(editPetDTO.location.cityName!!, county)
+                        ?: throw IllegalArgumentException("Ne postoji grad ${editPetDTO.location.cityName}!")
+                } else {
+                    // else we just find the city by its name
+                    cityRepository.findByCityName(editPetDTO.location.cityName!!)
+                        ?: throw IllegalArgumentException("Ne postoji grad ${editPetDTO.location.cityName}!")
+                }
+            } else {  // else we just keep the old city
+                pet.location.city
+            }
             val location = locationRepository.save(editPetDTO.location.toLocation(city, longitude, latitude))
             pet.location = location
         }
