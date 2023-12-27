@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './MainContent.css';
 import PetDetailsModal from './PetDetailsModal';
 import LostPetCard from './LostPetCard';
@@ -27,8 +27,10 @@ interface PetData {
 }
 interface MainContentProps {
     isLoggedIn:boolean;
+    userEmail:string;
+    go:boolean;
 }
-const MainContent: React.FC<MainContentProps> = () => {
+const MainContent= ({go}:MainContentProps) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
     const [filterName, setFilterName] = useState('');
@@ -40,6 +42,8 @@ const MainContent: React.FC<MainContentProps> = () => {
     const [currentUser, setCurrentUser] = useState<adUser>({
         email:"", name:"", telephoneNumber:""
     });
+    //const [isMenuVisible, setIsMenuVisible] = useState(false);
+    const [menuState, setMenuState] = useState<{ [key: string]: boolean }>({}); // Menu state dictionary
 
     useEffect(() => {
         document.title = "For All The Dogs";
@@ -89,6 +93,17 @@ const MainContent: React.FC<MainContentProps> = () => {
             });
     }, []);
 
+    useEffect(() => {
+        // ... (existing code)
+
+        // Initialize menu state for each card
+        const initialMenuState: { [key: string]: boolean } = {};
+        lostPets.forEach((pet) => {
+            initialMenuState[pet.petId.toString()] = false;
+        });
+        setMenuState(initialMenuState);
+    }, [lostPets]);
+
     const handleModalClose = () => {
         setModalOpen(false);
         setCurrentPet(null);
@@ -125,7 +140,6 @@ const MainContent: React.FC<MainContentProps> = () => {
     const handleApplyFilters = () => {
         // API call ovdje
     };
-
     const handleClearFilters = () => {
         setFilterName('');
         setFilterSpecies('');
@@ -137,9 +151,18 @@ const MainContent: React.FC<MainContentProps> = () => {
     };
     const handleLoggedOut=()=>{
         setIsLoggedIn(false);
+        setModalOpen(false);
+
         setCurrentUser({
             email:"", name:"", telephoneNumber:""
         });
+        setMenuState({}); // Clear menu state when logging out
+    };
+    const handleMenuToggle = (cardId: string) => {
+        setMenuState((prevMenuState) => ({
+            ...prevMenuState,
+            [cardId]: !prevMenuState[cardId],
+        }));
     };
     return (
         <main className="main">
@@ -167,6 +190,10 @@ const MainContent: React.FC<MainContentProps> = () => {
                             setCurrentPet(pet);
                             setModalOpen(true);
                         }}
+
+                        cardId={pet.petId.toString()} // Use petId as the card identifier
+                        menuState={menuState}
+                        onMenuToggle={handleMenuToggle}
                     />
                 ))}
                 {isLoggedIn&&filteredPetsInactive.map((pet) => (
@@ -180,6 +207,10 @@ const MainContent: React.FC<MainContentProps> = () => {
                             setCurrentPet(pet);
                             setModalOpen(true);
                         }}
+
+                        cardId={pet.petId.toString()} // Use petId as the card identifier
+                        menuState={menuState}
+                        onMenuToggle={handleMenuToggle}
                     />
                 ))}
             </div>

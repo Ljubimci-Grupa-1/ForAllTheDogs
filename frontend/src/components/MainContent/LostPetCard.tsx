@@ -3,8 +3,7 @@ import {LostPet} from "./MainContent.tsx";
 import "./LostPetCard.css";
 import {AddNewModal, adUser, fdata} from "./AddNewModal.tsx";
 import {CategoryComponent} from "./CategoryComponent.tsx";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
+
 
 interface LostPetCardProps {
     pet: LostPet;
@@ -12,16 +11,21 @@ interface LostPetCardProps {
     isLoggedIn:boolean;
     klasa:string;
     currUser:adUser;
+    // Receive the state as a prop
+    onMenuToggle: (cardId: string) => void;
+    cardId: string;
+    menuState: { [key: string]: boolean };
 }
 
-const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn , klasa, currUser}) => {
-    const [isMenuVisible, setMenuVisible] = useState(false);
+const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn , klasa, currUser,
+                                                     onMenuToggle, cardId, menuState}) => {
+    //const [isMenuVisible, setMenuVisible] = useState(false);
     const [updateVisibility, setUpdateVisibility] = useState(false);
     const [categoriesVisibility, setCategoriesVisibility] = useState(false);
     const [selectedValue, setSelectedValue] = useState('');
 
-    const handleMore=()=>{
-        setMenuVisible(!isMenuVisible);
+    const handleMore = () => {
+        onMenuToggle(cardId); // Pass the cardId to toggle the correct menu
     };
     const handleDelete = async () => {
         // Implement delete logic here
@@ -106,7 +110,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         <>
         <div className={klasa}>
             {(currUser.email===pet.user.email)&&isLoggedIn&&<button onClick={handleMore}><i className="bi bi-three-dots"></i></button>}
-            {isMenuVisible && (
+            {menuState[cardId] && (
                 <div className="menu">
                     <button onClick={handleDelete}>Delete</button>
                     <button onClick={handleUpdate}>Update</button>
