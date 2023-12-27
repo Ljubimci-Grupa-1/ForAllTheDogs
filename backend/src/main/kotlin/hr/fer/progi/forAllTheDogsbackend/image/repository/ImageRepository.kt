@@ -8,4 +8,6 @@ interface ImageRepository: JpaRepository<Image, Long> {
 
     fun findByAd(ad: Ad): List<Image>
 
+    fun deleteByAd(ad: Ad)
+
 }

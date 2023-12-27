@@ -165,6 +165,8 @@ class AdService(
         ad.inShelter = editAdDTO.inShelter ?: ad.inShelter
         ad.activity = editAdDTO.activityName?.let { activityRepository.findByActivityCategory(it) } ?: ad.activity
         if (editAdDTO.images != null) {
+            imageRepository.deleteByAd(ad)  // delete all the images from the database
+
             editAdDTO.images.forEach { image ->
                 imageRepository.save(editAdDTO.toImage(image, ad, null))
             }
