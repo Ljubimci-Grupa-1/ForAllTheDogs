@@ -2,6 +2,7 @@ import React, { useState} from "react";
 import {LostPet} from "./MainContent.tsx";
 import "./LostPetCard.css";
 import {AddNewModal, adUser} from "./AddNewModal.tsx";
+import {CategoryComponent} from "./CategoryComponent.tsx";
 
 interface LostPetCardProps {
     pet: LostPet;
@@ -14,6 +15,9 @@ interface LostPetCardProps {
 const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn , klasa, currUser}) => {
     const [isMenuVisible, setMenuVisible] = useState(false);
     const [updateVisibility, setUpdateVisibility] = useState(false);
+    const [categoriesVisibility, setCategoriesVisibility] = useState(false);
+    const [selectedValue, setSelectedValue] = useState('');
+
     const handleMore=()=>{
         setMenuVisible(!isMenuVisible);
     };
@@ -40,10 +44,18 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         setUpdateVisibility(true);
     };
     const handleChangeCategory = () => {
-
+        setCategoriesVisibility(true);
+    };
+    const handleCategoryClose=()=>{
+        //put method here!
+        setCategoriesVisibility(false);
     };
     const handleCloseModal = () => {
         setUpdateVisibility(false);
+    };
+    const handleSelected=(category:string)=>{
+        setSelectedValue(category);
+        console.log(category);
     };
     return (
         <>
@@ -56,6 +68,9 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     <button onClick={handleChangeCategory}>Change Category</button>
                 </div>
             )}
+            {categoriesVisibility&&
+                <CategoryComponent pet={pet} handleCategoryClose={handleCategoryClose} handleChangeCategory={handleSelected}>
+            </CategoryComponent>}
             {pet.images && pet.images[0] && <img src={pet.images[0].image} alt={pet.petName} />}
             <h3>{pet.petName}</h3>
             <p>Species: {pet.speciesName}</p>
