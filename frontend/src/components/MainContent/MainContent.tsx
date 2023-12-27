@@ -4,7 +4,7 @@ import PetDetailsModal from './PetDetailsModal';
 import LostPetCard from './LostPetCard';
 import FilterBar from "./Bars/FilterBar.tsx";
 import NavigationBar from "./Bars/NavigationBar.tsx";
-import {locationData} from "./AddNewModal.tsx";
+import {adUser, locationData} from "./AddNewModal.tsx";
 
 export interface LostPet {
     adId:number;
@@ -18,7 +18,7 @@ export interface LostPet {
     images: string[];
     description: string;
     location:locationData;
-    user:string;
+    user:adUser;
     // Other properties related to a lost pet
 }
 interface PetData {
@@ -37,7 +37,9 @@ const MainContent: React.FC<MainContentProps> = () => {
     const [lostPets, setLostPets] = useState<LostPet[]>([]);
     const [lostPetsInactive, setLostPetsInactive] = useState<LostPet[]>([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [currentUser, setCurrentUser] = useState("");
+    const [currentUser, setCurrentUser] = useState<adUser>({
+        email:"", name:"", telephoneNumber:""
+    });
 
     useEffect(() => {
         document.title = "For All The Dogs";
@@ -55,7 +57,7 @@ const MainContent: React.FC<MainContentProps> = () => {
                     if (data[i] && data[i].adId !== undefined) {
                         petsData[i].adId = data[i].adId;
                         petsData[i].activityName = data[i].activityName;
-                        petsData[i].user=data[i].user.email
+                        petsData[i].user=data[i].user
                     }
                 }
                 const separatedArrays = petsData.reduce<{
@@ -129,13 +131,15 @@ const MainContent: React.FC<MainContentProps> = () => {
         setFilterSpecies('');
         setFilterDateLost('');
     };
-    const handleLoggedIn=(user:string)=>{
+    const handleLoggedIn=(user:adUser)=>{
         setIsLoggedIn(true);
         setCurrentUser(user);
     };
     const handleLoggedOut=()=>{
         setIsLoggedIn(false);
-        setCurrentUser("");
+        setCurrentUser({
+            email:"", name:"", telephoneNumber:""
+        });
     };
     return (
         <main className="main">

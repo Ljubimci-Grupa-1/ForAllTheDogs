@@ -2,14 +2,16 @@ import './NavigationBar.css';
 import {Button, ButtonGroup, Grid, Sheet, Stack, Typography} from "@mui/joy";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {AddNewModal} from "../AddNewModal";
+import {AddNewModal, adUser} from "../AddNewModal";
 
 interface NavigationBarProps{
-    handleLoggedIn:(user:string)=>void;
+    handleLoggedIn:(user:adUser)=>void;
     handleLoggedOut:()=>void;
 }
 const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => {
     const [username, setUsername] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [userTelephoneNo, setUserTelephoneNo] = useState('');
     const [isLoggedIn, setLoginState] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     useEffect(() =>{
@@ -23,14 +25,18 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => 
                 const user = decodedToken.username;
                 // postavi vrtijednost statea
                 setUsername(user);
+                setUserEmail(decodedToken.email);
+                setUserTelephoneNo(decodedToken.telephoneNumber);
                 setLoginState(true);
                 //poslati maincontent da je ovo user mail
-                handleLoggedIn(user);
+                handleLoggedIn({name:decodedToken.username, email:decodedToken.email, telephoneNumber:decodedToken.exp});
+                console.log(decodedToken)
+                //handleLoggedIn(user);
             } catch (error) {
                 console.error('Error decoding token:', error);
             }
         }
-    })
+    }, [])
     const handleCloseModal = () => {
         setModalOpen(false);
     };
@@ -104,6 +110,11 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => 
                     closeModal={handleCloseModal} speciesFill="" nameFill="" ageFill={0}
                     cityFill="" latitudeFill={45.813257} longitudeFill={15.976448} datetimeFill="" descriptionFill="" colorsFill={[]}
                     text="Post new ad" imagesFill={[]} adIdFill={0} countyFill="" isLoggedIn={isLoggedIn}
+                    user={{
+                        name:username,
+                        email:userEmail,
+                        telephoneNumber:userTelephoneNo
+                    }}
                 ></AddNewModal>
             )
             }

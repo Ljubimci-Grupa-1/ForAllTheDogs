@@ -1,14 +1,14 @@
 import React, { useState} from "react";
 import {LostPet} from "./MainContent.tsx";
 import "./LostPetCard.css";
-import {AddNewModal} from "./AddNewModal.tsx";
+import {AddNewModal, adUser} from "./AddNewModal.tsx";
 
 interface LostPetCardProps {
     pet: LostPet;
     onDetailsClick: () => void;
     isLoggedIn:boolean;
     klasa:string;
-    currUser:string;
+    currUser:adUser;
 }
 
 const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn , klasa, currUser}) => {
@@ -45,12 +45,10 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     const handleCloseModal = () => {
         setUpdateVisibility(false);
     };
-
     return (
         <>
-
         <div className={klasa}>
-            {(currUser===pet.user)&&isLoggedIn&&<button onClick={handleMore}><i className="bi bi-three-dots"></i></button>}
+            {(currUser.email===pet.user.email)&&isLoggedIn&&<button onClick={handleMore}><i className="bi bi-three-dots"></i></button>}
             {isMenuVisible && (
                 <div className="menu">
                     <button onClick={handleDelete}>Delete</button>
@@ -72,6 +70,12 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     countyFill={""}
                     imagesFill={pet.images.map(image=>image.image)} adIdFill={pet.adId}
                     isLoggedIn={isLoggedIn}
+                    user={{
+                        name:currUser.name,
+                        email: currUser.email,
+                        telephoneNumber: currUser.telephoneNumber
+                    }
+                    }
                 ></AddNewModal>
             )
             }

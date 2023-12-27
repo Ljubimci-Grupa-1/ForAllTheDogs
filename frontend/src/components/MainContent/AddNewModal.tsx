@@ -32,6 +32,11 @@ export interface City{
 export interface Color {
     colorName:string;
 }
+export interface adUser{
+    name:string;
+    email:string;
+    telephoneNumber:string;
+}
 interface AddNewModalProps {
     closeModal: () => void;
     text:string;
@@ -48,6 +53,7 @@ interface AddNewModalProps {
     countyFill:string;
     imagesFill:string[];
     isLoggedIn:boolean;
+    user:adUser;
 }
 export interface Data{
     age:number;
@@ -75,11 +81,6 @@ interface petData{
     description:string;
     location:locationData;
 }
-interface adUser{
-    name:string;
-    email:string;
-    telephoneNumber:string;
-}
 interface fdata{
     inShelter:string;
     user: adUser;
@@ -101,7 +102,7 @@ interface FormValidation{
     city:boolean;
 }
 export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colorsFill, descriptionFill,
-                                latitudeFill, longitudeFill, cityFill, datetimeFill,imagesFill, text, adIdFill, isLoggedIn }: AddNewModalProps) =>{
+                                latitudeFill, longitudeFill, cityFill, datetimeFill,imagesFill, text, adIdFill, user }: AddNewModalProps) =>{
     const [colors, setColors] = useState([]);
     const [species, setSpecies]=useState([]);
     const [counties, setCounties] = useState<County[]>([]);
@@ -137,9 +138,9 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const [formData, setFormData] = useState<fdata>({
         inShelter: "1",
         user: {
-            name: "lana",
-            email: "lana@lana.com",
-            telephoneNumber: "123456789",
+            name: user.name,
+            email: user.email,
+            telephoneNumber: user.telephoneNumber,
         },
         activityName: "Za ljubimcem se traga",
         pet: {
@@ -214,7 +215,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
   white-space: nowrap;
   width: 1px;
 `;
-
     const handleClose=()=>{
         closeModal();
     }
