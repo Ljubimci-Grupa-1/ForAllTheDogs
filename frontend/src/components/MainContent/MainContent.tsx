@@ -18,6 +18,7 @@ export interface LostPet {
     images: string[];
     description: string;
     location:locationData;
+    user:string;
     // Other properties related to a lost pet
 }
 interface PetData {
@@ -36,6 +37,7 @@ const MainContent: React.FC<MainContentProps> = () => {
     const [lostPets, setLostPets] = useState<LostPet[]>([]);
     const [lostPetsInactive, setLostPetsInactive] = useState<LostPet[]>([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [currentUser, setCurrentUser] = useState("");
 
     useEffect(() => {
         document.title = "For All The Dogs";
@@ -53,9 +55,13 @@ const MainContent: React.FC<MainContentProps> = () => {
                     if (data[i] && data[i].adId !== undefined) {
                         petsData[i].adId = data[i].adId;
                         petsData[i].activityName = data[i].activityName;
+                        petsData[i].user=data[i].user.email
                     }
                 }
-                const separatedArrays = petsData.reduce(
+                const separatedArrays = petsData.reduce<{
+                    activeAds: LostPet[];
+                    inactiveAds: LostPet[];
+                }>(
                     (result, currentObject) => {
                         if (currentObject.activityName === 'Za ljubimcem se traga') {
                             result.activeAds.push(currentObject);
@@ -123,11 +129,13 @@ const MainContent: React.FC<MainContentProps> = () => {
         setFilterSpecies('');
         setFilterDateLost('');
     };
-    const handleLoggedIn=()=>{
+    const handleLoggedIn=(user:string)=>{
         setIsLoggedIn(true);
+        setCurrentUser(user);
     };
     const handleLoggedOut=()=>{
         setIsLoggedIn(false);
+        setCurrentUser("");
     };
     return (
         <main className="main">
@@ -146,6 +154,8 @@ const MainContent: React.FC<MainContentProps> = () => {
             <div className="lost-pets-list" >
                 {filteredPets.map((pet) => (
                     <LostPetCard
+                        klasa={"lost-pet-card"}
+                        currUser={currentUser}
                         key={pet.petId}
                         pet={pet}
                         isLoggedIn={isLoggedIn}
@@ -157,6 +167,8 @@ const MainContent: React.FC<MainContentProps> = () => {
                 ))}
                 {isLoggedIn&&filteredPetsInactive.map((pet) => (
                     <LostPetCard
+                        klasa={"lost-pet-card-inactive"}
+                        currUser={currentUser}
                         key={pet.petId}
                         pet={pet}
                         isLoggedIn={isLoggedIn}

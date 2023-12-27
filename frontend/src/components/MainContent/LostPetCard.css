@@ -8,7 +8,7 @@
     cursor: pointer;
 }
 
-.lost-pet-card {
+.lost-pet-card, .lost-pet-card-inactive {
     background: linear-gradient(to bottom, #f5f5f5, #fff);
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -20,7 +20,7 @@
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.lost-pet-card img {
+.lost-pet-card img, .lost-pet-card-inactive img {
     max-width: 100%;
     max-height: 100%;
     aspect-ratio: 1/1;
@@ -29,20 +29,20 @@
     transition: transform 0.2s;
 }
 
-.lost-pet-card h3 {
+.lost-pet-card h3 , .lost-pet-card-inactive h3{
     font-size: 24px;
     margin: 0;
     color: #333;
     font-weight: 600;
 }
 
-.lost-pet-card p {
+.lost-pet-card p , .lost-pet-card-inactive p{
     font-size: 16px;
     margin: 8px 0;
     color: #555;
 }
 
-.lost-pet-card button {
+.lost-pet-card button , .lost-pet-card-inactive button{
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -53,15 +53,19 @@
     transition: background-color 0.3s;
 }
 
-.lost-pet-card button:hover {
+.lost-pet-card button:hover , .lost-pet-card-inactive button:hover{
     background-color: #0056b3;
 }
 
-.lost-pet-card:hover {
+.lost-pet-card:hover , .lost-pet-card-inactive:hover{
     transform: translateY(-5px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
-.lost-pet-card img:hover {
+.lost-pet-card img:hover, .lost-pet-card-inactive img:hover {
     transform: scale(1.05);
+}
+
+.lost-pet-card-inactive{
+    opacity: 0.6;
 }

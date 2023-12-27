@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {AddNewModal} from "../AddNewModal";
 
 interface NavigationBarProps{
-    handleLoggedIn:()=>void;
+    handleLoggedIn:(user:string)=>void;
     handleLoggedOut:()=>void;
 }
 const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => {
@@ -24,7 +24,8 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => 
                 // postavi vrtijednost statea
                 setUsername(user);
                 setLoginState(true);
-                handleLoggedIn();
+                //poslati maincontent da je ovo user mail
+                handleLoggedIn(user);
             } catch (error) {
                 console.error('Error decoding token:', error);
             }

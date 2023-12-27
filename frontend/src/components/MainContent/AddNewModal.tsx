@@ -137,11 +137,11 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const [formData, setFormData] = useState<fdata>({
         inShelter: "1",
         user: {
-            name: "Aubrey Drake Graham",
-            email: "drizzy.drake@goated.com",
-            telephoneNumber: "0981234567",
+            name: "lana",
+            email: "lana@lana.com",
+            telephoneNumber: "123456789",
         },
-        activityName: "Sretno pronađen",
+        activityName: "Za ljubimcem se traga",
         pet: {
             speciesName: "",
             petName: "",

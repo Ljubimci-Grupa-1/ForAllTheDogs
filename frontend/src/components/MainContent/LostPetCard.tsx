@@ -7,9 +7,11 @@ interface LostPetCardProps {
     pet: LostPet;
     onDetailsClick: () => void;
     isLoggedIn:boolean;
+    klasa:string;
+    currUser:string;
 }
 
-const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn }) => {
+const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn , klasa, currUser}) => {
     const [isMenuVisible, setMenuVisible] = useState(false);
     const [updateVisibility, setUpdateVisibility] = useState(false);
     const handleMore=()=>{
@@ -47,8 +49,8 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     return (
         <>
 
-        <div className="lost-pet-card">
-            <button onClick={handleMore}><i className="bi bi-three-dots"></i></button>
+        <div className={klasa}>
+            {(currUser===pet.user)&&isLoggedIn&&<button onClick={handleMore}><i className="bi bi-three-dots"></i></button>}
             {isMenuVisible && (
                 <div className="menu">
                     <button onClick={handleDelete}>Delete</button>
