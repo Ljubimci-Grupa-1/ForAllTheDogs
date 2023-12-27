@@ -1,16 +1,19 @@
 
 
 import {LostPet} from "./MainContent.tsx";
+import "./CategoryComponent.css"
 
 interface CategoryComponentProps{
     pet:LostPet;
     handleCategoryClose:()=>void;
     handleChangeCategory:(category:string)=>void;
+    handleChanged:()=>void;
 }
-export const CategoryComponent = ({pet, handleCategoryClose, handleChangeCategory}:CategoryComponentProps)=>{
+export const CategoryComponent = ({pet, handleCategoryClose, handleChangeCategory, handleChanged}:CategoryComponentProps)=>{
     return(
         <>
-<div>
+<div className="categoryComponent">
+    <div className="categoryComponent-content">
     <button onClick={handleCategoryClose}>x</button>
     <select
         defaultValue={pet.activityName}
@@ -22,6 +25,8 @@ export const CategoryComponent = ({pet, handleCategoryClose, handleChangeCategor
         <option value="Nesretno pronađen">Nesretno pronađen</option>
         {/* Add more species as needed */}
     </select>
+        <button onClick={handleChanged}>done</button>
+    </div>
 </div>
         </>
 )

@@ -56,7 +56,6 @@
 .lost-pet-card button:hover , .lost-pet-card-inactive button:hover{
     background-color: #0056b3;
 }
-
 .lost-pet-card:hover , .lost-pet-card-inactive:hover{
     transform: translateY(-5px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);

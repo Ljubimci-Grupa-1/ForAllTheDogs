@@ -81,7 +81,7 @@ interface petData{
     description:string;
     location:locationData;
 }
-interface fdata{
+export interface fdata{
     inShelter:string;
     user: adUser;
     activityName: string;

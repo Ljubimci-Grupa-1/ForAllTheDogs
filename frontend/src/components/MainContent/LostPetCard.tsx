@@ -1,8 +1,10 @@
 import React, { useState} from "react";
 import {LostPet} from "./MainContent.tsx";
 import "./LostPetCard.css";
-import {AddNewModal, adUser} from "./AddNewModal.tsx";
+import {AddNewModal, adUser, fdata} from "./AddNewModal.tsx";
 import {CategoryComponent} from "./CategoryComponent.tsx";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 interface LostPetCardProps {
     pet: LostPet;
@@ -55,7 +57,50 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     };
     const handleSelected=(category:string)=>{
         setSelectedValue(category);
-        console.log(category);
+    };
+    const handleCategoryFinish=async ()=>{
+        const formData :fdata={
+            inShelter: "1",
+            user: {
+                name: pet.user.name,
+                email: pet.user.email,
+                telephoneNumber: "123456789",
+            },
+            activityName: selectedValue,
+            pet: {
+                speciesName: pet.speciesName,
+                petName: pet.petName,
+                Age: pet.petAge,
+                colors: pet.colors.map(colorName => ({ colorName })),
+                dateTimeMissing: pet.dateTimeMissing,
+                description: pet.description,
+                location: {
+                    latitude: pet.location.latitude,
+                    longitude: pet.location.longitude,
+                    cityName: pet.location.cityName,
+                },
+            },
+            images: [],
+        };
+        console.log(formData);
+        try {
+            const response = await fetch(`http://localhost:8080/ad/edit/${pet.adId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                console.log('Category changed successfully');
+                // You can handle the response from the server here
+            } else {
+                console.error('response not ok');
+            }
+        } catch (error) {
+            console.error('Error trying to change category:', error);
+        }
     };
     return (
         <>
@@ -68,9 +113,10 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     <button onClick={handleChangeCategory}>Change Category</button>
                 </div>
             )}
-            {categoriesVisibility&&
-                <CategoryComponent pet={pet} handleCategoryClose={handleCategoryClose} handleChangeCategory={handleSelected}>
-            </CategoryComponent>}
+            {categoriesVisibility &&
+                <CategoryComponent
+                    pet={pet} handleCategoryClose={handleCategoryClose}
+                    handleChangeCategory={handleSelected} handleChanged={handleCategoryFinish}/>}
             {pet.images && pet.images[0] && <img src={pet.images[0].image} alt={pet.petName} />}
             <h3>{pet.petName}</h3>
             <p>Species: {pet.speciesName}</p>
