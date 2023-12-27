@@ -24,12 +24,14 @@ class JwtUtil {
             "email": "email",
             "username": "username",
             "userType": "userTypeId"
+            "telephoneNumber": "telephoneNumber"
         }
          */
         val claims = mutableMapOf<String, Any>()
         claims["email"] = user.email
         claims["username"] = user.username
         claims["userType"] = user.userType.userTypeId
+        claims["telephoneNumber"] = user.telephoneNumber
 
         return Jwts.builder()
             .setClaims(claims)
