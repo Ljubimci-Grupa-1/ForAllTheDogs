@@ -3,6 +3,7 @@ import {Button, ButtonGroup, Grid, Sheet, Stack, Typography} from "@mui/joy";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {AddNewModal, adUser} from "../AddNewModal";
+import { useNavigate } from 'react-router-dom';
 
 interface NavigationBarProps{
     handleLoggedIn:(user:adUser)=>void;
@@ -14,6 +15,7 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => 
     const [userTelephoneNo, setUserTelephoneNo] = useState('');
     const [isLoggedIn, setLoginState] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
+    const navigate = useNavigate();
     useEffect(() =>{
         const jwt = localStorage.getItem('jwt');
         if(jwt){
@@ -83,8 +85,11 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => 
                             sx={{ '--ButtonGroup-radius': '40px' }}
                         >
                             <Button component={Link} to="/map">Map</Button>
-                            <Button component={Link} to="/account">Account</Button>
-                            <Button component={Link} to="/inbox">Inbox</Button>
+                            {isLoggedIn&&<Button onClick={() => {
+                                // Navigate to "/account" with the user email as a parameter
+                                navigate(`/account/${userEmail}`);
+                            }}>Account</Button>}
+                            {isLoggedIn&&<Button component={Link} to="/inbox">Inbox</Button>}
                         </ButtonGroup>
                     </Sheet>
                 </Grid>
@@ -97,6 +102,7 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => 
                             <Typography sx={{ width: '100%',
                             color:"white"}} level="title-lg">Hello, {username}</Typography>
                             <Button size="lg" component={Link} to="/" onClick={handleSignOut}>Sign out</Button>
+                            <Button component={Link} to="/profile"><i className="bi bi-person-circle"></i></Button>
                         </Sheet>
                     )}
                     {!isLoggedIn && (
