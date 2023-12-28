@@ -108,7 +108,7 @@ class AdService(
             PetDTO(pet,
                 dto.pet.colors.map { color -> color.colorName }.toMutableSet(), // map the colors to a set of strings
                 species,
-                LocationDTO(location, city.cityName)
+                LocationDTO(location, city.cityName, city.county.countyName)
             ),
             // map the images to a list of ImageDTOs
             dto.images.map { image -> ImageDTO(dto.toImage2(image, ad, null)) }
@@ -161,7 +161,7 @@ class AdService(
         return AdDTO(ad, UserAdDTO(user.get()),
             activity.get().activityCategory,
             PetDTO(pet.get(), colors, species.get(),
-                LocationDTO(location.get(), city.get().cityName)
+                LocationDTO(location.get(), city.get().cityName, city.get().county.countyName)
             ),
             images
         )

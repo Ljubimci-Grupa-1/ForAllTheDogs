@@ -7,12 +7,14 @@ data class LocationDTO (
     var locationId: Long,
     var longitude: Double,
     var latitude: Double,
-    var cityName: String
+    var cityName: String,
+    var countyName: String
 ){
-    constructor(location: Location, cityName: String): this(
+    constructor(location: Location, cityName: String, countyName: String): this(
         location.locationId,
         location.longitude,
         location.latitude,
-        cityName
+        cityName,
+        countyName
     )
 }

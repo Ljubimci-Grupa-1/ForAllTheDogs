@@ -51,7 +51,7 @@ class MessageService(
         return MessageDTO(
             message, ad.adId,
             UserAdDTO(user),
-            LocationDTO(location, city.cityName),
+            LocationDTO(location, city.cityName, city.county.countyName),
             ImageDTO(dto.toImage(dto.image ?: "", null, message, nextImageId))
         )
     }
