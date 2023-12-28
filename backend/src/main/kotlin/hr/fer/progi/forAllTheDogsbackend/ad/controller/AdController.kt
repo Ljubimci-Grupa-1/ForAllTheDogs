@@ -40,4 +40,9 @@ class AdController(private val adService: AdService) {
     fun editAd(@PathVariable id: Long, @RequestBody editAddDTO: EditAdDTO) = ResponseEntity.ok(
         adService.editAd(id, editAddDTO)
     )
+
+    @PutMapping("/delete/{id}")
+    fun deleteAd(@PathVariable id: Long) = ResponseEntity.ok(
+        adService.deleteAd(id)
+    )
 }

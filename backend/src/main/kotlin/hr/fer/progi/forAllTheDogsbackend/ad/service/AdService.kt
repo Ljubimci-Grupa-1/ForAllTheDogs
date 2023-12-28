@@ -48,7 +48,7 @@ class AdService(
     private val countyRepository: CountyRepository
 ) {
 
-    fun getAllAds() = adRepository.findAll().map { ad -> createAdDTO(ad) }
+    fun getAllAds() = adRepository.findAllByDeletedFalse().map { ad -> createAdDTO(ad) }
 
     fun getAllAds(pageable: Pageable) = adRepository.findAll(pageable).map { ad -> createAdDTO(ad) }
 
@@ -126,6 +126,13 @@ class AdService(
         adRepository.save(ad)
 
         return createAdDTO(ad)
+    }
+
+    fun deleteAd(id: Long) {
+
+        val ad = adRepository.findById(id).get()
+        ad.deleted = true
+        adRepository.save(ad)
     }
 
 

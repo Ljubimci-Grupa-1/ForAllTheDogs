@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS AD
 (
     adId BIGINT NOT NULL,
     inShelter INT NOT NULL,
+    deleted BOOLEAN NOT NULL,
     activityId BIGINT NOT NULL,
     userId BIGINT NOT NULL,
     petId BIGINT NOT NULL,
@@ -147,7 +148,7 @@ INSERT INTO APP_USER (userId, username, email, password, name, telephone_number,
 VALUES (1, 'Drizzy Drake', 'drizzy.drake@goated.com', '$2a$10$W5FOfV6k.ZBPo9sSZYC1Y.DIMYNr0mZc./DcYsP6SiJrsocDbzoLO', 'Aubrey Drake Graham', '0981234567', 1);
 
 INSERT INTO APP_USER (userId, username, email, password, name, telephone_number, userTypeId)
-VALUES (2, 'aaa', 'aaa@aaa.aaa', '$2a$10$ajsD5L28XtqgCw6v4u1yfup3PIZkfB5kOph3yqFpuQ51XrMT/AYRW', 'aaa', '0000000000', 2);
+VALUES (2, 'aaa Drake', 'aaa@aaa.aaa', '$2a$10$ajsD5L28XtqgCw6v4u1yfup3PIZkfB5kOph3yqFpuQ51XrMT/AYRW', 'aaa', '0000000000', 2);
 
 INSERT INTO COLOR (colorId, colorName) VALUES (1, 'Smeđa');
 INSERT INTO COLOR (colorId, colorName) VALUES (2, 'Crna');

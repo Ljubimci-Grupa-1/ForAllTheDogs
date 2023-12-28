@@ -16,6 +16,9 @@ class Ad(
     @Column(name = "inshelter")
     var inShelter: Int,
 
+    @Column(name = "deleted")
+    var deleted: Boolean = false,
+
     @JoinColumn(name = "userid")
     @ManyToOne
     var user: User,
