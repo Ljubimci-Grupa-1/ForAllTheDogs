@@ -20,19 +20,8 @@ import hr.fer.progi.forAllTheDogsbackend.pet.repository.PetRepository
 import hr.fer.progi.forAllTheDogsbackend.species.repository.SpeciesRepository
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserAdDTO
 import hr.fer.progi.forAllTheDogsbackend.user.repository.UserRepository
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import org.springframework.web.multipart.MultipartFile
-import java.awt.image.BufferedImage
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
-import java.util.*
-import javax.imageio.IIOImage
-import javax.imageio.ImageIO
-import javax.imageio.ImageWriteParam
-import javax.imageio.ImageWriter
-import javax.imageio.stream.ImageOutputStream
 
 @Service
 class AdService(
@@ -50,7 +39,7 @@ class AdService(
 
     fun getAllAds() = adRepository.findAllByDeletedFalse().map { ad -> createAdDTO(ad) }
 
-    fun getAllAds(pageable: Pageable) = adRepository.findAll(pageable).map { ad -> createAdDTO(ad) }
+    fun getAllAds(pageable: Pageable) = adRepository.findAllByDeletedFalse(pageable).map { ad -> createAdDTO(ad) }
 
     fun addAd(dto: AddAdDTO): AdDTO {
         // getting all the necessary data from the DTO
