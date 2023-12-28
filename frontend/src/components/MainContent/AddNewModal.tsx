@@ -225,6 +225,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         closeModal();
     }
     const handleDragEnd = (latlng: L.LatLng) => {
+        console.log(latlng.lng, latlng.lat);
         setMarkerPosition({
             latitude: latlng.lat,
             longitude: latlng.lng,
