@@ -11,14 +11,14 @@ data class MessageDTO(
     val messageId: Long,
     val text: String?,
     val date: Date,
-    val ad: AdDTO,
+    val adId: Long,
     val user: UserAdDTO,
     val location: LocationDTO,
     val image: ImageDTO?
 ){
     constructor(
         message: Message,
-        ad: AdDTO,
+        adId: Long,
         user: UserAdDTO,
         location: LocationDTO,
         image: ImageDTO
@@ -26,7 +26,7 @@ data class MessageDTO(
         message.messageId,
         message.text,
         message.date,
-        ad,
+        adId,
         user,
         location,
         image
