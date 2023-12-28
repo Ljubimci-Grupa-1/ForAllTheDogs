@@ -17,14 +17,22 @@ data class AddAdDTO (
     val pet: AddPetDTO,
     val images: List<String>
 ) {
-    fun toAd(activity: Activity, pet: Pet, user: User) = Ad(
+    fun toAd(activity: Activity, pet: Pet, user: User, adId: Long) = Ad(
+        adId = adId,
         inShelter = inShelter,
         user = user,
         activity = activity,
         pet = pet,
     )
 
-    fun toImage(image: String, ad: Ad?, message: Message?) = Image(
+    fun toImage(image: String, ad: Ad?, message: Message?, imageId: Long) = Image(
+        imageId = imageId,
+        image = image,
+        ad = ad,
+        message = message
+    )
+
+    fun toImage2(image: String, ad: Ad?, message: Message?) = Image(
         image = image,
         ad = ad,
         message = message

@@ -14,7 +14,8 @@ data class EditAdDTO(
     val pet: EditPetDTO? = null,
     val images: List<String>? = null
 ) {
-    fun toImage(image: String, ad: Ad?, message: Message?) = Image(
+    fun toImage(image: String, ad: Ad?, message: Message?, imageId: Long) = Image(
+        imageId = imageId,
         image = image,
         ad = ad,
         message = message

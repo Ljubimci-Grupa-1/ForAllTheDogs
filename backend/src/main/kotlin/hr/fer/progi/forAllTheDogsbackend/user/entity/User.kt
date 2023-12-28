@@ -12,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails
 class User(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_user_seq")
-    @SequenceGenerator(name = "app_user_seq", sequenceName = "app_user_seq", allocationSize = 1)
     @Column(name = "userid")
     var userId: Long = 0L,
 

@@ -12,8 +12,6 @@ import java.util.*
 @Entity
 class Pet (
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pet_seq")
-    @SequenceGenerator(name = "pet_seq", sequenceName = "pet_seq", allocationSize = 1)
     @Column(name = "petid")
     var petId: Long = 0L,
 

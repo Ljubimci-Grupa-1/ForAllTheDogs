@@ -13,8 +13,6 @@ import java.util.Date
 class Message(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_seq")
-    @SequenceGenerator(name = "message_seq", sequenceName = "message_seq", allocationSize = 1)
     @Column(name = "messageid")
     var messageId: Long = 0L,
 

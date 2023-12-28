@@ -17,7 +17,8 @@ data class AddPetDTO (
     val description: String,
     val location: AddLocationDTO
 ) {
-    fun toPet(location: Location, species: Species, colors: MutableSet<Color>) = Pet(
+    fun toPet(location: Location, species: Species, colors: MutableSet<Color>, petId: Long) = Pet(
+        petId = petId,
         species = species,
         petName = petName,
         age = age,

@@ -32,9 +32,12 @@ class UserService(
             userType
         )
 
+
+        val maxUserId = userRepository.findMaxUserId() ?: 0L
+        val nextUserId = maxUserId + 1
         return UserDTO(
             userRepository.save(
-                addUserDTO.toUser()
+                addUserDTO.toUser(nextUserId)
             )
         )
     }

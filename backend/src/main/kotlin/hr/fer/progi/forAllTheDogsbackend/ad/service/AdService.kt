@@ -83,15 +83,23 @@ class AdService(
             throw IllegalArgumentException("Ne postoji vrsta životinje ${dto.pet.speciesName}!")
 
         // saving the pet, location and ad to the database
-        val location = locationRepository.save(dto.pet.location.toLocation(city))
+        val maxLocationId = locationRepository.findMaxLocationId() ?: 0L
+        val nextLocationId = maxLocationId + 1
+        val location = locationRepository.save(dto.pet.location.toLocation(city, nextLocationId))
 
-        val pet = petRepository.save(dto.pet.toPet(location, species, colors))
+        val maxPetId = petRepository.findMaxPetId() ?: 0L
+        val nextPetId = maxPetId + 1
+        val pet = petRepository.save(dto.pet.toPet(location, species, colors, nextPetId))
 
-        val ad = adRepository.save(dto.toAd(activity, pet, user))
+        val maxAdId = adRepository.findMaxAdId() ?: 0L
+        val nextAdId = maxAdId + 1
+        val ad = adRepository.save(dto.toAd(activity, pet, user, nextAdId))
 
         // saving the compressed images to the database
         dto.images.forEach { image ->
-            imageRepository.save(dto.toImage(image, ad, null))
+            val maxImageId = imageRepository.findMaxImageId() ?: 0L
+            val nextImageId = maxImageId + 1
+            imageRepository.save(dto.toImage(image, ad, null, nextImageId))
         }
 
         // returning the DTO with the saved data
@@ -103,7 +111,7 @@ class AdService(
                 LocationDTO(location, city.cityName)
             ),
             // map the images to a list of ImageDTOs
-            dto.images.map { image -> ImageDTO(dto.toImage(image, ad, null)) }
+            dto.images.map { image -> ImageDTO(dto.toImage2(image, ad, null)) }
         )
     }
 
@@ -196,9 +204,10 @@ class AdService(
             imageRepository.deleteByAd(ad)  // delete all the images from the database
 
             editAdDTO.images.forEach { image ->
-                imageRepository.save(editAdDTO.toImage(image, ad, null))
+                val maxImageId = imageRepository.findMaxImageId() ?: 0L
+                val nextImageId = maxImageId + 1
+                imageRepository.save(editAdDTO.toImage(image, ad, null, nextImageId))
             }
         }
     }
-
 }

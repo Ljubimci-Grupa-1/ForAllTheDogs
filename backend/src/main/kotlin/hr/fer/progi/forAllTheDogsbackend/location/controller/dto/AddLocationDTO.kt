@@ -9,7 +9,8 @@ data class AddLocationDTO (
     var cityName: String,
     var countyName: String
 ) {
-    fun toLocation(city: City) = Location(
+    fun toLocation(city: City, locationId: Long) = Location(
+        locationId = locationId,
         longitude = longitude,
         latitude = latitude,
         city = city

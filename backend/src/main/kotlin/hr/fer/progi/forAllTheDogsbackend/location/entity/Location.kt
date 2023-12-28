@@ -9,8 +9,6 @@ import jakarta.validation.constraints.NotNull
 class Location (
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "location_seq")
-    @SequenceGenerator(name = "location_seq", sequenceName = "location_seq", allocationSize = 1)
     @Column(name = "locationid")
     var locationId: Long = 0L,
 

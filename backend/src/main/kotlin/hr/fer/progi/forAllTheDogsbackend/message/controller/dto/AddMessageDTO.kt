@@ -18,7 +18,8 @@ data class AddMessageDTO (
     val image: String?
 ){
 
-    fun toMessage(user: User, ad: Ad, location: Location) = Message(
+    fun toMessage(user: User, ad: Ad, location: Location, messageId: Long) = Message(
+        messageId = messageId,
         text = text,
         date = date,
         ad = ad,
@@ -26,7 +27,8 @@ data class AddMessageDTO (
         location = location
     )
 
-    fun toImage(image: String, ad: Ad?, message: Message?) = Image(
+    fun toImage(image: String, ad: Ad?, message: Message?, imageId: Long) = Image(
+        imageId = imageId,
         image = image,
         ad = ad,
         message = message

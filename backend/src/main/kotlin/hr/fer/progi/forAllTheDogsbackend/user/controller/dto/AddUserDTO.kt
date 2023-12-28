@@ -12,7 +12,8 @@ data class AddUserDTO(
     val telephoneNumber: String,
     val userType: UserType
 ){
-    fun toUser() = User(
+    fun toUser(userId: Long) = User(
+        userId = userId,
         username = username,
         email = email,
         password = password,

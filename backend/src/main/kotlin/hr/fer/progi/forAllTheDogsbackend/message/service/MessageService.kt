@@ -2,6 +2,7 @@ package hr.fer.progi.forAllTheDogsbackend.message.service
 
 import hr.fer.progi.forAllTheDogsbackend.ad.repository.AdRepository
 import hr.fer.progi.forAllTheDogsbackend.city.repository.CityRepository
+import hr.fer.progi.forAllTheDogsbackend.image.repository.ImageRepository
 import hr.fer.progi.forAllTheDogsbackend.location.repository.LocationRepository
 import hr.fer.progi.forAllTheDogsbackend.message.controller.dto.AddMessageDTO
 import hr.fer.progi.forAllTheDogsbackend.message.repository.MessageRepository
@@ -14,7 +15,8 @@ class MessageService(
     private val userRepository: UserRepository,
     private val adRepository: AdRepository,
     private val locationRepository: LocationRepository,
-    private val cityRepository: CityRepository
+    private val cityRepository: CityRepository,
+    private val imageRepository: ImageRepository
 ) {
 
     fun addMessage(dto: AddMessageDTO) {
@@ -29,8 +31,16 @@ class MessageService(
         val city = dto.location?.let { cityRepository.findByCityName(it.cityName) } ?:
             throw IllegalArgumentException("Ne postoji grad ${dto.location?.cityName}!")
 
-        val location = locationRepository.save(dto.location.toLocation(city))
+        val maxLocationId = locationRepository.findMaxLocationId() ?: 0L
+        val nextLocationId = maxLocationId + 1
+        val location = locationRepository.save(dto.location.toLocation(city, nextLocationId))
 
-        messageRepository.save(dto.toMessage(user, ad, location))
+        val maxMessageId = messageRepository.findMaxMessageId() ?: 0L
+        val nextMessageId = maxMessageId + 1
+        val message = messageRepository.save(dto.toMessage(user, ad, location, nextMessageId))
+
+        val maxImageId = imageRepository.findMaxImageId() ?: 0L
+        val nextImageId = maxImageId + 1
+        dto.image?.let { dto.toImage(it, null, message, nextImageId) }?.let { imageRepository.save(it) }
     }
 }

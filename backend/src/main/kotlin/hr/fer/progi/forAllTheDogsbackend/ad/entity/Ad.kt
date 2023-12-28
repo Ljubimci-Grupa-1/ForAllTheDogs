@@ -10,8 +10,6 @@ import jakarta.persistence.*
 class Ad(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ad_seq")
-    @SequenceGenerator(name = "ad_seq", sequenceName = "ad_seq", allocationSize = 1)
     @Column(name = "adid")
     var adId: Long = 0L,
 
