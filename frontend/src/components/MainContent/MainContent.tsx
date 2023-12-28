@@ -11,7 +11,7 @@ export interface LostPet {
     activityName:string;
     petId: number;
     petName: string;
-    petAge:number;
+    age:number;
     speciesName: string;
     dateTimeMissing: string;
     colors:string[];
@@ -25,26 +25,24 @@ interface PetData {
     pet: LostPet;
     // Other properties from the API response
 }
-interface MainContentProps {
-    isLoggedIn:boolean;
-    userEmail:string;
-    go:boolean;
-}
-const MainContent= ({go}:MainContentProps) => {
+
+const MainContent= () => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
     const [filterName, setFilterName] = useState('');
     const [filterSpecies, setFilterSpecies] = useState('');
     const [filterDateLost, setFilterDateLost] = useState('');
     const [lostPets, setLostPets] = useState<LostPet[]>([]);
+    const [lostPetsUserProfile, setLostPetsUserProfile] = useState<LostPet[]>([]);
     const [lostPetsInactive, setLostPetsInactive] = useState<LostPet[]>([]);
+    const [lostPetsInactiveUserProfile, setLostPetsInactiveUserProfile] = useState<LostPet[]>([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentUser, setCurrentUser] = useState<adUser>({
         email:"", name:"", telephoneNumber:""
     });
     //const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [menuState, setMenuState] = useState<{ [key: string]: boolean }>({}); // Menu state dictionary
-
+    const [go, setGo] = useState(true);
     useEffect(() => {
         document.title = "For All The Dogs";
         fetch('http://localhost:8080/ad/all')
@@ -64,6 +62,14 @@ const MainContent= ({go}:MainContentProps) => {
                         petsData[i].user=data[i].user
                     }
                 }
+                console.log("SAD USER", currentUser.email)
+                const filtrirani:LostPet[]=[];
+                for (let i = 0; i < petsData.length; i++) {
+                    if (petsData[i].user.email===currentUser.email) {
+                        console.log("j")
+                        filtrirani.push(petsData[i]);
+                    }
+                }
                 const separatedArrays = petsData.reduce<{
                     activeAds: LostPet[];
                     inactiveAds: LostPet[];
@@ -81,17 +87,39 @@ const MainContent= ({go}:MainContentProps) => {
 
                 const activeAds = separatedArrays.activeAds;
                 const inactiveAds = separatedArrays.inactiveAds;
+                console.log("FILTER", filtrirani)
 
-                console.log('activeAds', activeAds);
-                console.log('inactiveAds', inactiveAds);
-                console.log(petsData);
+                const separatedArraysUserProfile = filtrirani.reduce<{
+                    activeAdsUserProfile: LostPet[];
+                    inactiveAdsUserProfile: LostPet[];
+                }>(
+                    (result, currentObject) => {
+                        if (currentObject.activityName === 'Za ljubimcem se traga') {
+                            result.activeAdsUserProfile.push(currentObject);
+                        } else {
+                            result.inactiveAdsUserProfile.push(currentObject);
+                        }
+                        return result;
+                    },
+                    { activeAdsUserProfile: [], inactiveAdsUserProfile: [] }
+                );
+
+                const activeAdsUserProfile = separatedArraysUserProfile.activeAdsUserProfile;
+                const inactiveAdsUserProfile = separatedArraysUserProfile.inactiveAdsUserProfile;
+
+                console.log(filteredPetsUserProfile);
+                console.log("wtf se dogada", activeAdsUserProfile);
+                console.log(inactiveAdsUserProfile);
+                console.log(activeAds)
+                setLostPetsUserProfile(activeAdsUserProfile);
+                setLostPetsInactiveUserProfile(inactiveAdsUserProfile);
                 setLostPets(activeAds);
                 setLostPetsInactive(inactiveAds);
             })
             .catch((error) => {
                 console.error('Error fetching lost pets:', error);
             });
-    }, []);
+    }, [currentUser]);
 
     useEffect(() => {
         // ... (existing code)
@@ -103,6 +131,10 @@ const MainContent= ({go}:MainContentProps) => {
         });
         setMenuState(initialMenuState);
     }, [lostPets]);
+
+    const handleMainContentStateChange = () => {
+        setGo(false);
+    };
 
     const handleModalClose = () => {
         setModalOpen(false);
@@ -118,6 +150,21 @@ const MainContent= ({go}:MainContentProps) => {
     }) : [];
 
     const filteredPetsInactive = lostPetsInactive ? lostPetsInactive.filter((pet) => {
+        const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
+        const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
+        const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
+
+        return nameMatch && speciesMatch && dateLostMatch;
+    }) : [];
+
+    const filteredPetsUserProfile = lostPetsUserProfile ? lostPetsUserProfile.filter((pet) => {
+        const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
+        const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
+        const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
+
+        return nameMatch && speciesMatch && dateLostMatch;
+    }) : [];
+    const filteredPetsInactiveUserProfile = lostPetsInactiveUserProfile ? lostPetsInactiveUserProfile.filter((pet) => {
         const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
         const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
         const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
@@ -164,11 +211,12 @@ const MainContent= ({go}:MainContentProps) => {
             [cardId]: !prevMenuState[cardId],
         }));
     };
+
     return (
         <main className="main">
             <p>Welcome to For All The Dogs, a platform to help find lost pets...</p>
 
-            <NavigationBar handleLoggedIn={handleLoggedIn} handleLoggedOut={handleLoggedOut}/>
+            <NavigationBar handleLoggedIn={handleLoggedIn} handleLoggedOut={handleLoggedOut} setMainContentState={handleMainContentStateChange}/>
 
             <FilterBar
                 onNameChange={handleNameChange}
@@ -177,8 +225,7 @@ const MainContent= ({go}:MainContentProps) => {
                 onApplyFilters={handleApplyFilters}
                 onClearFilters={handleClearFilters}
             />
-
-            <div className="lost-pets-list" >
+            {go&&<div className="lost-pets-list" >
                 {filteredPets.map((pet) => (
                     <LostPetCard
                         klasa={"lost-pet-card"}
@@ -213,7 +260,45 @@ const MainContent= ({go}:MainContentProps) => {
                         onMenuToggle={handleMenuToggle}
                     />
                 ))}
-            </div>
+            </div>}
+            {
+                !go&&<div className="lost-pets-list" >
+                    {filteredPetsUserProfile.map((pet) => (
+                        <LostPetCard
+                            klasa={"lost-pet-card"}
+                            currUser={currentUser}
+                            key={pet.petId}
+                            pet={pet}
+                            isLoggedIn={isLoggedIn}
+                            onDetailsClick={() => {
+                                setCurrentPet(pet);
+                                setModalOpen(true);
+                            }}
+
+                            cardId={pet.petId.toString()} // Use petId as the card identifier
+                            menuState={menuState}
+                            onMenuToggle={handleMenuToggle}
+                        />
+                    ))}
+                    {isLoggedIn&&filteredPetsInactiveUserProfile.map((pet) => (
+                        <LostPetCard
+                            klasa={"lost-pet-card-inactive"}
+                            currUser={currentUser}
+                            key={pet.petId}
+                            pet={pet}
+                            isLoggedIn={isLoggedIn}
+                            onDetailsClick={() => {
+                                setCurrentPet(pet);
+                                setModalOpen(true);
+                            }}
+
+                            cardId={pet.petId.toString()} // Use petId as the card identifier
+                            menuState={menuState}
+                            onMenuToggle={handleMenuToggle}
+                        />
+                    ))}
+                </div>
+            }
             {isModalOpen && (
                 <PetDetailsModal
                     pet={currentPet}

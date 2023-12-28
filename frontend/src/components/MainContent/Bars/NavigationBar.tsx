@@ -3,13 +3,13 @@ import {Button, ButtonGroup, Grid, Sheet, Stack, Typography} from "@mui/joy";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {AddNewModal, adUser} from "../AddNewModal";
-import UserProfile from "../UserProfile.tsx";
 
 interface NavigationBarProps{
     handleLoggedIn:(user:adUser)=>void;
     handleLoggedOut:()=>void;
+    setMainContentState:()=>void;
 }
-const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => {
+const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState}:NavigationBarProps) => {
     const [username, setUsername] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userTelephoneNo, setUserTelephoneNo] = useState('');
@@ -31,7 +31,7 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => 
                 setUserTelephoneNo(decodedToken.telephoneNumber);
                 setLoginState(true);
                 //poslati maincontent da je ovo user mail
-                handleLoggedIn({name:decodedToken.username, email:decodedToken.email, telephoneNumber:decodedToken.exp});
+                handleLoggedIn({name:decodedToken.username, email:decodedToken.email, telephoneNumber:decodedToken.telephoneNumber});
                 console.log(decodedToken)
                 //handleLoggedIn(user);
             } catch (error) {
@@ -44,6 +44,7 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => 
     };
     const handleProfile=()=>{
         setGo(true);
+        setMainContentState();
     };
     const handleSignOut=()=>{
         setLoginState(false);
@@ -124,10 +125,10 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut}:NavigationBarProps) => 
                 ></AddNewModal>
             )
             }
-            {go&&<UserProfile userEmail={userEmail} isLoggedIn={true} currentUser={{
+            {/*{go&&<UserProfile userEmail={userEmail} isLoggedIn={true} currentUser={{
                 name:username, telephoneNumber:userTelephoneNo, email:userEmail
             }}></UserProfile>
-            }
+            }*/}
         </nav>
     );
 };

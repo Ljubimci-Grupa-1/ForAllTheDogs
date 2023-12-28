@@ -39,7 +39,7 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose }) => {
                 <p>Species: {pet.speciesName}</p>
                 <p>Has colors : {pet.colors.map(boja=>boja+" ")}</p>
                 <p>Date Lost: {datum} at {vrijeme}</p>
-                <p>Age : {pet.petAge}</p>
+                <p>Age : {pet.age}</p>
                 <p>Description: {pet.description}</p>
                 <button onClick={onClose}>Close</button>
             </div>

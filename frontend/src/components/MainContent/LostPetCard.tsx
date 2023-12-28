@@ -74,7 +74,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
             pet: {
                 speciesName: pet.speciesName,
                 petName: pet.petName,
-                Age: pet.petAge,
+                age: pet.petAge,
                 colors: pet.colors.map(colorName => ({ colorName })),
                 dateTimeMissing: pet.dateTimeMissing,
                 description: pet.description,
@@ -82,6 +82,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     latitude: pet.location.latitude,
                     longitude: pet.location.longitude,
                     cityName: pet.location.cityName,
+                    countyName:pet.location.countyName
                 },
             },
             images: [],
@@ -128,7 +129,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         </div>
             {updateVisibility && (
                 <AddNewModal
-                    closeModal={handleCloseModal} nameFill={pet.petName} ageFill={pet.petAge} speciesFill={pet.speciesName}
+                    closeModal={handleCloseModal} nameFill={pet.petName} ageFill={pet.age} speciesFill={pet.speciesName}
                     descriptionFill={pet.description} longitudeFill={pet.location.longitude} latitudeFill={pet.location.latitude}
                     datetimeFill={pet.dateTimeMissing} cityFill={pet.location.cityName} text="Edit this ad"
                     colorsFill={pet.colors.map(colorName => ({ colorName }))}

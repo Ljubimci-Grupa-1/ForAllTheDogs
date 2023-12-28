@@ -71,11 +71,12 @@ export interface locationData{
     latitude:number;
     longitude:number;
     cityName: string;
+    countyName:string;
 }
 interface petData{
     speciesName:string;
     petName:string;
-    Age:number;
+    age:number;
     colors:Color[];
     dateTimeMissing:string;
     description:string;
@@ -110,13 +111,12 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const [isUploaded, setIsUploaded] = useState(false);
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
     const [fileBase64Array, setFileBase64Array] = useState<string[]>(imagesFill);
-    const [newImages, setNewImages] = useState<string[]>([]);
     const [browsedFile, setBrowsedFile]=useState('');
     const [counter, setCounter]=useState(fileBase64Array.length);
     //problem sa county, oni ga ne salju
     const [data, setData]=useState<Data>({
         age:ageFill, name:nameFill, species:speciesFill, colors:colorsFill,
-        latitude:latitudeFill, longitude:longitudeFill, datetime:datetimeFill, description:descriptionFill, city:cityFill, county:""
+        latitude:latitudeFill, longitude:longitudeFill, datetime:datetimeFill, description:descriptionFill, city:cityFill, county:"Brodsko-posavska"
     })
 
     const [selectedDateTime, setSelectedDateTime] =useState(null);
@@ -143,7 +143,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         pet: {
             speciesName: "",
             petName: "",
-            Age: -1,
+            age: -1,
             colors: [],
             dateTimeMissing: "",
             description: "",
@@ -151,6 +151,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 latitude: 45.813257,
                 longitude: 15.976448,
                 cityName: "",
+                countyName:""
             },
         },
         images: [],
@@ -305,7 +306,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         // Here, you can save the selectedFile or perform any other action
         if (fileBase64Array) {
             setFileBase64Array(prevArray => [...prevArray, browsedFile]);
-            setNewImages(prevArray => [...prevArray, browsedFile]);
             setCounter(counter+1)
             setIsUploaded(false)
         } else {
@@ -314,11 +314,8 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     };
     const handleDeleteImage=(index:number)=>{
         const updatedFiles = [...fileBase64Array];
-        const updatedFiles1 = [...newImages];
         updatedFiles.splice(index, 1);
-        updatedFiles1.splice(index-(fileBase64Array.length-newImages.length), 1);
         setFileBase64Array(updatedFiles);
-        setNewImages(updatedFiles1);
     };
     const formValidation = ()=>{
         const forma = {
@@ -336,7 +333,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         if (fileBase64Array) {
             console.log(fileBase64Array)
             formData.pet.speciesName = data.species;
-            formData.pet.Age = data.age;
+            formData.pet.age = data.age;
             formData.pet.petName = data.name;
             formData.pet.location.latitude = data.latitude;
             formData.pet.location.longitude = data.longitude;
@@ -344,9 +341,10 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             formData.pet.dateTimeMissing = data.datetime;
             formData.pet.description = data.description;
             formData.pet.location.cityName = data.city;
+            formData.pet.location.countyName=data.county;
+            formData.images = fileBase64Array;
             if(speciesFill===''){
             try {
-                formData.images = fileBase64Array;
                 console.log(formData);
                 const response = await fetch('http://localhost:8080/ad/add', {
                     method: 'POST',
@@ -358,10 +356,12 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
 
                 if (response.ok) {
                     console.log('Images uploaded successfully');
+
                     // You can handle the response from the server here
                     setFileBase64Array([]);
                     setCounter(0);
                 } else {
+
                     console.error('Failed to add the ad');
                 }
             } catch (error) {
@@ -369,7 +369,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             }}
             else{
                 //radi se o updateu
-                formData.images = newImages;
+                console.log(formData);
                 try {
                     const response = await fetch(`http://localhost:8080/ad/edit/${adIdFill}`, {
                         method: 'PUT',
@@ -383,6 +383,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                         console.log('Images uploaded successfully');
                         // You can handle the response from the server here
                     } else {
+                        console.log(Error);
                         console.error('Failed to add the ad');
                     }
                 } catch (error) {
