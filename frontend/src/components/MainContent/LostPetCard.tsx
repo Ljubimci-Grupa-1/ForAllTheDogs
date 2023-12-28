@@ -31,7 +31,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         // Implement delete logic here
         try {
             const response = await fetch(`http://localhost:8080/ad/delete/${pet.adId}`, {
-                method: 'DELETE',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -74,7 +74,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
             pet: {
                 speciesName: pet.speciesName,
                 petName: pet.petName,
-                age: pet.petAge,
+                age: pet.age,
                 colors: pet.colors.map(colorName => ({ colorName })),
                 dateTimeMissing: pet.dateTimeMissing,
                 description: pet.description,
@@ -82,10 +82,11 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     latitude: pet.location.latitude,
                     longitude: pet.location.longitude,
                     cityName: pet.location.cityName,
+                    //countyName:pet.location.countyName
                     countyName:pet.location.countyName
                 },
             },
-            images: [],
+            images: null,
         };
         console.log(formData);
         try {
@@ -133,7 +134,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     descriptionFill={pet.description} longitudeFill={pet.location.longitude} latitudeFill={pet.location.latitude}
                     datetimeFill={pet.dateTimeMissing} cityFill={pet.location.cityName} text="Edit this ad"
                     colorsFill={pet.colors.map(colorName => ({ colorName }))}
-                    countyFill={""}
+                    countyFill={pet.location.countyName}
                     imagesFill={pet.images.map(image=>image.image)} adIdFill={pet.adId}
                     isLoggedIn={isLoggedIn}
                     user={{

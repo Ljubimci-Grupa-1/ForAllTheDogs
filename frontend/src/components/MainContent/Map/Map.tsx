@@ -17,8 +17,11 @@ interface Popup {
     long:number;
     lat:number;
 }
+interface MapProps{
+    isLoggedIn:boolean;
+}
 
-const Map : FC = () => {
+const Map : FC<MapProps> = ({ isLoggedIn }) => {
     const [popups, setPopups] = useState<Popup[]>([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -32,6 +35,24 @@ const Map : FC = () => {
                     const images = item.images; // Replace 'images' with the actual property name
                     return { ...pet, images };
                 });
+                if(!isLoggedIn){
+                    const filtrirani:LostPet[]=[];
+                    for(let i=0; i<petsData.length; i++){
+                        if(petsData[i].activityName==='Za ljubimcem se traga'){
+                            filtrirani.push(petsData[i]);
+                        }
+                    }
+                    setPopups(
+                        filtrirani.map((pet) => ({
+                            title: pet.petName,
+                            description: pet.description,
+                            imageUrl: pet.images[0]?.image || "",
+                            long: pet.location.longitude,
+                            lat: pet.location.latitude,
+                        }))
+                    );
+                }
+                else{
                 setPopups(
                     petsData.map((pet) => ({
                         title: pet.petName,
@@ -40,7 +61,7 @@ const Map : FC = () => {
                         long: pet.location.longitude,
                         lat: pet.location.latitude,
                     }))
-                );
+                );}
             })
             .catch((error) => {
                 console.error('Error fetching lost pets:', error);
@@ -59,7 +80,7 @@ const Map : FC = () => {
     if (loading) {
         return <p>Loading...</p>; // Show a loading indicator or message
     }
-    return popups.length > 0 ? (
+    return (
         <MapContainer center={[45.80044256647421, 15.971142980178024]} zoom={13}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
@@ -78,7 +99,7 @@ const Map : FC = () => {
                 </Marker>
             ))}
         </MapContainer>
-    ) : <p>hfdhd</p>
+    )
         ;}
 
 export default Map;

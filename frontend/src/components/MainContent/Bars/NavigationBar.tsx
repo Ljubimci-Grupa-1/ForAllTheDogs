@@ -15,7 +15,6 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState}:Na
     const [userTelephoneNo, setUserTelephoneNo] = useState('');
     const [isLoggedIn, setLoginState] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
-    const [go, setGo]=useState(false);
     useEffect(() =>{
         const jwt = localStorage.getItem('jwt');
         if(jwt){
@@ -43,7 +42,7 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState}:Na
         setModalOpen(false);
     };
     const handleProfile=()=>{
-        setGo(true);
+        //setGo(true);
         setMainContentState();
     };
     const handleSignOut=()=>{
@@ -125,10 +124,6 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState}:Na
                 ></AddNewModal>
             )
             }
-            {/*{go&&<UserProfile userEmail={userEmail} isLoggedIn={true} currentUser={{
-                name:username, telephoneNumber:userTelephoneNo, email:userEmail
-            }}></UserProfile>
-            }*/}
         </nav>
     );
 };

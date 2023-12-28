@@ -25,8 +25,12 @@ interface PetData {
     pet: LostPet;
     // Other properties from the API response
 }
+interface MainContentProps{
+    handleLoggedInAppC:()=>void;
+    handleLoggedOutAppC:()=>void;
+}
 
-const MainContent= () => {
+const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
     const [filterName, setFilterName] = useState('');
@@ -194,10 +198,12 @@ const MainContent= () => {
     };
     const handleLoggedIn=(user:adUser)=>{
         setIsLoggedIn(true);
+        handleLoggedInAppC();
         setCurrentUser(user);
     };
     const handleLoggedOut=()=>{
         setIsLoggedIn(false);
+        handleLoggedOutAppC();
         setModalOpen(false);
 
         setCurrentUser({

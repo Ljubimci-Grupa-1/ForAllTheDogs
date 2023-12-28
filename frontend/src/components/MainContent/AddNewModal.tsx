@@ -103,7 +103,7 @@ interface FormValidation{
     city:boolean;
 }
 export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colorsFill, descriptionFill,
-                                latitudeFill, longitudeFill, cityFill, datetimeFill,imagesFill, text, adIdFill, user }: AddNewModalProps) =>{
+                                latitudeFill, longitudeFill, cityFill, datetimeFill,imagesFill, countyFill, text, adIdFill, user }: AddNewModalProps) =>{
     const [colors, setColors] = useState([]);
     const [species, setSpecies]=useState([]);
     const [counties, setCounties] = useState<County[]>([]);
@@ -116,7 +116,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     //problem sa county, oni ga ne salju
     const [data, setData]=useState<Data>({
         age:ageFill, name:nameFill, species:speciesFill, colors:colorsFill,
-        latitude:latitudeFill, longitude:longitudeFill, datetime:datetimeFill, description:descriptionFill, city:cityFill, county:"Brodsko-posavska"
+        latitude:latitudeFill, longitude:longitudeFill, datetime:datetimeFill, description:descriptionFill, city:cityFill, county:countyFill
     })
 
     const [selectedDateTime, setSelectedDateTime] =useState(null);
@@ -186,18 +186,26 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     }, []);
 
     useEffect(() => {
-        const fetchCounties = async () => {
+        const fetchData = async () => {
             try {
                 const response = await fetch("http://localhost:8080/county/all");
-                const data = await response.json();
-                setCounties(data);
+                const data1 = await response.json();
+                setCounties(data1);
+
+                if (data.county !== '') {
+                    const targetCounty = data1.find(county => county.countyName === data.county);
+                    const myId = targetCounty ? targetCounty.countyId : null;
+                    const responseCities = await fetch(`http://localhost:8080/county/${myId}`);
+                    const data2 = await responseCities.json();
+                    setCountyCities(data2.cities);
+                }
             } catch (error) {
-                console.error("Error fetching counties:", error);
+                console.error("Error fetching data:", error);
             }
         };
 
-        fetchCounties();
-    }, []);
+        fetchData();
+    }, [data.county]);
 
     useEffect(() => {
     }, [validation]);
@@ -342,9 +350,9 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             formData.pet.description = data.description;
             formData.pet.location.cityName = data.city;
             formData.pet.location.countyName=data.county;
-            formData.images = fileBase64Array;
             if(speciesFill===''){
             try {
+                formData.images = fileBase64Array;
                 console.log(formData);
                 const response = await fetch('http://localhost:8080/ad/add', {
                     method: 'POST',
@@ -369,6 +377,13 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             }}
             else{
                 //radi se o updateu
+                if(fileBase64Array==imagesFill){
+                    console.log("radi");
+                    formData.images=null;
+                }
+                else{
+                    formData.images=fileBase64Array;
+                }
                 console.log(formData);
                 try {
                     const response = await fetch(`http://localhost:8080/ad/edit/${adIdFill}`, {
@@ -646,6 +661,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         color="primary"
                                         id="counties"
                                         onChange={handleChangeCounty}
+                                        value={data.county}
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
                                                 <Chip variant="solid" color="primary">
@@ -692,6 +708,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         color="primary"
                                         id="cities"
                                         onChange={handleChangeCity}
+                                        value={data.city}
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
                                                 <Chip variant="solid" color="primary">
