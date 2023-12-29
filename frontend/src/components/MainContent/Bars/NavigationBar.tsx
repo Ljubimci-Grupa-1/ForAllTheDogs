@@ -6,6 +6,10 @@ import {AddNewModal, adUser} from "../AddNewModal";
 
 {/*
 1.NavigationBarProps explained in MainContent
+
+2.handleCloseModal-to close form of posting a new ad
+
+3.handleProfile, handleBackToMain-toggling between all ads and user's ads
 */}
 
 interface NavigationBarProps{

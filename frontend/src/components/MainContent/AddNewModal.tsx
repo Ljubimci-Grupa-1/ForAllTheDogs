@@ -11,6 +11,31 @@ import DraggableMapForm from "./Map/DraggableMapForm";
 import dayjs from "dayjs";
 import 'dayjs/locale/en'; // Import English locale for dayjs
 
+{/*
+1.isUploaded-when users picks a photo from his device, he needs to click Upload to confirm his choice. isUploaded is false when there is
+no photo waiting to be uploaded, true otherwise.
+fileBase64Array-all chosen photos for user's ad.
+browsedFile-file waiting to be uploaded
+counter-amount of chosen photos
+
+2.data: initial placeholders for form inputs
+a)when posting-this is recognized as speciesFill===''
+initially all empty, changes when user changes certain input
+b)when editing-this is recognized as speciesFill!==''
+initially has values of the edited ad, changes when user changes certain input
+
+3.changed-object of booleans saying is an input has been changed at all (probably useless but i'm not sure, as there still is
+reference to it in formValidation); initially all false
+validation-object of booleans later used for displaying error messages if some inputs are left empty; initially all true
+formValidation-function called when submitting, used for validating user's form
+
+4.VisuallyHiddenInput-taken from Joy; used for browsing your own files
+
+5.handleChange, handleChangeCounty, handleChangeCity, handleColorChange, handleDateTimeChange-all used for changing values of its inputs
+
+6.convertFile, handleUpload, handleDeleteImage-used for uploading and deleting uploaded images
+*/}
+
 // Set English locale for dayjs
 dayjs.locale('en');
 interface Boja{
@@ -266,6 +291,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             fetchCitiesByCounties();
         }
     };
+
     const handleChangeCity = (
         _: React.SyntheticEvent | null,
         newValue: string | null,
@@ -310,6 +336,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             }
         }
     };
+
     const handleUpload :React.MouseEventHandler<HTMLButtonElement>= (event) => {
         event.preventDefault();
         // Here, you can save the selectedFile or perform any other action
@@ -428,6 +455,9 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             <div className="modal-container">
                 {}
                 <Sheet className="modal-content">
+
+
+                    {/*CLOSE BUTTON*/}
                     <i className="bi bi-x-circle"
                        style={{
                            fontSize: '2em', // Adjust the font size to make the button bigger
@@ -438,10 +468,17 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                        }}
                        onClick={handleClose}
                     ></i>
+
+
+
+                    {/*INPUTS*/}
                     <Stack spacing={3}>
                         <h2>{text}</h2>
                         <form onSubmit={handleSubmit}>
                             <Stack spacing={3} direction="row" justifyContent="center" flexWrap="wrap" useFlexGap>
+
+
+                                {/*SPECIES INPUT*/}
                                 <div className="input-container">
                                     <label htmlFor="species2">Species:</label>
                                     <Select
@@ -487,6 +524,10 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                     </Select>
                                     {!validation.species && <p className="error-message" style={{color:"red"}}>Species is required!</p>}
                                 </div>
+
+
+
+                                {/*NAME INPUT*/}
                                 <div className="input-container">
                                     <label htmlFor="petName">Pet name:</label>
                                     <Input
@@ -499,6 +540,10 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                     />
                                     {!validation.name && <p className="error-message" style={{color:"red"}}>Name is required!</p>}
                                 </div>
+
+
+
+                                {/*AGE INPUT*/}
                                 <div className="input-container">
                                     <label htmlFor="age">Age:</label>
                                     <Input
@@ -515,6 +560,10 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                     />
                                     {!validation.age && <p className="error-message" style={{color:"red"}}>Age is required!</p>}
                                 </div>
+
+
+
+                                {/*COLOR INPUT*/}
                                 <div className="input-container">
                                     <label htmlFor="color">Color:</label>
                                     <Select
@@ -562,6 +611,10 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                     </Select>
                                     {!validation.colors && <p className="error-message" style={{color:"red"}}>At least 1 color!</p>}
                                 </div>
+
+
+
+                                {/*DATETIME INPUT*/}
                                 <div className="input-container">
                                     <label htmlFor="dateandtime">Gone missing:</label>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -598,6 +651,10 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                     </LocalizationProvider>
                                     {!validation.datetime && <p className="error-message" style={{color:"red"}}>Date and time are required!</p>}
                                 </div>
+
+
+
+                                {/*IMAGES INPUT*/}
                                 <div className="input-container">
                                     <label htmlFor="uploadPhoto">Upload photos:</label>
 
@@ -650,6 +707,9 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                     </div>
                                     {!validation.images && <p className="error-message" style={{color:"red"}}>At least 1 image!</p>}
                                 </div>
+
+
+                                {/*DESCRIPTION INPUT*/}
                                 <div className="input-container">
                                     <label htmlFor="description">Description:</label>
                                     <textarea id="description" value={data.description}
@@ -657,13 +717,17 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                     ></textarea>
                                     {!validation.description && <p className="error-message" style={{color:"red"}}>Description is required!</p>}
                                 </div>
+
+
+
+                                {/*MAP INPUT*/}
                                 <div style={{height:'200px'}} className="input-container">
                                     <DraggableMapForm onDragEnd={handleDragEnd} center={{lat:latitudeFill, lng:longitudeFill}}/>
                                 </div>
 
 
 
-
+                                {/*COUNTY INPUT*/}
                                 <div className="input-container">
                                     <label htmlFor="counties">County:</label>
                                     <Select
@@ -711,6 +775,9 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                     {!validation.county && <p className="error-message" style={{color:"red"}}>County is required!</p>}
                                 </div>
 
+
+
+                                {/*CITY INPUT*/}
                                 <div className="input-container">
                                     <label htmlFor="cities">City:</label>
                                     <Select
@@ -758,6 +825,9 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                     {!validation.city && <p className="error-message" style={{color:"red"}}>City is required!</p>}
                                 </div>
 
+
+
+                                {/*showing images, possibility of deleting*/}
                                 <div className="input-container">
                                     {fileBase64Array.map((_, index) => (
                                         <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
@@ -772,6 +842,10 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         </div>
                                     ))}
                                 </div>
+
+
+
+                                {/*SUBMIT BUTTON*/}
                                 <button type="button" onClick={handleSubmit}>submit</button>
                             </Stack>
                         </form>

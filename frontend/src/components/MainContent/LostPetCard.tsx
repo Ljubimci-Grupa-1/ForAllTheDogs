@@ -4,6 +4,18 @@ import "./LostPetCard.css";
 import {AddNewModal, adUser, fdata} from "./AddNewModal.tsx";
 import {CategoryComponent} from "./CategoryComponent.tsx";
 
+{/*
+1.LostPetCardProps-explained in MainContent; klasa-lost-pet-card or lost-pet-card-inactive, currUser-user who is logged in
+
+2.updateVisibility-shows the same component as for posting a new ad, just used for editing now
+
+3.handleMore-menu; when clicked, shows 3 actions with ad: update, delete, change category
+
+4.selectedValue-current chosen category
+
+
+*/}
+
 
 interface LostPetCardProps {
     pet: LostPet;
@@ -11,7 +23,6 @@ interface LostPetCardProps {
     isLoggedIn:boolean;
     klasa:string;
     currUser:adUser;
-    // Receive the state as a prop
     onMenuToggle: (cardId: string) => void;
     cardId: string;
     menuState: { [key: string]: boolean };
@@ -28,7 +39,6 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         onMenuToggle(cardId); // Pass the cardId to toggle the correct menu
     };
     const handleDelete = async () => {
-        // Implement delete logic here
         try {
             const response = await fetch(`http://localhost:8080/ad/delete/${pet.adId}`, {
                 method: 'PUT',
@@ -53,7 +63,6 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         setCategoriesVisibility(true);
     };
     const handleCategoryClose=()=>{
-        //put method here!
         setCategoriesVisibility(false);
     };
     const handleCloseModal = () => {
@@ -68,7 +77,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
             user: {
                 name: pet.user.name,
                 email: pet.user.email,
-                telephoneNumber: "123456789",
+                telephoneNumber: pet.user.telephoneNumber,
             },
             activityName: selectedValue,
             pet: {
@@ -82,7 +91,6 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     latitude: pet.location.latitude,
                     longitude: pet.location.longitude,
                     cityName: pet.location.cityName,
-                    //countyName:pet.location.countyName
                     countyName:pet.location.countyName
                 },
             },
@@ -100,7 +108,6 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
 
             if (response.ok) {
                 console.log('Category changed successfully');
-                // You can handle the response from the server here
             } else {
                 console.error('response not ok');
             }
