@@ -45,4 +45,9 @@ class AdController(private val adService: AdService) {
     fun deleteAd(@PathVariable id: Long) = ResponseEntity.ok(
         adService.deleteAd(id)
     )
+
+    @GetMapping("/{id}/messages")
+    fun getAdMessages(@PathVariable id: Long) = ResponseEntity.ok(
+        adService.getAdWithMessages(id)
+    )
 }

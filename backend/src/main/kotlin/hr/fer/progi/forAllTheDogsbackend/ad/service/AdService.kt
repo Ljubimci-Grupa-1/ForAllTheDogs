@@ -13,6 +13,8 @@ import hr.fer.progi.forAllTheDogsbackend.image.controller.dto.ImageDTO
 import hr.fer.progi.forAllTheDogsbackend.image.repository.ImageRepository
 import hr.fer.progi.forAllTheDogsbackend.location.controller.dto.LocationDTO
 import hr.fer.progi.forAllTheDogsbackend.location.repository.LocationRepository
+import hr.fer.progi.forAllTheDogsbackend.message.controller.dto.MessageDTO
+import hr.fer.progi.forAllTheDogsbackend.message.repository.MessageRepository
 import hr.fer.progi.forAllTheDogsbackend.pet.controller.dto.EditPetDTO
 import hr.fer.progi.forAllTheDogsbackend.pet.controller.dto.PetDTO
 import hr.fer.progi.forAllTheDogsbackend.pet.entity.Pet
@@ -34,7 +36,8 @@ class AdService(
     private val cityRepository: CityRepository,
     private val colorRepository: ColorRepository,
     private val speciesRepository: SpeciesRepository,
-    private val countyRepository: CountyRepository
+    private val countyRepository: CountyRepository,
+    private val messageRepository: MessageRepository
 ) {
 
     fun getAllAds() = adRepository.findAllByDeletedFalse().map { ad -> createAdDTO(ad) }
@@ -118,10 +121,28 @@ class AdService(
     }
 
     fun deleteAd(id: Long) {
-
         val ad = adRepository.findById(id).get()
         ad.deleted = true
         adRepository.save(ad)
+    }
+
+    fun getAdWithMessages(id: Long): List<MessageDTO> {
+        val ad = adRepository.findById(id).get()
+        val messages = messageRepository.findByAd(ad)
+        return messages.map { message ->
+
+            MessageDTO(
+                message,
+                ad.adId,
+                UserAdDTO(message.user),
+                LocationDTO(
+                    message.location,
+                    message.location?.city?.cityName,
+                    message.location?.city?.county?.countyName
+                ),
+                ImageDTO(imageRepository.findByMessage(message))
+            )
+        }
     }
 
 
