@@ -4,12 +4,17 @@ import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {AddNewModal, adUser} from "../AddNewModal";
 
+{/*
+1.NavigationBarProps explained in MainContent
+*/}
+
 interface NavigationBarProps{
     handleLoggedIn:(user:adUser)=>void;
     handleLoggedOut:()=>void;
-    setMainContentState:()=>void;
+    setMainContentState:(state:boolean)=>void;
+    mainContentState:boolean;
 }
-const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState}:NavigationBarProps) => {
+const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState, mainContentState}:NavigationBarProps) => {
     const [username, setUsername] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userTelephoneNo, setUserTelephoneNo] = useState('');
@@ -31,7 +36,6 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState}:Na
                 setLoginState(true);
                 //poslati maincontent da je ovo user mail
                 handleLoggedIn({name:decodedToken.username, email:decodedToken.email, telephoneNumber:decodedToken.telephoneNumber});
-                console.log(decodedToken)
                 //handleLoggedIn(user);
             } catch (error) {
                 console.error('Error decoding token:', error);
@@ -42,8 +46,10 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState}:Na
         setModalOpen(false);
     };
     const handleProfile=()=>{
-        //setGo(true);
-        setMainContentState();
+        setMainContentState(true);
+    };
+    const handleBackToMain=()=>{
+        setMainContentState(false);
     };
     const handleSignOut=()=>{
         setLoginState(false);
@@ -102,7 +108,8 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState}:Na
                             <Typography sx={{ width: '100%',
                             color:"white"}} level="title-lg">Hello, {username}</Typography>
                             <Button size="lg" component={Link} to="/" onClick={handleSignOut}>Sign out</Button>
-                            <button onClick={handleProfile}><i className="bi bi-person-circle"></i></button>
+                            {mainContentState&&<button onClick={handleProfile}><i className="bi bi-person-circle"></i></button>}
+                            {!mainContentState&&<button onClick={handleBackToMain}><i className="bi bi-arrow-left-circle"></i></button>}
                         </Sheet>
                     )}
                     {!isLoggedIn && (

@@ -6,6 +6,25 @@ import FilterBar from "./Bars/FilterBar.tsx";
 import NavigationBar from "./Bars/NavigationBar.tsx";
 import {adUser, locationData} from "./AddNewModal.tsx";
 
+{/*
+HELP
+1.go-if set to true, all ads are shown, if set to false, only user's ads are shown. 2 buttons (user in circle and left arrow in circle)
+next to sign out button toggle the "go" state, user leads user to his own ads and left arrow leads user back to main page.
+go needs to be passed to the NavigationBar component because based on the go state, only one button is displayed;
+handleMainContentStateChange also needs to be passed because the toggle happens there.
+
+2.handleLoggedInAppC and handleLoggedOutAppC are props because MainComponent's parent component (App) needs to have information about
+the login state so it can pass it down to Map component because different ads are shown on map based on the login state.
+
+3.lostPets=all ACTIVE ads, lostPetsUserProfile=all user's ACTIVE ads,
+lostPetsInactive=all INACTIVE ads, lostPetsInactiveUserProfile=all user's INACTIVE ads
+
+4.menuState-map with petId as key, representing the current clicked ad and the boolean value representing if it's menu is
+currently open (3 dots are clicked, showing 3 possible actions with user's ad).
+handleMenuToggle-toggles the menu state of clicked ad, needs to be passed to LostPetCard component
+
+5.areFiltersApplied-represents if filters are applied
+*/}
 export interface LostPet {
     adId:number;
     activityName:string;
@@ -19,11 +38,9 @@ export interface LostPet {
     description: string;
     location:locationData;
     user:adUser;
-    // Other properties related to a lost pet
 }
 interface PetData {
     pet: LostPet;
-    // Other properties from the API response
 }
 interface MainContentProps{
     handleLoggedInAppC:()=>void;
@@ -33,9 +50,12 @@ interface MainContentProps{
 const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
+    const [areFiltersApplied, setAreFiltersApplied] = useState(false);
     const [filterName, setFilterName] = useState('');
     const [filterSpecies, setFilterSpecies] = useState('');
     const [filterDateLost, setFilterDateLost] = useState('');
+    const [filterCounty, setFilterCounty] = useState('');
+    const [filterCity, setFilterCity] = useState('');
     const [lostPets, setLostPets] = useState<LostPet[]>([]);
     const [lostPetsUserProfile, setLostPetsUserProfile] = useState<LostPet[]>([]);
     const [lostPetsInactive, setLostPetsInactive] = useState<LostPet[]>([]);
@@ -52,7 +72,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
         fetch('http://localhost:8080/ad/all')
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
                 const petsData: LostPet[] = data.map((item: PetData) => {
                     const pet: LostPet = item.pet;
                     // Assuming images is available in your data, replace 'images' with the actual property name
@@ -66,11 +85,9 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
                         petsData[i].user=data[i].user
                     }
                 }
-                console.log("SAD USER", currentUser.email)
                 const filtrirani:LostPet[]=[];
                 for (let i = 0; i < petsData.length; i++) {
                     if (petsData[i].user.email===currentUser.email) {
-                        console.log("j")
                         filtrirani.push(petsData[i]);
                     }
                 }
@@ -91,7 +108,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
 
                 const activeAds = separatedArrays.activeAds;
                 const inactiveAds = separatedArrays.inactiveAds;
-                console.log("FILTER", filtrirani)
 
                 const separatedArraysUserProfile = filtrirani.reduce<{
                     activeAdsUserProfile: LostPet[];
@@ -111,10 +127,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
                 const activeAdsUserProfile = separatedArraysUserProfile.activeAdsUserProfile;
                 const inactiveAdsUserProfile = separatedArraysUserProfile.inactiveAdsUserProfile;
 
-                console.log(filteredPetsUserProfile);
-                console.log("wtf se dogada", activeAdsUserProfile);
-                console.log(inactiveAdsUserProfile);
-                console.log(activeAds)
                 setLostPetsUserProfile(activeAdsUserProfile);
                 setLostPetsInactiveUserProfile(inactiveAdsUserProfile);
                 setLostPets(activeAds);
@@ -126,9 +138,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
     }, [currentUser]);
 
     useEffect(() => {
-        // ... (existing code)
 
-        // Initialize menu state for each card
         const initialMenuState: { [key: string]: boolean } = {};
         lostPets.forEach((pet) => {
             initialMenuState[pet.petId.toString()] = false;
@@ -136,8 +146,8 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
         setMenuState(initialMenuState);
     }, [lostPets]);
 
-    const handleMainContentStateChange = () => {
-        setGo(false);
+    const handleMainContentStateChange = (state:boolean) => {
+        setGo(!state);
     };
 
     const handleModalClose = () => {
@@ -149,31 +159,60 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
         const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
         const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
         const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
+        const countyMatch = pet.location.countyName.includes(filterCounty);
+        const cityMatch = pet.location.cityName.includes(filterCity);
 
-        return nameMatch && speciesMatch && dateLostMatch;
+        if (areFiltersApplied){
+            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch;
+        }
+        else{
+            return lostPets;
+        }
     }) : [];
 
     const filteredPetsInactive = lostPetsInactive ? lostPetsInactive.filter((pet) => {
         const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
         const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
         const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
+        const countyMatch = pet.location.countyName.includes(filterCounty);
+        const cityMatch = pet.location.cityName.includes(filterCity);
 
-        return nameMatch && speciesMatch && dateLostMatch;
+        if (areFiltersApplied){
+            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch;
+        }
+        else{
+            return lostPetsInactive;
+        }
     }) : [];
 
     const filteredPetsUserProfile = lostPetsUserProfile ? lostPetsUserProfile.filter((pet) => {
         const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
         const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
         const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
+        const countyMatch = pet.location.countyName.includes(filterCounty);
+        const cityMatch = pet.location.cityName.includes(filterCity);
 
-        return nameMatch && speciesMatch && dateLostMatch;
+        if (areFiltersApplied){
+            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch;
+        }
+        else{
+            return lostPetsUserProfile;
+        }
     }) : [];
+
     const filteredPetsInactiveUserProfile = lostPetsInactiveUserProfile ? lostPetsInactiveUserProfile.filter((pet) => {
         const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
         const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
         const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
+        const countyMatch = pet.location.countyName.includes(filterCounty);
+        const cityMatch = pet.location.cityName.includes(filterCity);
 
-        return nameMatch && speciesMatch && dateLostMatch;
+        if (areFiltersApplied){
+            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch;
+        }
+        else{
+            return lostPetsInactiveUserProfile;
+        }
     }) : [];
 
     const handleNameChange = (name: string) => {
@@ -188,13 +227,26 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
         setFilterDateLost(dateLost);
     };
 
+    const handleCountyChange=(county : string)=>{
+        setFilterCounty(county);
+    };
+
+    const handleCityChange=(city : string)=>{
+        setFilterCity(city);
+
+    };
+
     const handleApplyFilters = () => {
         // API call ovdje
+        setAreFiltersApplied(true);
     };
     const handleClearFilters = () => {
         setFilterName('');
         setFilterSpecies('');
         setFilterDateLost('');
+        setFilterCounty('');
+        setFilterCity('');
+        setAreFiltersApplied(false);
     };
     const handleLoggedIn=(user:adUser)=>{
         setIsLoggedIn(true);
@@ -222,12 +274,18 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
         <main className="main">
             <p>Welcome to For All The Dogs, a platform to help find lost pets...</p>
 
-            <NavigationBar handleLoggedIn={handleLoggedIn} handleLoggedOut={handleLoggedOut} setMainContentState={handleMainContentStateChange}/>
+            <NavigationBar handleLoggedIn={handleLoggedIn}
+                           handleLoggedOut={handleLoggedOut}
+                           setMainContentState={handleMainContentStateChange}
+                           mainContentState={go}
+            />
 
             <FilterBar
                 onNameChange={handleNameChange}
                 onSpeciesChange={handleSpeciesChange}
                 onDateLostChange={handleDateLostChange}
+                onCountyChange={handleCountyChange}
+                onCityChange={handleCityChange}
                 onApplyFilters={handleApplyFilters}
                 onClearFilters={handleClearFilters}
             />
@@ -280,7 +338,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
                                 setCurrentPet(pet);
                                 setModalOpen(true);
                             }}
-
                             cardId={pet.petId.toString()} // Use petId as the card identifier
                             menuState={menuState}
                             onMenuToggle={handleMenuToggle}
@@ -297,7 +354,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
                                 setCurrentPet(pet);
                                 setModalOpen(true);
                             }}
-
                             cardId={pet.petId.toString()} // Use petId as the card identifier
                             menuState={menuState}
                             onMenuToggle={handleMenuToggle}

@@ -2,10 +2,21 @@ import React, {useEffect, useState} from 'react';
 import './FilterBar.css';
 import {Vrsta} from "../AddNewModal.tsx";
 
+interface County{
+    id:number;
+    countyName:string;
+}
+interface City{
+    id:number;
+    cityName:string;
+}
+
 interface FilterBarProps {
     onNameChange: (name: string) => void;
     onSpeciesChange: (species: string) => void;
     onDateLostChange: (dateLost: string) => void;
+    onCountyChange: (county: string) => void;
+    onCityChange: (city: string) => void;
     onApplyFilters: () => void;
     onClearFilters: () => void;
 }
@@ -14,10 +25,14 @@ const FilterBar: React.FC<FilterBarProps> = ({
                                                  onNameChange,
                                                  onSpeciesChange,
                                                  onDateLostChange,
+                                                 onCountyChange,
+                                                 onCityChange,
                                                  onApplyFilters,
                                                  onClearFilters
                                              }) => {
     const [species, setSpecies]=useState([]);
+    const [counties, setCounties]=useState([]);
+    const [cities, setCities]=useState([]);
 
     useEffect(() => {
         const fetchSpecies = async () => {
@@ -30,7 +45,32 @@ const FilterBar: React.FC<FilterBarProps> = ({
             }
         };
 
+        const fetchCounties = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/county/all");
+                const data = await response.json();
+                setCounties(data);
+            } catch (error) {
+                console.error("Error fetching species:", error);
+            }
+        };
+
+        {/*
+        OTKOM KAD VEDRAN I LUCIJA NAPISU METODU
+        const fetchCities = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/city/all");
+                const data = await response.json();
+                setCities(data);
+            } catch (error) {
+                console.error("Error fetching species:", error);
+            }
+        }; */}
+
+
         fetchSpecies();
+        fetchCounties();
+        //fetchCities();
     }, []);
     return (
         <div className="filter-bar">
@@ -50,6 +90,38 @@ const FilterBar: React.FC<FilterBarProps> = ({
                     </option>
                 ))}
             </select>
+            <select
+                defaultValue=""
+                onChange={(e) => onCountyChange(e.target.value)}
+            >
+                <option value="" key={-1}>All Counties</option>
+                {counties.map((spec: County) => (
+                    <option value={spec.countyName} key={spec.id}>
+                        {spec.countyName}
+                    </option>
+                ))}
+            </select>
+            <select
+                defaultValue=""
+                onChange={(e) => onCountyChange(e.target.value)}
+            >
+                <option value="" key={-1}>All Counties</option>
+                {counties.map((spec: County) => (
+                    <option value={spec.countyName} key={spec.id}>
+                        {spec.countyName}
+                    </option>
+                ))}
+            </select><select
+            defaultValue=""
+            onChange={(e) => onCityChange(e.target.value)}
+        >
+            <option value="" key={-1}>All Cities</option>
+            {cities.map((spec: City) => (
+                <option value={spec.cityName} key={spec.id}>
+                    {spec.cityName}
+                </option>
+            ))}
+        </select>
             <input
                 className="filter-date"
                 type="date"
