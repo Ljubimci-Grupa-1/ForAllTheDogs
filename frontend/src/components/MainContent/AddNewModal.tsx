@@ -87,7 +87,7 @@ export interface fdata{
     user: adUser;
     activityName: string;
     pet: petData;
-    images: string[];
+    images: string[] | null;
 }
 interface FormValidation{
     age:boolean;
@@ -193,7 +193,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 setCounties(data1);
 
                 if (data.county !== '') {
-                    const targetCounty = data1.find(county => county.countyName === data.county);
+                    const targetCounty = data1.find((county:County) => county.countyName === data.county);
                     const myId = targetCounty ? targetCounty.countyId : null;
                     const responseCities = await fetch(`http://localhost:8080/county/${myId}`);
                     const data2 = await responseCities.json();
@@ -327,13 +327,24 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         setFileBase64Array(updatedFiles);
     };
     const formValidation = ()=>{
-        const forma = {
-            age:changed.age&&(data.age!==-1)&&(!isNaN(data.age)), name:(data.name!==''), species:changed.species&&(data.species!==''),
-            description:(data.description!==''), datetime:(data.datetime!==''),
-            colors:(data.colors.length!==0), latitude:(data.latitude!==190), longitude:(data.longitude!==190),
-            images:(fileBase64Array.length<4)&&(fileBase64Array.length>0), county:(data.county!==''), city:(data.city!=='')
+        if(speciesFill===''){
+            const forma = {
+                age:changed.age&&(data.age>=0)&&(!isNaN(data.age)), name:(data.name!==''), species:changed.species&&(data.species!==''),
+                description:(data.description!==''), datetime:(data.datetime!==''),
+                colors:(data.colors.length!==0), latitude:(data.latitude!==190), longitude:(data.longitude!==190),
+                images:(fileBase64Array.length<4)&&(fileBase64Array.length>0), county:(data.county!==''), city:(data.city!=='')
+            }
+            setValidation(forma);
         }
-        setValidation(forma);
+        else{
+            const forma = {
+                age:(!isNaN(data.age))&&(data.age>=0), name:(data.name!==''), species:(data.species!==''),
+                description:(data.description!==''), datetime:(data.datetime!==''),
+                colors:(data.colors.length!==0), latitude:(data.latitude!==190), longitude:(data.longitude!==190),
+                images:(fileBase64Array.length<4)&&(fileBase64Array.length>0), county:(data.county!==''), city:(data.city!=='')
+            }
+            setValidation(forma);
+        }
     };
 
     const handleSubmit=async ()=>{
