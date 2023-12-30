@@ -42,6 +42,12 @@ class UserService(
         )
     }
 
+    fun getAllShelters(): List<UserDTO> {
+        val shelterUserType = userTypeRepository.findByUserTypeId(2L)
+            ?: throw IllegalArgumentException("Shelter user type doesn't exist")
+        return userRepository.findAllByUserType(shelterUserType).map { UserDTO(it) }
+    }
+
     private fun checkIfUserExists(jsonUserDTO: JsonUserDTO) {
         var user = userRepository.findByEmail(jsonUserDTO.email)
         if(user != null) throw IllegalArgumentException("User with this email already exists")

@@ -51,4 +51,9 @@ class UserController(
         }
     }
 
+    @GetMapping("/shelter/all")
+    fun getAllShelters() = ResponseEntity.ok(
+        userService.getAllShelters()
+    )
+
 }
