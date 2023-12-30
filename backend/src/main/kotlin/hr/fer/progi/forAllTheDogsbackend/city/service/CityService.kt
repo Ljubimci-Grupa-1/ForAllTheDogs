@@ -27,6 +27,8 @@ class CityService(
         return CityDTO(cityRepository.save(newCity))
     }
 
-
+    fun getAllCities(): List<CityDTO> {
+        return cityRepository.findAll().map { CityDTO(it) }
+    }
 
 }
