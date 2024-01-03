@@ -40,7 +40,12 @@ class User(
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return mutableListOf(SimpleGrantedAuthority(userType.name))
+        val roleName = when (userType.name) {
+            "Osoba" -> "ROLE_USER" // Map "Osoba" UserType to "ROLE_USER"
+            "Skloniste" -> "ROLE_SHELTER" // Map "Skloniste" UserType to "ROLE_SHELTER"
+            else -> throw IllegalArgumentException("Unknown UserType: ${userType.name}")
+        }
+        return mutableListOf(SimpleGrantedAuthority(roleName))
     }
 
     override fun getPassword() = password
