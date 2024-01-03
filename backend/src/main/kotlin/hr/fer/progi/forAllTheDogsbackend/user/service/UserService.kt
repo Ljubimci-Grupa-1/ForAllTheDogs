@@ -32,7 +32,6 @@ class UserService(
             userType
         )
 
-
         val maxUserId = userRepository.findMaxUserId() ?: 0L
         val nextUserId = maxUserId + 1
         return UserDTO(
@@ -70,7 +69,12 @@ class UserService(
     }
 
     override fun loadUserByUsername(email: String): UserDetails {
-        return userRepository.findByEmail(email) ?: throw UsernameNotFoundException("User not found")
+        val user = userRepository.findByEmail(email) ?: throw UsernameNotFoundException("User not found")
+        return org.springframework.security.core.userdetails.User(
+            user.email,
+            user.password,
+            user.authorities
+        )
     }
 
 }
