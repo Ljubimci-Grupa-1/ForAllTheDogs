@@ -3,9 +3,31 @@
 		
 		\section{Korištene tehnologije i alati}
 		
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Detaljno navesti sve tehnologije i alate koji su primijenjeni pri izradi dokumentacije i aplikacije. Ukratko ih opisati, te navesti njihovo značenje i mjesto primjene. Za svaki navedeni alat i tehnologiju je potrebno \textbf{navesti internet poveznicu} gdje se mogu preuzeti ili više saznati o njima}.
+			Komunikacija u timu ostvarena je pomoću $Discord^{1}$ platforme koja nudi opcije tekstualnog dopisivanja, glasovnog poziva i video-chat-a. U serveru našeg projektnog tima postojalo je nekoliko kanala koji su se bavili različitim temama (back-end, front-end, dokumentacija…) što nam je pomoglo u podjeli posla i filtriranju zadataka. Za izradu UML dijagrama koristili smo se aplikacijom $Astah^{2}$ pomoću koje smo vrlo jednostavno napravili željene dijagrame i time pokazali ideju projektnog zadatka, kao i način rada naše aplikacije. Udaljeni repozitorij projekta dostupan je na web platformi $GitHub^{3}$.\\
+Za razvojno okruženje koristili smo $Visual Studio Code (VSC)^{4}$ i $IntelliJ IDEA^{5}$. VSC nudi široku podršku za jezike i ekstenzije, integraciju s Git-om i različitim alatima i servisima ($Docker^{6}$) te snimanje koraka za debugging. Također, dolazi s ugrađenom podrškom za $JavaScript^{7}$ i $TypeScript^{8}$. IntelliJ IDEA smatra se dobrim izborom IDE-a jer nudi programeru naprednu podršku za pisanje koda (Code Assistance), odličan debugger, refaktoriranje koda te podršku za različite tehnologije (Spring Framework, JavaScript, HTML, CSS, TypeScript, React, SQL) i jezike (Java, Kotlin, Groovy). \\
+Klijentska strana aplikacije (\textit{front-end}) napisana je $React^{9}$-om preko TypeScript-a i $Vite.js^{10}$-om. $Material UI^{11}$ je biblioteka React komponenata koja pruža implementaciju Google-ovog Material Design koncepta u React aplikacijama, a fokusiran je na stvaranje dosljednih i intuitivnih korisničkih sučelja.\\
+Poslužiteljska strana aplikacije (\textit{back-end}) napisana je $Kotlin^{12}$-om i $Spring Framework^{13}$-om. Kotlin omogućuje interoperabilnost s jezikom $Java^{14}$ (može se koristiti zajedno s njim u sklopu istog projekta te koristiti njegove biblioteke). Spring Framework je open-source radni okvir za razvoj aplikacija baziranih na Javi. On implementira inverziju kontrole (IoC), uvođenje ovisnosti (DI), Model-View-Controller (MVC), pristup podacima, sigurnost i Spring Boot.\\
+Pokretanje, izvršavanje i puštanje u pogon izvršavaju se preko 3 kontejnera platforme Docker koji pokrivaju najvažnije dijelove aplikacije: back-end, front-end i PostgreSQL bazu podataka. Pri deployment-u projekta koristimo radni okvir $Express.js^{15}$ za izgradnju API-ja s $Node.js^{16}$ radnim okruženjem.\\
+
+
+\begin{footnotesize}
+	\noindent $^1$\href{https://discord.com/}{https://discord.com/} \\
+	$^2$\href{https://astah.net/}{https://astah.net/} \\
+	$^3$\href{https://github.com/}{https://github.com/} \\
+	$^4$\href{https://code.visualstudio.com/}{https://code.visualstudio.com/} \\
+	$^5$\href{https://www.jetbrains.com/idea/}{https://www.jetbrains.com/idea/} \\
+	$^6$\href{https://www.docker.com/}{https://www.docker.com/} \\
+	$^7$\href{https://www.javascript.com/}{https://www.javascript.com/} \\
+	$^8$\href{https://www.typescriptlang.org/}{https://www.typescriptlang.org/} \\
+	$^9$\href{https://react.dev/}{https://react.dev/} \\
+	$^{10}$\href{https://vitejs.dev/}{https://vitejs.dev/} \\
+	$^{11}$\href{https://mui.com/}{https://mui.com/} \\
+	$^{12}$\href{https://kotlinlang.org/}{https://kotlinlang.org/} \\
+	$^{13}$\href{https://spring.io/projects/spring-framework/}{https://spring.io/projects/spring-framework/} \\
+	$^{14}$\href{https://www.java.com/en/}{https://www.java.com/en/} \\
+	$^{15}$\href{https://expressjs.com/}{https://expressjs.com/} \\
+	$^{16}$\href{https://nodejs.org/en}{https://nodejs.org/en}
+\end{footnotesize}
 			
 			
 			\eject 
