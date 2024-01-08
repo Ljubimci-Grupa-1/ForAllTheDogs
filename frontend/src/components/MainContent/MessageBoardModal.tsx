@@ -22,9 +22,34 @@ interface FormValidation{
     county:boolean;
     city:boolean;
 }
+
+const deepCopy = (obj) => {
+    if (obj === null || typeof obj !== 'object') {
+        return obj;
+    }
+
+    if (Array.isArray(obj)) {
+        const arrCopy = [];
+        for (let i = 0; i < obj.length; i++) {
+            arrCopy[i] = deepCopy(obj[i]);
+        }
+        return arrCopy;
+    }
+
+    const objCopy = {};
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            objCopy[key] = deepCopy(obj[key]);
+        }
+    }
+
+    return objCopy;
+};
+
+
 const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, currUser }) => {    // Your message board content and functionality here
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
-    const [fileBase64Array, setFileBase64Array] = useState<string[]>([]);
+    const [fileBase64Array, setFileBase64Array] = useState<string>('');
     const [counter, setCounter]=useState(fileBase64Array.length);
     const [isUploaded, setIsUploaded] = useState(false);
     let browsedFile='';
@@ -46,8 +71,8 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
         location: {
             latitude: null,
             longitude: null,
-            cityName: "Zagreb",
-            countyName: "a",
+            cityName: "Zaprešić",
+            countyName: "Zagrebačka",
         },
         image: null,
     });
@@ -56,12 +81,19 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
             latitude: latlng.lat,
             longitude: latlng.lng,
         });
+
+        // Deep copy the location object
+        const newLocation = deepCopy(formData.location);
+
+        // Update the fields
+        newLocation.latitude = latlng.lat;
+        newLocation.longitude = latlng.lng;
+        newLocation.cityName = 'Zaprešić';
+        newLocation.countyName = 'Zagrebačka';
+
         setFormData({
             ...formData,
-            location: {
-                latitude: latlng.lat,
-                longitude: latlng.lng,
-            },
+            location: newLocation,
         });
         console.log(formData);
     };
@@ -77,10 +109,23 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
   width: 1px;
 `;
     const handleChange = (fieldName: string) => (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setFormData({
-            ...formData,
-            [fieldName]: event.target.value,
-        });
+        if (fieldName.startsWith('location.')) {
+            // If the field belongs to the location object, use a deep copy
+            const newLocation = deepCopy(formData.location);
+            const locationFieldName = fieldName.split('.')[1];
+            newLocation[locationFieldName] = event.target.value;
+
+            setFormData({
+                ...formData,
+                location: newLocation,
+            });
+        } else {
+            // If the field is at the top level, update directly
+            setFormData({
+                ...formData,
+                [fieldName]: event.target.value,
+            });
+        }
         console.log(formData);
     };
     const convertFile = (files: FileList | null) => {
@@ -97,7 +142,6 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                     // convert it to base64
                     const base64String = `data:${fileType || "application/octet-stream"};base64,${btoa(ev.target.result)}`;
                     // Add the new base64 string to the array
-                    setFileBase64Array(prevArray => [...prevArray, base64String]);
                     setCounter(counter+1)
                     setFormData({
                         ...formData,
@@ -109,11 +153,10 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
     };
 
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().slice(0, 16); // Format: "YYYY-MM-DDTHH:mm"
-        console.log(formattedDate);
         setFormData(prevFormData => ({
             ...prevFormData,
             date: formattedDate,
@@ -124,6 +167,24 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
             },
         }));
         console.log(formData);
+        try {
+            const response = await fetch('http://localhost:8080/message/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                console.log('Message sent successfully');
+                // Optionally, you can reset the form or perform other actions upon successful submission.
+            } else {
+                console.error('Failed to send message');
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
     };
 
     return (
