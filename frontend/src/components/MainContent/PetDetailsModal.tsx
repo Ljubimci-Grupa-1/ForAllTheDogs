@@ -2,15 +2,19 @@ import './PetDetailsModal.css';
 import React, {useState} from 'react';
 import { LostPet } from './MainContent';
 import UserDetails from "./UserDetails.tsx";
+import MessageBoardModal from "./MessageBoardModal";
+import {adUser} from "./AddNewModal";
 
 interface PetDetailsModalProps {
     pet: LostPet | null;
     onClose: () => void;
+    currUser:adUser;
 }
 
-const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose }) => {
+const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUser }) => {
     const [imageIndex, setImageIndex] = useState(0);
-    const [userDetailsVisibility, setUserDetailsVisibility] = useState(false)
+    const [userDetailsVisibility, setUserDetailsVisibility] = useState(false);
+    const [messageBoardVisibility, setMessageBoardVisibility] = useState(false);
     if (!pet) return null;
     const handleLeft=()=>{
         setImageIndex((imageIndex - 1 + pet.images.length)%pet.images.length);
@@ -23,12 +27,19 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose }) => {
     const handleShowUserDetails=()=>{
         setUserDetailsVisibility(true)
     };
+    const handleOpenMessageBoard = () => {
+        setMessageBoardVisibility(true);
+    };
+
+    const modalContentClass = `modal-content${messageBoardVisibility ? ' shifted' : ''}`;
 
     return (
         <div className="modal-background" >
-            <div className="modal-content">
+            <div className={modalContentClass}>
                 <button onClick={handleShowUserDetails}><i className="bi bi-person-plus-fill"></i></button>
                 {userDetailsVisibility&&<UserDetails user={pet.user}></UserDetails>}
+                <button onClick={handleOpenMessageBoard}>Open Message Board</button>
+                {messageBoardVisibility && <MessageBoardModal onClose={() => setMessageBoardVisibility(false)} adId={pet.adId} currUser={currUser}/>}
                 <img src={pet.images[imageIndex].image} alt={pet.petName} />
                 <div>
                     <button onClick={handleLeft}><i className="bi bi-chevron-left"></i></button>

@@ -1,4 +1,3 @@
-
 .modal-background {
     position: fixed;
     top: 0;
@@ -20,7 +19,13 @@
     max-width: 400px;
     width: 100%;
     text-align: center;
+    position: relative; /* Added position relative for child positioning */
+    transition: margin-right 0.3s ease-in-out; /* Added transition for smooth movement */
+}
 
+/* Add this new class for applying margin when the message board modal is open */
+.modal-content.shifted {
+    margin-right: 40%; /* Adjust the margin as needed */
 }
 
 .modal-content img {

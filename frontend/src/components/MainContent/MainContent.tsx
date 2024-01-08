@@ -365,6 +365,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
                 <PetDetailsModal
                     pet={currentPet}
                     onClose={handleModalClose}
+                    currUser={currentUser}
                 />
             )}
         </main>
