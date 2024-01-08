@@ -3,7 +3,8 @@ import React, {useEffect, useState} from 'react';
 import './MessageBoardModal.css'
 import {Button, styled, SvgIcon, Textarea} from "@mui/joy";
 import DraggableMapForm from "./Map/DraggableMapForm";
-import {adUser} from "./AddNewModal"; // You may need to install this library
+import {adUser} from "./AddNewModal";
+import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet"; // You may need to install this library
 interface MessageBoardModalProps {
     onClose: () => void;
     adId: number;
@@ -59,6 +60,25 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
             city:true
         }
     );
+    const [messages, setMessages] = useState([]); // State to store fetched messages
+
+    useEffect(() => {
+        const fetchMessages = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/ad/${adId}/messages`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setMessages(data);
+                } else {
+                    console.error('Failed to fetch messages');
+                }
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+            }
+        };
+
+        fetchMessages();
+    }, [adId]);
     const [formData, setFormData] = useState({
         text: null,
         date: "",
@@ -189,6 +209,34 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
 
     return (
         <div className="message-board-modal">
+            {messages.map((message) => (
+                <div key={message.messageId}>
+                    <p>{message.text}</p>
+                    <p>Submitted by: {message.user.name}</p>
+                    <p>At time: {message.date}</p>
+                    {message.image && (
+                        <img
+                            src={message.image.image}  // Assuming image URL is in the `image` property
+                            alt="User submitted"
+                            style={{ maxWidth: '100%', maxHeight: '200px' }}
+                        />
+                    )}
+                    {/* Add other message details as needed */}
+
+                    {/* Display Leaflet map if latitude and longitude are not null */}
+                    {message.location.latitude !== null && message.location.longitude !== null && (
+                        <MapContainer center={[message.location.latitude, message.location.longitude]} zoom={13} style={{ height: '300px', width: '50%' }}>
+                            <TileLayer
+                                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            />
+                            <Marker position={[message.location.latitude, message.location.longitude]}>
+                                <Popup>{message.location.cityName}, {message.location.countyName}</Popup>
+                            </Marker>
+                        </MapContainer>
+                    )}
+                </div>
+            ))}
             <form onSubmit={handleSubmit}>
                 <Textarea
                     color="primary"
