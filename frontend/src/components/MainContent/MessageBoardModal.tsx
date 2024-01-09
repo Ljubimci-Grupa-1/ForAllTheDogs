@@ -322,10 +322,8 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                     )}
                     {isUploaded && <p style={{color:"red"}}>!</p>}
                 </div>
-                {!validation.image && <p className="error-message" style={{color:"red"}}>At least 1 image!</p>}
             </div>
                 <Button type="submit">Send message</Button>
-
             </form>
             <button onClick={onClose}>Close Message Board</button>
         </div>
