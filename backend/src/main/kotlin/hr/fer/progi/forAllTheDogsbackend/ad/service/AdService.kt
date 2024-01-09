@@ -180,9 +180,10 @@ class AdService(
     private fun editPetDetails(pet: Pet, editPetDTO: EditPetDTO) {
         pet.species = editPetDTO.speciesName?.let { speciesRepository.findBySpeciesName(it) } ?: pet.species
         if(editPetDTO.location != null) {
-            val longitude = editPetDTO.location.longitude ?: pet.location.longitude
-            val latitude = editPetDTO.location.latitude ?: pet.location.latitude
-            val city = if (editPetDTO.location.cityName != null) {  // if the city is not null, it means it was changed
+            val location = locationRepository.findById(pet.location.locationId).get()
+            location.longitude = editPetDTO.location.longitude ?: location.longitude
+            location.latitude = editPetDTO.location.latitude ?: location.latitude
+            location.city = if (editPetDTO.location.cityName != null) {  // if the city is not null, it means it was changed
                 if (editPetDTO.location.cityName == "Ostalo") {
                     // if the city is "Ostalo", we need to check which county it belongs to
                     val county = editPetDTO.location.countyName?.let { countyRepository.findByCountyName(it) }
@@ -198,7 +199,7 @@ class AdService(
             } else {  // else we just keep the old city
                 pet.location.city
             }
-            val location = locationRepository.save(editPetDTO.location.toLocation(city, longitude, latitude))
+            locationRepository.save(location)
             pet.location = location
         }
         if(editPetDTO.colors != null) {
