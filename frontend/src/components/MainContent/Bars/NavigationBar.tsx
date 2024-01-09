@@ -85,7 +85,7 @@ const NavigationBar = ({
                         <Button size="lg" component={Link} to="/login">Login</Button>
                         <Button size="lg" component={Link} to="/signup">Signup</Button>
                     </Stack>)}
-                    {isLoggedIn && !isSheltersRoute &&(
+                    {isLoggedIn &&(
                         <Button onClick={()=>setModalOpen(true)} size="lg">Post new ad</Button>
                     )}
                 </Grid>
