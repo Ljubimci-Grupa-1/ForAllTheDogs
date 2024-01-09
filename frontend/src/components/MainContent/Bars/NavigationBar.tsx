@@ -1,6 +1,6 @@
 import './NavigationBar.css';
 import {Button, ButtonGroup, Grid, Sheet, Stack, Typography} from "@mui/joy";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {AddNewModal, adUser} from "../AddNewModal";
 
@@ -18,7 +18,14 @@ interface NavigationBarProps{
     setMainContentState:(state:boolean)=>void;
     mainContentState:boolean;
 }
-const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState, mainContentState}:NavigationBarProps) => {
+const NavigationBar = ({
+                           handleLoggedIn,
+                           handleLoggedOut,
+                           setMainContentState,
+                           mainContentState,
+                       }: NavigationBarProps) => {
+    const location = useLocation();
+    const isSheltersRoute = location.pathname === '/shelters';
     const [username, setUsername] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userTelephoneNo, setUserTelephoneNo] = useState('');
@@ -78,7 +85,7 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState, ma
                         <Button size="lg" component={Link} to="/login">Login</Button>
                         <Button size="lg" component={Link} to="/signup">Signup</Button>
                     </Stack>)}
-                    {isLoggedIn && (
+                    {isLoggedIn && !isSheltersRoute &&(
                         <Button onClick={()=>setModalOpen(true)} size="lg">Post new ad</Button>
                     )}
                 </Grid>
@@ -95,11 +102,14 @@ const NavigationBar = ({handleLoggedIn, handleLoggedOut, setMainContentState, ma
                             orientation="horizontal"
                             size="lg"
                             variant="soft"
-                            sx={{ '--ButtonGroup-radius': '40px' }}
                         >
                             <Button component={Link} to="/map">Map</Button>
-                            {isLoggedIn&&<Button component={Link} to="/account">Account</Button>}
-                            {isLoggedIn&&<Button component={Link} to="/inbox">Inbox</Button>}
+                            {isLoggedIn && <Button component={Link} to="/account">Account</Button>}
+                            {isLoggedIn && (isSheltersRoute ? (
+                                <Button component={Link} to="/">Posts</Button>
+                            ) : (
+                                <Button component={Link} to="/shelters">Shelters</Button>
+                            ))}
                         </ButtonGroup>
                     </Sheet>
                 </Grid>
