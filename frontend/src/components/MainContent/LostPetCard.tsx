@@ -26,13 +26,15 @@ interface LostPetCardProps {
     onMenuToggle: (cardId: string) => void;
     cardId: string;
     menuState: { [key: string]: boolean };
+    categoriesVisibility: { [key: string]: boolean };
+    onCategoriesToggle: (cardId: string, state:boolean) => void;
 }
 
 const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn , klasa, currUser,
-                                                     onMenuToggle, cardId, menuState}) => {
+                                                     onMenuToggle, cardId, menuState,
+                                                     onCategoriesToggle, categoriesVisibility}) => {
     //const [isMenuVisible, setMenuVisible] = useState(false);
     const [updateVisibility, setUpdateVisibility] = useState(false);
-    const [categoriesVisibility, setCategoriesVisibility] = useState(false);
     const [selectedValue, setSelectedValue] = useState('');
 
     const handleMore = () => {
@@ -60,10 +62,13 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         setUpdateVisibility(true);
     };
     const handleChangeCategory = () => {
-        setCategoriesVisibility(true);
+        //promijenit u true za cardId
+        onCategoriesToggle(cardId, true);
     };
     const handleCategoryClose=()=>{
-        setCategoriesVisibility(false);
+
+        onCategoriesToggle(cardId, false);
+        //promijenit u false za cardId
     };
     const handleCloseModal = () => {
         setUpdateVisibility(false);
@@ -126,7 +131,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     <button onClick={handleChangeCategory}>Change Category</button>
                 </div>
             )}
-            {categoriesVisibility &&
+            {categoriesVisibility[cardId] &&
                 <CategoryComponent
                     pet={pet} handleCategoryClose={handleCategoryClose}
                     handleChangeCategory={handleSelected} handleChanged={handleCategoryFinish}/>}

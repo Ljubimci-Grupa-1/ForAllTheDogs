@@ -66,6 +66,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
     });
     //const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [menuState, setMenuState] = useState<{ [key: string]: boolean }>({}); // Menu state dictionary
+    const [categoriesVisibility, setCategoriesVisibility] = useState<{ [key: string]: boolean }>({});
     const [go, setGo] = useState(true);
     useEffect(() => {
         document.title = "For All The Dogs";
@@ -144,6 +145,12 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
             initialMenuState[pet.petId.toString()] = false;
         });
         setMenuState(initialMenuState);
+
+        const initialCategoriesVisibility: { [key: string]: boolean } = {};
+        lostPets.forEach((pet) => {
+            initialCategoriesVisibility[pet.petId.toString()] = false;
+        });
+        setCategoriesVisibility(initialCategoriesVisibility);
     }, [lostPets]);
 
     const handleMainContentStateChange = (state:boolean) => {
@@ -262,11 +269,19 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
             email:"", name:"", telephoneNumber:""
         });
         setMenuState({}); // Clear menu state when logging out
+        setCategoriesVisibility({});
     };
     const handleMenuToggle = (cardId: string) => {
         setMenuState((prevMenuState) => ({
             ...prevMenuState,
             [cardId]: !prevMenuState[cardId],
+        }));
+    };
+
+    const handleCategoriesToggle=(cardId:string, state:boolean)=>{
+        setCategoriesVisibility((prevCategoriesVisibility) => ({
+            ...prevCategoriesVisibility,
+            [cardId]: state,
         }));
     };
 
@@ -304,7 +319,9 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
 
                         cardId={pet.petId.toString()} // Use petId as the card identifier
                         menuState={menuState}
+                        categoriesVisibility={categoriesVisibility}
                         onMenuToggle={handleMenuToggle}
+                        onCategoriesToggle={handleCategoriesToggle}
                     />
                 ))}
                 {isLoggedIn&&filteredPetsInactive.map((pet) => (
@@ -321,7 +338,9 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
 
                         cardId={pet.petId.toString()} // Use petId as the card identifier
                         menuState={menuState}
+                        categoriesVisibility={categoriesVisibility}
                         onMenuToggle={handleMenuToggle}
+                        onCategoriesToggle={handleCategoriesToggle}
                     />
                 ))}
             </div>}
@@ -340,7 +359,9 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
                             }}
                             cardId={pet.petId.toString()} // Use petId as the card identifier
                             menuState={menuState}
+                            categoriesVisibility={categoriesVisibility}
                             onMenuToggle={handleMenuToggle}
+                            onCategoriesToggle={handleCategoriesToggle}
                         />
                     ))}
                     {isLoggedIn&&filteredPetsInactiveUserProfile.map((pet) => (
@@ -356,7 +377,9 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
                             }}
                             cardId={pet.petId.toString()} // Use petId as the card identifier
                             menuState={menuState}
+                            categoriesVisibility={categoriesVisibility}
                             onMenuToggle={handleMenuToggle}
+                            onCategoriesToggle={handleCategoriesToggle}
                         />
                     ))}
                 </div>
