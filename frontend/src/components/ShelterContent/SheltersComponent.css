@@ -3,3 +3,15 @@ main {
     padding: 20px;
     background-color: #f4f4f4;
 }
+
+.shelter-container{
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.shelterUser-container{
+    border: 1px solid black;
+}

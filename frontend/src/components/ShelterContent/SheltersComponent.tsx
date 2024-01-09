@@ -36,11 +36,11 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
                 handleLoggedOut={handleLoggedOut}
             />
             <h2>Shelter Usernames</h2>
-            <ul>
+                <div className="shelter-container">
                 {shelters.map((shelter) => (
-                    <li key={shelter.id}>{shelter.username}</li>
+                    <div className="shelterUser-container" key={shelter.id}>{shelter.username}</div>
                 ))}
-            </ul>
+                </div>
         </main>
     );
 };

@@ -11,17 +11,9 @@ interface MessageBoardModalProps {
     currUser:adUser;
 }
 interface FormValidation{
-    age:boolean;
-    name:boolean;
-    species:boolean;
-    colors:boolean;
-    latitude:boolean;
-    longitude:boolean;
-    datetime:boolean;
-    description:boolean;
-    images:boolean;
-    county:boolean;
-    city:boolean;
+    image:boolean;
+    text:boolean;
+    location:boolean;
 }
 
 const deepCopy = (obj) => {
@@ -48,6 +40,7 @@ const deepCopy = (obj) => {
 };
 
 
+
 const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, currUser }) => {    // Your message board content and functionality here
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
     const [fileBase64Array, setFileBase64Array] = useState<string>('');
@@ -56,10 +49,31 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
     let browsedFile='';
     const [validation, setValidation]=useState<FormValidation>(
         {
-            age:true, name:true, species:true, colors:true, latitude:true, longitude:true, datetime:true, description:true, images:true, county:true,
-            city:true
+            image:true,
+            text:true,
+            location:true,
         }
     );
+    const validateForm = (): boolean => {
+        let isValid = true;
+        const newValidation: FormValidation = {
+            image: !!formData.image,
+            text: !!formData.text,
+            location: !!formData.location.latitude && !!formData.location.longitude,
+        };
+
+        setValidation(newValidation);
+
+        // Check if any field is invalid
+        for (const key in newValidation) {
+            if (!newValidation[key]) {
+                isValid = false;
+                break;
+            }
+        }
+
+        return isValid;
+    };
     const [messages, setMessages] = useState([]); // State to store fetched messages
 
     useEffect(() => {
@@ -128,6 +142,8 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
   white-space: nowrap;
   width: 1px;
 `;
+
+
     const handleChange = (fieldName: string) => (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         if (fieldName.startsWith('location.')) {
             // If the field belongs to the location object, use a deep copy
@@ -174,6 +190,16 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
 
 
     const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        // Validate the form
+        const isFormValid = validateForm();
+
+        if (!isFormValid) {
+            // Handle validation error (display error messages or take other actions)
+            console.error('Form validation failed');
+            return;
+        }
         event.preventDefault();
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().slice(0, 16); // Format: "YYYY-MM-DDTHH:mm"
@@ -238,6 +264,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                 </div>
             ))}
             <form onSubmit={handleSubmit}>
+                {!validation.text && !validation.location && !validation.image && <p className="error-message" style={{ color: "red" }}>Something must be sent!</p>}
                 <Textarea
                     color="primary"
                     minRows={2}
@@ -295,7 +322,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                     )}
                     {isUploaded && <p style={{color:"red"}}>!</p>}
                 </div>
-                {!validation.images && <p className="error-message" style={{color:"red"}}>At least 1 image!</p>}
+                {!validation.image && <p className="error-message" style={{color:"red"}}>At least 1 image!</p>}
             </div>
                 <Button type="submit">Send message</Button>
 
