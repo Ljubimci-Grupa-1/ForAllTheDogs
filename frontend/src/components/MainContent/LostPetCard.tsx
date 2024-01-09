@@ -51,6 +51,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
 
             if (response.ok) {
                 console.log('Successfully deleted');
+                window.location.reload();
             } else {
                 console.error('Failed to delete');
             }
