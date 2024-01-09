@@ -55,22 +55,21 @@ const FilterBar: React.FC<FilterBarProps> = ({
             }
         };
 
-        {/*
-        OTKOM KAD VEDRAN I LUCIJA NAPISU METODU
         const fetchCities = async () => {
             try {
                 const response = await fetch("http://localhost:8080/city/all");
                 const data = await response.json();
-                setCities(data);
+                const data1=data.filter((value:City) => value.cityName !== "Ostalo");
+                setCities(data1);
             } catch (error) {
                 console.error("Error fetching species:", error);
             }
-        }; */}
+        };
 
 
         fetchSpecies();
         fetchCounties();
-        //fetchCities();
+        fetchCities();
     }, []);
     return (
         <div className="filter-bar">

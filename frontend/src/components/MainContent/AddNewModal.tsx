@@ -338,7 +338,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     };
 
     const handleUpload :React.MouseEventHandler<HTMLButtonElement>= (event) => {
-        event.preventDefault();
+        //event.preventDefault();
         // Here, you can save the selectedFile or perform any other action
         if (fileBase64Array) {
             setFileBase64Array(prevArray => [...prevArray, browsedFile]);
@@ -846,7 +846,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
 
 
                                 {/*SUBMIT BUTTON*/}
-                                <button type="button" onClick={handleSubmit}>submit</button>
+                                <button type="submit">submit</button>
                             </Stack>
                         </form>
                     </Stack>
