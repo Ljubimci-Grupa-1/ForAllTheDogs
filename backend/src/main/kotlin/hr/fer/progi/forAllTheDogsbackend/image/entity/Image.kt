@@ -17,7 +17,7 @@ class Image(
     var image: String,
 
     @JoinColumn(name = "adid")
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.ALL])
     var ad: Ad? = null,
 
     @JoinColumn(name = "messageid")

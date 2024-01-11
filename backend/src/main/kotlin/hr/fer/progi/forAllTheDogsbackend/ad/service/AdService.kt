@@ -24,6 +24,7 @@ import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserAdDTO
 import hr.fer.progi.forAllTheDogsbackend.user.repository.UserRepository
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AdService(
@@ -215,11 +216,15 @@ class AdService(
         pet.description = editPetDTO.description ?: pet.description
     }
 
-    private fun editAdDetails(ad: Ad, editAdDTO: EditAdDTO) {
+    @Transactional
+    fun editAdDetails(ad: Ad, editAdDTO: EditAdDTO) {
+        println("boob")
         ad.inShelter = editAdDTO.inShelter ?: ad.inShelter
         ad.activity = editAdDTO.activityName?.let { activityRepository.findByActivityCategory(it) } ?: ad.activity
         if (editAdDTO.images != null) {
+            println("boob2")
             imageRepository.deleteByAd(ad)  // delete all the images from the database
+            println("boob3")
 
             editAdDTO.images.forEach { image ->
                 val maxImageId = imageRepository.findMaxImageId() ?: 0L
