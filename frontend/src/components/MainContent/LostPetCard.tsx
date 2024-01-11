@@ -114,6 +114,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
 
             if (response.ok) {
                 console.log('Category changed successfully');
+                window.location.reload();
             } else {
                 console.error('response not ok');
             }
