@@ -45,9 +45,11 @@ interface PetData {
 interface MainContentProps{
     handleLoggedInAppC:()=>void;
     handleLoggedOutAppC:()=>void;
+    handleMainContentStateChange:()=>void;
+    mainContentState:boolean;
 }
 
-const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) => {
+const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentStateChange, mainContentState}:MainContentProps) => {
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
     const [areFiltersApplied, setAreFiltersApplied] = useState(false);
@@ -67,7 +69,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
     //const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [menuState, setMenuState] = useState<{ [key: string]: boolean }>({}); // Menu state dictionary
     const [categoriesVisibility, setCategoriesVisibility] = useState<{ [key: string]: boolean }>({});
-    const [go, setGo] = useState(true);
     useEffect(() => {
         document.title = "For All The Dogs";
         fetch('http://localhost:8080/ad/all')
@@ -154,9 +155,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
         setCategoriesVisibility(initialCategoriesVisibility);
     }, [lostPets]);
 
-    const handleMainContentStateChange = (state:boolean) => {
-        setGo(!state);
-    };
 
     const handleModalClose = () => {
         setModalOpen(false);
@@ -293,7 +291,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
             <NavigationBar handleLoggedIn={handleLoggedIn}
                            handleLoggedOut={handleLoggedOut}
                            setMainContentState={handleMainContentStateChange}
-                           mainContentState={go}
+                           mainContentState={mainContentState}
             />
 
             <FilterBar
@@ -305,7 +303,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
                 onApplyFilters={handleApplyFilters}
                 onClearFilters={handleClearFilters}
             />
-            {go&&<div className="lost-pets-list" >
+            {mainContentState&&<div className="lost-pets-list" >
                 {filteredPets.map((pet) => (
                     <LostPetCard
                         klasa={"lost-pet-card"}
@@ -346,7 +344,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC}:MainContentProps) 
                 ))}
             </div>}
             {
-                !go&&<div className="lost-pets-list" >
+                !mainContentState&&<div className="lost-pets-list" >
                     {filteredPetsUserProfile.map((pet) => (
                         <LostPetCard
                             klasa={"lost-pet-card"}

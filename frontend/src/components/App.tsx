@@ -12,6 +12,7 @@ import ShelterById from "./ShelterContent/ShelterById";
 
 function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);
+    const [mainContentState, setMainContentState]=useState(true);
 
     const handleLoggedInAppC = () => {
         setLoggedIn(true);
@@ -20,15 +21,23 @@ function App() {
     const handleLoggedOutAppC = () => {
         setLoggedIn(false);
     };
+
+    const handlemainContentStateChange=()=>{
+        setMainContentState(!mainContentState);
+    };
     return (
         <BrowserRouter>
 
             <Routes>
                 <Route path="/signup" element={<SignUpForm />} />
                 <Route path="/login" element={<LoginForm/>} />
-                <Route path="/" element={<MainContent handleLoggedInAppC={handleLoggedInAppC} handleLoggedOutAppC={handleLoggedOutAppC}/>} />
+                <Route path="/" element={<MainContent
+                    handleLoggedInAppC={handleLoggedInAppC} handleLoggedOutAppC={handleLoggedOutAppC}
+                    handleMainContentStateChange={handlemainContentStateChange} mainContentState={mainContentState}/>} />
                 <Route path="/map" element={<Map isLoggedIn={isLoggedIn}/>} />
-                <Route path="/shelters" element={<SheltersComponent handleLoggedIn={handleLoggedInAppC} handleLoggedOut={handleLoggedOutAppC}/>}/>
+                <Route path="/shelters" element={<SheltersComponent
+                    handleLoggedIn={handleLoggedInAppC} handleLoggedOut={handleLoggedOutAppC}
+                mainContentState={mainContentState} setMainContentState={handlemainContentStateChange}/>}/>
                 <Route path="/shelters/:id" element={<ShelterById />}/>
             </Routes>
 

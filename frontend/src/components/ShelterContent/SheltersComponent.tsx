@@ -6,8 +6,8 @@ import NavigationBar from '../MainContent/Bars/NavigationBar';
 interface ShelterComponentProps {
     handleLoggedIn: () => void;
     handleLoggedOut: () => void;
-    setMainContentState: (state: string) => void;
-    mainContentState: string; // You should replace 'string' with the actual type of mainContentState
+    setMainContentState: (state: boolean) => void;
+    mainContentState: boolean; // You should replace 'string' with the actual type of mainContentState
 }
 
 const ShelterComponent: React.FC<ShelterComponentProps> = ({
@@ -38,6 +38,8 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
             <NavigationBar
                 handleLoggedIn={handleLoggedIn}
                 handleLoggedOut={handleLoggedOut}
+                setMainContentState={setMainContentState}
+                mainContentState={mainContentState}
             />
             <h2>Shelter Usernames</h2>
             <div className="shelter-container">
