@@ -132,7 +132,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
 
                 setLostPetsUserProfile(activeAdsUserProfile);
                 setLostPetsInactiveUserProfile(inactiveAdsUserProfile);
-                console.log(activeAds)
                 setLostPets(activeAds);
                 setLostPetsInactive(inactiveAds);
             })

@@ -82,41 +82,33 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 defaultValue=""
                 onChange={(e) => onSpeciesChange(e.target.value)}
             >
-                <option value="" key={-1}>All Species</option>
+                <option value="" key={0}>All Species</option>
                 {species.map((spec: Vrsta) => (
-                    <option value={spec.speciesName} key={spec.id}>
+                    <option value={spec.speciesName} key={spec.speciesName}>
                         {spec.speciesName}
                     </option>
                 ))}
             </select>
+
             <select
                 defaultValue=""
                 onChange={(e) => onCountyChange(e.target.value)}
             >
-                <option value="" key={-1}>All Counties</option>
+                <option value="" key={2}>All Counties</option>
                 {counties.map((spec: County) => (
-                    <option value={spec.countyName} key={spec.id}>
+                    <option value={spec.countyName} key={spec.countyName}>
                         {spec.countyName}
                     </option>
                 ))}
             </select>
+
             <select
-                defaultValue=""
-                onChange={(e) => onCountyChange(e.target.value)}
-            >
-                <option value="" key={-1}>All Counties</option>
-                {counties.map((spec: County) => (
-                    <option value={spec.countyName} key={spec.id}>
-                        {spec.countyName}
-                    </option>
-                ))}
-            </select><select
             defaultValue=""
             onChange={(e) => onCityChange(e.target.value)}
         >
-            <option value="" key={-1}>All Cities</option>
+            <option value="" key={3}>All Cities</option>
             {cities.map((spec: City) => (
-                <option value={spec.cityName} key={spec.id}>
+                <option value={spec.cityName} key={spec.cityName}>
                     {spec.cityName}
                 </option>
             ))}

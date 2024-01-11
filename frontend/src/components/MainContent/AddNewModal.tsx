@@ -417,7 +417,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             else{
                 //radi se o updateu
                 if(fileBase64Array==imagesFill){
-                    console.log("radi");
                     formData.images=null;
                 }
                 else{
@@ -490,7 +489,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         value={data.species}
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
-                                                <Chip variant="solid" color="primary">
+                                                <Chip variant="solid" color="primary" key={"speciesRender"}>
                                                     {(selected!==null)&&selected.label}
                                                 </Chip>
 
@@ -517,7 +516,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         }}
                                     >
                                         {species.map((spec: Vrsta) => (
-                                            <Option key={spec.id} value={spec.speciesName}>
+                                            <Option key={spec.speciesName} value={spec.speciesName}>
                                                 {spec.speciesName}
                                             </Option>
                                         ))}
@@ -577,7 +576,8 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
                                                 {selected.map((selectedOption) => (
-                                                    <Chip variant="solid" color="primary">
+                                                    <Chip variant="solid" color="primary"
+                                                          key={selectedOption.label}>
                                                         {selectedOption.label}
                                                     </Chip>
                                                 ))}
@@ -604,7 +604,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         }}
                                     >
                                         {colors.map((color: Boja) => (
-                                            <Option key={color.id} value={color.colorName}>
+                                            <Option key={color.colorName} value={color.colorName}>
                                                 {color.colorName}
                                             </Option>
                                         ))}
@@ -740,7 +740,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         value={data.county}
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
-                                                <Chip variant="solid" color="primary">
+                                                <Chip variant="solid" color="primary" key={"countyRender"}>
                                                     {(selected!==null)&&selected.label}
                                                 </Chip>
 
@@ -767,7 +767,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         }}
                                     >
                                         {counties.map((spec: County) => (
-                                            <Option key={spec.countyId} value={spec.countyName}>
+                                            <Option key={spec.countyName} value={spec.countyName}>
                                                 {spec.countyName}
                                             </Option>
                                         ))}
@@ -790,7 +790,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         value={data.city}
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
-                                                <Chip variant="solid" color="primary">
+                                                <Chip variant="solid" color="primary" key={"cityRender"}>
                                                     {(selected!==null)&&selected.label}
                                                 </Chip>
 
@@ -817,7 +817,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         }}
                                     >
                                         {countyCities.map((spec: City) => (
-                                            <Option key={spec.id} value={spec.cityName}>
+                                            <Option key={spec.cityName} value={spec.cityName}>
                                                 {spec.cityName}
                                             </Option>
                                         ))}

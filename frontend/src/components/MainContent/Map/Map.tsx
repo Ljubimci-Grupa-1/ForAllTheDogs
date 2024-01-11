@@ -35,7 +35,6 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
             .then((response) => response.json())
             .then((data) => {
                 if(!isLoggedIn){
-                    console.log("ubit cu nekog",data)
                     const filtrirani:DataFetched[]=[];
                     for(let i=0; i<data.length; i++){
                         if(data[i].activityName==='Za ljubimcem se traga'){
@@ -48,7 +47,6 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
                         const images = item.images; // Replace 'images' with the actual property name
                         return { ...pet, images };
                     });
-                    console.log("nije ulog")
                     setPopups(
                         petsData.map((pet) => ({
                             title: pet.petName,
@@ -60,7 +58,6 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
                     );
                 }
                 else{
-                    console.log("je ulog")
                     const petsData: LostPet[] = data.map((item: DataFetched) => {
                         const pet: LostPet = item.pet;
                         // Assuming images is available in your data, replace 'images' with the actual property name
