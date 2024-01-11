@@ -41,6 +41,7 @@ export interface LostPet {
 }
 interface PetData {
     pet: LostPet;
+    //images:string[];
 }
 interface MainContentProps{
     handleLoggedInAppC:()=>void;

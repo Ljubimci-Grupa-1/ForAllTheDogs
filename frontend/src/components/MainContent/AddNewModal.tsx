@@ -847,7 +847,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
 
                                 {/*SUBMIT BUTTON*/}
                                 {/*<button type="button" onClick={handleSubmit}>submit</button>*/}
-                                <button type="submit">submit</button>
+                                {<button type="submit">submit</button>}
                             </Stack>
                         </form>
                     </Stack>

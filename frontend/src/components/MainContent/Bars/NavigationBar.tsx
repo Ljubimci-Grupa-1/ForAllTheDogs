@@ -104,7 +104,6 @@ const NavigationBar = ({
                             variant="soft"
                         >
                             <Button component={Link} to="/map">Map</Button>
-                            {isLoggedIn && <Button component={Link} to="/account">Account</Button>}
                             {isLoggedIn && (isSheltersRoute ? (
                                 <Button component={Link} to="/">Posts</Button>
                             ) : (
@@ -122,8 +121,10 @@ const NavigationBar = ({
                             <Typography sx={{ width: '100%',
                             color:"white"}} level="title-lg">Hello, {username}</Typography>
                             <Button size="lg" component={Link} to="/" onClick={handleSignOut}>Sign out</Button>
-                            {mainContentState&&<button onClick={handleProfile}><i className="bi bi-person-circle"></i></button>}
-                            {!mainContentState&&<button onClick={handleBackToMain}><i className="bi bi-arrow-left-circle"></i></button>}
+                            {/*{mainContentState&&<button onClick={handleProfile}><i className="bi bi-person-circle"></i></button>}
+                            {!mainContentState&&<button onClick={handleBackToMain}><i className="bi bi-arrow-left-circle"></i></button>}*/}
+                            {mainContentState&&<Button size="lg" component={Link} to="/" onClick={handleProfile}><i className="bi bi-person-circle"></i></Button>}
+                            {!mainContentState&&<Button size="lg" component={Link} to="/" onClick={handleBackToMain}><i className="bi bi-arrow-left-circle"></i></Button>}
                         </Sheet>
                     )}
                     {!isLoggedIn && (

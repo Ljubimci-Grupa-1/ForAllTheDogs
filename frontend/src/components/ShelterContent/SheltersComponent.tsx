@@ -10,6 +10,12 @@ interface ShelterComponentProps {
     mainContentState: boolean; // You should replace 'string' with the actual type of mainContentState
 }
 
+interface Shelter{
+    userId:number;
+    username:string;
+
+}
+
 const ShelterComponent: React.FC<ShelterComponentProps> = ({
                                                                handleLoggedIn,
                                                                handleLoggedOut,
@@ -43,7 +49,7 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
             />
             <h2>Shelter Usernames</h2>
             <div className="shelter-container">
-                {shelters.map((shelter) => (
+                {shelters.map((shelter:Shelter) => (
                     <Link to={`/shelters/${shelter.userId}`} key={shelter.userId}>
                         <div className="shelterUser-container">{shelter.username}</div>
                     </Link>
