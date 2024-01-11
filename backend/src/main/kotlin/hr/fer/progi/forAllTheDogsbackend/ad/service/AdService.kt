@@ -108,6 +108,7 @@ class AdService(
         )
     }
 
+    @Transactional
     fun editAd(id: Long, editAddDTO: EditAdDTO): AdDTO {
         val ad = adRepository.findById(id).get()
         val pet = petRepository.findById(ad.pet.petId).get()
@@ -218,13 +219,10 @@ class AdService(
 
     @Transactional
     fun editAdDetails(ad: Ad, editAdDTO: EditAdDTO) {
-        println("boob")
         ad.inShelter = editAdDTO.inShelter ?: ad.inShelter
         ad.activity = editAdDTO.activityName?.let { activityRepository.findByActivityCategory(it) } ?: ad.activity
         if (editAdDTO.images != null) {
-            println("boob2")
             imageRepository.deleteByAd(ad)  // delete all the images from the database
-            println("boob3")
 
             editAdDTO.images.forEach { image ->
                 val maxImageId = imageRepository.findMaxImageId() ?: 0L
