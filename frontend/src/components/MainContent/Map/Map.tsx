@@ -4,11 +4,16 @@ import "./MapStyles.css";
 import { Icon } from "leaflet";
 import {FC, useEffect, useState} from "react";
 import {LostPet} from "../MainContent.tsx";
+import {adUser} from "../AddNewModal.tsx";
 
 
-interface PetData {
-    pet: LostPet;
-    // Other properties from the API response
+interface DataFetched{
+    pet:LostPet;
+    user:adUser;
+    activityName:string;
+    inShelter:number;
+    adId:number;
+    images:string[];
 }
 interface Popup {
     title:string;
@@ -29,21 +34,23 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
         fetch('http://localhost:8080/ad/all')
             .then((response) => response.json())
             .then((data) => {
-                const petsData: LostPet[] = data.map((item: PetData) => {
-                    const pet: LostPet = item.pet;
-                    // Assuming images is available in your data, replace 'images' with the actual property name
-                    const images = item.images; // Replace 'images' with the actual property name
-                    return { ...pet, images };
-                });
                 if(!isLoggedIn){
-                    const filtrirani:LostPet[]=[];
-                    for(let i=0; i<petsData.length; i++){
-                        if(petsData[i].activityName==='Za ljubimcem se traga'){
-                            filtrirani.push(petsData[i]);
+                    console.log("ubit cu nekog",data)
+                    const filtrirani:DataFetched[]=[];
+                    for(let i=0; i<data.length; i++){
+                        if(data[i].activityName==='Za ljubimcem se traga'){
+                            filtrirani.push(data[i]);
                         }
                     }
+                    const petsData: LostPet[] = filtrirani.map((item: DataFetched) => {
+                        const pet: LostPet = item.pet;
+                        // Assuming images is available in your data, replace 'images' with the actual property name
+                        const images = item.images; // Replace 'images' with the actual property name
+                        return { ...pet, images };
+                    });
+                    console.log("nije ulog")
                     setPopups(
-                        filtrirani.map((pet) => ({
+                        petsData.map((pet) => ({
                             title: pet.petName,
                             description: pet.description,
                             imageUrl: pet.images[0]?.image || "",
@@ -53,6 +60,13 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
                     );
                 }
                 else{
+                    console.log("je ulog")
+                    const petsData: LostPet[] = data.map((item: DataFetched) => {
+                        const pet: LostPet = item.pet;
+                        // Assuming images is available in your data, replace 'images' with the actual property name
+                        const images = item.images; // Replace 'images' with the actual property name
+                        return { ...pet, images };
+                    });
                 setPopups(
                     petsData.map((pet) => ({
                         title: pet.petName,

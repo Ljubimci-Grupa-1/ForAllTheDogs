@@ -28,7 +28,7 @@ function App() {
                 <Route path="/login" element={<LoginForm/>} />
                 <Route path="/" element={<MainContent handleLoggedInAppC={handleLoggedInAppC} handleLoggedOutAppC={handleLoggedOutAppC}/>} />
                 <Route path="/map" element={<Map isLoggedIn={isLoggedIn}/>} />
-                <Route path="/shelters" element={<SheltersComponent/>}/>
+                <Route path="/shelters" element={<SheltersComponent handleLoggedIn={handleLoggedInAppC} handleLoggedOut={handleLoggedOutAppC}/>}/>
                 <Route path="/shelters/:id" element={<ShelterById />}/>
             </Routes>
 

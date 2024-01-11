@@ -13,6 +13,8 @@ interface ShelterComponentProps {
 const ShelterComponent: React.FC<ShelterComponentProps> = ({
                                                                handleLoggedIn,
                                                                handleLoggedOut,
+                                                               setMainContentState,
+                                                               mainContentState
                                                            }) => {
     const [shelters, setShelters] = useState([]);
 
