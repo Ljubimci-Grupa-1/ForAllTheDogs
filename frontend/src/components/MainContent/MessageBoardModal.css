@@ -3,10 +3,18 @@
     top: 0;
     right: 0;
     width: 40%; /* Adjust the width as needed */
-    height: 100%;
+    max-height: 100%;
+    overflow-y: auto; /* Enable vertical scrolling if the content exceeds the height */
     background: white;
     display: flex;
     flex-direction: column;
     padding: 20px;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); /* Optional: add a shadow to create a separation */
+    transition: margin-right 0.3s ease-in-out; /* Added transition for smooth movement */
+}
+
+/* Add this new class for applying margin when the message board modal is open */
+.message-board-modal.shifted {
+    margin-right: 40%; /* Adjust the margin as needed */
+    transform: translateX(-50%); /* Center the modal horizontally */
 }

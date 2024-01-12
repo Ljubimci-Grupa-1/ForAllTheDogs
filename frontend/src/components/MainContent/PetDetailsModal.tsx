@@ -4,6 +4,7 @@ import { LostPet } from './MainContent';
 import UserDetails from "./UserDetails.tsx";
 import MessageBoardModal from "./MessageBoardModal";
 import {adUser} from "./AddNewModal";
+import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
 
 interface PetDetailsModalProps {
     pet: LostPet | null;
@@ -42,6 +43,7 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
                 {messageBoardVisibility && <MessageBoardModal onClose={() => setMessageBoardVisibility(false)} adId={pet.adId} currUser={currUser}/>}
                 <img src={pet.images[imageIndex].image} alt={pet.petName} />
                 <div>
+
                     <button onClick={handleLeft}><i className="bi bi-chevron-left"></i></button>
                     <button onClick={handleRight}><i className="bi bi-chevron-right"></i></button>
 
@@ -52,6 +54,26 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
                 <p>Date Lost: {datum} at {vrijeme}</p>
                 <p>Age : {pet.age}</p>
                 <p>Description: {pet.description}</p>
+                <div>
+                    <MapContainer
+                        center={[pet.location.latitude, pet.location.longitude]}
+                        zoom={13}
+                        style={{ height: "300px", width: "100%" }}                    >
+                        {/* Add a TileLayer for the map */}
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        />
+
+                        {/* Add a Marker for the pet's location */}
+                        <Marker position={[pet.location.latitude, pet.location.longitude]}>
+                            {/* Add a Popup with location details */}
+                            <Popup>
+                                {pet.location.cityName}, {pet.location.countyName}
+                            </Popup>
+                        </Marker>
+                    </MapContainer>
+                </div>
                 <button onClick={onClose}>Close</button>
             </div>
         </div>

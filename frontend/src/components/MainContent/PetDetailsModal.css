@@ -19,8 +19,16 @@
     max-width: 400px;
     width: 100%;
     text-align: center;
-    position: relative; /* Added position relative for child positioning */
-    transition: margin-right 0.3s ease-in-out; /* Added transition for smooth movement */
+    position: relative;
+    transition: margin-right 0.3s ease-in-out;
+    /* Add max-height and overflow properties for scrolling */
+    max-height: 100%; /* Set a maximum height for the modal content */
+    overflow-y: auto; /* Enable vertical scrolling if the content exceeds the max height */
+}
+
+/* Add this new class for applying margin when the message board modal is open */
+.modal-content.shifted {
+    margin-right: 40%; /* Adjust the margin as needed */
 }
 
 /* Add this new class for applying margin when the message board modal is open */

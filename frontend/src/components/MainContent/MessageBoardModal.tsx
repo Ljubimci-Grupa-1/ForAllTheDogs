@@ -259,7 +259,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                     {/* Add other message details as needed */}
 
                     {/* Display Leaflet map if latitude and longitude are not null */}
-                    {message.location.latitude !== null && message.location.longitude !== null && (
+                    {message.location.latitude !== 0 && message.location.longitude !== 0 && (
                         <MapContainer center={[message.location.latitude, message.location.longitude]} zoom={13} style={{ height: '300px', width: '50%' }}>
                             <TileLayer
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
