@@ -59,6 +59,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     const [filterDateLost, setFilterDateLost] = useState('');
     const [filterCounty, setFilterCounty] = useState('');
     const [filterCity, setFilterCity] = useState('');
+    const [filterColors, setFilterColors] = useState<string[]>([]);
     const [lostPets, setLostPets] = useState<LostPet[]>([]);
     const [lostPetsUserProfile, setLostPetsUserProfile] = useState<LostPet[]>([]);
     const [lostPetsInactive, setLostPetsInactive] = useState<LostPet[]>([]);
@@ -167,9 +168,10 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
         const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
         const countyMatch = pet.location.countyName.includes(filterCounty);
         const cityMatch = pet.location.cityName.includes(filterCity);
+        const colorMatch = filterColors.every(color => pet.colors.includes(color));
 
         if (areFiltersApplied){
-            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch;
+            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch && colorMatch;
         }
         else{
             return lostPets;
@@ -182,9 +184,10 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
         const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
         const countyMatch = pet.location.countyName.includes(filterCounty);
         const cityMatch = pet.location.cityName.includes(filterCity);
+        const colorMatch = filterColors.every(color => pet.colors.includes(color));
 
         if (areFiltersApplied){
-            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch;
+            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch && colorMatch;
         }
         else{
             return lostPetsInactive;
@@ -197,9 +200,10 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
         const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
         const countyMatch = pet.location.countyName.includes(filterCounty);
         const cityMatch = pet.location.cityName.includes(filterCity);
+        const colorMatch = filterColors.every(color => pet.colors.includes(color));
 
         if (areFiltersApplied){
-            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch;
+            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch && colorMatch;
         }
         else{
             return lostPetsUserProfile;
@@ -212,9 +216,10 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
         const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
         const countyMatch = pet.location.countyName.includes(filterCounty);
         const cityMatch = pet.location.cityName.includes(filterCity);
+        const colorMatch = filterColors.every(color => pet.colors.includes(color));
 
         if (areFiltersApplied){
-            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch;
+            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch && colorMatch;
         }
         else{
             return lostPetsInactiveUserProfile;
@@ -240,6 +245,9 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     const handleCityChange=(city : string)=>{
         setFilterCity(city);
 
+    };
+    const handleColorChange = (colors: string[]) => {
+        setFilterColors(colors);
     };
 
     const handleApplyFilters = () => {
@@ -300,6 +308,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                 onDateLostChange={handleDateLostChange}
                 onCountyChange={handleCountyChange}
                 onCityChange={handleCityChange}
+                onColorChange={handleColorChange}
                 onApplyFilters={handleApplyFilters}
                 onClearFilters={handleClearFilters}
             />
