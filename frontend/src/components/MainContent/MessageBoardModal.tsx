@@ -55,7 +55,6 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
         }
     );
     const validateForm = (): boolean => {
-        let isValid = true;
         const newValidation: FormValidation = {
             image: !!formData.image,
             text: !!formData.text,
@@ -64,16 +63,13 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
 
         setValidation(newValidation);
 
-        // Check if any field is invalid
-        for (const key in newValidation) {
-            if (!newValidation[key]) {
-                isValid = false;
-                break;
-            }
-        }
+        // Check if at least one field is valid
+        const isValid = Object.values(newValidation).some(value => value);
 
         return isValid;
     };
+
+
     const [messages, setMessages] = useState([]); // State to store fetched messages
 
     useEffect(() => {
@@ -129,7 +125,6 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
             ...formData,
             location: newLocation,
         });
-        console.log(formData);
     };
     const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
@@ -188,6 +183,20 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
         }
     };
 
+    useEffect(() => {
+        // Set the current date when the component mounts
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().slice(0, 16);
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            date: formattedDate,
+            user: {
+                name: currUser.name,
+                email: currUser.email,
+                telephoneNumber: currUser.telephoneNumber,
+            },
+        }));
+    }, [currUser]);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
