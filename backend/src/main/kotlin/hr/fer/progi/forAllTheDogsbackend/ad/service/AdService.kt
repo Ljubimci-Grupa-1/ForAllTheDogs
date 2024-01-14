@@ -21,8 +21,10 @@ import hr.fer.progi.forAllTheDogsbackend.pet.entity.Pet
 import hr.fer.progi.forAllTheDogsbackend.pet.repository.PetRepository
 import hr.fer.progi.forAllTheDogsbackend.species.repository.SpeciesRepository
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserAdDTO
+import hr.fer.progi.forAllTheDogsbackend.user.entity.User
 import hr.fer.progi.forAllTheDogsbackend.user.repository.UserRepository
 import org.springframework.data.domain.Pageable
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -50,9 +52,9 @@ class AdService(
         val activity = activityRepository.findByActivityCategory(dto.activityName) ?:
             throw IllegalArgumentException("Ne postoji kategorija s imenom ${dto.activityName}!")
 
-        val user = userRepository.findByEmail(dto.user.email) ?:
-            throw IllegalArgumentException("Ne postoji korisnik s emailom ${dto.user.email}!")
-
+//        val user = userRepository.findByEmail(dto.user.email) ?:
+//            throw IllegalArgumentException("Ne postoji korisnik s emailom ${dto.user.email}!")
+        val user = SecurityContextHolder.getContext().authentication.principal as User
 
         val city = if (dto.pet.location.cityName == "Ostalo") {
             // if the city is "Ostalo", we need to check which county it belongs to
