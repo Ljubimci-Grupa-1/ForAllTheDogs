@@ -41,6 +41,7 @@ class SecurityConfig(
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { it.disable() }
+            .cors {}
             .authorizeHttpRequests {
                 it
 //                    .requestMatchers("/user/test").hasRole("USER")  // lucija nemoj brisat pliz <3
