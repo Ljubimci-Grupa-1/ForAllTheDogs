@@ -58,6 +58,7 @@ class UserController(
     )
 
     @GetMapping("/test")
+    @PreAuthorize("hasRole('USER')")
     fun test() = ResponseEntity.ok("BIG BOMBOCLAAT")
 
 }
