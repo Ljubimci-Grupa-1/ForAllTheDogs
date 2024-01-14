@@ -52,9 +52,9 @@ class AdService(
         val activity = activityRepository.findByActivityCategory(dto.activityName) ?:
             throw IllegalArgumentException("Ne postoji kategorija s imenom ${dto.activityName}!")
 
-//        val user = userRepository.findByEmail(dto.user.email) ?:
-//            throw IllegalArgumentException("Ne postoji korisnik s emailom ${dto.user.email}!")
-        val user = SecurityContextHolder.getContext().authentication.principal as User
+        val user = userRepository.findByEmail(dto.user.email) ?:
+            throw IllegalArgumentException("Ne postoji korisnik s emailom ${dto.user.email}!")
+//        val user = SecurityContextHolder.getContext().authentication.principal as User
 
         val city = if (dto.pet.location.cityName == "Ostalo") {
             // if the city is "Ostalo", we need to check which county it belongs to

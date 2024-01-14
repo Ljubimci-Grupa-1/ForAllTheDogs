@@ -52,13 +52,18 @@ class SecurityConfig(
                     .requestMatchers("/ad/all/pageable").permitAll()
                     .requestMatchers("/ad/{id}/messages").permitAll()
                     .requestMatchers("/ad/add").hasAnyRole("SHELTER", "USER")
+                    .requestMatchers("/ad/edit/{id}").hasAnyRole("SHELTER", "USER")
+                    .requestMatchers("/ad/delete/{id}").hasAnyRole("SHELTER", "USER")
+                    //
                     .requestMatchers("/user/register").permitAll()
                     .requestMatchers("/user/login").permitAll()
                     .requestMatchers("/user/shelter/all").permitAll()
+                    //
                     .requestMatchers("/color/**").permitAll()
                     .requestMatchers("/species/**").permitAll()
                     .requestMatchers("/county/**").permitAll()
                     .requestMatchers(("/city/**")).permitAll()
+                    //
                     .requestMatchers("/message/**").permitAll()
                     .anyRequest().authenticated()
             }
