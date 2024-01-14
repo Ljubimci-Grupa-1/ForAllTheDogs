@@ -45,8 +45,13 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 it
 //                    .requestMatchers("/user/test").hasRole("USER")  // lucija nemoj brisat pliz <3
-                    .requestMatchers("/user/test").hasRole("USER")
+//                    .requestMatchers("/user/test").hasRole("USER")
 //                    .requestMatchers("/user/test").permitAll()
+                    .requestMatchers("/ad/**").permitAll()
+                    .requestMatchers("/ad/all").permitAll()
+                    .requestMatchers("/ad/all/pageable").permitAll()
+                    .requestMatchers("/ad/{id}/messages").permitAll()
+                    .requestMatchers("/ad/add").hasAnyRole("SHELTER", "ADMIN")
                     .requestMatchers("/user/register").permitAll()
                     .requestMatchers("/user/login").permitAll()
                     .requestMatchers("/user/shelter/all").permitAll()
@@ -54,7 +59,6 @@ class SecurityConfig(
                     .requestMatchers("/species/**").permitAll()
                     .requestMatchers("/county/**").permitAll()
                     .requestMatchers(("/city/**")).permitAll()
-                    .requestMatchers("/ad/**").permitAll()
                     .requestMatchers("/message/**").permitAll()
                     .anyRequest().authenticated()
             }
