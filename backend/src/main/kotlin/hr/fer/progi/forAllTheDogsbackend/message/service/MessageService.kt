@@ -12,6 +12,7 @@ import hr.fer.progi.forAllTheDogsbackend.message.controller.dto.MessageDTO
 import hr.fer.progi.forAllTheDogsbackend.message.repository.MessageRepository
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserAdDTO
 import hr.fer.progi.forAllTheDogsbackend.user.repository.UserRepository
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 @Service
@@ -25,9 +26,10 @@ class MessageService(
 ) {
 
     fun addMessage(dto: AddMessageDTO): MessageDTO {
+        val authentication = SecurityContextHolder.getContext().authentication
 
-        val user = userRepository.findByEmail(dto.user.email) ?:
-            throw IllegalArgumentException("Ne postoji korisnik s emailom ${dto.user.email}!")
+        val user = userRepository.findByEmail(authentication.name) ?:
+            throw IllegalArgumentException("Ne postoji korisnik s emailom ${authentication.name}!")
 
         val ad = adRepository.findById(dto.adId)
             .orElseThrow { IllegalArgumentException("Ad with ID ${dto.adId} not found") }
