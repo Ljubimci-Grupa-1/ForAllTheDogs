@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile
 
 data class EditAdDTO(
     val inShelter: Int? = null,
-    val user: UserAdDTO,
     val activityName: String? = null,
     val pet: EditPetDTO? = null,
     val images: List<String>? = null

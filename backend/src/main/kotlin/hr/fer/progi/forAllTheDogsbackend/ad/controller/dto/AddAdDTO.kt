@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile
 
 data class AddAdDTO (
     val inShelter: Int,
-    val user: UserAdDTO,
     val activityName: String,
     val pet: AddPetDTO,
     val images: List<String>
