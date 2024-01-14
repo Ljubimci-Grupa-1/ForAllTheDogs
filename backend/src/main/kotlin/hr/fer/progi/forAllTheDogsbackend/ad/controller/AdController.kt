@@ -32,20 +32,20 @@ class AdController(private val adService: AdService) {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('ROLE_SHELTER') || hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_SHELTER') || hasRole('ROLE_USER')")
     fun addAd(@RequestBody addAdDTO: AddAdDTO): ResponseEntity<AdDTO> {
         return ResponseEntity.ok(adService.addAd(addAdDTO))
     }
 
 
     @PutMapping("/edit/{id}")
-    @PreAuthorize("hasRole('ROLE_SHELTER') || hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_SHELTER') || hasRole('ROLE_USER')")
     fun editAd(@PathVariable id: Long, @RequestBody editAddDTO: EditAdDTO) = ResponseEntity.ok(
         adService.editAd(id, editAddDTO)
     )
 
     @PutMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_SHELTER') || hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_SHELTER') || hasRole('ROLE_USER')")
     fun deleteAd(@PathVariable id: Long) = ResponseEntity.ok(
         adService.deleteAd(id)
     )

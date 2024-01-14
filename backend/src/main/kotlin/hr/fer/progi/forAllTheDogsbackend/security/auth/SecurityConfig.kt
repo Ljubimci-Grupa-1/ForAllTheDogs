@@ -47,11 +47,11 @@ class SecurityConfig(
 //                    .requestMatchers("/user/test").hasRole("USER")  // lucija nemoj brisat pliz <3
 //                    .requestMatchers("/user/test").hasRole("USER")
 //                    .requestMatchers("/user/test").permitAll()
-                    .requestMatchers("/ad/**").permitAll()
+//                    .requestMatchers("/ad/**").permitAll()
                     .requestMatchers("/ad/all").permitAll()
                     .requestMatchers("/ad/all/pageable").permitAll()
                     .requestMatchers("/ad/{id}/messages").permitAll()
-                    .requestMatchers("/ad/add").hasAnyRole("SHELTER", "ADMIN")
+                    .requestMatchers("/ad/add").hasAnyRole("SHELTER", "USER")
                     .requestMatchers("/user/register").permitAll()
                     .requestMatchers("/user/login").permitAll()
                     .requestMatchers("/user/shelter/all").permitAll()
