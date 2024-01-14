@@ -21,7 +21,6 @@ import hr.fer.progi.forAllTheDogsbackend.pet.entity.Pet
 import hr.fer.progi.forAllTheDogsbackend.pet.repository.PetRepository
 import hr.fer.progi.forAllTheDogsbackend.species.repository.SpeciesRepository
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserAdDTO
-import hr.fer.progi.forAllTheDogsbackend.user.entity.User
 import hr.fer.progi.forAllTheDogsbackend.user.repository.UserRepository
 import org.springframework.data.domain.Pageable
 import org.springframework.security.core.context.SecurityContextHolder
@@ -51,9 +50,6 @@ class AdService(
         // getting all the necessary data from the DTO
         val activity = activityRepository.findByActivityCategory(dto.activityName) ?:
             throw IllegalArgumentException("Ne postoji kategorija s imenom ${dto.activityName}!")
-
-//        val user = userRepository.findByEmail(dto.user.email) ?:
-//            throw IllegalArgumentException("Ne postoji korisnik s emailom ${dto.user.email}!")
 
         val authentication = SecurityContextHolder.getContext().authentication
 
