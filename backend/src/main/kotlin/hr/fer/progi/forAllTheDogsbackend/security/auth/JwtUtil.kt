@@ -21,6 +21,7 @@ class JwtUtil {
     fun createToken(user: UserDTO): String {
         /* kreiramo claims objekt tipa
         {
+            "name": "name",
             "email": "email",
             "username": "username",
             "userType": "userTypeId"
@@ -28,6 +29,7 @@ class JwtUtil {
         }
          */
         val claims = mutableMapOf<String, Any>()
+        claims["name"] = user.name
         claims["email"] = user.email
         claims["username"] = user.username
         claims["userType"] = user.userType.userTypeId
