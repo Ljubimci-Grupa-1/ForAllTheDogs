@@ -57,8 +57,4 @@ class UserController(
         userService.getAllShelters()
     )
 
-    @GetMapping("/test")
-    @PreAuthorize("hasRole('USER')")
-    fun test() = ResponseEntity.ok("BIG BOMBOCLAAT")
-
 }
