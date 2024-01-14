@@ -393,10 +393,12 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             try {
                 formData.images = fileBase64Array;
                 console.log(formData);
+                const token = localStorage.getItem('jwt');
                 const response = await fetch('http://localhost:8080/ad/add', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token,
                     },
                     body: JSON.stringify(formData),
                 });

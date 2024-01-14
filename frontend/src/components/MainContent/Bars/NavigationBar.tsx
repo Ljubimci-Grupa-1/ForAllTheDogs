@@ -67,21 +67,7 @@ const NavigationBar = ({
         localStorage.removeItem('jwt');
         handleLoggedOut();
     };
-    const ideGas = async () => {
-        const jwtToken = localStorage.getItem('jwt');
-        console.log(`Bearer ${jwtToken}`);
-        const response = await fetch('http://localhost:8080/user/test', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${jwtToken}`, // Include the JWT token in the Authorization header
-            },
-            credentials: 'include',
-        });
 
-        const data = await response.text();
-        console.log(data);
-    };
 
     return (
         <nav className="navbar">
@@ -147,7 +133,6 @@ const NavigationBar = ({
                         <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)'}}>
                             <Typography sx={{ width: '100%', color:"white" }} level="title-lg">Please login or signup</Typography></Sheet>
                     )}
-                    <Button onClick={ideGas}>Ide gas</Button>
                 </Grid>
             </Grid>
             {modalOpen && (
