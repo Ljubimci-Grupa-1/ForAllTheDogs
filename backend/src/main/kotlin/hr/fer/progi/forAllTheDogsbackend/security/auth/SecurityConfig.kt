@@ -44,7 +44,7 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 it
 //                    .requestMatchers("/user/test").hasRole("USER")  // lucija nemoj brisat pliz <3
-//                    .requestMatchers("/user/test").hasRole("USER")
+                    .requestMatchers("/user/test").hasRole("USER")
                     .requestMatchers("/user/register").permitAll()
                     .requestMatchers("/user/login").permitAll()
                     .requestMatchers("/user/shelter/all").permitAll()
@@ -54,6 +54,7 @@ class SecurityConfig(
                     .requestMatchers(("/city/**")).permitAll()
                     .requestMatchers("/ad/**").permitAll()
                     .requestMatchers("/message/**").permitAll()
+                        //.requestMatchers("/user/test").permitAll()
                     .anyRequest().authenticated()
             }
             .sessionManagement { session ->
