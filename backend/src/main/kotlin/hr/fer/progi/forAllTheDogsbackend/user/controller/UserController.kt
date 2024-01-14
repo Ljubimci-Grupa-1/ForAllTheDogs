@@ -57,4 +57,7 @@ class UserController(
         userService.getAllShelters()
     )
 
+    @GetMapping("/test")
+    fun test() = ResponseEntity.ok("BIG BOMBOCLAAT")
+
 }
