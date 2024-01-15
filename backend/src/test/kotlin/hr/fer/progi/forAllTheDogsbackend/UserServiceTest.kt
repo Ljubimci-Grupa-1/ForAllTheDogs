@@ -118,4 +118,69 @@ class UserServiceTest {
         verify(userRepository, times(1)).save(any(User::class.java))
     }
 
+    @Test
+    fun registerInvalidTest(){
+
+        val jsonUserDTO = JsonUserDTO(
+            username = "username",
+            email = "us.us@us.us",
+            password = "ususus123",
+            name = "user",
+            telephoneNumber = "1234567899",
+            userTypeId = 1L
+        )
+
+        `when`(userRepository.findByEmail(jsonUserDTO.email)).thenReturn(null)
+
+        assertThrows<IllegalArgumentException> {
+            userService.addUser(jsonUserDTO)
+        }
+
+    }
+
+    @Test
+    fun getAllSheltersTest(){
+        val shelterUserType = UserType(2L, "Sklonište")
+
+        val shelter1 = User(
+            userId = 1L,
+            username = "username1",
+            email = "email1",
+            password = "password1",
+            name = "name1",
+            telephoneNumber = "telephoneNumber1",
+            userType = shelterUserType
+        )
+
+        val shelter2 = User(
+            userId = 2L,
+            username = "username2",
+            email = "email2",
+            password = "password2",
+            name = "name2",
+            telephoneNumber = "telephoneNumber2",
+            userType = shelterUserType
+        )
+
+        val shelter3 = User(
+            userId = 3L,
+            username = "username3",
+            email = "email3",
+            password = "password3",
+            name = "name3",
+            telephoneNumber = "telephoneNumber3",
+            userType = shelterUserType
+        )
+
+        val shelters = listOf(shelter1, shelter2, shelter3)
+
+        `when`(userTypeRepository.findByUserTypeId(2L)).thenReturn(shelterUserType)
+        `when`(userRepository.findAllByUserType(shelterUserType)).thenReturn(shelters)
+
+        val result = userService.getAllShelters().map { it.toUser() }
+
+        assertEquals(shelters, result)
+        assertEquals(shelters, result)
+    }
+
 }
