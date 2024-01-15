@@ -23,4 +23,16 @@ data class UserDTO(
         user.telephoneNumber,
         user.userType
     )
+
+    fun toUser(): User {
+        return User(
+            userId,
+            username,
+            email,
+            password,
+            name,
+            telephoneNumber,
+            userType
+        )
+    }
 }
