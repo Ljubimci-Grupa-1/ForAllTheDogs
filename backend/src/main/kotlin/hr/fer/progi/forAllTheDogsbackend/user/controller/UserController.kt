@@ -25,8 +25,7 @@ class UserController(
     @PostMapping("/register")
     fun addUser(@RequestBody user: JsonUserDTO): ResponseEntity<UserDTO> {
         user.password = passwordEncoder.encode(user.password)
-        val registeredUser = userService.addUser(user)
-        return ResponseEntity.ok(registeredUser)
+        return ResponseEntity.ok(userService.addUser(user))
     }
 
     @PostMapping("/login")
