@@ -32,10 +32,7 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
     const datum = pet.dateTimeMissing.substring(0, 10);
     const vrijeme=pet.dateTimeMissing.substring(11, pet.dateTimeMissing.length);
     const handleShowUserDetails=()=>{
-        setUserDetailsVisibility(true)
-    };
-    const handleOpenMessageBoard = () => {
-        setMessageBoardVisibility(true);
+        setUserDetailsVisibility(!userDetailsVisibility)
     };
 
     const modalContentClass = `modal-content${messageBoardVisibility ? ' shifted' : ''}`;

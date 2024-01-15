@@ -375,9 +375,10 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     };
 
     const handleSubmit=async ()=>{
+        event.preventDefault();
         formValidation();
         console.log(markerPosition);
-        if (fileBase64Array) {
+        if (fileBase64Array.length>0) {
             console.log(fileBase64Array)
             formData.pet.speciesName = data.species;
             formData.pet.age = data.age;
@@ -404,6 +405,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 });
 
                 if (response.ok) {
+                    window.location.reload();
                     console.log('Images uploaded successfully');
 
                     // You can handle the response from the server here
@@ -435,6 +437,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                     });
 
                     if (response.ok) {
+                        window.location.reload();
                         console.log('Images uploaded successfully');
                         // You can handle the response from the server here
                     } else {
