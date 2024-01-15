@@ -56,12 +56,57 @@ Pokretanje, izvršavanje i puštanje u pogon izvršavaju se preko 3 kontejnera p
 		
 		\section{Upute za puštanje u pogon}
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
+			Izvorni kod aplikacije postavljen je na GitHub repozitorij na adresi \url{https://github.com/Ljubimci-Grupa-1/ForAllTheDogs}. Puštanje u pogon obavit ćemo uz pomoć platforme Render\footnote{\url{https://render.com}}.
 			
+			\subsection{Frontend}
 			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+			U datoteku \textbf{package.json} dodajemo "dotenv", "express" i "http-proxy-middleware" ovisnosti (engl. \textit{dependencies}) kao što je prikazano na slici \ref{dependencies}.
 			
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{slike/dependencies.PNG} 
+				\centering
+				\caption{"dependencies" u package.json}
+				\label{dependencies}
+			\end{figure}
+			
+			Datoteku \textbf{server.js}, prikazanu na slici \ref{server_js}, stavljamo u korijenski direktorij za frontend. Ona sadrži konfiguraciju za Express server koji koristimo za posluživanje frontenda.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{slike/server_js.PNG} 
+				\centering
+				\caption{Sadržaj datoteke server.js}
+				\label{server_js}
+			\end{figure}
+			
+			Zatim se vraćamo u datoteku \textbf{package.json} i ažuriramo "scripts" kao na slici \ref{scripts} te obavimo \textit{git push}.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.4]{slike/scripts.PNG} 
+				\centering
+				\caption{"scripts" u package.json}
+				\label{scripts}
+			\end{figure}
+			
+			Prijavljujemo se na \url{https://dashboard.render.com} svojim korisničkim podacima te odabiremo \textit{New} $\rightarrow$ \textit{Web Service}. Nakon odabira našeg GitHub repozitorija postavljamo željeno ime, regiju (EU Central), odgovarajuću granu repozitorija (main), te ime korijenskog direktorija za frontend dio aplikacije (direktorij \textbf{frontend}).
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{slike/frontend_1.PNG} 
+				\centering
+				\caption{Postavljanje Web Service}
+				\label{frontend_1}
+			\end{figure}
+			
+			Nadalje navodimo \textit{Build} i \textit{Start} naredbe koje će biti pokrenute u odabranom korijenskom direktoriju. Naredba \textit{Build} (u našem slučaju \textit{yarn build}) odgovorna je za instalaciju potrebnih programskih biblioteka i kompilaciju koda (uz automatski \textit{redeployment} prilikom svake promjene izvornog koda na GitHub repozitoriju). Naredba \textit{Start} (u našem slučaju \textit{yarn start-prod}) služi za pokretanje aplikacije odnosno web poslužitelja.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{slike/frontend_2.PNG} 
+				\centering
+				\caption{Build i Start}
+				\label{frontend_2}
+			\end{figure}
+			
+			Za kraj odabiremo opciju \textit{Create Web Service}.
+			
+			\subsection{Backend}
 			
 			\eject 
