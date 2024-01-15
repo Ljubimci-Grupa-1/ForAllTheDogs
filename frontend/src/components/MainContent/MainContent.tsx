@@ -89,18 +89,12 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
 
     useEffect(() => {
         document.title = "For All The Dogs";
-        fetch(`http://localhost:8080/ad/all/pageable?page=${currentPage}&size=${pageSize}`)
+        fetch(`http://localhost:8080/ad/all`)
             .then((response) => response.json())
             .then((data) => {
-                const petsData: LostPet[] = data.content.map((item: PetData) => {
+                const petsData: LostPet[] = data.map((item: PetData) => {
                     const pet: LostPet = item.pet;
                     const images = item.images;
-                    const user = item.user || {};
-                    pet.user = {
-                        name: user.name || "",
-                        email: user.email || "",
-                        telephoneNumber: user.telephoneNumber || "",
-                    };
                     return { ...pet, images };
                 });
                 for (let i = 0; i < petsData.length; i++) {
@@ -429,38 +423,38 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                     currUser={currentUser}
                 />
             )}
-            <Grid container spacing={3} sx={{ flexGrow: 1,
-            margin:'10px'}}>
-                <Grid xs>
+            {/*<Grid container spacing={3} sx={{ flexGrow: 1,*/}
+            {/*margin:'10px'}}>*/}
+            {/*    <Grid xs>*/}
 
-                </Grid>
-                <Grid xs={10}>
-                    <p>
-                        Page {currentPage + 1} of {totalPages}
-                    </p>
-                    <button
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 0}
-                    >
-                        Previous
-                    </button>
-                    <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages - 1}
-                    >
-                        Next
-                    </button>
-                </Grid>
-                <Grid  xs>
-                    <label htmlFor="pageSize">Page Size:</label>
-                    <select id="pageSize" value={pageSize} onChange={handlePageSizeChange}>
-                        <option value={5}>5</option>
-                        <option value={10}>10</option>
-                        <option value={15}>15</option>
-                        <option value={20}>20</option>
-                    </select>
-                </Grid>
-            </Grid>
+            {/*    </Grid>*/}
+            {/*    <Grid xs={10}>*/}
+            {/*        <p>*/}
+            {/*            Page {currentPage + 1} of {totalPages}*/}
+            {/*        </p>*/}
+            {/*        <button*/}
+            {/*            onClick={() => handlePageChange(currentPage - 1)}*/}
+            {/*            disabled={currentPage === 0}*/}
+            {/*        >*/}
+            {/*            Previous*/}
+            {/*        </button>*/}
+            {/*        <button*/}
+            {/*            onClick={() => handlePageChange(currentPage + 1)}*/}
+            {/*            disabled={currentPage === totalPages - 1}*/}
+            {/*        >*/}
+            {/*            Next*/}
+            {/*        </button>*/}
+            {/*    </Grid>*/}
+            {/*    <Grid  xs>*/}
+            {/*        <label htmlFor="pageSize">Page Size:</label>*/}
+            {/*        <select id="pageSize" value={pageSize} onChange={handlePageSizeChange}>*/}
+            {/*            <option value={5}>5</option>*/}
+            {/*            <option value={10}>10</option>*/}
+            {/*            <option value={15}>15</option>*/}
+            {/*            <option value={20}>20</option>*/}
+            {/*        </select>*/}
+            {/*    </Grid>*/}
+            {/*</Grid>*/}
         </main>
     );
 };
