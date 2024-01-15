@@ -75,18 +75,18 @@ const NavigationBar = ({
                 display:'flex',
                 alignItems:'center',
                 justifyContent:'center',
-            flexGrow:'1'}}>
+                flexGrow:'1'}}>
                 <Grid xs>
                     {!isLoggedIn && (
-                    <Stack
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="center"
-                        spacing={2}>
+                        <Stack
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="center"
+                            spacing={2}>
 
-                        <Button size="lg" component={Link} to="/login">Login</Button>
-                        <Button size="lg" component={Link} to="/signup">Signup</Button>
-                    </Stack>)}
+                            <Button size="lg" component={Link} to="/login">Login</Button>
+                            <Button size="lg" component={Link} to="/signup">Signup</Button>
+                        </Stack>)}
                     {isLoggedIn &&(
                         <Button onClick={()=>setModalOpen(true)} size="lg">Post new ad</Button>
                     )}
@@ -96,7 +96,7 @@ const NavigationBar = ({
                     alignItems:'center',
                     justifyContent:'center'}}>
                     <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)',
-                    width:'70%'}}>
+                        width:'70%'}}>
                         <ButtonGroup
                             buttonFlex={1}
                             color="primary"
@@ -117,11 +117,11 @@ const NavigationBar = ({
                 <Grid xs sx={{
                     display:'flex',
                     alignItems:'center',
-                justifyContent:'center'}}>
+                    justifyContent:'center'}}>
                     {isLoggedIn && (
                         <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
                             <Typography sx={{ width: '100%',
-                            color:"white"}} level="title-lg">Hello, {username}</Typography>
+                                color:"white"}} level="title-lg">Hello, {username}</Typography>
                             <Button size="lg" component={Link} to="/" onClick={handleSignOut}>Sign out</Button>
                             {/*{mainContentState&&<button onClick={handleProfile}><i className="bi bi-person-circle"></i></button>}
                             {!mainContentState&&<button onClick={handleBackToMain}><i className="bi bi-arrow-left-circle"></i></button>}*/}

@@ -1,6 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import './FilterBar.css';
 import {Vrsta} from "../AddNewModal.tsx";
+import Input from '@mui/joy/Input';
+import Select from '@mui/joy/Select';
+import Option from '@mui/joy/Option';
+import { ButtonGroup, Button } from '@mui/joy';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 interface County{
     id:number;
@@ -51,21 +59,23 @@ const FilterBar: React.FC<FilterBarProps> = ({
         onCityChange('');
         onColorChange([]);
 
-        const citySelect = document.getElementById('citySelect') as HTMLSelectElement;
-        const speciesSelect = document.getElementById('speciesSelect') as HTMLSelectElement;
-        const countySelect = document.getElementById('countySelect') as HTMLSelectElement;
-        const colorSelect = document.getElementById('colorSelect') as HTMLSelectElement;
-
-        citySelect.selectedIndex = 0;
-        speciesSelect.selectedIndex = 0;
-        countySelect.selectedIndex = 0;
-        colorSelect.selectedIndex = 0;
-
+        // Clear the input and select values directly
         const petNameInput = document.getElementById('petNameInput') as HTMLInputElement;
         petNameInput.value = '';
-        const dateLostInput = document.getElementById('dateLostInput') as HTMLInputElement;
-        dateLostInput.value = '';
+
+        const speciesSelect = document.getElementById('speciesSelect') as HTMLSelectElement;
+        speciesSelect.value = '';
+
+        const colorSelect = document.getElementById('colorSelect') as HTMLSelectElement;
+        colorSelect.value = []
+
+        const countySelect = document.getElementById('countySelect') as HTMLSelectElement;
+        countySelect.value = '';
+
+        const citySelect = document.getElementById('citySelect') as HTMLSelectElement;
+        citySelect.value = '';
     };
+
 
     useEffect(() => {
         const fetchSpecies = async () => {
@@ -118,78 +128,100 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
     return (
         <div className="filter-bar">
-            <input
-                type="text"
+            <Input
                 placeholder="Pet Name"
-                onChange={(e) => onNameChange(e.target.value)}
                 id="petNameInput"
-            />
-            <select
+                onChange={(e) => onNameChange(e.target.value)}
+            >
+                <label htmlFor="speciesSelect">Species</label>
+            </Input>
+
+            <Select
                 defaultValue=""
-                onChange={(e) => onSpeciesChange(e.target.value)}
+                color="primary"
+                placeholder="Choose one…"
+                size="md"
+                variant="outlined"
+                onChange={(e) => {
+                    console.log('Selected Species:', e.target.value);
+                    onSpeciesChange(e.target.value);
+                }}
                 id="speciesSelect"
             >
-                <option value="" key={-1}>All Species</option>
+                <Option value="" key={-1}>All Species</Option>
                 {species.map((spec: Vrsta) => (
-                    <option value={spec.speciesName} key={spec.id}>
+                    <Option value={spec.speciesName} key={spec.id}>
                         {spec.speciesName}
-                    </option>
+                    </Option>
                 ))}
-            </select>
-            <select
-                defaultValue=""
+            </Select>
+
+            <Select
+                defaultValue={['All Colors']}
+                color="primary"
+                placeholder="Choose one…"
+                size="md"
+                variant="outlined"
+                multiple
+                id="countySelect"
                 onChange={(e) => {
-                    const selectedOptions = Array.from(e.target.selectedOptions, (option) => option.value);
+                    const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
                     onColorChange(selectedOptions);
                 }}
-                multiple={true}
-                id="colorSelect"
+
             >
-                <option value="" key={-1}>All Colors</option>
+                <Option value="" key={-1}>All Colors</Option>
                 {colors.map((spec: Color) => (
-                    <option value={spec.colorName} key={spec.colorId}>
+                    <Option value={spec.colorName} key={spec.colorId}>
                         {spec.colorName}
-                    </option>
+                    </Option>
                 ))}
-            </select>
-            <select
+            </Select>
+
+            <Select
                 defaultValue=""
+                color="primary"
+                placeholder="Choose one…"
+                size="md"
+                variant="outlined"
                 onChange={(e) => onCountyChange(e.target.value)}
                 id="countySelect"
             >
-                <option value="" key={-1}>All Counties</option>
-                {counties.map((spec: County) => (
-                    <option value={spec.countyName} key={spec.id}>
-                        {spec.countyName}
-                    </option>
+                <Option value="" key={-1}>All Counties</Option>
+                {counties.map((county: County) => (
+                    <Option value={county.countyName} key={county.id}>
+                        {county.countyName}
+                    </Option>
                 ))}
-            </select>
-            <select
+            </Select>
+
+            <Select
                 defaultValue=""
+                color="primary"
+                placeholder="Choose one…"
+                size="md"
+                variant="outlined"
                 onChange={(e) => onCityChange(e.target.value)}
                 id="citySelect"
             >
-                <option value="" key={-1}>All Cities</option>
-                {cities.map((spec: City) => (
-                    <option value={spec.cityName} key={spec.id}>
-                        {spec.cityName}
-                    </option>
+                <Option value="" key={-1}>All Cities</Option>
+                {cities.map((city: City) => (
+                    <Option value={city.cityName} key={city.id}>
+                        {city.cityName}
+                    </Option>
                 ))}
-            </select>
-            <input
-                className="filter-date"
-                type="date"
-                placeholder="Date Lost"
-                onChange={(e) => onDateLostChange(e.target.value)}
-                id={"dateLostInput"}
-            />
-            <button onClick={onApplyFilters}>Apply Filters</button>
-            <button onClick={() => {
-                onClearFilters();
-                handleClearFilters();
-            }}>Clear Filters
-            </button>
+            </Select>
 
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={['DateTimePicker']}>
+                    <DateTimePicker views={['year', 'day']} label="Date missing"/>
+                </DemoContainer>
+            </LocalizationProvider>
+
+            <ButtonGroup aria-label="outlined primary button group">
+                <Button onClick={onApplyFilters}>Apply Filters</Button>
+                <Button onClick={() => { onClearFilters(); handleClearFilters(); }}>Clear Filters</Button>
+            </ButtonGroup>
         </div>
     );
 };
