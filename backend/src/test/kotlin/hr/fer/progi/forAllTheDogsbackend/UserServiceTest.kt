@@ -130,7 +130,17 @@ class UserServiceTest {
             userTypeId = 1L
         )
 
-        `when`(userRepository.findByEmail(jsonUserDTO.email)).thenReturn(null)
+        val savedUser = User(
+            userId = 1L,
+            username = jsonUserDTO.username,
+            email = jsonUserDTO.email,
+            password = jsonUserDTO.password,
+            name = jsonUserDTO.name,
+            telephoneNumber = jsonUserDTO.telephoneNumber,
+            userType = UserType(1L, "Osoba")
+        )
+
+        `when`(userRepository.findByEmail(jsonUserDTO.email)).thenReturn(savedUser)
 
         assertThrows<IllegalArgumentException> {
             userService.addUser(jsonUserDTO)
