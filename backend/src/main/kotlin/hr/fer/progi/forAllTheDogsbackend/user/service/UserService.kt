@@ -24,8 +24,9 @@ class UserService(
 
     fun addUser(jsonUserDTO: JsonUserDTO): UserDTO {
         checkIfUserExists(jsonUserDTO)
+
         val userType = userTypeRepository.findByUserTypeId(jsonUserDTO.userTypeId)
-            ?: throw IllegalArgumentException("User with ID ${jsonUserDTO.userTypeId} doesn't exist")
+            ?: throw IllegalArgumentException("UserType with ID ${jsonUserDTO.userTypeId} doesn't exist")
 
         val addUserDTO = AddUserDTO(
             jsonUserDTO.username,
