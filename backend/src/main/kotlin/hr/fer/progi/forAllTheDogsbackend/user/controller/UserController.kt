@@ -7,6 +7,7 @@ import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.LoginUserResponseDT
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.service.UserService
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
@@ -54,5 +55,17 @@ class UserController(
     fun getAllShelters() = ResponseEntity.ok(
         userService.getAllShelters()
     )
+
+    @DeleteMapping("/delete")
+    @PreAuthorize("hasRole('ROLE_USER') || hasRole('ROLE_SHELTER')")
+    fun deleteUser() {
+        userService.deleteUser()
+    }
+
+    @PutMapping("/update")
+    @PreAuthorize("hasRole('ROLE_USER') || hasRole('ROLE_SHELTER')")
+    fun updateUser(@RequestBody user: JsonUserDTO): ResponseEntity<UserDTO> {
+        return ResponseEntity.ok(userService.updateUser(user))
+    }
 
 }

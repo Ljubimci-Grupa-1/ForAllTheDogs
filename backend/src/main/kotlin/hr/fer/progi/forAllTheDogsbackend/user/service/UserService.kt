@@ -4,8 +4,10 @@ import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.AddUserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.JsonUserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.LoginUserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.UserDTO
+import hr.fer.progi.forAllTheDogsbackend.user.entity.User
 import hr.fer.progi.forAllTheDogsbackend.user.repository.UserRepository
 import hr.fer.progi.forAllTheDogsbackend.userType.repository.UserTypeRepository
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -61,6 +63,26 @@ class UserService(
         }
     }
 
+    fun deleteUser() {
+        val authentication = SecurityContextHolder.getContext().authentication
+
+        val user = userRepository.findByEmail(authentication.name) ?:
+            throw IllegalArgumentException("Ne postoji korisnik s emailom ${authentication.name}!")
+
+        userRepository.delete(user)
+    }
+
+    fun updateUser(updatedDetails: JsonUserDTO): UserDTO {
+        val authentication = SecurityContextHolder.getContext().authentication
+
+        var user = userRepository.findByEmail(authentication.name) ?:
+            throw IllegalArgumentException("Ne postoji korisnik s emailom ${authentication.name}!")
+
+        user = updateUserDetails(user, updatedDetails)
+
+        return UserDTO(userRepository.save(user))
+    }
+
     // Autorizacija podataka unesenih u login formu
     fun authorizeUser(loginUserDTO: LoginUserDTO): UserDTO {
         val user = userRepository.findByEmail(loginUserDTO.email)
@@ -75,6 +97,16 @@ class UserService(
             user.password,
             user.authorities
         )
+    }
+
+    fun updateUserDetails(user: User, updatedDetails: JsonUserDTO): User {
+        checkIfUserExists(updatedDetails)
+        if(updatedDetails.username != "") user.username = updatedDetails.username
+        if(updatedDetails.email != "") user.email = updatedDetails.email
+        if(updatedDetails.password != "") user.password = updatedDetails.password
+        if(updatedDetails.name != "") user.name = updatedDetails.name
+        if(updatedDetails.telephoneNumber != "") user.telephoneNumber = updatedDetails.telephoneNumber
+        return user
     }
 
 }

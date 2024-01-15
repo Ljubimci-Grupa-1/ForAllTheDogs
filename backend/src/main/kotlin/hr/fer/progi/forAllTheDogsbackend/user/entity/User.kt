@@ -62,6 +62,14 @@ class User(
 
     fun username() = username
 
+    fun setUsername(username: String) {
+        this.username = username
+    }
+
+    fun setPassword(password: String) {
+        this.password = password
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is User) return false
