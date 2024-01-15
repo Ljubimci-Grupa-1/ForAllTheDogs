@@ -62,4 +62,19 @@ class User(
 
     fun username() = username
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is User) return false
+
+        if (userId != other.userId) return false
+        if (username != other.username) return false
+        if (email != other.email) return false
+        if (password != other.password) return false
+        if (name != other.name) return false
+        if (telephoneNumber != other.telephoneNumber) return false
+        if (userType != other.userType) return false
+
+        return true
+    }
+
 }
