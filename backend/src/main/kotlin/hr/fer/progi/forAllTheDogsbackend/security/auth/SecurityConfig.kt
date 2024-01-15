@@ -54,7 +54,6 @@ class SecurityConfig(
                     .requestMatchers("/user/register").permitAll()
                     .requestMatchers("/user/login").permitAll()
                     .requestMatchers("/user/shelter/all").permitAll()
-                    .requestMatchers("/user/edit").hasAnyRole("SHELTER", "USER", "ADMIN")
                     .requestMatchers("/city/add").hasRole("ADMIN")
                     .requestMatchers("/city/all").permitAll()
                     .requestMatchers("/color/add").hasRole("ADMIN")

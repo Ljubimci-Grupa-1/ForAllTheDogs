@@ -66,17 +66,6 @@ class UserService(
         }
     }
 
-    fun updateUser(updatedDetails: JsonUserDTO): UserDTO {
-        val authentication = SecurityContextHolder.getContext().authentication
-
-        var user = userRepository.findByEmail(authentication.name) ?:
-            throw IllegalArgumentException("Ne postoji korisnik s emailom ${authentication.name}!")
-
-        user = updateUserDetails(user, updatedDetails)
-
-        return UserDTO(userRepository.save(user))
-    }
-
     // Autorizacija podataka unesenih u login formu
     fun authorizeUser(loginUserDTO: LoginUserDTO): UserDTO {
         val user = userRepository.findByEmail(loginUserDTO.email)
@@ -91,16 +80,6 @@ class UserService(
             user.password,
             user.authorities
         )
-    }
-
-    fun updateUserDetails(user: User, updatedDetails: JsonUserDTO): User {
-        checkIfUserExists(updatedDetails)
-        if(updatedDetails.username != "") user.username = updatedDetails.username
-        if(updatedDetails.email != "") user.email = updatedDetails.email
-        if(updatedDetails.password != "") user.password = updatedDetails.password
-        if(updatedDetails.name != "") user.name = updatedDetails.name
-        if(updatedDetails.telephoneNumber != "") user.telephoneNumber = updatedDetails.telephoneNumber
-        return user
     }
 
 }

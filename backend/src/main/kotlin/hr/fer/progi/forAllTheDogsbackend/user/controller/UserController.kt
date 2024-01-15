@@ -55,10 +55,4 @@ class UserController(
         userService.getAllShelters()
     )
 
-    @PutMapping("/update")
-    @PreAuthorize("hasRole('ROLE_USER') || hasRole('ROLE_SHELTER')")
-    fun updateUser(@RequestBody user: JsonUserDTO): ResponseEntity<UserDTO> {
-        return ResponseEntity.ok(userService.updateUser(user))
-    }
-
 }
