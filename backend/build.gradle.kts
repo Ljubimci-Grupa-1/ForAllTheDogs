@@ -34,6 +34,8 @@ dependencies {
 	implementation("org.springframework.security:spring-security-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
+	testImplementation("io.mockk:mockk:1.11.0")
+	testImplementation("junit:junit:4.13.2")
 }
 
 tasks.withType<KotlinCompile> {
