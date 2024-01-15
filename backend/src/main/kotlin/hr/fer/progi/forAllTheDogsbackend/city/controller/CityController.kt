@@ -3,6 +3,7 @@ package hr.fer.progi.forAllTheDogsbackend.city.controller
 import hr.fer.progi.forAllTheDogsbackend.city.controller.dto.AddCityDTO
 import hr.fer.progi.forAllTheDogsbackend.city.service.CityService
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 class CityController(private val cityService: CityService) {
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     fun addCity(@RequestBody city: AddCityDTO) = ResponseEntity.ok(
         cityService.addCity(city)
     )

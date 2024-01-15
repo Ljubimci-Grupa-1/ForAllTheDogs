@@ -4,6 +4,7 @@ import hr.fer.progi.forAllTheDogsbackend.county.controller.dto.AddCountyDTO
 import hr.fer.progi.forAllTheDogsbackend.county.entity.County
 import hr.fer.progi.forAllTheDogsbackend.county.service.CountyService
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -24,6 +25,7 @@ class CountyController(private val countyService: CountyService) {
     )
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     fun addCounty(@RequestBody county: AddCountyDTO) = ResponseEntity.ok(
         countyService.addCounty(county)
     )

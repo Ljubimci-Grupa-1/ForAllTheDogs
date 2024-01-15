@@ -73,9 +73,4 @@ class JwtUtil {
         }
     }
 
-    fun getEmail(claims: Claims) = claims.subject
-
-    fun getRoles(claims: Claims): List<String>? {
-        return claims["roles"] as? List<String>
-    }
 }

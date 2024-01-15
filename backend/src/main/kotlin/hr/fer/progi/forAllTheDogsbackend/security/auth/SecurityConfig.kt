@@ -40,21 +40,30 @@ class SecurityConfig(
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        http.csrf { it.disable() }
+        http
+            .csrf { it.disable() }
+            .cors {}
             .authorizeHttpRequests {
                 it
-//                    .requestMatchers("/user/test").hasRole("USER")  // lucija nemoj brisat pliz <3
-                    .requestMatchers("/user/test").hasRole("USER")
+                    .requestMatchers("/ad/all").permitAll()
+                    .requestMatchers("/ad/all/pageable").permitAll()
+                    .requestMatchers("/ad/{id}/messages").permitAll()
+                    .requestMatchers("/ad/add").hasAnyRole("SHELTER", "USER", "ADMIN")
+                    .requestMatchers("/ad/edit/{id}").hasAnyRole("SHELTER", "USER", "ADMIN")
+                    .requestMatchers("/ad/delete/{id}").hasAnyRole("SHELTER", "USER", "ADMIN")
                     .requestMatchers("/user/register").permitAll()
                     .requestMatchers("/user/login").permitAll()
                     .requestMatchers("/user/shelter/all").permitAll()
-                    .requestMatchers("/color/**").permitAll()
-                    .requestMatchers("/species/**").permitAll()
-                    .requestMatchers("/county/**").permitAll()
-                    .requestMatchers(("/city/**")).permitAll()
-                    .requestMatchers("/ad/**").permitAll()
-                    .requestMatchers("/message/**").permitAll()
-                        //.requestMatchers("/user/test").permitAll()
+                    .requestMatchers("/city/add").hasRole("ADMIN")
+                    .requestMatchers("/city/all").permitAll()
+                    .requestMatchers("/color/add").hasRole("ADMIN")
+                    .requestMatchers("/color/all").permitAll()
+                    .requestMatchers("/county/add").hasRole("ADMIN")
+                    .requestMatchers("/county/all").permitAll()
+                    .requestMatchers("/county/{id}").permitAll()
+                    .requestMatchers("/message/add").hasAnyRole("SHELTER", "USER", "ADMIN")
+                    .requestMatchers("/species/all").permitAll()
+                    .requestMatchers("/species/add").hasRole("ADMIN")
                     .anyRequest().authenticated()
             }
             .sessionManagement { session ->

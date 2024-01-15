@@ -13,7 +13,6 @@ data class AddMessageDTO (
     val text: String?,
     val date: Date,
     val adId: Long,
-    val user: UserAdDTO,
     val location: AddLocationDTO?,
     val image: String?
 ){

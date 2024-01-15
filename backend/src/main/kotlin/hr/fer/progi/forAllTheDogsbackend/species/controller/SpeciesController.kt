@@ -3,6 +3,7 @@ package hr.fer.progi.forAllTheDogsbackend.species.controller
 import hr.fer.progi.forAllTheDogsbackend.species.controller.dto.AddSpeciesDTO
 import hr.fer.progi.forAllTheDogsbackend.species.service.SpeciesService
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,6 +20,7 @@ class SpeciesController(private val speciesService: SpeciesService) {
     )
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     fun addSpecies(@RequestBody species: AddSpeciesDTO) = ResponseEntity.ok(
         speciesService.addSpecies(species)
     )
