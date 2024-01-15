@@ -231,8 +231,11 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     };
 
     const handleSpeciesChange = (species: string) => {
-        setFilterSpecies(species);
+        console.log('Species:', species);
+        // Ensure species is always a string, even if it's initially a number
+        setFilterSpecies(String(species));
     };
+
 
     const handleDateLostChange = (dateLost: string) => {
         setFilterDateLost(dateLost);

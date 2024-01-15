@@ -390,30 +390,32 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             formData.pet.location.cityName = data.city;
             formData.pet.location.countyName=data.county;
             if(speciesFill===''){
-            try {
-                formData.images = fileBase64Array;
-                console.log(formData);
-                const response = await fetch('http://localhost:8080/ad/add', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData),
-                });
+                try {
+                    formData.images = fileBase64Array;
+                    console.log(formData);
+                    const token = localStorage.getItem('jwt');
+                    const response = await fetch('http://localhost:8080/ad/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token,
+                        },
+                        body: JSON.stringify(formData),
+                    });
 
-                if (response.ok) {
-                    console.log('Images uploaded successfully');
+                    if (response.ok) {
+                        console.log('Images uploaded successfully');
 
-                    // You can handle the response from the server here
-                    setFileBase64Array([]);
-                    setCounter(0);
-                } else {
+                        // You can handle the response from the server here
+                        setFileBase64Array([]);
+                        setCounter(0);
+                    } else {
 
-                    console.error('Failed to add the ad');
-                }
-            } catch (error) {
-                console.error('Error uploading images:', error);
-            }}
+                        console.error('Failed to add the ad');
+                    }
+                } catch (error) {
+                    console.error('Error uploading images:', error);
+                }}
             else{
                 //radi se o updateu
                 if(fileBase64Array==imagesFill){

@@ -82,7 +82,7 @@ const SignUpForm: React.FC<Props> = () => {
             backgroundSize: '10%',
         }}>
             <form className="Auth-form" onSubmit={handleSubmit}>
-                <Stack spacing={3}>
+                <Stack spacing={2}>
                     <h3 className="Auth-form-title">Sign up</h3>
                     <div className="input-container">
                         <label>Username</label>

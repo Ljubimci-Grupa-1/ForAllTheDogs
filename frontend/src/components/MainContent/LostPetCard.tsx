@@ -3,6 +3,12 @@ import {LostPet} from "./MainContent.tsx";
 import "./LostPetCard.css";
 import {AddNewModal, adUser, fdata} from "./AddNewModal.tsx";
 import {CategoryComponent} from "./CategoryComponent.tsx";
+import Button from '@mui/joy/Button';
+import ButtonGroup from '@mui/joy/ButtonGroup';
+import Typography from '@mui/joy/Typography';
+import Box from '@mui/joy/Box';
+import AspectRatio from '@mui/joy/AspectRatio';
+import Card from '@mui/joy/Card';
 
 {/*
 1.LostPetCardProps-explained in MainContent; klasa-lost-pet-card or lost-pet-card-inactive, currUser-user who is logged in
@@ -124,28 +130,49 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     };
     return (
         <>
-        <div className={klasa}>
-            {(currUser.email===pet.user.email)&&isLoggedIn&&<button onClick={handleMore}><i className="bi bi-three-dots"></i></button>}
-            {menuState[cardId] && (
-                <div className="menu">
-                    <button onClick={handleDelete}>Delete</button>
-                    <button onClick={handleUpdate}>Update</button>
-                    <button onClick={handleChangeCategory}>Change Category</button>
+            <Card sx={{width: 320}}>
+                {(currUser.email === pet.user.email) && isLoggedIn && (
+                    <Button onClick={handleMore}>
+                        <i className="bi bi-three-dots"></i>
+                    </Button>
+                )}
+                {menuState[cardId] && (
+                    <ButtonGroup aria-label="outlined primary button group">
+                        <Button onClick={handleDelete} sx={{width: '80px', ml: 2.5}}>Delete</Button>
+                        <Button onClick={handleUpdate} sx={{width: '80px'}}>Update</Button>
+                        <Button onClick={handleChangeCategory} sx={{width: '80px'}}>Change Category</Button>
+                    </ButtonGroup>
+                )}
+                {categoriesVisibility[cardId] && (
+                    <CategoryComponent
+                        pet={pet}
+                        handleCategoryClose={handleCategoryClose}
+                        handleChangeCategory={handleSelected}
+                        handleChanged={handleCategoryFinish}
+                    />
+                )}
+                {pet.images && pet.images[0] && (
+                    <AspectRatio minHeight="120px" maxHeight="200px">
+                        <img src={pet.images[0].image} alt={pet.petName}/>
+                    </AspectRatio>
+                )}
+                <div>
+                    <Typography level="title-lg">{pet.petName}</Typography>
+                    <Typography level="body-sm">{pet.speciesName}</Typography>
+                    <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <Typography level="body-sm">{pet.location.cityName}</Typography>
+                        <Typography level="body-sm">, {pet.location.countyName}</Typography>
+                    </Box>
                 </div>
-            )}
-            {categoriesVisibility[cardId] &&
-                <CategoryComponent
-                    pet={pet} handleCategoryClose={handleCategoryClose}
-                    handleChangeCategory={handleSelected} handleChanged={handleCategoryFinish}/>}
-            {pet.images && pet.images[0] && <img src={pet.images[0].image} alt={pet.petName} />}
-            <h3>{pet.petName}</h3>
-            <p>Species: {pet.speciesName}</p>
-            <button onClick={onDetailsClick}>View Details</button>
-        </div>
+
+                <Button onClick={onDetailsClick}>View Details</Button>
+            </Card>
+
             {updateVisibility && (
                 <AddNewModal
                     closeModal={handleCloseModal} nameFill={pet.petName} ageFill={pet.age} speciesFill={pet.speciesName}
-                    descriptionFill={pet.description} longitudeFill={pet.location.longitude} latitudeFill={pet.location.latitude}
+                    descriptionFill={pet.description} longitudeFill={pet.location.longitude}
+                    latitudeFill={pet.location.latitude}
                     datetimeFill={pet.dateTimeMissing} cityFill={pet.location.cityName} text="Edit this ad"
                     colorsFill={pet.colors.map(colorName => ({ colorName }))}
                     countyFill={pet.location.countyName}

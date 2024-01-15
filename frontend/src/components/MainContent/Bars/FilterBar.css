@@ -5,8 +5,8 @@
     background-color: #f7f7f7;
     border: 1px solid #ddd;
     border-radius: 5px;
-    padding: 10px 20px;
-    margin-bottom: 20px;
+    padding: 5px; /* Reduced padding */
+    margin-bottom: 10px; /* Reduced margin */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -31,28 +31,12 @@
 }
 
 .filter-bar select {
-    background-color: #fff;
     cursor: pointer;
     border-radius: 15px;
-}
-
-.filter-bar button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 15px;
-    padding: 10px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
 }
 
 .filter-bar button:hover {
     background-color: #0056b3;
-}
-
-.filter-bar button:last-child {
-    margin-left: 10px;
 }
 
 .filter-bar input[type="date"] {
@@ -70,11 +54,21 @@
     .filter-bar input[type="text"],
     .filter-bar input[type="date"],
     .filter-bar select {
-        width: calc(100% - 20px); /* Adjusted width to account for padding */
+        width: calc(100% - 20px);
         margin-bottom: 10px;
     }
 
     .filter-bar button {
-        width: calc(100% - 20px); /* Adjusted width to account for padding */
+        width: calc(100% - 20px);
     }
 }
+
+.filter-bar select#colorSelect {
+    height: 40px;
+}
+
+.filter-bar select#colorSelect[multiple] {
+    max-height: 40px;
+    overflow-y: auto;
+}
+

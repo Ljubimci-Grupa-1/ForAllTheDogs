@@ -334,7 +334,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
             </div>
                 <Button type="submit">Send message</Button>
             </form>
-            <button onClick={onClose}>Close Message Board</button>
+            <Button onClick={onClose}>Close Message Board</Button>
         </div>
     );
 };
