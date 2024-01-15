@@ -9,9 +9,11 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import java.lang.IllegalArgumentException
 
 @SpringBootTest
 class UserServiceTest {
@@ -24,6 +26,7 @@ class UserServiceTest {
 
     @Test
     fun loginValidTest(){
+
         val newUser = User(
             userId = 1L,
             username = "username",
@@ -42,13 +45,6 @@ class UserServiceTest {
         `when`(userRepository.findByEmail(newUser.email)).thenReturn(newUser)
 
         val savedUser: User = userService.authorizeUser(login).toUser()
-        println(savedUser.email + " "
-                + savedUser.password + " "
-                + savedUser.userId  + " "
-                + savedUser.userType.name + " "
-                + savedUser.userType.userTypeId + " "
-                + savedUser.telephoneNumber
-        )
 
         assertNotNull(savedUser)
         assertEquals(newUser, savedUser)
@@ -57,6 +53,26 @@ class UserServiceTest {
     @Test
     fun loginInvalidTest(){
 
+        val newUser = User(
+            userId = 1L,
+            username = "username",
+            email = "us.us@us.us",
+            password = "ususus123",
+            name = "user",
+            telephoneNumber = "1234567899",
+            userType = UserType(1L, "Osoba")
+        )
+
+        val login = LoginUserDTO(
+            newUser.email,
+            "krivi password"
+        )
+
+        `when`(userRepository.findByEmail(newUser.email)).thenReturn(null)
+
+        assertThrows<IllegalArgumentException> {
+            userService.authorizeUser(login)
+        }
     }
 
 
