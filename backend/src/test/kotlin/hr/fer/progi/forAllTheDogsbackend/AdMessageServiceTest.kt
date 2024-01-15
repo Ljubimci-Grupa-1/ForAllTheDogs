@@ -3,7 +3,6 @@ package hr.fer.progi.forAllTheDogsbackend
 import hr.fer.progi.forAllTheDogsbackend.activity.entity.Activity
 import hr.fer.progi.forAllTheDogsbackend.activity.repository.ActivityRepository
 import hr.fer.progi.forAllTheDogsbackend.ad.controller.dto.AdDTO
-import io.mockk.mockk
 import hr.fer.progi.forAllTheDogsbackend.ad.controller.dto.AddAdDTO
 import hr.fer.progi.forAllTheDogsbackend.ad.entity.Ad
 import hr.fer.progi.forAllTheDogsbackend.ad.repository.AdRepository
@@ -20,8 +19,6 @@ import hr.fer.progi.forAllTheDogsbackend.image.repository.ImageRepository
 import hr.fer.progi.forAllTheDogsbackend.location.controller.dto.AddLocationDTO
 import hr.fer.progi.forAllTheDogsbackend.location.entity.Location
 import hr.fer.progi.forAllTheDogsbackend.location.repository.LocationRepository
-import hr.fer.progi.forAllTheDogsbackend.message.repository.MessageRepository
-import hr.fer.progi.forAllTheDogsbackend.message.service.MessageService
 import hr.fer.progi.forAllTheDogsbackend.pet.controller.dto.AddPetDTO
 import hr.fer.progi.forAllTheDogsbackend.pet.entity.Pet
 import hr.fer.progi.forAllTheDogsbackend.pet.repository.PetRepository
@@ -30,16 +27,13 @@ import hr.fer.progi.forAllTheDogsbackend.species.repository.SpeciesRepository
 import hr.fer.progi.forAllTheDogsbackend.user.entity.User
 import hr.fer.progi.forAllTheDogsbackend.user.repository.UserRepository
 import hr.fer.progi.forAllTheDogsbackend.userType.entity.UserType
-import io.mockk.every
-import io.mockk.slot
-import io.mockk.verify
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.`when`
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -47,7 +41,6 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.core.context.SecurityContextHolder
 import java.time.LocalDateTime
-import java.util.*
 
 @SpringBootTest
 class AdMessageServiceTest {
@@ -263,11 +256,5 @@ class AdMessageServiceTest {
         assertEquals(addAdDTO1.pet.location.countyName, result.pet.location.countyName)
         assertEquals(addAdDTO1.images, result.images.map { it.image })
     }
-
-    @Test
-    fun addNewMessage(){
-
-    }
-
 
 }
