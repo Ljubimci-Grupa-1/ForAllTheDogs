@@ -1,5 +1,7 @@
 package hr.fer.progi.forAllTheDogsbackend.user.service
 
+import hr.fer.progi.forAllTheDogsbackend.ad.repository.AdRepository
+import hr.fer.progi.forAllTheDogsbackend.message.repository.MessageRepository
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.AddUserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.JsonUserDTO
 import hr.fer.progi.forAllTheDogsbackend.user.controller.dto.LoginUserDTO
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val userTypeRepository: UserTypeRepository
+    private val userTypeRepository: UserTypeRepository,
 ): UserDetailsService {
 
     fun addUser(jsonUserDTO: JsonUserDTO): UserDTO {
@@ -61,15 +63,6 @@ class UserService(
             user = userRepository.findByName(jsonUserDTO.name)
             if(user != null) throw IllegalArgumentException("Shelter name ${jsonUserDTO.name} is already in use")
         }
-    }
-
-    fun deleteUser() {
-        val authentication = SecurityContextHolder.getContext().authentication
-
-        val user = userRepository.findByEmail(authentication.name) ?:
-            throw IllegalArgumentException("Ne postoji korisnik s emailom ${authentication.name}!")
-
-        userRepository.delete(user)
     }
 
     fun updateUser(updatedDetails: JsonUserDTO): UserDTO {

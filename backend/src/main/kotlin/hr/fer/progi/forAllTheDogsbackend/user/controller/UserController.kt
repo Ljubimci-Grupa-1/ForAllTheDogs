@@ -56,12 +56,6 @@ class UserController(
         userService.getAllShelters()
     )
 
-    @DeleteMapping("/delete")
-    @PreAuthorize("hasRole('ROLE_USER') || hasRole('ROLE_SHELTER')")
-    fun deleteUser() {
-        userService.deleteUser()
-    }
-
     @PutMapping("/update")
     @PreAuthorize("hasRole('ROLE_USER') || hasRole('ROLE_SHELTER')")
     fun updateUser(@RequestBody user: JsonUserDTO): ResponseEntity<UserDTO> {
