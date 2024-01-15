@@ -35,4 +35,16 @@ data class UserDTO(
             userType
         )
     }
+
+    fun toJsonUser(): JsonUserDTO {
+        return JsonUserDTO(
+            username,
+            email,
+            password,
+            name,
+            telephoneNumber,
+            userType.userTypeId
+        )
+    }
+
 }
