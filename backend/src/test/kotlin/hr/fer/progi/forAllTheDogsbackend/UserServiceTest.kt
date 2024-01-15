@@ -110,13 +110,9 @@ class UserServiceTest {
 
         `when`(userRepository.save(any(User::class.java))).thenReturn(savedUser)
 
-        val result = userService.addUser(jsonUserDTO)
+        val result = userService.addUser(jsonUserDTO).toJsonUser()
 
-        assertEquals(jsonUserDTO.username, result.username)
-        assertEquals(jsonUserDTO.email, result.email)
-        assertEquals(jsonUserDTO.name, result.name)
-        assertEquals(jsonUserDTO.telephoneNumber, result.telephoneNumber)
-        assertEquals(userType, result.userType)
+        assertEquals(jsonUserDTO, result)
 
         // Verify that userRepository.save was called with a non-null argument
         verify(userRepository, times(1)).save(any(User::class.java))
