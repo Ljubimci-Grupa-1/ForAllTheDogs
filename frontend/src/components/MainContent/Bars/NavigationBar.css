@@ -1,4 +1,12 @@
-.navbar {
+@media only screen and (max-width: 600px) {
+    .sheet{
+        display:flex;
+        flex-direction: row;
+        gap: 5px;
+    }
+
+}
+    .navbar {
     background-color: #007bff;
     color: #fff;
     padding: 10px 0;

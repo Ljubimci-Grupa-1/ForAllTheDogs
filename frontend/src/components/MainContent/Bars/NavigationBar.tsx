@@ -119,7 +119,7 @@ const NavigationBar = ({
                     alignItems:'center',
                     justifyContent:'center'}}>
                     {isLoggedIn && (
-                        <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
+                        <Sheet className={"sheet"} sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
                             <Typography sx={{ width: '100%',
                                 color:"white"}} level="title-lg">Hello, {username}</Typography>
                             <Button size="lg" component={Link} to="/" onClick={handleSignOut}>Sign out</Button>
