@@ -1,6 +1,6 @@
-import  {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./AddNewModal.css"
-import {Box, Button, Chip, Input, Option, Select, Sheet, Stack, SvgIcon} from "@mui/joy";
+import {Box, Button, Checkbox, Chip, Input, Option, Select, Sheet, Stack, SvgIcon} from "@mui/joy";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -61,6 +61,7 @@ export interface adUser{
     name:string;
     email:string;
     telephoneNumber:string;
+    userType:number;
 }
 interface AddNewModalProps {
     closeModal: () => void;
@@ -109,7 +110,7 @@ interface petData{
 }
 export interface fdata{
     inShelter:string;
-    user: adUser;
+    user: object;
     activityName: string;
     pet: petData;
     images: string[] | null;
@@ -138,6 +139,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const [fileBase64Array, setFileBase64Array] = useState<string[]>(imagesFill);
     const [browsedFile, setBrowsedFile]=useState('');
     const [counter, setCounter]=useState(fileBase64Array.length);
+    const [isChecked, setIsChecked] = useState(false);
     //problem sa county, oni ga ne salju
     const [data, setData]=useState<Data>({
         age:ageFill, name:nameFill, species:speciesFill, colors:colorsFill,
@@ -375,11 +377,12 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     };
 
     const handleSubmit=async ()=>{
+        // @ts-ignore
         event.preventDefault();
         formValidation();
         console.log(markerPosition);
         if (fileBase64Array.length>0) {
-            console.log(fileBase64Array)
+            formData.inShelter = isChecked ? "2" : "1";
             formData.pet.speciesName = data.species;
             formData.pet.age = data.age;
             formData.pet.petName = data.name;
@@ -454,6 +457,11 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             console.log('No files to submit');
         }
     };
+
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+    };
+
     return (
         <>
             <div className="modal-container">
@@ -847,8 +855,31 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         </div>
                                     ))}
                                 </div>
-
-
+                                <div className="input-container">
+                                    {fileBase64Array.map((_, index) => (
+                                        <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                                            <span>Image {index + 1}</span>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleDeleteImage(index)}
+                                                style={{ marginLeft: '8px', cursor: 'pointer', background: 'none', border: 'none', color: 'blue' }}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                                {user.userType==2 &&
+                                <div className="input-container">
+                                    <label htmlFor="inShelter">In shelter:</label>
+                                    <Checkbox
+                                        color="primary"
+                                        label="In shelter?"
+                                        variant="solid"
+                                        onChange={handleCheckboxChange}
+                                    />
+                                </div>
+                                }
 
                                 {/*SUBMIT BUTTON*/}
                                 {/*<button type="button" onClick={handleSubmit}>submit</button>*/}

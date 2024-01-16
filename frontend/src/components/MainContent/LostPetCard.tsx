@@ -36,7 +36,7 @@ interface LostPetCardProps {
     onCategoriesToggle: (cardId: string, state:boolean) => void;
 }
 
-const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn , klasa, currUser,
+const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn, currUser,
                                                      onMenuToggle, cardId, menuState,
                                                      onCategoriesToggle, categoriesVisibility}) => {
     //const [isMenuVisible, setMenuVisible] = useState(false);

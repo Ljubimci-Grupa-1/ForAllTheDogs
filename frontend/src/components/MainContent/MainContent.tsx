@@ -5,7 +5,7 @@ import LostPetCard from './LostPetCard';
 import FilterBar from "./Bars/FilterBar.tsx";
 import NavigationBar from "./Bars/NavigationBar.tsx";
 import {adUser, locationData} from "./AddNewModal.tsx";
-import {Grid, Sheet, Stack} from "@mui/joy";
+import {useLocation} from "react-router-dom";
 
 {/*
 HELP
@@ -34,7 +34,7 @@ export interface LostPet {
     age:number;
     speciesName: string;
     dateTimeMissing: string;
-    colors:string[];
+    colors: string[];
     images: string[];
     description: string;
     location:locationData;
@@ -52,6 +52,24 @@ interface MainContentProps{
 }
 
 const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentStateChange, mainContentState}:MainContentProps) => {
+    const location = useLocation();
+    const shelterIdFromState = location.state && location.state.shelterId;
+
+    useEffect(() => {
+        if (shelterIdFromState) {
+            console.log('Shelter ID:', shelterIdFromState);
+            // Fetch data for the specific shelter using shelterId
+            // Add your fetching logic here
+        }
+
+        // Add other logic as needed based on shelterIdFromState
+
+        // Fetch your initial data
+        // ...
+
+        // Update other state variables as needed
+    }, [shelterIdFromState, /* other dependencies */]);
+    // Rest of the code...
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
     const [areFiltersApplied, setAreFiltersApplied] = useState(false);

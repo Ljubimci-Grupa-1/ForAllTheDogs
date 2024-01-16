@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import './SheltersComponent.css';
 import NavigationBar from '../MainContent/Bars/NavigationBar';
+import {useNavigate} from 'react-router-dom';
 
 interface ShelterComponentProps {
     handleLoggedIn: () => void;
@@ -23,6 +23,7 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
                                                                mainContentState
                                                            }) => {
     const [shelters, setShelters] = useState([]);
+    const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,6 +40,13 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
         fetchData();
     }, []);
 
+    const handleShelterClick = (shelterId: number) => {
+        // Use navigate function to navigate and pass state
+        navigate('/', { state: { shelterId: shelterId } });
+    };
+
+
+
     return (
         <main className="main">
             <NavigationBar
@@ -49,11 +57,15 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
             />
             <h2>Shelter Usernames</h2>
             <div className="shelter-container">
-                {shelters.map((shelter:Shelter) => (
-                    <Link to={`/shelters/${shelter.userId}`} key={shelter.userId}>
-                        <div className="shelterUser-container">{shelter.username}</div>
-                    </Link>
+                {shelters.map((shelter: Shelter) => (
+                    <div
+                        onClick={() => handleShelterClick(shelter.userId)}
+                        key={shelter.userId}
+                        className="shelterUser-container">
+                        {shelter.username}
+                    </div>
                 ))}
+
             </div>
         </main>
     );

@@ -8,11 +8,11 @@ import MainContent from "./MainContent/MainContent.tsx";
 import Map from "./MainContent/Map/Map.tsx";
 import {useState} from "react";
 import SheltersComponent from "./ShelterContent/SheltersComponent";
-import ShelterById from "./ShelterContent/ShelterById";
 
 function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [mainContentState, setMainContentState]=useState(true);
+
 
     const handleLoggedInAppC = () => {
         setLoggedIn(true);
@@ -38,7 +38,6 @@ function App() {
                 <Route path="/shelters" element={<SheltersComponent
                     handleLoggedIn={handleLoggedInAppC} handleLoggedOut={handleLoggedOutAppC}
                 mainContentState={mainContentState} setMainContentState={handlemainContentStateChange}/>}/>
-                <Route path="/shelters/:id" element={<ShelterById />}/>
             </Routes>
 
         </BrowserRouter>

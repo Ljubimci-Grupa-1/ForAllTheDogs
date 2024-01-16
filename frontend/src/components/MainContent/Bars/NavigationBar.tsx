@@ -29,6 +29,8 @@ const NavigationBar = ({
     const [username, setUsername] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [userTelephoneNo, setUserTelephoneNo] = useState('');
+    const [userType, setUserType] = useState(1);
+    const [name, setName] = useState('');
     const [isLoggedIn, setLoginState] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     useEffect(() =>{
@@ -45,8 +47,10 @@ const NavigationBar = ({
                 setUserEmail(decodedToken.email);
                 setUserTelephoneNo(decodedToken.telephoneNumber);
                 setLoginState(true);
+                setUserType(decodedToken.userType);
+                setName(decodedToken.name);
                 //poslati maincontent da je ovo user mail
-                handleLoggedIn({name:decodedToken.username, email:decodedToken.email, telephoneNumber:decodedToken.telephoneNumber});
+                handleLoggedIn({name:decodedToken.username, email:decodedToken.email, telephoneNumber:decodedToken.telephoneNumber, userType:decodedToken.userType});
                 //handleLoggedIn(user);
             } catch (error) {
                 console.error('Error decoding token:', error);
@@ -127,6 +131,11 @@ const NavigationBar = ({
                             {!mainContentState&&<button onClick={handleBackToMain}><i className="bi bi-arrow-left-circle"></i></button>}*/}
                             {mainContentState&&<Button size="lg" component={Link} to="/" onClick={handleProfile}><i className="bi bi-person-circle"></i></Button>}
                             {!mainContentState&&<Button size="lg" component={Link} to="/" onClick={handleBackToMain}><i className="bi bi-arrow-left-circle"></i></Button>}
+                            {!mainContentState&&
+                                <div className={"personalData"}>
+                                    <Typography sx={{ width: '100%', color:"white" }} level="title-lg">Name: {name}</Typography>
+                                    <Typography sx={{ width: '100%', color:"white" }} level="title-lg">Email: {userEmail}</Typography>
+                                    <Typography sx={{ width: '100%', color:"white" }} level="title-lg">Telephone: {userTelephoneNo}</Typography></div>}
                         </Sheet>
                     )}
                     {!isLoggedIn && (
@@ -143,7 +152,8 @@ const NavigationBar = ({
                     user={{
                         name:username,
                         email:userEmail,
-                        telephoneNumber:userTelephoneNo
+                        telephoneNumber:userTelephoneNo,
+                        userType:userType
                     }}
                 ></AddNewModal>
             )

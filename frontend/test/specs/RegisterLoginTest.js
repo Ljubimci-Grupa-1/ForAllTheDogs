@@ -34,6 +34,7 @@ describe('My Login application', () => {
         await checkboxInput.waitForExist();
         expect(checkboxInput).toBeDisplayed();
         await checkboxInput.click();
+        await checkboxInput.click();
         let submitButton = await $('[type="submit"]');
         await submitButton.waitForExist();
         expect(submitButton).toBeDisplayed();
