@@ -181,6 +181,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     // @ts-ignore
                     imagesFill={pet.images.map(image=>image.image)} adIdFill={pet.adId}
                     isLoggedIn={isLoggedIn}
+                    // @ts-ignore
                     user={{
                         name:currUser.name,
                         email: currUser.email,

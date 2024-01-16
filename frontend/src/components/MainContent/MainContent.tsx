@@ -84,6 +84,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     const [lostPetsInactive, setLostPetsInactive] = useState<LostPet[]>([]);
     const [lostPetsInactiveUserProfile, setLostPetsInactiveUserProfile] = useState<LostPet[]>([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // @ts-ignore
     const [currentUser, setCurrentUser] = useState<adUser>({
         email:"", name:"", telephoneNumber:""
     });
@@ -306,6 +307,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
         handleLoggedOutAppC();
         setModalOpen(false);
 
+        // @ts-ignore
         setCurrentUser({
             email:"", name:"", telephoneNumber:""
         });
