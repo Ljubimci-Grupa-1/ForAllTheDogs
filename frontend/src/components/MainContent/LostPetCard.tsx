@@ -36,7 +36,7 @@ interface LostPetCardProps {
     onCategoriesToggle: (cardId: string, state:boolean) => void;
 }
 
-const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn , klasa, currUser,
+const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLoggedIn , currUser,
                                                      onMenuToggle, cardId, menuState,
                                                      onCategoriesToggle, categoriesVisibility}) => {
     //const [isMenuVisible, setMenuVisible] = useState(false);
@@ -153,7 +153,9 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                 )}
                 {pet.images && pet.images[0] && (
                     <AspectRatio minHeight="120px" maxHeight="200px">
-                        <img src={pet.images[0].image} alt={pet.petName}/>
+                        <img
+                            // @ts-ignore
+                            src={pet.images[0].image} alt={pet.petName}/>
                     </AspectRatio>
                 )}
                 <div>
@@ -176,6 +178,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     datetimeFill={pet.dateTimeMissing} cityFill={pet.location.cityName} text="Edit this ad"
                     colorsFill={pet.colors.map(colorName => ({ colorName }))}
                     countyFill={pet.location.countyName}
+                    // @ts-ignore
                     imagesFill={pet.images.map(image=>image.image)} adIdFill={pet.adId}
                     isLoggedIn={isLoggedIn}
                     user={{

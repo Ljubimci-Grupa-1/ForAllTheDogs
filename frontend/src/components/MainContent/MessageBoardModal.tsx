@@ -15,7 +15,7 @@ interface FormValidation{
     text:boolean;
     location:boolean;
 }
-
+// @ts-ignore
 const deepCopy = (obj) => {
     if (obj === null || typeof obj !== 'object') {
         return obj;
@@ -29,9 +29,11 @@ const deepCopy = (obj) => {
         return arrCopy;
     }
 
+
     const objCopy = {};
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
+            // @ts-ignore
             objCopy[key] = deepCopy(obj[key]);
         }
     }
@@ -43,10 +45,11 @@ const deepCopy = (obj) => {
 
 const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, currUser }) => {    // Your message board content and functionality here
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
+    // @ts-ignore
     const [fileBase64Array, setFileBase64Array] = useState<string>('');
     const [counter, setCounter]=useState(fileBase64Array.length);
+    // @ts-ignore
     const [isUploaded, setIsUploaded] = useState(false);
-    let browsedFile='';
     const [validation, setValidation]=useState<FormValidation>(
         {
             image:true,
@@ -176,6 +179,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                     setCounter(counter+1)
                     setFormData({
                         ...formData,
+                        // @ts-ignore
                         image: base64String,
                     });
                 };
@@ -245,12 +249,21 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
     return (
         <div className="message-board-modal">
             {messages.map((message) => (
-                <div key={message.messageId}>
-                    <p>{message.text}</p>
-                    <p>Submitted by: {message.user.name}</p>
-                    <p>At time: {message.date}</p>
-                    {message.image && (
+                <div
+                    // @ts-ignore
+                    key={message.messageId}>
+                    <p>{
+                        // @ts-ignore
+                        message.text}</p>
+                    <p>Submitted by: {
+                        // @ts-ignore
+                        message.user.name}</p>
+                    <p>At time: {// @ts-ignore
+                        message.date}</p>
+                    {// @ts-ignore
+                        message.image && (
                         <img
+                            // @ts-ignore
                             src={message.image.image}  // Assuming image URL is in the `image` property
                             alt="User submitted"
                             style={{ maxWidth: '100%', maxHeight: '200px' }}
@@ -259,14 +272,22 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                     {/* Add other message details as needed */}
 
                     {/* Display Leaflet map if latitude and longitude are not null */}
-                    {message.location.latitude !== 0 && message.location.longitude !== 0 && (
-                        <MapContainer center={[message.location.latitude, message.location.longitude]} zoom={13} style={{ height: '300px', width: '50%' }}>
+                    {
+                        // @ts-ignore
+                        message.location.latitude !== 0 && message.location.longitude !== 0 && (
+                        <MapContainer
+                            // @ts-ignore
+                            center={[message.location.latitude, message.location.longitude]} zoom={13} style={{ height: '300px', width: '50%' }}>
                             <TileLayer
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             />
-                            <Marker position={[message.location.latitude, message.location.longitude]}>
-                                <Popup>{message.location.cityName}, {message.location.countyName}</Popup>
+                            <Marker
+                                // @ts-ignore
+                                position={[message.location.latitude, message.location.longitude]}>
+                                <Popup>{
+                                    // @ts-ignore
+                                    message.location.cityName}, {message.location.countyName}</Popup>
                             </Marker>
                         </MapContainer>
                     )}

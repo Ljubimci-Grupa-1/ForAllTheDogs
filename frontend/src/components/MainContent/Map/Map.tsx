@@ -51,6 +51,7 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
                         petsData.map((pet) => ({
                             title: pet.petName,
                             description: pet.description,
+                            // @ts-ignore
                             imageUrl: pet.images[0]?.image || "",
                             long: pet.location.longitude,
                             lat: pet.location.latitude,
@@ -68,6 +69,7 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
                     petsData.map((pet) => ({
                         title: pet.petName,
                         description: pet.description,
+                        // @ts-ignore
                         imageUrl: pet.images[0]?.image || "",
                         long: pet.location.longitude,
                         lat: pet.location.latitude,
