@@ -708,7 +708,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         <button onClick={handleUpload} disabled={!isUploaded}>
                                             Upload
                                         </button>
-                                        {isUploaded && <p style={{color:"red"}}>!</p>}
+                                        {isUploaded && <p style={{color:"red"}}>Press the Upload button!</p>}
                                     </div>
                                     {!validation.images && <p className="error-message" style={{color:"red"}}>At least 1 image!</p>}
                                 </div>

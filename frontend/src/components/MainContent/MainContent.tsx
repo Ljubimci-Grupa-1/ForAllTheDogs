@@ -258,6 +258,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     };
 
     const handleCountyChange=(county : string)=>{
+        console.log('County:', county);
         setFilterCounty(county);
     };
 

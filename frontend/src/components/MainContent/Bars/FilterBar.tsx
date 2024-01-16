@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './FilterBar.css';
-import {Vrsta} from "../AddNewModal.tsx";
+import { Vrsta } from '../AddNewModal.tsx';
 import Input from '@mui/joy/Input';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
@@ -9,14 +9,16 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import dayjs from "dayjs";
+import 'dayjs/locale/en';
 
-interface County{
-    id:number;
-    countyName:string;
+interface County {
+    id: number;
+    countyName: string;
 }
-interface City{
-    id:number;
-    cityName:string;
+interface City {
+    id: number;
+    cityName: string;
 }
 
 interface Color {
@@ -43,15 +45,18 @@ const FilterBar: React.FC<FilterBarProps> = ({
                                                  onCityChange,
                                                  onColorChange,
                                                  onApplyFilters,
-                                                 onClearFilters
+                                                 onClearFilters,
                                              }) => {
-    const [species, setSpecies]=useState([]);
-    const [counties, setCounties]=useState([]);
-    const [cities, setCities]=useState([]);
-    const [colors, setColors] = useState<string[]>([]);
-
+    const [species, setSpecies] = useState<Vrsta[]>([]);
+    const [counties, setCounties] = useState<County[]>([]);
+    const [cities, setCities] = useState<City[]>([]);
+    const [colors, setColors] = useState<Color[]>([]);
+    const [selectedSpecies, setSelectedSpecies] = useState<string>('');
+    const [selectedColors, setSelectedColors] = useState<string[]>([]);
+    const [selectedCounty, setSelectedCounty] = useState<string>('');
+    const [selectedCity, setSelectedCity] = useState<string>('');
+    const [selectedDateTime, setSelectedDateTime] = useState<Date | null>(null);
     const handleClearFilters = () => {
-        // Reset the state variables to their default values
         onNameChange('');
         onSpeciesChange('');
         onDateLostChange('');
@@ -59,72 +64,70 @@ const FilterBar: React.FC<FilterBarProps> = ({
         onCityChange('');
         onColorChange([]);
 
-        // Clear the input and select values directly
-        const petNameInput = document.getElementById('petNameInput') as HTMLInputElement;
-        petNameInput.value = '';
-
-        const speciesSelect = document.getElementById('speciesSelect') as HTMLSelectElement;
-        speciesSelect.value = '';
-
-        const colorSelect = document.getElementById('colorSelect') as HTMLSelectElement;
-        colorSelect.value = []
-
-        const countySelect = document.getElementById('countySelect') as HTMLSelectElement;
-        countySelect.value = '';
-
-        const citySelect = document.getElementById('citySelect') as HTMLSelectElement;
-        citySelect.value = '';
+        setSelectedSpecies('');
+        setSelectedColors([]);
+        setSelectedCounty('');
+        setSelectedCity('');
     };
-
 
     useEffect(() => {
         const fetchSpecies = async () => {
             try {
-                const response = await fetch("http://localhost:8080/species/all");
+                const response = await fetch('http://localhost:8080/species/all');
                 const data = await response.json();
                 setSpecies(data);
             } catch (error) {
-                console.error("Error fetching species:", error);
+                console.error('Error fetching species:', error);
             }
         };
 
         const fetchCounties = async () => {
             try {
-                const response = await fetch("http://localhost:8080/county/all");
+                const response = await fetch('http://localhost:8080/county/all');
                 const data = await response.json();
                 setCounties(data);
             } catch (error) {
-                console.error("Error fetching species:", error);
+                console.error('Error fetching counties:', error);
             }
         };
 
         const fetchCities = async () => {
             try {
-                const response = await fetch("http://localhost:8080/city/all");
+                const response = await fetch('http://localhost:8080/city/all');
                 const data = await response.json();
-                const data1=data.filter((value:City) => value.cityName !== "Ostalo");
-                setCities(data1);
+                const filteredData = data.filter((value: City) => value.cityName !== 'Ostalo');
+                setCities(filteredData);
             } catch (error) {
-                console.error("Error fetching species:", error);
+                console.error('Error fetching cities:', error);
             }
         };
 
         const fetchColors = async () => {
             try {
-                const response = await fetch("http://localhost:8080/color/all");
+                const response = await fetch('http://localhost:8080/color/all');
                 const data = await response.json();
-                setColors(data)
+                setColors(data);
             } catch (error) {
-                console.error("Error fetching colors:", error);
+                console.error('Error fetching colors:', error);
             }
         };
-
 
         fetchSpecies();
         fetchCounties();
         fetchCities();
         fetchColors();
     }, []);
+
+    const handleDateTimeChange = (newDateTime) => {
+        setSelectedDateTime(newDateTime);
+
+        const formattedDateTime = dayjs(newDateTime).format('YYYY-MM-DDTHH:mm:ss');
+
+        onDateLostChange(formattedDateTime);
+    };
+
+
+
 
     return (
         <div className="filter-bar">
@@ -133,18 +136,19 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 id="petNameInput"
                 onChange={(e) => onNameChange(e.target.value)}
             >
-                <label htmlFor="speciesSelect">Species</label>
             </Input>
 
             <Select
-                defaultValue=""
+                value={selectedSpecies}
                 color="primary"
                 placeholder="Choose one…"
                 size="md"
                 variant="outlined"
-                onChange={(e) => {
-                    console.log('Selected Species:', e.target.value);
-                    onSpeciesChange(e.target.value);
+                onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string | null) => {
+                    const selectedValue = value || ''; // Handle null value if needed
+                    console.log('Selected Species:', selectedValue);
+                    setSelectedSpecies(selectedValue);
+                    onSpeciesChange(selectedValue);
                 }}
                 id="speciesSelect"
             >
@@ -156,21 +160,26 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 ))}
             </Select>
 
+
+
+
             <Select
-                defaultValue={['All Colors']}
+                value={selectedColors}
                 color="primary"
-                placeholder="Choose one…"
+                placeholder="Choose one or more…"
                 size="md"
                 variant="outlined"
                 multiple
-                id="countySelect"
-                onChange={(e) => {
-                    const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
+                id="colorSelect"
+                onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string[] | null) => {
+                    const selectedOptions = value || [];
+                    setSelectedColors(selectedOptions);
                     onColorChange(selectedOptions);
                 }}
-
             >
-                <Option value="" key={-1}>All Colors</Option>
+                <Option value="" key={-1}>
+                    All Colors
+                </Option>
                 {colors.map((spec: Color) => (
                     <Option value={spec.colorName} key={spec.colorId}>
                         {spec.colorName}
@@ -178,16 +187,23 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 ))}
             </Select>
 
+
             <Select
-                defaultValue=""
+                value={selectedCounty}
                 color="primary"
                 placeholder="Choose one…"
                 size="md"
                 variant="outlined"
-                onChange={(e) => onCountyChange(e.target.value)}
+                onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string | null) => {
+                    const selectedValue = value || '';
+                    setSelectedCounty(selectedValue);
+                    onCountyChange(selectedValue);
+                }}
                 id="countySelect"
             >
-                <Option value="" key={-1}>All Counties</Option>
+                <Option value="" key={-1}>
+                    All Counties
+                </Option>
                 {counties.map((county: County) => (
                     <Option value={county.countyName} key={county.id}>
                         {county.countyName}
@@ -196,15 +212,21 @@ const FilterBar: React.FC<FilterBarProps> = ({
             </Select>
 
             <Select
-                defaultValue=""
+                value={selectedCity}
                 color="primary"
                 placeholder="Choose one…"
                 size="md"
                 variant="outlined"
-                onChange={(e) => onCityChange(e.target.value)}
+                onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string | null) => {
+                    const selectedValue = value || '';
+                    setSelectedCity(selectedValue);
+                    onCityChange(selectedValue);
+                }}
                 id="citySelect"
             >
-                <Option value="" key={-1}>All Cities</Option>
+                <Option value="" key={-1}>
+                    All Cities
+                </Option>
                 {cities.map((city: City) => (
                     <Option value={city.cityName} key={city.id}>
                         {city.cityName}
@@ -214,9 +236,14 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={['DateTimePicker']}>
-                    <DateTimePicker views={['year', 'day']} label="Date missing"/>
+                    <DateTimePicker
+                        views={['year', 'day']}
+                        label="Date missing"
+                        onChange={(newDateTime) => handleDateTimeChange(newDateTime)}
+                    />
                 </DemoContainer>
             </LocalizationProvider>
+
 
             <ButtonGroup aria-label="outlined primary button group">
                 <Button onClick={onApplyFilters}>Apply Filters</Button>
@@ -224,6 +251,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
             </ButtonGroup>
         </div>
     );
+
 };
 
 export default FilterBar;
