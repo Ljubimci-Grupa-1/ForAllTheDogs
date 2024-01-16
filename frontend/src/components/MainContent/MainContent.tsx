@@ -90,20 +90,16 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     //const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [menuState, setMenuState] = useState<{ [key: string]: boolean }>({}); // Menu state dictionary
     const [categoriesVisibility, setCategoriesVisibility] = useState<{ [key: string]: boolean }>({});
-    const [pageSize, setPageSize] = useState(5);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
 
+    //const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //    const size = parseInt(e.target.value, 10);
+    //    setPageSize(size);
+    //    setCurrentPage(0); // Reset to the first page when changing page size
+    //};
 
-    const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const size = parseInt(e.target.value, 10);
-        setPageSize(size);
-        setCurrentPage(0); // Reset to the first page when changing page size
-    };
-
-    const handlePageChange = (newPage: number) => {
-        setCurrentPage(newPage);
-    };
+    //const handlePageChange = (newPage: number) => {
+    //    setCurrentPage(newPage);
+    //};
 
     useEffect(() => {
         document.title = "For All The Dogs";
@@ -112,6 +108,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
             .then((data) => {
                 const petsData: LostPet[] = data.map((item: PetData) => {
                     const pet: LostPet = item.pet;
+                    // @ts-ignore
                     const images = item.images;
                     return { ...pet, images };
                 });
@@ -168,12 +165,11 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                 setLostPetsInactiveUserProfile(inactiveAdsUserProfile);
                 setLostPets(activeAds);
                 setLostPetsInactive(inactiveAds);
-                setTotalPages(data.totalPages);
             })
             .catch((error) => {
                 console.error('Error fetching lost pets:', error);
             });
-    }, [currentUser,currentPage,pageSize]);
+    }, [currentUser]);
 
     useEffect(() => {
 
@@ -349,11 +345,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                 onColorChange={handleColorChange}
                 onApplyFilters={handleApplyFilters}
                 onClearFilters={handleClearFilters}
-                pageSize={pageSize}
-                onPageChange={handlePageChange}
-                onPageSizeChange={handlePageSizeChange}
-                totalPages={totalPages}
-                currentPage={currentPage}
             />
             {mainContentState&&<div className="lost-pets-list" >
                 {filteredPets.map((pet) => (

@@ -55,6 +55,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
     const [selectedColors, setSelectedColors] = useState<string[]>([]);
     const [selectedCounty, setSelectedCounty] = useState<string>('');
     const [selectedCity, setSelectedCity] = useState<string>('');
+    // @ts-ignore
     const [selectedDateTime, setSelectedDateTime] = useState<Date | null>(null);
     const handleClearFilters = () => {
         onNameChange('');
@@ -118,6 +119,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         fetchColors();
     }, []);
 
+    // @ts-ignore
     const handleDateTimeChange = (newDateTime) => {
         setSelectedDateTime(newDateTime);
 
@@ -125,6 +127,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
         onDateLostChange(formattedDateTime);
     };
+
 
 
 
@@ -144,6 +147,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 placeholder="Choose one…"
                 size="md"
                 variant="outlined"
+                // @ts-ignore
                 onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string | null) => {
                     const selectedValue = value || ''; // Handle null value if needed
                     console.log('Selected Species:', selectedValue);
@@ -171,6 +175,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 variant="outlined"
                 multiple
                 id="colorSelect"
+                // @ts-ignore
                 onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string[] | null) => {
                     const selectedOptions = value || [];
                     setSelectedColors(selectedOptions);
@@ -194,6 +199,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 placeholder="Choose one…"
                 size="md"
                 variant="outlined"
+                // @ts-ignore
                 onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string | null) => {
                     const selectedValue = value || '';
                     setSelectedCounty(selectedValue);
@@ -217,6 +223,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 placeholder="Choose one…"
                 size="md"
                 variant="outlined"
+                // @ts-ignore
                 onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string | null) => {
                     const selectedValue = value || '';
                     setSelectedCity(selectedValue);
