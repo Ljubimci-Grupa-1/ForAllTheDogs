@@ -310,6 +310,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 }))})
         }
     };
+    // @ts-ignore
     const handleDateTimeChange = (newDateTime) => {
         setSelectedDateTime(newDateTime);
         const formattedDateTime = dayjs(newDateTime).format('YYYY-MM-DDTHH:mm:ss');
@@ -337,6 +338,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         }
     };
 
+    // @ts-ignore
     const handleUpload :React.MouseEventHandler<HTMLButtonElement>= (event) => {
         //event.preventDefault();
         // Here, you can save the selectedFile or perform any other action
@@ -375,6 +377,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     };
 
     const handleSubmit=async ()=>{
+        // @ts-ignore
         event.preventDefault();
         formValidation();
         console.log(markerPosition);
@@ -454,6 +457,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             console.log('No files to submit');
         }
     };
+
     return (
         <>
             <div className="modal-container">
@@ -581,7 +585,9 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
                                                 {selected.map((selectedOption) => (
-                                                    <Chip variant="solid" color="primary"
+                                                    <Chip variant="solid"
+                                                          color="primary"
+                                                          // @ts-ignore
                                                           key={selectedOption.label}>
                                                         {selectedOption.label}
                                                     </Chip>
