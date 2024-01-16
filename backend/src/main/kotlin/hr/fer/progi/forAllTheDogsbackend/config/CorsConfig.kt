@@ -13,7 +13,7 @@ class CorsConfig {
         return object : WebMvcConfigurer {
             override fun addCorsMappings(registry: CorsRegistry) {
                 registry.addMapping("/**") // You can restrict paths with "/api/**" for example
-                    .allowedOrigins("https://forallthedogs-omw5.onrender.com/") // The front-end server's address
+                    .allowedOrigins("https://forallthedogs-omw5.onrender.com") // The front-end server's address
                     //.allowedOrigins("http://localhost:5173")
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .allowedHeaders("*")
