@@ -84,8 +84,8 @@ const NavigationBar = ({
                             alignItems="center"
                             spacing={2}>
 
-                            <Button size="lg" component={Link} to="/login">Login</Button>
-                            <Button size="lg" component={Link} to="/signup">Signup</Button>
+                            <Button id={"loginButton"} size="lg" component={Link} to="/login">Login</Button>
+                            <Button id={"signupButton"} size="lg" component={Link} to="/signup">Signup</Button>
                         </Stack>)}
                     {isLoggedIn &&(
                         <Button onClick={()=>setModalOpen(true)} size="lg">Post new ad</Button>
@@ -120,7 +120,7 @@ const NavigationBar = ({
                     justifyContent:'center'}}>
                     {isLoggedIn && (
                         <Sheet className={"sheet"} sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
-                            <Typography sx={{ width: '100%',
+                            <Typography id={"showUsername"} sx={{ width: '100%',
                                 color:"white"}} level="title-lg">Hello, {username}</Typography>
                             <Button size="lg" component={Link} to="/" onClick={handleSignOut}>Sign out</Button>
                             {/*{mainContentState&&<button onClick={handleProfile}><i className="bi bi-person-circle"></i></button>}

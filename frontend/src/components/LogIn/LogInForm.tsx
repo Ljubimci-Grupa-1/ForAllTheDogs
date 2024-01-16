@@ -106,6 +106,7 @@ const LoginForm: FC = () => {
                             {error && <Typography
                                 color="danger" level="title-lg" variant="plain">{error}</Typography>}
                             <Button
+                                id="submitLogin"
                                 variant="solid"
                                 type="submit">Login</Button>
                         </Stack>
