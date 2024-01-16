@@ -103,7 +103,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
 
     useEffect(() => {
         document.title = "For All The Dogs";
-        fetch(`http://localhost:8080/ad/all`)
+        fetch(`https://forallthedogs.onrender.com/ad/all`)
             .then((response) => response.json())
             .then((data) => {
                 const petsData: LostPet[] = data.map((item: PetData) => {

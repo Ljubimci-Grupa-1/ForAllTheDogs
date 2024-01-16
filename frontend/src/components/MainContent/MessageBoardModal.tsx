@@ -78,7 +78,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/ad/${adId}/messages`);
+                const response = await fetch(`https://forallthedogs.onrender.com/ad/${adId}/messages`);
                 if (response.ok) {
                     const data = await response.json();
                     setMessages(data);
@@ -227,10 +227,12 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
         }));
         console.log(formData);
         try {
-            const response = await fetch('http://localhost:8080/message/add', {
+            const token = localStorage.getItem('jwt');
+            const response = await fetch('https://forallthedogs.onrender.com/message/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(formData),
             });
