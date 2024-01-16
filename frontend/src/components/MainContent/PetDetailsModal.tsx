@@ -54,7 +54,8 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
                             <MessageBoardModal onClose={() => setMessageBoardVisibility(false)} adId={pet.adId} currUser={currUser} />
                         )}
 
-                        <img src={pet.images[imageIndex].image} alt={pet.petName} style={{ width: '100%', maxWidth: '100%',borderRadius: '10px'}} />
+                        <img src={// @ts-ignore
+                            pet.images[imageIndex].image} alt={pet.petName} style={{ width: '100%', maxWidth: '100%',borderRadius: '10px'}} />
 
                         <div>
                             <Button onClick={handleLeft}>
@@ -99,6 +100,7 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
                         <MapContainer
                             center={[pet.location.latitude, pet.location.longitude]}
                             zoom={13}
+                            // @ts-ignore
                             style={{ height: '300px', width: '100%', marginTop: '16px', mb: 2 }}
                         >
                             <TileLayer
