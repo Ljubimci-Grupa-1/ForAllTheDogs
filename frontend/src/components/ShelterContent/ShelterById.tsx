@@ -32,6 +32,7 @@ const ShelterById: React.FC<ShelterByIdProps> = () => {
                 const dataShelter = await responseShelter.json();
 
                 // Find the shelter with the specific id
+                // @ts-ignore
                 const specificShelter = dataShelter.find((shelter: Shelter) => shelter.userId === parseInt(id, 10));
 
                 // Set the shelter data
