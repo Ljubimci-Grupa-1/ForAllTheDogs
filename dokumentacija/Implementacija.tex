@@ -31,7 +31,7 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 			\includegraphics[scale=0.5]{slike/unit1.PNG} 
 			\centering
 			\caption{Unit test 1 - \textit{log-in}}
-			\label{pawBoost}
+			\label{unit1}
 		\end{figure}
 
 \pagebreak
@@ -41,7 +41,7 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 			\includegraphics[scale=0.5]{slike/unit2.PNG} 
 			\centering
 			\caption{Unit test 2 - \textit{log-in} s neispravnim \textit{password}-om}
-			\label{pawBoost}
+			\label{unit2}
 		\end{figure}
 
 \pagebreak		
@@ -51,7 +51,7 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 			\includegraphics[scale=0.5]{slike/unit3.PNG} 
 			\centering
 			\caption{Unit test 3 - registracija}
-			\label{pawBoost}
+			\label{unit3}
 		\end{figure}
 		
 \pagebreak		
@@ -61,7 +61,7 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 			\includegraphics[scale=0.5]{slike/unit4.PNG} 
 			\centering
 			\caption{Unit test 4 - registracija s već postojećim \textit{e-mail}-om}
-			\label{pawBoost}
+			\label{unit4}
 		\end{figure}
 
 \pagebreak		
@@ -71,7 +71,7 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 			\includegraphics[scale=0.5]{slike/unit5.PNG} 
 			\centering
 			\caption{Unit test 5 - dohvaćanje rute svih korisnika}
-			\label{pawBoost}
+			\label{unit5}
 		\end{figure}
 		
 \pagebreak
@@ -81,7 +81,7 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 			\includegraphics[scale=0.5]{slike/unit6.PNG} 
 			\centering
 			\caption{Unit test 6 - dodavanje novog oglasa}
-			\label{pawBoost}
+			\label{unit6}
 		\end{figure}
 		
 \pagebreak	
@@ -168,5 +168,59 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 			Za kraj odabiremo opciju \textit{Create Web Service}.
 			
 			\subsection{Backend}
+			
+			Za puštanje backenda u pogon ponovno odabiremo \textit{New} $\rightarrow$ \textit{Web Service} te kao korijenski direktorij odabiremo direktorij \textbf{backend}.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{slike/backend.PNG} 
+				\centering
+				\caption{Postavke za backend}
+				\label{backend}
+			\end{figure}
+			
+			Kao \textit{Runtime} postavljamo Docker. Datoteka Dockerfile, pozicionirana u korijenskom direktoriju za backend, sadrži instrukcije za izgradnju i pakiranje (engl. \textit{build-and-package}) aplikacije. Objasnimo sadržaj datoteke Dockerfile.
+			
+			Prvo se definira "builder".
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.5]{slike/dockerfile_builder.PNG} 
+				\centering
+				\caption{builder}
+				\label{dockerfile_builder}
+			\end{figure}
+			
+			Zatim se zadaje radni direktorij te u kontejner kopira konfiguracijske datoteke alata Gradle (\textbf{build.gradle.kts} i \textbf{settings.gradle.kts}), skripte Gradle omotača (\textit{Gradle Wrapper}) te izvorni kod aplikacije.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{slike/dockerfile_workdir.PNG} 
+				\centering
+				\caption{Radni direktorij i Gradle}
+				\label{dockerfile_workdir}
+			\end{figure}
+			
+			Naredbe na slici \ref{dockerfile_run} (redom) služe za: 
+			\begin{packed_item}
+				\item davanje skripti Gradle omotača pravo izvršavanja (\textit{execute} permission)
+				\item preuzimanje \textit{project dependencies}
+				\item izgradnju aplikacije
+			\end{packed_item}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.6]{slike/dockerfile_run.PNG} 
+				\centering
+				\caption{Naredbe za izgradnju}
+				\label{dockerfile_run}
+			\end{figure}
+			
+			Na kraju imamo naredbe vezane uz \textit{staging}. Pokrećemo novi \textit{stage} koji koristi istu osnovnu sliku za izvođenje aplikacije (\textit{build stage} više nam nije potreban, kopiraju se samo potrebni artefakti). Izgrađena JAR datoteka (iz \textit{build stage}) kopira se u trenutni \textit{stage}. Zatim su navedene naredbe koje će biti izvedene pri pokretanju kontejnera. Aplikacija se pokreće kao izvršna datoteka (\textit{executable}).
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.45]{slike/dockerfile_stage.PNG} 
+				\centering
+				\caption{Naredbe za \textit{staging}}
+				\label{dockerfile_stage}
+			\end{figure}
+			
+			Kao i prije, završavamo s \textit{Create Web Service}.
 			
 			\eject 
