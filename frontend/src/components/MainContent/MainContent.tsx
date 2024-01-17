@@ -120,7 +120,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
 
                 const filtriraniShelter:LostPet[]=[];
                 for (let i = 0; i < petsData.length; i++) {
-                    if (petsData[i].inShelter==2 && petsData[i].user.email===shelterIdFromState) {
+                    if (petsData[i].user.email===shelterIdFromState) {
                         filtriraniShelter.push(petsData[i]);
                     }
                 }
