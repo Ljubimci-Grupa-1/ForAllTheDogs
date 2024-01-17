@@ -108,9 +108,10 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
         fetch(`https://forallthedogs.onrender.com/ad/all`)
             .then((response) => response.json())
             .then((data) => {
-                console.log("data " + data);
+                console.dir(data, { depth: null });
                 const petsData: LostPet[] = data.map((item: PetData) => {
                     const pet: LostPet = item.pet;
+                    console.log(pet);
                     // @ts-ignore
                     const images = item.images;
                     return { ...pet, images };
@@ -160,7 +161,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                     },
                     { activeAdsUserProfile: [], inactiveAdsUserProfile: [] }
                 );
-
                 const activeAdsUserProfile = separatedArraysUserProfile.activeAdsUserProfile;
                 const inactiveAdsUserProfile = separatedArraysUserProfile.inactiveAdsUserProfile;
                 console.log("aktivni", activeAds)
@@ -168,6 +168,8 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                 setLostPetsInactiveUserProfile(inactiveAdsUserProfile);
                 setLostPets(activeAds);
                 setLostPetsInactive(inactiveAds);
+                console.log("aktivni", activeAds);
+                console.log("neaktivni", inactiveAds);
             })
             .catch((error) => {
                 console.error('Error fetching lost pets:', error);
@@ -362,7 +364,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                             setCurrentPet(pet);
                             setModalOpen(true);
                         }}
-
                         cardId={pet.petId.toString()} // Use petId as the card identifier
                         menuState={menuState}
                         categoriesVisibility={categoriesVisibility}
@@ -370,7 +371,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                         onCategoriesToggle={handleCategoriesToggle}
                     />
                 ))}
-                {isLoggedIn&&filteredPetsInactive.map((pet) => (
+                {filteredPetsInactive.map((pet) => (
                     <LostPetCard
                         klasa={"lost-pet-card-inactive"}
                         currUser={currentUser}
@@ -392,7 +393,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
             </div>}
             {
                 !mainContentState&&<div className="lost-pets-list" >
-                    {filteredPetsUserProfile.map((pet) => (
+                    {isLoggedIn&&filteredPetsUserProfile.map((pet) => (
                         <LostPetCard
                             klasa={"lost-pet-card"}
                             currUser={currentUser}
