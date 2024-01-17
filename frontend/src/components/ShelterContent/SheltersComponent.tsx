@@ -8,11 +8,14 @@ interface ShelterComponentProps {
     handleLoggedOut: () => void;
     setMainContentState: (state: boolean) => void;
     mainContentState: boolean; // You should replace 'string' with the actual type of mainContentState
+    handleShelterAdsShow:(state:boolean)=>void;
+    shelterAdsShow:boolean;
 }
 
 interface Shelter{
     userId:number;
     username:string;
+    email:string;
 
 }
 
@@ -20,12 +23,16 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
                                                                handleLoggedIn,
                                                                handleLoggedOut,
                                                                setMainContentState,
-                                                               mainContentState
+                                                               mainContentState,
+                                                               handleShelterAdsShow,
+                                                               shelterAdsShow
                                                            }) => {
     const [shelters, setShelters] = useState([]);
     const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
     useEffect(() => {
+        setMainContentState(true);
+        handleShelterAdsShow(false);
         const fetchData = async () => {
             try {
                 const response = await fetch('http://localhost:8080/user/shelter/all');
@@ -38,10 +45,11 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
         };
 
         fetchData();
-    }, []);
 
-    const handleShelterClick = (shelterId: number) => {
+    }, []);
+    const handleShelterClick = (shelterId: string) => {
         // Use navigate function to navigate and pass state
+        handleShelterAdsShow(true);
         navigate('/', { state: { shelterId: shelterId } });
     };
 
@@ -54,12 +62,14 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
                 handleLoggedOut={handleLoggedOut}
                 setMainContentState={setMainContentState}
                 mainContentState={mainContentState}
+                shelterAdsShow={shelterAdsShow}
+                handleShelterAdsShow={handleShelterAdsShow}
             />
             <h2>Shelter Usernames</h2>
             <div className="shelter-container">
                 {shelters.map((shelter: Shelter) => (
                     <div
-                        onClick={() => handleShelterClick(shelter.userId)}
+                        onClick={() => handleShelterClick(shelter.email)}
                         key={shelter.userId}
                         className="shelterUser-container">
                         {shelter.username}

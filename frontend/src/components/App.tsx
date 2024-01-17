@@ -12,7 +12,7 @@ import SheltersComponent from "./ShelterContent/SheltersComponent";
 function App() {
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [mainContentState, setMainContentState]=useState(true);
-
+    const [shelterAdsShow, setShelterAdsShow]=useState(false);
 
     const handleLoggedInAppC = () => {
         setLoggedIn(true);
@@ -22,8 +22,12 @@ function App() {
         setLoggedIn(false);
     };
 
-    const handlemainContentStateChange=()=>{
-        setMainContentState(!mainContentState);
+    const handlemainContentStateChange=(state:boolean)=>{
+        setMainContentState(state);
+        setShelterAdsShow(false);
+    };
+    const handleShowShelterAds=(state:boolean)=>{
+        setShelterAdsShow(state);
     };
     return (
         <BrowserRouter>
@@ -33,11 +37,14 @@ function App() {
                 <Route path="/login" element={<LoginForm/>} />
                 <Route path="/" element={<MainContent
                     handleLoggedInAppC={handleLoggedInAppC} handleLoggedOutAppC={handleLoggedOutAppC}
-                    handleMainContentStateChange={handlemainContentStateChange} mainContentState={mainContentState}/>} />
+                    handleMainContentStateChange={handlemainContentStateChange}
+                    mainContentState={mainContentState} shelterAdsShow={shelterAdsShow}
+                    handleShelterAdsShow={handleShowShelterAds}/>} />
                 <Route path="/map" element={<Map isLoggedIn={isLoggedIn}/>} />
                 <Route path="/shelters" element={<SheltersComponent
                     handleLoggedIn={handleLoggedInAppC} handleLoggedOut={handleLoggedOutAppC}
-                mainContentState={mainContentState} setMainContentState={handlemainContentStateChange}/>}/>
+                mainContentState={mainContentState} setMainContentState={handlemainContentStateChange}
+                handleShelterAdsShow={handleShowShelterAds} shelterAdsShow={shelterAdsShow}/>}/>
             </Routes>
 
         </BrowserRouter>
