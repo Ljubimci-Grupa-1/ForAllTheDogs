@@ -108,6 +108,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
         fetch(`https://forallthedogs.onrender.com/ad/all`)
             .then((response) => response.json())
             .then((data) => {
+                console.log("data " + data);
                 const petsData: LostPet[] = data.map((item: PetData) => {
                     const pet: LostPet = item.pet;
                     // @ts-ignore
