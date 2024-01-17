@@ -43,7 +43,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import java.time.LocalDateTime
 
 @SpringBootTest
-class AdMessageServiceTest {
+class AdServiceTest {
 
     @Autowired
     private lateinit var adService: AdService
