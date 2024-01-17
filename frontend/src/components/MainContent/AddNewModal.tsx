@@ -186,7 +186,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     useEffect(() => {
         const fetchColors = async () => {
             try {
-                const response = await fetch("http://localhost:8080/color/all");
+                const response = await fetch("http://localhost:5173/color/all");
                 const data = await response.json();
                 setColors(data);
             } catch (error) {
@@ -201,7 +201,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     useEffect(() => {
         const fetchSpecies = async () => {
             try {
-                const response = await fetch("http://localhost:8080/species/all");
+                const response = await fetch("http://localhost:5173/species/all");
                 const data = await response.json();
                 setSpecies(data);
             } catch (error) {
@@ -215,7 +215,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:8080/county/all");
+                const response = await fetch("http://localhost:5173/county/all");
                 const data1 = await response.json();
                 setCounties(data1);
 
@@ -283,7 +283,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             const myId = targetCounty ? targetCounty.countyId : null;
             const fetchCitiesByCounties = async () => {
                 try {
-                    const response = await fetch(`http://localhost:8080/county/${myId}`);
+                    const response = await fetch(`http://localhost:5173/county/${myId}`);
                     const data = await response.json();
                     setCountyCities(data.cities);
                 } catch (error) {
@@ -398,7 +398,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 formData.images = fileBase64Array;
                 console.log(formData);
                 const token = localStorage.getItem('jwt');
-                const response = await fetch('http://localhost:8080/ad/add', {
+                const response = await fetch('http://localhost:5173/ad/add', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -431,10 +431,12 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 }
                 console.log(formData);
                 try {
-                    const response = await fetch(`http://localhost:8080/ad/edit/${adIdFill}`, {
+                    const token = localStorage.getItem('jwt');
+                    const response = await fetch(`http://localhost:5173/ad/edit/${adIdFill}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + token,
                         },
                         body: JSON.stringify(formData),
                     });

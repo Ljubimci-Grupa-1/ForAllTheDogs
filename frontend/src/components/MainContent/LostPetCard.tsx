@@ -48,10 +48,12 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     };
     const handleDelete = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/ad/delete/${pet.adId}`, {
+            const token = localStorage.getItem('jwt');
+            const response = await fetch(`http://localhost:5173/ad/delete/${pet.adId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
             });
 
@@ -110,10 +112,12 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         };
         console.log(formData);
         try {
-            const response = await fetch(`http://localhost:8080/ad/edit/${pet.adId}`, {
+            const token = localStorage.getItem('jwt');
+            const response = await fetch(`http://localhost:5173/ad/edit/${pet.adId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(formData),
             });
