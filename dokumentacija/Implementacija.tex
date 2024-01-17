@@ -20,7 +20,7 @@ Pokretanje, izvršavanje i puštanje u pogon izvršavaju se preko 3 kontejnera p
 			
 			Komponente programskog sustava ostvaruju određenu funkcionalnost te međusobno imaju usku komunikaciju preko raznih ponuđenih sučelja. Pomoću unit testova provjeravamo ispravnost i pravilno ponašanje pojedinačnih „jedinica“ komponenti, najčešće funkcija ili metoda. To su najmanji dijelovi softverskog sustava koji se mogu testirati odvojeno, a provođenjem unit testiranja poboljšavamo kvalitetu koda tijekom vremena te identificiramo eventualne probleme. \\
 			
-Ispitivanje komponenti ostvareno je preko Junit radnog okvira, a proveli smo 2 vrste testova: unos ispravne varijante koja zadovoljava unit testove, a i one druge kako bi smo provjerili reakciju sustava na neki neprihvatljiv unos.  Prilikom testiranja UserService metoda, korišteno je sučelje UserRepository uz klase User i DTO objekti koji su korišteni za entitet User.\\
+Ispitivanje komponenti ostvareno je preko JUnit radnog okvira, a proveli smo 2 vrste testova: unos ispravne varijante koja zadovoljava unit testove, a i one druge kako bi smo provjerili reakciju sustava na neki neprihvatljiv unos.  Prilikom testiranja UserService metoda, korišteno je sučelje UserRepository uz klase User i DTO objekti koji su korišteni za entitet User.\\
 Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike kodova.
 
 \pagebreak
@@ -35,7 +35,7 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 		\end{figure}
 
 \pagebreak
-\textbf{Ispitni slučaj 2: Drugi test provjerava logiranje sa neispravnim textit{password}-om.}
+\textbf{Ispitni slučaj 2: Drugi test provjerava logiranje sa neispravnim \textit{password}-om.}
 
 \begin{figure}[H]
 			\includegraphics[scale=0.5]{slike/unit2.PNG} 
@@ -101,9 +101,7 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 		
 		\section{Dijagram razmještaja}
 			
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
+			Sustav se zasniva na arhitekturi "klijent - poslužitelj". Klijenti koriste web preglednik za pristupanje web aplikaciji. Komunikacija klijenata i poslužitelja odvija se preko HTTP veze. Za posluživanje se koristi platforma Render.
 			 
 			 \begin{figure}[H]
 				\includegraphics[scale=0.6]{slike/dijagram_razmjestaja.PNG} 
@@ -166,6 +164,10 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 			\end{figure}
 			
 			Za kraj odabiremo opciju \textit{Create Web Service}.
+			
+			\subsection{Baza podataka}
+			
+			Na Render Dashboard odabiremo \textit{New} $\rightarrow$ \textit{PostgreSQL}. Ispunjavamo željene postavke (ime, regija, PostgreSQL verzija (15) itd.) te završavamo s \textit{Create Database}.
 			
 			\subsection{Backend}
 			
