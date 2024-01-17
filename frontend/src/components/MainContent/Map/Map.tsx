@@ -31,7 +31,7 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         document.title = "For All The Dogs";
-        fetch('http://localhost:8080/ad/all')
+        fetch('https://forallthedogs.onrender.com/ad/all')
             .then((response) => response.json())
             .then((data) => {
                 if(!isLoggedIn){
