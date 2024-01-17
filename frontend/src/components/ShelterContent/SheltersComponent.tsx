@@ -28,7 +28,7 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/user/shelter/all');
+                const response = await fetch('https://forallthedogs.onrender.com/user/shelter/all');
                 const data = await response.json();
                 console.log(data); // Log shelter objects
                 setShelters(data);
