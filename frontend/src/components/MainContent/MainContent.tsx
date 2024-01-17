@@ -58,12 +58,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                         mainContentState, shelterAdsShow, handleShelterAdsShow}:MainContentProps) => {
     const location = useLocation();
     const shelterIdFromState = location.state && location.state.shelterId;
-
-    useEffect(() => {
-        if (shelterIdFromState) {
-            console.log('Shelter ID:', shelterIdFromState);
-        }
-    }, [shelterIdFromState, /* other dependencies */]);
     // Rest of the code...
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
@@ -80,7 +74,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     const [lostPetsInactiveUserProfile, setLostPetsInactiveUserProfile] = useState<LostPet[]>([]);
     const [lostPetsShelterActive, setLostPetsShelterActive]=useState<LostPet[]>([]);
     const [lostPetsShelterInactive, setLostPetsShelterInactive]=useState<LostPet[]>([]);
-
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     // @ts-ignore
     const [currentUser, setCurrentUser] = useState<adUser>({
@@ -113,7 +106,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                 const filtriraniShelter:LostPet[]=[];
                 console.log(shelterIdFromState)
                 for (let i = 0; i < petsData.length; i++) {
-                    if (petsData[i].inShelter==2 && petsData[i].user.email===shelterIdFromState) {
+                    if (petsData[i].user.email===shelterIdFromState) {
                             filtriraniShelter.push(petsData[i]);
                     }
                 }
@@ -344,7 +337,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
             [cardId]: state,
         }));
     };
-
     return (
         <main className="main">
             <p>Welcome to For All The Dogs, a platform to help find lost pets...</p>
@@ -367,7 +359,8 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                 onApplyFilters={handleApplyFilters}
                 onClearFilters={handleClearFilters}
             />
-            {mainContentState&&!shelterAdsShow&&<div className="lost-pets-list" >
+            {mainContentState&&!shelterAdsShow&&
+                <div className="lost-pets-list" >
                 {filteredPets.map((pet) => (
                     <LostPetCard
                         klasa={"lost-pet-card"}

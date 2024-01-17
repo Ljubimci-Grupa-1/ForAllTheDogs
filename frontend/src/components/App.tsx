@@ -28,6 +28,7 @@ function App() {
     };
     const handleShowShelterAds=(state:boolean)=>{
         setShelterAdsShow(state);
+        console.log("shelter ads show: "+state);
     };
     return (
         <BrowserRouter>

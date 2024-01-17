@@ -64,19 +64,32 @@ const NavigationBar = ({
         setModalOpen(false);
     };
     const handleProfile=()=>{
+        console.log("show profile")
+        console.log(mainContentState);
         setMainContentState(false);
         handleShelterAdsShow(false);
+        console.log(mainContentState);
     };
+
     const handleBackToMain=()=>{
+        console.log("back to main")
+        console.log(mainContentState);
         setMainContentState(true);
         handleShelterAdsShow(false);
+        console.log(mainContentState);
     };
+
     const handleSignOut=()=>{
         setLoginState(false);
         localStorage.removeItem('jwt');
         handleLoggedOut();
     };
 
+
+    function handlePostsClick() {
+        setMainContentState(true);
+        handleShelterAdsShow(false);
+    }
 
     return (
         <nav className="navbar">
@@ -118,8 +131,13 @@ const NavigationBar = ({
                             {isLoggedIn && (isSheltersRoute ? (
                                 <Button component={Link} to="/">Posts</Button>
                             ) : (
-                                <Button component={Link} to="/shelters">Shelters</Button>
+                                shelterAdsShow ? (
+                                    <Button component={Link} to="/" onClick={handlePostsClick}>Posts</Button>
+                                ) : (
+                                    <Button component={Link} to="/shelters">Shelters</Button>
+                                )
                             ))}
+
                         </ButtonGroup>
                     </Sheet>
                 </Grid>
@@ -132,7 +150,7 @@ const NavigationBar = ({
                             <Typography id={"showUsername"} sx={{ width: '100%',
                                 color:"white"}} level="title-lg">Hello, {username}</Typography>
                             <Button size="lg" component={Link} to="/" onClick={handleSignOut}>Sign out</Button>
-                            {mainContentState&&<Button size="lg" component={Link} to="/" onClick={handleProfile}><i className="bi bi-person-circle"></i></Button>}
+                            {!shelterAdsShow && mainContentState&&<Button size="lg" component={Link} to="/" onClick={handleProfile}><i className="bi bi-person-circle"></i></Button>}
                             {!mainContentState&&<Button size="lg" component={Link} to="/" onClick={handleBackToMain}><i className="bi bi-arrow-left-circle"></i></Button>}
                             {!mainContentState&&!shelterAdsShow&&
                                 <div className={"personalData"}>
