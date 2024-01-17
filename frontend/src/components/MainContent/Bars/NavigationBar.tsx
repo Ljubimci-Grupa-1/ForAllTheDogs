@@ -17,12 +17,15 @@ interface NavigationBarProps{
     handleLoggedOut:()=>void;
     setMainContentState:(state:boolean)=>void;
     mainContentState:boolean;
+    handleShelterAdsShow:(state:boolean)=>void;
+    shelterAdsShow:boolean;
 }
 const NavigationBar = ({
                            handleLoggedIn,
                            handleLoggedOut,
                            setMainContentState,
                            mainContentState,
+                           handleShelterAdsShow, shelterAdsShow
                        }: NavigationBarProps) => {
     const location = useLocation();
     const isSheltersRoute = location.pathname === '/shelters';
@@ -61,10 +64,12 @@ const NavigationBar = ({
         setModalOpen(false);
     };
     const handleProfile=()=>{
-        setMainContentState(true);
+        setMainContentState(false);
+        handleShelterAdsShow(false);
     };
     const handleBackToMain=()=>{
-        setMainContentState(false);
+        setMainContentState(true);
+        handleShelterAdsShow(false);
     };
     const handleSignOut=()=>{
         setLoginState(false);
@@ -127,11 +132,9 @@ const NavigationBar = ({
                             <Typography id={"showUsername"} sx={{ width: '100%',
                                 color:"white"}} level="title-lg">Hello, {username}</Typography>
                             <Button size="lg" component={Link} to="/" onClick={handleSignOut}>Sign out</Button>
-                            {/*{mainContentState&&<button onClick={handleProfile}><i className="bi bi-person-circle"></i></button>}
-                            {!mainContentState&&<button onClick={handleBackToMain}><i className="bi bi-arrow-left-circle"></i></button>}*/}
                             {mainContentState&&<Button size="lg" component={Link} to="/" onClick={handleProfile}><i className="bi bi-person-circle"></i></Button>}
                             {!mainContentState&&<Button size="lg" component={Link} to="/" onClick={handleBackToMain}><i className="bi bi-arrow-left-circle"></i></Button>}
-                            {!mainContentState&&
+                            {!mainContentState&&!shelterAdsShow&&
                                 <div className={"personalData"}>
                                     <Typography sx={{ width: '100%', color:"white" }} level="title-lg">Name: {name}</Typography>
                                     <Typography sx={{ width: '100%', color:"white" }} level="title-lg">Email: {userEmail}</Typography>

@@ -39,6 +39,7 @@ export interface LostPet {
     description: string;
     location:locationData;
     user:adUser;
+    inShelter:number;
 }
 interface PetData {
     pet: LostPet;
@@ -47,27 +48,21 @@ interface PetData {
 interface MainContentProps{
     handleLoggedInAppC:()=>void;
     handleLoggedOutAppC:()=>void;
-    handleMainContentStateChange:()=>void;
+    handleMainContentStateChange:(state:boolean)=>void;
     mainContentState:boolean;
+    shelterAdsShow:boolean;
+    handleShelterAdsShow:(state:boolean)=>void;
 }
 
-const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentStateChange, mainContentState}:MainContentProps) => {
+const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentStateChange,
+                        mainContentState, shelterAdsShow, handleShelterAdsShow}:MainContentProps) => {
     const location = useLocation();
     const shelterIdFromState = location.state && location.state.shelterId;
 
     useEffect(() => {
         if (shelterIdFromState) {
             console.log('Shelter ID:', shelterIdFromState);
-            // Fetch data for the specific shelter using shelterId
-            // Add your fetching logic here
         }
-
-        // Add other logic as needed based on shelterIdFromState
-
-        // Fetch your initial data
-        // ...
-
-        // Update other state variables as needed
     }, [shelterIdFromState, /* other dependencies */]);
     // Rest of the code...
     const [isModalOpen, setModalOpen] = useState(false);
@@ -83,12 +78,13 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     const [lostPetsUserProfile, setLostPetsUserProfile] = useState<LostPet[]>([]);
     const [lostPetsInactive, setLostPetsInactive] = useState<LostPet[]>([]);
     const [lostPetsInactiveUserProfile, setLostPetsInactiveUserProfile] = useState<LostPet[]>([]);
+    const [lostPetsShelterActive, setLostPetsShelterActive]=useState<LostPet[]>([]);
+    const [lostPetsShelterInactive, setLostPetsShelterInactive]=useState<LostPet[]>([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     // @ts-ignore
     const [currentUser, setCurrentUser] = useState<adUser>({
         email:"", name:"", telephoneNumber:""
     });
-    //const [isMenuVisible, setIsMenuVisible] = useState(false);
     const [menuState, setMenuState] = useState<{ [key: string]: boolean }>({}); // Menu state dictionary
     const [categoriesVisibility, setCategoriesVisibility] = useState<{ [key: string]: boolean }>({});
 
@@ -117,9 +113,35 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                     if (data[i] && data[i].adId !== undefined) {
                         petsData[i].adId = data[i].adId;
                         petsData[i].activityName = data[i].activityName;
-                        petsData[i].user=data[i].user
+                        petsData[i].user=data[i].user;
+                        petsData[i].inShelter=data[i].inShelter;
                     }
                 }
+
+                const filtriraniShelter:LostPet[]=[];
+                for (let i = 0; i < petsData.length; i++) {
+                    if (petsData[i].inShelter==2 && petsData[i].user.email===shelterIdFromState) {
+                        filtriraniShelter.push(petsData[i]);
+                    }
+                }
+                const separatedArraysShelter = filtriraniShelter.reduce<{
+                    activeAds: LostPet[];
+                    inactiveAds: LostPet[];
+                }>(
+                    (result, currentObject) => {
+                        if (currentObject.activityName === 'Za ljubimcem se traga') {
+                            result.activeAds.push(currentObject);
+                        } else {
+                            result.inactiveAds.push(currentObject);
+                        }
+                        return result;
+                    },
+                    { activeAds: [], inactiveAds: [] }
+                );
+
+                const filteredPetsShelter = separatedArraysShelter.activeAds;
+                const filteredPetsInactiveShelter = separatedArraysShelter.inactiveAds;
+
                 const filtrirani:LostPet[]=[];
                 for (let i = 0; i < petsData.length; i++) {
                     if (petsData[i].user.email===currentUser.email) {
@@ -166,6 +188,8 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                 setLostPetsInactiveUserProfile(inactiveAdsUserProfile);
                 setLostPets(activeAds);
                 setLostPetsInactive(inactiveAds);
+                setLostPetsShelterActive(filteredPetsShelter);
+                setLostPetsShelterInactive(filteredPetsInactiveShelter);
             })
             .catch((error) => {
                 console.error('Error fetching lost pets:', error);
@@ -336,6 +360,8 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                            handleLoggedOut={handleLoggedOut}
                            setMainContentState={handleMainContentStateChange}
                            mainContentState={mainContentState}
+                           handleShelterAdsShow={handleShelterAdsShow}
+                           shelterAdsShow={shelterAdsShow}
             />
 
             <FilterBar
@@ -348,7 +374,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                 onApplyFilters={handleApplyFilters}
                 onClearFilters={handleClearFilters}
             />
-            {mainContentState&&<div className="lost-pets-list" >
+            {mainContentState&&!shelterAdsShow&&<div className="lost-pets-list" >
                 {filteredPets.map((pet) => (
                     <LostPetCard
                         klasa={"lost-pet-card"}
@@ -389,7 +415,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                 ))}
             </div>}
             {
-                !mainContentState&&<div className="lost-pets-list" >
+                !mainContentState&&!shelterAdsShow&&<div className="lost-pets-list" >
                     {filteredPetsUserProfile.map((pet) => (
                         <LostPetCard
                             klasa={"lost-pet-card"}
@@ -428,6 +454,85 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                     ))}
                 </div>
             }
+            {
+                shelterAdsShow&&<div className="lost-pets-list" >
+                    {lostPetsShelterActive.map((pet) => (
+                        <LostPetCard
+                            klasa={"lost-pet-card"}
+                            currUser={currentUser}
+                            key={pet.petId}
+                            pet={pet}
+                            isLoggedIn={isLoggedIn}
+                            onDetailsClick={() => {
+                                setCurrentPet(pet);
+                                setModalOpen(true);
+                            }}
+                            cardId={pet.petId.toString()} // Use petId as the card identifier
+                            menuState={menuState}
+                            categoriesVisibility={categoriesVisibility}
+                            onMenuToggle={handleMenuToggle}
+                            onCategoriesToggle={handleCategoriesToggle}
+                        />
+                    ))}
+                    {isLoggedIn&&lostPetsShelterInactive.map((pet) => (
+                        <LostPetCard
+                            klasa={"lost-pet-card-inactive"}
+                            currUser={currentUser}
+                            key={pet.petId}
+                            pet={pet}
+                            isLoggedIn={isLoggedIn}
+                            onDetailsClick={() => {
+                                setCurrentPet(pet);
+                                setModalOpen(true);
+                            }}
+                            cardId={pet.petId.toString()} // Use petId as the card identifier
+                            menuState={menuState}
+                            categoriesVisibility={categoriesVisibility}
+                            onMenuToggle={handleMenuToggle}
+                            onCategoriesToggle={handleCategoriesToggle}
+                        />
+                    ))}
+                </div>
+            }{
+            shelterAdsShow&&<div className="lost-pets-list" >
+                {lostPetsShelterActive.map((pet) => (
+                    <LostPetCard
+                        klasa={"lost-pet-card"}
+                        currUser={currentUser}
+                        key={pet.petId}
+                        pet={pet}
+                        isLoggedIn={isLoggedIn}
+                        onDetailsClick={() => {
+                            setCurrentPet(pet);
+                            setModalOpen(true);
+                        }}
+                        cardId={pet.petId.toString()} // Use petId as the card identifier
+                        menuState={menuState}
+                        categoriesVisibility={categoriesVisibility}
+                        onMenuToggle={handleMenuToggle}
+                        onCategoriesToggle={handleCategoriesToggle}
+                    />
+                ))}
+                {isLoggedIn&&lostPetsShelterInactive.map((pet) => (
+                    <LostPetCard
+                        klasa={"lost-pet-card-inactive"}
+                        currUser={currentUser}
+                        key={pet.petId}
+                        pet={pet}
+                        isLoggedIn={isLoggedIn}
+                        onDetailsClick={() => {
+                            setCurrentPet(pet);
+                            setModalOpen(true);
+                        }}
+                        cardId={pet.petId.toString()} // Use petId as the card identifier
+                        menuState={menuState}
+                        categoriesVisibility={categoriesVisibility}
+                        onMenuToggle={handleMenuToggle}
+                        onCategoriesToggle={handleCategoriesToggle}
+                    />
+                ))}
+            </div>
+        }
             {isModalOpen && (
                 <PetDetailsModal
                     pet={currentPet}

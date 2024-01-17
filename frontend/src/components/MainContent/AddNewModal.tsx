@@ -862,20 +862,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         </div>
                                     ))}
                                 </div>
-                                <div className="input-container">
-                                    {fileBase64Array.map((_, index) => (
-                                        <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-                                            <span>Image {index + 1}</span>
-                                            <button
-                                                type="button"
-                                                onClick={() => handleDeleteImage(index)}
-                                                style={{ marginLeft: '8px', cursor: 'pointer', background: 'none', border: 'none', color: 'blue' }}
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
+
                                 {user.userType==2 &&
                                 <div className="input-container">
                                     <label htmlFor="inShelter">In shelter:</label>
