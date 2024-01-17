@@ -39,7 +39,7 @@ export interface LostPet {
     description: string;
     location:locationData;
     user:adUser;
-    inShelter:number;
+    inShelter: string;
 }
 interface PetData {
     pet: LostPet;
@@ -386,7 +386,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                             setCurrentPet(pet);
                             setModalOpen(true);
                         }}
-
                         cardId={pet.petId.toString()} // Use petId as the card identifier
                         menuState={menuState}
                         categoriesVisibility={categoriesVisibility}

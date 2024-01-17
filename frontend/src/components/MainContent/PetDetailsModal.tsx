@@ -11,6 +11,7 @@ import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 import {ButtonGroup} from "@mui/joy";
+import {Icon} from "leaflet";
 
 interface PetDetailsModalProps {
     pet: LostPet | null;
@@ -36,6 +37,14 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
     };
 
     const modalContentClass = `modal-content${messageBoardVisibility ? ' shifted' : ''}`;
+
+    const customIcon = new Icon({
+        iconUrl: "https://cdn0.iconfinder.com/data/icons/creatype-pet-shop-outline/64/1_pin_gps_paw_pet_animal_map-512.png",
+        iconSize: [50, 50],
+        iconAnchor: [12.5, 12.5],
+        popupAnchor: [0, 0]
+    });
+
 
     return (
         <div className="modal-background" >
@@ -107,7 +116,7 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             />
-                            <Marker position={[pet.location.latitude, pet.location.longitude]}>
+                            <Marker position={[pet.location.latitude, pet.location.longitude]} icon={customIcon}>
                                 <Popup>{pet.location.cityName}, {pet.location.countyName}</Popup>
                             </Marker>
                         </MapContainer>

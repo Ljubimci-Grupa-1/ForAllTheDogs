@@ -48,7 +48,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     };
     const handleDelete = async () => {
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('jwt');
             const response = await fetch(`https://forallthedogs.onrender.com/ad/delete/${pet.adId}`, {
                 method: 'PUT',
                 headers: {
@@ -87,7 +87,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     };
     const handleCategoryFinish=async ()=>{
         const formData :fdata={
-            inShelter: "1",
+            inShelter: pet.inShelter,
             user: {
                 name: pet.user.name,
                 email: pet.user.email,
@@ -112,7 +112,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         };
         console.log(formData);
         try {
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('jwt');
             const response = await fetch(`https://forallthedogs.onrender.com/ad/edit/${pet.adId}`, {
                 method: 'PUT',
                 headers: {
