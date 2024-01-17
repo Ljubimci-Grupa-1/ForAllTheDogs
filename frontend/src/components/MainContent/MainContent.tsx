@@ -492,46 +492,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                         />
                     ))}
                 </div>
-            }{
-            shelterAdsShow&&<div className="lost-pets-list" >
-                {lostPetsShelterActive.map((pet) => (
-                    <LostPetCard
-                        klasa={"lost-pet-card"}
-                        currUser={currentUser}
-                        key={pet.petId}
-                        pet={pet}
-                        isLoggedIn={isLoggedIn}
-                        onDetailsClick={() => {
-                            setCurrentPet(pet);
-                            setModalOpen(true);
-                        }}
-                        cardId={pet.petId.toString()} // Use petId as the card identifier
-                        menuState={menuState}
-                        categoriesVisibility={categoriesVisibility}
-                        onMenuToggle={handleMenuToggle}
-                        onCategoriesToggle={handleCategoriesToggle}
-                    />
-                ))}
-                {isLoggedIn&&lostPetsShelterInactive.map((pet) => (
-                    <LostPetCard
-                        klasa={"lost-pet-card-inactive"}
-                        currUser={currentUser}
-                        key={pet.petId}
-                        pet={pet}
-                        isLoggedIn={isLoggedIn}
-                        onDetailsClick={() => {
-                            setCurrentPet(pet);
-                            setModalOpen(true);
-                        }}
-                        cardId={pet.petId.toString()} // Use petId as the card identifier
-                        menuState={menuState}
-                        categoriesVisibility={categoriesVisibility}
-                        onMenuToggle={handleMenuToggle}
-                        onCategoriesToggle={handleCategoriesToggle}
-                    />
-                ))}
-            </div>
-        }
+            }
             {isModalOpen && (
                 <PetDetailsModal
                     pet={currentPet}
