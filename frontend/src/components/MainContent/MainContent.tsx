@@ -92,7 +92,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
 
     useEffect(() => {
         document.title = "For All The Dogs";
-        fetch(`http://localhost:5173/ad/all`)
+        fetch(`http://localhost:8080/ad/all`)
             .then((response) => response.json())
             .then((data) => {
                 console.log("joooj", data);

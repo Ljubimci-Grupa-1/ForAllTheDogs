@@ -42,7 +42,7 @@ const SignUpForm: React.FC<Props> = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:5173/user/register', {
+            const response = await fetch('http://localhost:8080/user/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
