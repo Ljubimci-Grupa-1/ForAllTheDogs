@@ -166,7 +166,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             email: user.email,
             telephoneNumber: user.telephoneNumber,
         },
-        activityName: "Za ljubimcem se traga",
+        activityName: "Search in progress",
         pet: {
             speciesName: "",
             petName: "",
