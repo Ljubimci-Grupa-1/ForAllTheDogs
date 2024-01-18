@@ -30,7 +30,11 @@ export const config: Options.Testrunner = {
     // of the config file unless it's absolute.
     //
     specs: [
-        './test/specs/**/*.ts'
+        [
+            "./test/specs/RegisterTest.js",
+            "./test/specs/LoginTest.js",
+            "./test/specs/PostNewAddTest.js"
+        ],
     ],
     // Patterns to exclude.
     exclude: [
@@ -52,7 +56,7 @@ export const config: Options.Testrunner = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 1,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
