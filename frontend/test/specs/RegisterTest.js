@@ -1,9 +1,9 @@
 const { expect, browser, $ } = require('@wdio/globals')
 
-describe('My Login application', () => {
-    it('should login with valid credentials', async () => {
+describe('Register test', () => {
+    it('should register valid credentials', async () => {
         //load main page
-        await browser.url(`http://localhost:5173/`)
+        await browser.url(`http://localhost:5173/`);
         //click on signup
         const signUpButton = await $('#signupButton');
         await signUpButton.waitForExist();
@@ -39,36 +39,8 @@ describe('My Login application', () => {
         await submitButton.waitForExist();
         expect(submitButton).toBeDisplayed();
         await submitButton.click();
-        // Wait for the email input to be available
-        emailInput = await $('#email');
-        await emailInput.waitForExist();
-        expect(emailInput).toBeDisplayed();
-        await emailInput.setValue('wdioTest@test.com');
-        passwordInput = await $('#password');
-        await passwordInput.waitForExist();
-        expect(passwordInput).toBeDisplayed();
-        await passwordInput.setValue('wdio');
-        const submitLogin = await $('#submitLogin');
-        await submitLogin.waitForExist();
-        expect(submitLogin).toBeDisplayed();
-        await submitLogin.click();
-        await browser.waitUntil(
-            async () => (await browser.getUrl()) === 'http://localhost:5173/',
-            {
-                timeout: 5000,
-                timeoutMsg: 'URL is not http://localhost:5173 after login',
-            }
-        );
-
-        // Wait for the showUsername element to be available
-        const showUsername = await $('#showUsername');
-        await showUsername.waitForExist();
-
-        // Get the text content of the showUsername element
-        const usernameText = await showUsername.getText();
-
-        // Assert that the username is Drizzy drake
-        expect(usernameText).toContain('Hello, Drizzy Drake');
+        // Check if the URL is "localhost:5173/login"
+        expect(browser.getUrl()).toContain('http://localhost:5173/login');
     })
 })
 
