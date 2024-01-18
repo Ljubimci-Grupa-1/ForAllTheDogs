@@ -170,7 +170,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                         <Typography level="body-sm">{pet.location.cityName}</Typography>
                         <Typography level="body-sm">, {pet.location.countyName}</Typography>
                     </Box>
-                    {pet.inShelter == 2 && (
+                    {pet.inShelter === 2 && (
                         <Chip variant="soft" >In Shelter</Chip>
                     )}
                 </div>
