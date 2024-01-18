@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './SheltersComponent.css';
 import NavigationBar from '../MainContent/Bars/NavigationBar';
 import {useNavigate} from 'react-router-dom';
+import {Typography, Stack, Card} from "@mui/joy";
 
 interface ShelterComponentProps {
     handleLoggedIn: () => void;
@@ -64,18 +65,32 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
                 shelterAdsShow={shelterAdsShow}
                 handleShelterAdsShow={handleShelterAdsShow}
             />
-            <h2>Shelter Usernames</h2>
-            <div className="shelter-container">
-                {shelters.map((shelter: Shelter) => (
-                    <div
-                        onClick={() => handleShelterClick(shelter.email)}
-                        key={shelter.userId}
-                        className="shelterUser-container">
-                        {shelter.username}
-                    </div>
-                ))}
 
-            </div>
+            <Stack
+                spacing={2}
+                sx={{
+                    width: '100%',
+                    margin: '0 auto'
+                }}
+            >
+                <Card sx={{ p: 2, borderRadius: 2, boxShadow: '0 0 10px rgba(0,0,0,0.2)' }}>
+                    <Typography level="h1" sx={{ fontSize: '2rem', fontWeight: 'bold', color: '#2196F3', marginBottom: '1rem' }}>
+                        All Shelters
+                    </Typography>
+                    <Card color="primary" className="shelter-container" sx={{ p: 2, borderRadius: 5, boxShadow: '0 0 10px rgba(0,0,0,0.2)'}}>
+                        {shelters.map((shelter: Shelter) => (
+                            <Typography
+                                key={shelter.userId}
+                                onClick={() => handleShelterClick(shelter.email)}
+                                className="shelterUser-container"
+                                level={'h3'}
+                            >
+                                {shelter.username}
+                            </Typography>
+                        ))}
+                    </Card>
+                </Card>
+            </Stack>
         </main>
     );
 };
