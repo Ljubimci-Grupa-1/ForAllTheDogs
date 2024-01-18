@@ -136,7 +136,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     return (
         <>
             <Card sx={{ width: 320, backgroundColor: pet.inShelter === 2 ? 'lightblue' : 'inherit' }}>
-                {(currUser.email === pet.user.email) && isLoggedIn && (
+                {(currUser.email == pet.user.email) && isLoggedIn && (
                     <Button onClick={handleMore}>
                         <i className="bi bi-three-dots"></i>
                     </Button>
@@ -170,7 +170,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                         <Typography level="body-sm">{pet.location.cityName}</Typography>
                         <Typography level="body-sm">, {pet.location.countyName}</Typography>
                     </Box>
-                    {pet.inShelter === 2 && (
+                    {pet.inShelter == 2 && (
                         <Chip variant="soft" >In Shelter</Chip>
                     )}
                 </div>
