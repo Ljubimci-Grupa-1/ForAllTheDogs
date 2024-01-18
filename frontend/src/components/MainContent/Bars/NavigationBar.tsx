@@ -93,12 +93,15 @@ const NavigationBar = ({
 
     return (
         <nav className="navbar">
-            <Grid container spacing={3} sx={{
-                display:'flex',
-                alignItems:'center',
-                justifyContent:'center',
-                flexGrow:'1'}}>
-                <Grid xs>
+            <Grid container
+                  direction="row"
+                  justifyContent="space-around"
+                  alignItems="center"
+                  spacing={{ xs: 4, md: 3 }}
+                  columns={{ xs: 2, sm: 8, md: 12 }}
+                  sx={{ flexGrow: 1 }}
+                      >
+                <Grid xs={2} sm={4} md={4}>
                     {!isLoggedIn && (
                         <Stack
                             direction="row"
@@ -110,15 +113,13 @@ const NavigationBar = ({
                             <Button id={"signupButton"} size="lg" component={Link} to="/signup">Signup</Button>
                         </Stack>)}
                     {isLoggedIn &&(
-                        <Button onClick={()=>setModalOpen(true)} size="lg">Post new ad</Button>
+                        <Button id="addNewPostButton" onClick={()=>setModalOpen(true)} size="lg">Post new ad</Button>
                     )}
                 </Grid>
-                <Grid xs={6} sx={{
-                    display:'flex',
-                    alignItems:'center',
-                    justifyContent:'center'}}>
-                    <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)',
-                        width:'70%'}}>
+                <Grid xs={2} sm={4} md={4}
+                      justifyContent="space-around"
+                      alignItems="center">
+
                         <ButtonGroup
                             buttonFlex={1}
                             color="primary"
@@ -126,25 +127,22 @@ const NavigationBar = ({
                             orientation="horizontal"
                             size="lg"
                             variant="soft"
+                            className={"buttonGroup"}
                         >
-                            <Button component={Link} to="/map">Map</Button>
+                            <Button className={"button"} component={Link} to="/map">Map</Button>
                             {isLoggedIn && (isSheltersRoute ? (
-                                <Button component={Link} to="/">Posts</Button>
+                                <Button className={"button"} component={Link} to="/">Posts</Button>
                             ) : (
                                 shelterAdsShow ? (
-                                    <Button component={Link} to="/" onClick={handlePostsClick}>Posts</Button>
+                                    <Button className={"button"} component={Link} to="/" onClick={handlePostsClick}>Posts</Button>
                                 ) : (
-                                    <Button component={Link} to="/shelters">Shelters</Button>
+                                    <Button className={"button"} component={Link} to="/shelters">Shelters</Button>
                                 )
                             ))}
 
                         </ButtonGroup>
-                    </Sheet>
                 </Grid>
-                <Grid xs sx={{
-                    display:'flex',
-                    alignItems:'center',
-                    justifyContent:'center'}}>
+                <Grid xs={2} sm={4} md={4}>
                     {isLoggedIn && (
                         <Sheet className={"sheet"} sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
                             <Typography id={"showUsername"} sx={{ width: '100%',
