@@ -88,7 +88,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     };
     const handleCategoryFinish=async ()=>{
         const formData :fdata={
-            inShelter: pet.inShelter,
+            inShelter: pet.inShelter.toString,
             user: {
                 name: pet.user.name,
                 email: pet.user.email,
