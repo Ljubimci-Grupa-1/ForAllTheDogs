@@ -107,18 +107,113 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			\label{unit6}
 		\end{figure}
 		
-\pagebreak
+\eject
 	
 			\subsection{Ispitivanje sustava}
 			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
-			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
-			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
-			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
+			Ispitivanje sustava je vrsta softverskog testiranja koja se fokusira na ispitivanje i provjeru cjelokupnog sustava kako bi se omogućilo da svi njegovi dijelovi funkcioniraju zajedno prema specifikacijama i očekivanjima. Kako bismo to postigli u projektu smo koristili radni okvir WebDriverIO koji je baziran na Selenium WebDriver-u  te pruža jednostavan i efikasan način za automatizaciju testova web stranica i aplikacija.\\
+			
+			\textbf{Ispitni slučaj 1: provjera ispravnosti registracije}
+			
+			Ovaj system test provjerava ispravnost sustava registracije. Korisnik odlazi na glavnu stranicu i čeka dok se ne pojavi gumb za sign-up. Tada ga klikne, ispuni podatke za registraciju (username, e-mail, password, ime i broj telefona) i označi tip korisnika, a zatim klikne gumb za predaju (submit). Na samom kraju se provjerava ispravnost dobivenog URL-a koji nam govori o uspješnosti registracije.\\
+			
+			\textbf{Ulaz:}
+			
+				\begin{enumerate}
+					\item Unos svih ispravnih podataka
+					\item Izostavljen unos username-a
+					\item Izostavljen unos e-mail-a
+				\end{enumerate}
+				
+			\textbf{Očekivani rezultat:}
+			
+				\begin{enumerate}
+					\item Test je prošao. Sve je ispravno.
+					\item Došlo je do greške. I dalje smo na sign-up dijelu dok se ne unesu svi podaci ispravno.
+					\item Došlo je do greške. I dalje smo na sign-up dijelu dok se ne unesu svi podaci ispravno.
+				\end{enumerate}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.7]{slike/sysreg1.PNG} 
+				\centering
+				\caption{System test: ispravan unos podataka pri registraciji (1.)}
+				\label{dijagram_razmjestaja}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.7]{slike/sysreg2.PNG} 
+				\centering
+				\caption{System test: ispravan unos podataka pri registraciji (2.)}
+				\label{dijagram_razmjestaja}
+			\end{figure}
+			
+			\textbf{Rezultat:}
+			Svi su rezultati testova jednaki očekivanim.\\
+			
+			\textbf{Ispitni slučaj 2: provjera ispravnosti ulogiravanja}
+			
+			Ovaj system test provjerava ispravnost sustava ulogiravanja. Korisnik čeka dok se ne pojavi gumb za log-in, a kad se pojavi unosi svoj e-mail i password. Zatim klikne gumb za predaju te se odvija provjera ispravnosti dobivenog URL-a. Nakon toga se prepoznaje i dohvaća username korisnika i ispisuje se poruka „Hello, \textit{username}“. \\
+			
+			\textbf{Ulaz:}
+			
+				\begin{enumerate}
+					\item Unos svih ispravnih podataka
+					\item Unos e-mail-a koji ne postoji u bazi podataka
+					\item Izostavljen unos e-mail-a
+				\end{enumerate}
+				
+			\textbf{Očekivani rezultat:}
+			
+				\begin{enumerate}
+					\item Test je prošao
+					\item Došlo je do greške i ispisa "Wrong Credentials!"
+					\item Došlo je do greške. I dalje smo na log-in dijelu dok se ne unesu svi podaci ispravno.
+				\end{enumerate}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.7]{slike/syslogin1.PNG} 
+				\centering
+				\caption{System test: ispravan unos podataka pri ulogiravanju (1.)}
+				\label{dijagram_razmjestaja}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.7]{slike/syslogin2.PNG} 
+				\centering
+				\caption{System test: ispravan unos podataka pri ulogiravanju (2.)}
+				\label{dijagram_razmjestaja}
+			\end{figure}
+			
+			\textbf{Rezultat:}
+			Svi su rezultati testova jednaki očekivanim.\\
+			
+			\textbf{Ispitni slučaj 3: provjera ispravnosti izmjene oglasa}
+			
+			Ovaj system test provjerava ispravnost sustava izmjene oglasa. Pronalazi se post korisnika, a zatim se ulazi u ekran za izmjenu oglasa. Korisnik izvodi promjene u oglasu i klikne gumb za predaju. Uspoređuje se tekst iz oglasa na glavnoj stranici o izmijenjenom podatku s novom vrijednosti podatka. Ako su identični, izmjena je uspjela. \\
+			
+			\textbf{Ulaz:}
+			
+				\begin{enumerate}
+					\item Promijenjena je vrsta životinje sa "Pas" na "Papiga"
+					\item Unos e-mail-a koji ne postoji u bazi podataka
+				\end{enumerate}
+				
+			\textbf{Očekivani rezultat:}
+			
+				\begin{enumerate}
+					\item Test je prošao
+					\item Došlo je do greške i ispisa "Wrong Credentials!"
+				\end{enumerate}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.7]{slike/sysedit1.PNG} 
+				\centering
+				\caption{System test: promjena vrste životinje sa "Pas" na "Papiga" na oglasu}
+				\label{dijagram_razmjestaja}
+			\end{figure}
+			
+			\textbf{Rezultat:}
+			Svi su rezultati testova jednaki očekivanim.\\
 			
 			\eject 
 		
