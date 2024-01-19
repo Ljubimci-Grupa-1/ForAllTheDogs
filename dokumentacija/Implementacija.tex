@@ -128,7 +128,7 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			\textbf{Očekivani rezultat:}
 			
 				\begin{enumerate}
-					\item Test je prošao. Sve je ispravno.
+					\item Nije došlo do greške - svi su podaci uspješno uneseni. Test je prošao.
 					\item Došlo je do greške. I dalje smo na sign-up dijelu dok se ne unesu svi podaci ispravno.
 					\item Došlo je do greške. I dalje smo na sign-up dijelu dok se ne unesu svi podaci ispravno.
 				\end{enumerate}
@@ -165,8 +165,8 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			\textbf{Očekivani rezultat:}
 			
 				\begin{enumerate}
-					\item Test je prošao
-					\item Došlo je do greške i ispisa "Wrong Credentials!"
+					\item Nije došlo do greške - svi su podaci uspješno uneseni. Test je prošao.
+					\item Došlo je do greške i ispisa "Wrong Credentials!" pri predaji promjena (submit).
 					\item Došlo je do greške. I dalje smo na log-in dijelu dok se ne unesu svi podaci ispravno.
 				\end{enumerate}
 			
@@ -194,15 +194,15 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			\textbf{Ulaz:}
 			
 				\begin{enumerate}
-					\item Promijenjena je vrsta životinje iz "Pas" u "Papiga"
-					\item Unos e-mail-a koji ne postoji u bazi podataka
+					\item Promijenjena je vrsta životinje iz "Pas" u "Papiga" i pohranjuje se ta promjena
+					\item Brisanje jedine slike unutar oglasa
 				\end{enumerate}
 				
 			\textbf{Očekivani rezultat:}
 			
 				\begin{enumerate}
-					\item Test je prošao
-					\item Došlo je do greške i ispisa "Wrong Credentials!"
+					\item Nije došlo do greške - promjena je uspjela. Test je prošao.
+					\item Došlo je do greške i ispisa "At least 1 image!" pri predaji promjena (submit).
 				\end{enumerate}
 			
 			\begin{figure}[H]
@@ -212,8 +212,70 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 				\label{sysedit1}
 			\end{figure}
 			
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.7]{slike/sysedit2.PNG} 
+				\centering
+				\caption{System test: pokušaj brisanja jedine slike unutar oglasa}
+				\label{sysedit1}
+			\end{figure}
+			
 			\textbf{Rezultat:}
 			Svi su rezultati testova jednaki očekivanim.\\
+			
+			\textbf{Ispitni slučaj 4: provjera ispravnosti brisanja postojećeg oglasa}
+			
+			Ovaj system test provjerava ispravnost sustava brisanja oglasa. Korisnik pronalazi svoj oglas koji namjerava obrisati. Klikne na gumb "3 točke" te se otvaraju opcije manevriranja oglasom i izabire opciju "Delete". Pregledavaju se sva imena objava i ako ne postoji ime upravo obrisane objave među njima onda objava i je obrisana. \\
+			
+			\textbf{Ulaz:}
+			
+				\begin{enumerate}
+					\item Prikaz testiranja brisanja postojećeg oglasa
+				\end{enumerate}
+				
+			\textbf{Očekivani rezultat:}
+			
+				\begin{enumerate}
+					\item Nije došlo do greške - oglas je uspješno obrisan. Test je prošao.
+				\end{enumerate}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.7]{slike/sysdeletepost.PNG} 
+				\centering
+				\caption{System test: prikaz brisanja postojećeg oglasa}
+				\label{sysedit1}
+			\end{figure}
+			
+			
+			\textbf{Rezultat:}
+			Rezultat testa je jednak očekivanom.\\
+			
+			\textbf{Ispitni slučaj 5: provjera ispravnosti odjave korisničkog računa}
+			
+			Ovaj system test provjerava ispravnost sustava odjave korisničkog računa. Korisnik klikne na gumb za odjavu (sign-out). Zatim se provjerava postojanje teksta koji se ispisuje na ekranu kada korisnik nije prijavljen ("Please login or signup") što potvrđuje da u tom trenutku nema prijavljenog korisnika. \\
+			
+			\textbf{Ulaz:}
+			
+				\begin{enumerate}
+					\item Prikaz testiranja odjave korisničkog računa
+				\end{enumerate}
+				
+			\textbf{Očekivani rezultat:}
+			
+				\begin{enumerate}
+					\item Nije došlo do greške - korisnik se uspješno odjavio. Test je prošao.
+				\end{enumerate}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.7]{slike/syslogout.PNG} 
+				\centering
+				\caption{System test: prikaz odjave postojećeg računa}
+				\label{sysedit1}
+			\end{figure}
+			
+			
+			\textbf{Rezultat:}
+			Rezultat testa je jednak očekivanom.\\
 			
 			\eject 
 		
