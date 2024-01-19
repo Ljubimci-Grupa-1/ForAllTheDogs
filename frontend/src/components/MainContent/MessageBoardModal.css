@@ -11,10 +11,35 @@
     padding: 20px;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); /* Optional: add a shadow to create a separation */
     transition: margin-right 0.3s ease-in-out; /* Added transition for smooth movement */
+    gap:10px;
 }
 
 /* Add this new class for applying margin when the message board modal is open */
 .message-board-modal.shifted {
     margin-right: 40%; /* Adjust the margin as needed */
     transform: translateX(-50%); /* Center the modal horizontally */
+}
+
+.message{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 5px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+.submitted{
+    font-weight: bold;
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 10px;
 }

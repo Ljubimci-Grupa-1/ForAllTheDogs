@@ -72,23 +72,33 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
 
     const [messages, setMessages] = useState([]); // State to store fetched messages
 
-    useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                const response = await fetch(`http://localhost:8080/ad/${adId}/messages`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setMessages(data);
-                } else {
-                    console.error('Failed to fetch messages');
-                }
-            } catch (error) {
-                console.error('Error fetching messages:', error);
+    const fetchMessages = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/ad/${adId}/messages`);
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                setMessages(data);
+            } else {
+                console.error('Failed to fetch messages');
             }
-        };
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+        }
+    };
 
+    useEffect(() => {
+        // Fetch messages when the component mounts
         fetchMessages();
-    }, [adId]);
+
+        // Set up interval to fetch messages every 5 seconds (adjust as needed)
+        const intervalId = setInterval(fetchMessages, 5000);
+
+        // Clear the interval when the component is unmounted
+        return () => clearInterval(intervalId);
+    }, [adId]); // Fetch messages when adId changes
+
+
     const [formData, setFormData] = useState({
         text: null,
         date: "",
@@ -223,10 +233,12 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
         }));
         console.log(formData);
         try {
+            const token = localStorage.getItem('jwt');
             const response = await fetch('http://localhost:8080/message/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(formData),
             });
@@ -245,11 +257,11 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
     return (
         <div className="message-board-modal">
             {messages.map((message) => (
-                <div key={message.messageId}>
-                    <p>{message.text}</p>
-                    <p>Submitted by: {message.user.name}</p>
+                <div className="message" key={message.messageId}>
+                    <p className="submitted" >Submitted by: {message.user.name}</p>
+                    {message.text !== null && (<p>{message.text}</p>)}
                     <p>At time: {message.date}</p>
-                    {message.image && (
+                    {message.image.image && (
                         <img
                             src={message.image.image}  // Assuming image URL is in the `image` property
                             alt="User submitted"
@@ -260,7 +272,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
 
                     {/* Display Leaflet map if latitude and longitude are not null */}
                     {message.location.latitude !== 0 && message.location.longitude !== 0 && (
-                        <MapContainer center={[message.location.latitude, message.location.longitude]} zoom={13} style={{ height: '300px', width: '50%' }}>
+                        <MapContainer center={[message.location.latitude, message.location.longitude]} zoom={13} style={{ height: '300px', minWidth: '100%' }}>
                             <TileLayer
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -272,6 +284,8 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                     )}
                 </div>
             ))}
+            {currUser.name !== '' && (
+                <div className="formContainer">
             <form onSubmit={handleSubmit}>
                 {!validation.text && !validation.location && !validation.image && <p className="error-message" style={{ color: "red" }}>Something must be sent!</p>}
                 <Textarea
@@ -281,7 +295,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                     variant="soft"
                     onChange={handleChange("text")}
                 />
-                <div style={{width:'100%',height:'200px'}} className="input-container">
+                <div style={{width:'100%',height:'200px',alignItems:'center'}} className="input-container">
                     <DraggableMapForm onDragEnd={handleDragEnd} center={{lat:markerPosition.latitude, lng:markerPosition.longitude}}/>
                 </div><div className="input-container">
                 <label htmlFor="uploadPhoto">Upload photos:</label>
@@ -334,6 +348,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
             </div>
                 <Button type="submit">Send message</Button>
             </form>
+                    </div>)}
             <Button onClick={onClose}>Close Message Board</Button>
         </div>
     );

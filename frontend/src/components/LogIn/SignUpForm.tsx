@@ -73,9 +73,10 @@ const SignUpForm: React.FC<Props> = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundImage: 'url("/FATDlogoBG.png")',
-            backgroundRepeat: 'repeat',
-            backgroundSize: '10%',
+            minHeight: '100vh',
+            width: '100%',
+            background: '#f5f5f5',
+
         }}>
             <form className="Auth-form" onSubmit={handleSubmit}>
                 <Stack spacing={2}>
@@ -141,7 +142,6 @@ const SignUpForm: React.FC<Props> = () => {
                     <div className="input-container">
                         <label>Telephone number</label>
                         <input
-                            type="text"
                             pattern="[0-9]{9,10}"
                             placeholder="xxx-xxx-xxxx"
                             className="input"
@@ -154,7 +154,7 @@ const SignUpForm: React.FC<Props> = () => {
                     <div>
                         <Checkbox
                             color="primary"
-                            label="Jeste li sklonište?"
+                            label="Are you a shelter?"
                             variant="solid"
                             onChange={handleCheckboxChange}
                         />
