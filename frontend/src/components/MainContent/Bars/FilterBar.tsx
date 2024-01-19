@@ -98,7 +98,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
             try {
                 const response = await fetch('https://forallthedogs.onrender.com/city/all');
                 const data = await response.json();
-                const filteredData = data.filter((value: City) => value.cityName !== 'Ostalo');
+                const filteredData = data.filter((value: City) => value.cityName !== 'Other');
                 setCities(filteredData);
             } catch (error) {
                 console.error('Error fetching cities:', error);

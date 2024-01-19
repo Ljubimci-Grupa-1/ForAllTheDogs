@@ -100,7 +100,7 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
                                     <Typography>
                                         <span style={{ fontWeight: 'bold' }}>Age:</span> {pet.age}
                                     </Typography>
-                                    <Typography>
+                                    <Typography className="description">
                                         <span style={{ fontWeight: 'bold' }}>Description:</span> {pet.description}
                                     </Typography>
                                 </CardContent>
