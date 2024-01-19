@@ -58,12 +58,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                         mainContentState, shelterAdsShow, handleShelterAdsShow}:MainContentProps) => {
     const location = useLocation();
     const shelterIdFromState = location.state && location.state.shelterId;
-
-    useEffect(() => {
-        if (shelterIdFromState) {
-            console.log('Shelter ID:', shelterIdFromState);
-        }
-    }, [shelterIdFromState, /* other dependencies */]);
+    
     // Rest of the code...
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
@@ -148,7 +143,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                     inactiveAds: LostPet[];
                 }>(
                     (result, currentObject) => {
-                        if (currentObject.activityName === 'Za ljubimcem se traga') {
+                        if (currentObject.activityName === 'Search in progress') {
                             result.activeAds.push(currentObject);
                         } else {
                             result.inactiveAds.push(currentObject);
@@ -172,7 +167,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                     inactiveAds: LostPet[];
                 }>(
                     (result, currentObject) => {
-                        if (currentObject.activityName === 'Za ljubimcem se traga') {
+                        if (currentObject.activityName === 'Search in progress') {
                             result.activeAds.push(currentObject);
                         } else {
                             result.inactiveAds.push(currentObject);
@@ -190,7 +185,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                     inactiveAdsUserProfile: LostPet[];
                 }>(
                     (result, currentObject) => {
-                        if (currentObject.activityName === 'Za ljubimcem se traga') {
+                        if (currentObject.activityName === 'Search in progress') {
                             result.activeAdsUserProfile.push(currentObject);
                         } else {
                             result.inactiveAdsUserProfile.push(currentObject);
