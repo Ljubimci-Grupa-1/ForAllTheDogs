@@ -78,6 +78,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                 const response = await fetch(`http://localhost:8080/ad/${adId}/messages`);
                 if (response.ok) {
                     const data = await response.json();
+                    console.log(data, "slike");
                     setMessages(data);
                 } else {
                     console.error('Failed to fetch messages');
@@ -223,10 +224,12 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
         }));
         console.log(formData);
         try {
+            const token = localStorage.getItem('jwt');
             const response = await fetch('http://localhost:8080/message/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(formData),
             });
@@ -249,7 +252,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                     <p>{message.text}</p>
                     <p>Submitted by: {message.user.name}</p>
                     <p>At time: {message.date}</p>
-                    {message.image && (
+                    {message.image.image && (
                         <img
                             src={message.image.image}  // Assuming image URL is in the `image` property
                             alt="User submitted"
