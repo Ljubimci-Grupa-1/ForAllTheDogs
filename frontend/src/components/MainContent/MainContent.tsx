@@ -148,7 +148,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                     inactiveAds: LostPet[];
                 }>(
                     (result, currentObject) => {
-                        if (currentObject.activityName === 'Za ljubimcem se traga') {
+                        if (currentObject.activityName === 'Search in progress') {
                             result.activeAds.push(currentObject);
                         } else {
                             result.inactiveAds.push(currentObject);
@@ -172,7 +172,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                     inactiveAds: LostPet[];
                 }>(
                     (result, currentObject) => {
-                        if (currentObject.activityName === 'Za ljubimcem se traga') {
+                        if (currentObject.activityName === 'Search in progress') {
                             result.activeAds.push(currentObject);
                         } else {
                             result.inactiveAds.push(currentObject);
@@ -190,7 +190,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                     inactiveAdsUserProfile: LostPet[];
                 }>(
                     (result, currentObject) => {
-                        if (currentObject.activityName === 'Za ljubimcem se traga') {
+                        if (currentObject.activityName === 'Search in progress') {
                             result.activeAdsUserProfile.push(currentObject);
                         } else {
                             result.inactiveAdsUserProfile.push(currentObject);
