@@ -866,15 +866,15 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
 
 
                                 {/*showing images, possibility of deleting*/}
-                                <div className="input-container">
+                                <div className="input-container-images">
                                     {fileBase64Array.map((_, index) => (
-                                        <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                                        <div key={index} style={{border:'1px solid black', borderRadius:'3px', padding:'3px', display: 'flex', flexDirection:"row", alignItems: 'center', marginRight: '8px' }}>
                                             <span>Image {index + 1}</span>
                                             <button
                                                 id="deleteImage"
                                                 type="button"
                                                 onClick={() => handleDeleteImage(index)}
-                                                style={{ marginLeft: '8px', cursor: 'pointer', background: 'none', border: 'none', color: 'blue' }}
+                                                style={{padding:'0px',marginTop:'0px',cursor: 'pointer', background: '#e3effb', border: 'none', color: 'blue' }}
                                             >
                                                 Delete
                                             </button>
@@ -883,20 +883,21 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                 </div>
 
                                 {user.userType==2 &&
-                                <div className="input-container">
-                                    <label htmlFor="inShelter">In shelter:</label>
-                                    <Checkbox
-                                        color="primary"
-                                        label="In shelter?"
-                                        variant="solid"
-                                        onChange={handleCheckboxChange}
-                                    />
-                                </div>
+                                    <div className="input-container-shelter">
+                                        <Checkbox
+                                            color="primary"
+                                            label="In shelter?"
+                                            variant="solid"
+                                            onChange={handleCheckboxChange}
+                                        />
+                                    </div>
                                 }
 
                                 {/*SUBMIT BUTTON*/}
                                 {/*<button type="button" onClick={handleSubmit}>submit</button>*/}
-                                {<button id="submit" type="submit">submit</button>}
+                                <div className="input-container-button">
+                                    {<button id="submit" type="submit">Submit</button>}
+                                </div>
                             </Stack>
                         </form>
                     </Stack>
