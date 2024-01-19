@@ -20,7 +20,7 @@ Pokretanje, izvršavanje i puštanje u pogon izvršavaju se preko 3 kontejnera p
 			
 			Komponente programskog sustava ostvaruju određenu funkcionalnost te međusobno imaju usku komunikaciju preko raznih ponuđenih sučelja. Pomoću unit testova provjeravamo ispravnost i pravilno ponašanje pojedinačnih "jedinica" komponenti, najčešće funkcija ili metoda. To su najmanji dijelovi softverskog sustava koji se mogu testirati odvojeno, a provođenjem unit testiranja poboljšavamo kvalitetu koda tijekom vremena te identificiramo eventualne probleme. \\
 			
-Ispitivanje komponenti ostvareno je preko JUnit radnog okvira, a proveli smo 2 vrste testova: unos ispravne varijante koja zadovoljava unit testove, a i one druge kako bi smo provjerili reakciju sustava na neki neprihvatljiv unos.  Prilikom testiranja UserService metoda, korišteno je sučelje UserRepository uz klase User i DTO objekti koji su korišteni za entitet User.\\
+Ispitivanje komponenti ostvareno je preko JUnit radnog okvira, a proveli smo 2 vrste testova: testiranje ponašanja sustava prilikom unosa ispravnih podataka te testiranje rubnih slučajeva odnosno ponašanja sustava kod unosa neispravnih podataka.  Prilikom testiranja UserService metoda, korišteno je sučelje UserRepository uz klase User i DTO objekata koji su korišteni za entitet User. Prilikom testiranja AdService metode za dodavanje oglasa korištena su sučelja: ActivityRepository, CityRepository, AdRepository, ColorRepository, CountyRepository, ImageRepository, LocationRepository, PetRepository, SpeciesRepository, UserRepository te klase DTO objekata potrebne za kreiranje novog oglasa.\\
 Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike kodova.
 
 \pagebreak
