@@ -159,7 +159,7 @@ const NavigationBar = ({
                 <AddNewModal
                     closeModal={handleCloseModal} speciesFill="" nameFill="" ageFill={0}
                     cityFill="" latitudeFill={45.813257} longitudeFill={15.976448} datetimeFill="" descriptionFill="" colorsFill={[]}
-                    text="Post new ad" imagesFill={[]} adIdFill={0} countyFill="" isLoggedIn={isLoggedIn}
+                    text="Post new ad" imagesFill={[]} adIdFill={0} countyFill="" isLoggedIn={isLoggedIn} inShelterFill={1}
                     user={{
                         name:username,
                         email:userEmail,

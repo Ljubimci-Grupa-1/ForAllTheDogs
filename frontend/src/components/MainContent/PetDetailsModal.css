@@ -1,6 +1,6 @@
 @media only screen and (max-width: 700px) {
     .cardContainer{
-        max-width: 400px;
+        max-width: 300px;
     }
     .description{
         word-wrap: break-word;

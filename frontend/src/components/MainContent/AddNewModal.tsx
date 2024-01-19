@@ -80,6 +80,7 @@ interface AddNewModalProps {
     imagesFill:string[];
     isLoggedIn:boolean;
     user:adUser;
+    inShelterFill:number;
 }
 export interface Data{
     age:number | string;
@@ -92,6 +93,7 @@ export interface Data{
     description:string;
     city:string;
     county:string;
+    inShelter:number;
 }
 export interface locationData{
     latitude:number;
@@ -129,7 +131,8 @@ interface FormValidation{
     city:boolean;
 }
 export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colorsFill, descriptionFill,
-                                latitudeFill, longitudeFill, cityFill, datetimeFill,imagesFill, countyFill, text, adIdFill, user }: AddNewModalProps) =>{
+                                latitudeFill, longitudeFill, cityFill, datetimeFill,
+                                imagesFill, countyFill, text, adIdFill, user, inShelterFill }: AddNewModalProps) =>{
     const [colors, setColors] = useState([]);
     const [species, setSpecies]=useState([]);
     const [counties, setCounties] = useState<County[]>([]);
@@ -139,12 +142,13 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const [fileBase64Array, setFileBase64Array] = useState<string[]>(imagesFill);
     const [browsedFile, setBrowsedFile]=useState('');
     const [counter, setCounter]=useState(fileBase64Array.length);
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(inShelterFill===2?true:false);
 
     //problem sa county, oni ga ne salju
     const [data, setData]=useState<Data>({
         age:ageFill, name:nameFill, species:speciesFill, colors:colorsFill,
-        latitude:latitudeFill, longitude:longitudeFill, datetime:datetimeFill, description:descriptionFill, city:cityFill, county:countyFill
+        latitude:latitudeFill, longitude:longitudeFill, datetime:datetimeFill, description:descriptionFill,
+        city:cityFill, county:countyFill, inShelter:inShelterFill
     })
 
     const [selectedDateTime, setSelectedDateTime] =useState(null);
