@@ -338,60 +338,83 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 
 			Na dijagramima su prikazani razredi vezani uz serversku stranu aplikacije.
 			
-			Dijagram na slici \ref{dijagram_model} prikazuje razrede entitete (modele) koji odgovaraju tablicama u bazi podataka.
+			Dijagram na slici \ref{class_model} prikazuje razrede entitete (modele) koji odgovaraju tablicama u bazi podataka.
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.3]{slike/dijagram_model.PNG} 
+				\includegraphics[scale=0.225]{slike/class_model.PNG} 
 				\centering
 				\caption{Dijagram razreda entiteta}
-				\label{dijagram_model}
+				\label{class_model}
 			\end{figure}
 			
-			Na slici \ref{dijagram_repository} prikazana su sučelja \textit{Repository} (npr. UserRepository, MessageRepository), odgovorna za komuniciranje s bazom podataka. Radi preglednosti je na slici \ref{dijagram_user_service_repository} prikazan samo odnos UserService i UserRepository, ostali se ponašaju analogno.
+			Na slici \ref{class_repo} prikazana su sučelja \textit{Repository} (npr. UserRepository, MessageRepository), odgovorna za komuniciranje s bazom podataka. Radi preglednosti je na slici \ref{class_service_repo} prikazan samo odnos UserService i UserRepository, ostali se ponašaju analogno.
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.2]{slike/dijagram_repository.PNG} 
+				\includegraphics[scale=0.25]{slike/class_repo.PNG} 
 				\centering
 				\caption{Dijagram razreda \textit{Repository}}
-				\label{dijagram_repository}
+				\label{class_repo}
 			\end{figure}
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.3]{slike/dijagram_user_service_repository.PNG} 
+				\includegraphics[scale=0.35]{slike/class_service_repo.PNG} 
 				\centering
 				\caption{UserService i UserRepository}
-				\label{dijagram_user_service_repository}
+				\label{class_service_repo}
 			\end{figure}
 			
-			Dijagram \ref{dijagram_controller_service_dto} prikazuje odnose između \textit{Controller}, \textit{Service} i \textit{Data Transfer Object} (DTO) razreda. Razredi i pripadne metode, naročito one koje pokrivaju funkcionalnosti van generičkih, podložne su izmjenama.
+			Dijagrami \ref{class_ad}, \ref{class_add_ad_message}, \ref{class_message}, \ref{class_user}, \ref{class_city_county}, \ref{class_species_color} prikazuju odnose između \textit{Controller}, \textit{Service} i \textit{Data Transfer Object} (DTO) razreda vezanih uz oglase, poruke, korisnike, gradove i županije te boje i vrste ljubimaca.
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.18]{slike/dijagram_controller_service_dto.PNG} 
+				\includegraphics[scale=0.225]{slike/class_ad.PNG} 
 				\centering
-				\caption{\textit{Controller}, \textit{Service} i \textit{DTO} razredi}
-				\label{dijagram_controller_service_dto}
-			\end{figure}
-			
-			Na \ref{dijagram_exception_handler} i \ref{dijagram_security} prikazani su razredi odgovorni za upravljanje iznimkama te autorizaciju.
-			
-			\begin{figure}[H]
-				\includegraphics[scale=0.4]{slike/dijagram_exception_handler.PNG} 
-				\centering
-				\caption{Upravljač iznimkama}
-				\label{dijagram_exception_handler}
+				\caption{Razredi - oglasi}
+				\label{class_ad}
 			\end{figure}
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.2]{slike/dijagram_security.PNG} 
+				\includegraphics[scale=0.25]{slike/class_add_ad_message.PNG} 
 				\centering
-				\caption{Autorizacija}
-				\label{dijagram_security}
+				\caption{Razredi - dodavanje oglasa i poruka}
+				\label{class_add_ad_message}
 			\end{figure}
 			
-			\textbf{\textit{dio 2. revizije}}\\			
+			\begin{figure}[H]
+				\includegraphics[scale=0.25]{slike/class_message.PNG} 
+				\centering
+				\caption{Razredi - poruke}
+				\label{class_message}
+			\end{figure}
 			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/class_user.PNG} 
+				\centering
+				\caption{Razredi - korisnici}
+				\label{class_user}
+			\end{figure}
 			
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/class_city_county.PNG} 
+				\centering
+				\caption{Razredi - gradovi i županije}
+				\label{class_city_county}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/class_species_color.PNG} 
+				\centering
+				\caption{Razredi - vrste i boje ljubimaca}
+				\label{class_species_color}
+			\end{figure}
+			
+			Na slici \ref{class_security_exc_cors} prikazani su razredi odgovorni za autorizaciju, upravljanje iznimkama te \textit{cross-origin resource sharing (CORS)}.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/class_security_exc_cors.PNG} 
+				\centering
+				\caption{Autorizacija, upravljanje iznimkama i CORS}
+				\label{class_security_exc_cors}
+			\end{figure}
 			
 			\eject
 		

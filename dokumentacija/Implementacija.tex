@@ -18,16 +18,16 @@ Pokretanje, izvršavanje i puštanje u pogon izvršavaju se preko 3 kontejnera p
 			
 			\subsection{Ispitivanje komponenti}
 			
-			Komponente programskog sustava ostvaruju određenu funkcionalnost te međusobno imaju usku komunikaciju preko raznih ponuđenih sučelja. Pomoću unit testova provjeravamo ispravnost i pravilno ponašanje pojedinačnih „jedinica“ komponenti, najčešće funkcija ili metoda. To su najmanji dijelovi softverskog sustava koji se mogu testirati odvojeno, a provođenjem unit testiranja poboljšavamo kvalitetu koda tijekom vremena te identificiramo eventualne probleme. \\
+			Komponente programskog sustava ostvaruju određenu funkcionalnost te međusobno imaju usku komunikaciju preko raznih ponuđenih sučelja. Pomoću unit testova provjeravamo ispravnost i pravilno ponašanje pojedinačnih "jedinica" komponenti, najčešće funkcija ili metoda. To su najmanji dijelovi softverskog sustava koji se mogu testirati odvojeno, a provođenjem unit testiranja poboljšavamo kvalitetu koda tijekom vremena te identificiramo eventualne probleme. \\
 			
 Ispitivanje komponenti ostvareno je preko JUnit radnog okvira, a proveli smo 2 vrste testova: unos ispravne varijante koja zadovoljava unit testove, a i one druge kako bi smo provjerili reakciju sustava na neki neprihvatljiv unos.  Prilikom testiranja UserService metoda, korišteno je sučelje UserRepository uz klase User i DTO objekti koji su korišteni za entitet User.\\
 Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike kodova.
 
 \pagebreak
 
-\textbf{Ispitni slučaj 1: Najprije smo testirali funkcionalnost logiranja. Prvi test provjerava uspješno logiranje sa unaprijed zadanim emailom i \textit{password}-om.}
+\textbf{Ispitni slučaj 1: Najprije smo testirali funkcionalnost logiranja. Prvi test provjerava uspješnu prijavu s unaprijed zadanim emailom i lozinkom.}
 
-\begin{figure}[H]
+		\begin{figure}[H]
 			\includegraphics[scale=0.5]{slike/unit1.PNG} 
 			\centering
 			\caption{Unit test 1 - \textit{log-in}}
@@ -35,19 +35,19 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 		\end{figure}
 
 \pagebreak
-\textbf{Ispitni slučaj 2: Drugi test provjerava logiranje sa neispravnim \textit{password}-om.}
+\textbf{Ispitni slučaj 2: Drugi test provjerava prijavu s neispravnom lozinkom.}
 
-\begin{figure}[H]
+		\begin{figure}[H]
 			\includegraphics[scale=0.5]{slike/unit2.PNG} 
 			\centering
-			\caption{Unit test 2 - \textit{log-in} s neispravnim \textit{password}-om}
+			\caption{Unit test 2 - \textit{log-in} s neispravnom lozinkom.}
 			\label{unit2}
 		\end{figure}
 
 \pagebreak		
 \textbf{Ispitni slučaj 3: Treći test provjerava uspješnu registraciju.}
 
-\begin{figure}[H]
+		\begin{figure}[H]
 			\includegraphics[scale=0.5]{slike/unit3.PNG} 
 			\centering
 			\caption{Unit test 3 - registracija}
@@ -55,9 +55,9 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 		\end{figure}
 		
 \pagebreak		
-\textbf{Ispitni slučaj 4: U četvrtom testu testiramo pokušaj registracije sa \textit{e-mail}-om koji je već u uporabi.}
+\textbf{Ispitni slučaj 4: U četvrtom testu testiramo pokušaj registracije s \textit{e-mail}-om koji je već u uporabi.}
 
-\begin{figure}[H]
+		\begin{figure}[H]
 			\includegraphics[scale=0.5]{slike/unit4.PNG} 
 			\centering
 			\caption{Unit test 4 - registracija s već postojećim \textit{e-mail}-om}
@@ -67,7 +67,7 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 \pagebreak		
 \textbf{Ispitni slučaj 5: Peti test testira rutu dohvaćanja svih korisnika koji su prijavljeni kao sklonište odnosno "shelter".}
 
-\begin{figure}[H]
+		\begin{figure}[H]
 			\includegraphics[scale=0.5]{slike/unit5.PNG} 
 			\centering
 			\caption{Unit test 5 - dohvaćanje rute svih korisnika}
@@ -77,7 +77,7 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 \pagebreak
 \textbf{Ispitni slučaj 6: U šestom testu testiramo dodavanje novog oglasa.}		
 		
-\begin{figure}[H]
+		\begin{figure}[H]
 			\includegraphics[scale=0.5]{slike/unit6.PNG} 
 			\centering
 			\caption{Unit test 6 - dodavanje novog oglasa}
@@ -88,37 +88,37 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 		
 \textbf{Prikaz rezultata unit testova}\\
 
-Prvih 5 unit testova služi za testiranje metoda iz UserService-a i to su testovi loginValidTest, loginInvalidTest, registerValidTest, registerInvalidTest i getAllSheltersTest. Svi testovi su bili uspješni.
+Prvih 5 unit testova (loginValidTest, loginInvalidTest, registerValidTest, registerInvalidTest i getAllSheltersTest) služi za testiranje metoda iz UserService-a. Svi testovi su bili uspješni.
 
-\begin{figure}[H]
+		\begin{figure}[H]
 			\includegraphics[scale=0.45]{slike/5unitrez.PNG} 
 			\centering
 			\caption{Prikaz prolaznosti unit testova (1. - 5.)}
-			\label{unit6}
+			\label{5unitrez}
 		\end{figure}
 		
 		
 Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo mogućnost dodavanja novog oglasa. Test je također bio uspješan.
 
-\begin{figure}[H]
+		\begin{figure}[H]
 			\includegraphics[scale=0.45]{slike/1unitrez.PNG} 
 			\centering
 			\caption{Prikaz prolaznosti 6. unit testa}
-			\label{unit6}
+			\label{1unitrez}
 		\end{figure}
 		
 \eject
 	
 			\subsection{Ispitivanje sustava}
 			
-			Ispitivanje sustava je vrsta softverskog testiranja koja se fokusira na ispitivanje i provjeru cjelokupnog sustava kako bi se omogućilo da svi njegovi dijelovi funkcioniraju zajedno prema specifikacijama i očekivanjima. Kako bismo to postigli u projektu smo koristili radni okvir WebDriverIO koji je baziran na Selenium WebDriver-u  te pruža jednostavan i efikasan način za automatizaciju testova web stranica i aplikacija.\\
+			Ispitivanje sustava je vrsta softverskog testiranja koja se fokusira na ispitivanje i provjeru cjelokupnog sustava kako bi se omogućilo da svi njegovi dijelovi funkcioniraju zajedno prema specifikacijama i očekivanjima. Kako bismo to postigli u projektu smo koristili radni okvir \textit{WebDriverIO} koji je baziran na Selenium WebDriver-u  te pruža jednostavan i efikasan način za automatizaciju testova web stranica i aplikacija.\\
 			
 			\textbf{Ispitni slučaj 1: provjera ispravnosti registracije}
 			
 			Ovaj system test provjerava ispravnost sustava registracije. Korisnik odlazi na glavnu stranicu i čeka dok se ne pojavi gumb za sign-up. Tada ga klikne, ispuni podatke za registraciju (username, e-mail, password, ime i broj telefona) i označi tip korisnika, a zatim klikne gumb za predaju (submit). Na samom kraju se provjerava ispravnost dobivenog URL-a koji nam govori o uspješnosti registracije.\\
 			
 			\textbf{Ulaz:}
-			
+
 				\begin{enumerate}
 					\item Unos svih ispravnih podataka
 					\item Izostavljen unos username-a
@@ -137,14 +137,14 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 				\includegraphics[scale=0.7]{slike/sysreg1.PNG} 
 				\centering
 				\caption{System test: ispravan unos podataka pri registraciji (1.)}
-				\label{dijagram_razmjestaja}
+				\label{sysreg1}
 			\end{figure}
 			
 			\begin{figure}[H]
 				\includegraphics[scale=0.7]{slike/sysreg2.PNG} 
 				\centering
 				\caption{System test: ispravan unos podataka pri registraciji (2.)}
-				\label{dijagram_razmjestaja}
+				\label{sysreg2}
 			\end{figure}
 			
 			\textbf{Rezultat:}
@@ -174,14 +174,14 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 				\includegraphics[scale=0.7]{slike/syslogin1.PNG} 
 				\centering
 				\caption{System test: ispravan unos podataka pri ulogiravanju (1.)}
-				\label{dijagram_razmjestaja}
+				\label{syslogin1}
 			\end{figure}
 			
 			\begin{figure}[H]
 				\includegraphics[scale=0.7]{slike/syslogin2.PNG} 
 				\centering
 				\caption{System test: ispravan unos podataka pri ulogiravanju (2.)}
-				\label{dijagram_razmjestaja}
+				\label{syslogin2}
 			\end{figure}
 			
 			\textbf{Rezultat:}
@@ -194,7 +194,7 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			\textbf{Ulaz:}
 			
 				\begin{enumerate}
-					\item Promijenjena je vrsta životinje sa "Pas" na "Papiga"
+					\item Promijenjena je vrsta životinje iz "Pas" u "Papiga"
 					\item Unos e-mail-a koji ne postoji u bazi podataka
 				\end{enumerate}
 				
@@ -208,8 +208,8 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			\begin{figure}[H]
 				\includegraphics[scale=0.7]{slike/sysedit1.PNG} 
 				\centering
-				\caption{System test: promjena vrste životinje sa "Pas" na "Papiga" na oglasu}
-				\label{dijagram_razmjestaja}
+				\caption{System test: promjena vrste životinje iz "Pas" u "Papiga" na oglasu}
+				\label{sysedit1}
 			\end{figure}
 			
 			\textbf{Rezultat:}
