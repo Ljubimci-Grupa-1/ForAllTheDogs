@@ -1,7 +1,7 @@
 const { expect, browser, $ } = require('@wdio/globals')
 
-describe('Register test', () => {
-    it('should register valid credentials', async () => {
+describe('Register email fail test', () => {
+    it('should register without email', async () => {
         //load main page
         await browser.url(`http://localhost:5173/`);
         //click on signup
@@ -13,10 +13,6 @@ describe('Register test', () => {
         const usernameInput = await $('[name="username"]');
         expect(usernameInput).toBeDisplayed();
         await usernameInput.setValue('wdioTest');
-        //find and input email
-        let emailInput = await $('[name="email"]');
-        expect(emailInput).toBeDisplayed();
-        await emailInput.setValue('wdioTest@test.com');
         // Wait for the email input to be available
         let passwordInput = await $('[name="password"]');
         await passwordInput.waitForExist();
@@ -40,10 +36,9 @@ describe('Register test', () => {
         expect(submitButton).toBeDisplayed();
         await submitButton.click();
         // Check if the URL is "localhost:5173/login"
-        await browser.pause(1000);
         const URL = await browser.getUrl();
         console.log(URL);
-        expect(URL).toBe('http://localhost:5173/login');
+        expect(URL).toBe('http://localhost:5173/signup');
     })
 })
 

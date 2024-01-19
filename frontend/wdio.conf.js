@@ -22,10 +22,16 @@ exports.config = {
     //
     specs: [
         [
+            "./test/specs/RegisterUsernameFailTest.js",
+            "./test/specs/RegisterEmailFailTest.js",
+            "./test/specs/RegisterTest.js",
+            "./test/specs/LoginFailTest.js",
+            "./test/specs/LoginMissingEmailTest.js",
             "./test/specs/LoginTest.js",
-            "./test/specs/PostNewAddTest.js"
+            "./test/specs/EditTest.js",
         ],
     ],
+
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
