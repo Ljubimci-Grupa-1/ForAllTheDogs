@@ -47,6 +47,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                                                  onApplyFilters,
                                                  onClearFilters,
                                              }) => {
+    const [inputtedName, setInputtedName]=useState('');
     const [species, setSpecies] = useState<Vrsta[]>([]);
     const [counties, setCounties] = useState<County[]>([]);
     const [cities, setCities] = useState<City[]>([]);
@@ -68,6 +69,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         setSelectedColors([]);
         setSelectedCounty('');
         setSelectedCity('');
+        setSelectedDateTime(null);
     };
 
     useEffect(() => {
@@ -122,7 +124,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         setSelectedDateTime(newDateTime);
 
         const formattedDateTime = dayjs(newDateTime).format('YYYY-MM-DDTHH:mm:ss');
-
+        console.log(formattedDateTime);
         onDateLostChange(formattedDateTime);
     };
 
@@ -134,7 +136,8 @@ const FilterBar: React.FC<FilterBarProps> = ({
             <Input
                 placeholder="Pet Name"
                 id="petNameInput"
-                onChange={(e) => onNameChange(e.target.value)}
+                onChange={(e) => {onNameChange(e.target.value); setInputtedName(e.target.value)}}
+                value={inputtedName}
             >
             </Input>
 
@@ -145,10 +148,10 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 size="md"
                 variant="outlined"
                 onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string | null) => {
-                    const selectedValue = value || ''; // Handle null value if needed
-                    console.log('Selected Species:', selectedValue);
-                    setSelectedSpecies(selectedValue);
-                    onSpeciesChange(selectedValue);
+                        const selectedOption = value || "";
+                            setSelectedSpecies(selectedOption);
+                            onSpeciesChange(selectedOption);
+
                 }}
                 id="speciesSelect"
             >
@@ -166,18 +169,33 @@ const FilterBar: React.FC<FilterBarProps> = ({
             <Select
                 value={selectedColors}
                 color="primary"
-                placeholder="Choose one or more…"
+                placeholder="All Colors"
                 size="md"
                 variant="outlined"
                 multiple
                 id="colorSelect"
                 onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string[] | null) => {
-                    const selectedOptions = value || [];
-                    setSelectedColors(selectedOptions);
-                    onColorChange(selectedOptions);
+                    if (value?.includes("All Colors") && value[value?.length-1]==="All Colors") {
+                        console.log("help")
+                        setSelectedColors(["All Colors"]);
+                        onColorChange([])
+                    } else {
+                        const selectedOptions = value || [];
+                        if(selectedOptions?.includes("All Colors") && selectedOptions[selectedOptions?.length-1]!=="All Colors") {
+                            //izbaci all colors i ostalo settaj na to, jer smo bili na all colors al sad tog nema
+                            const valueToDelete = "All Colors";
+                            const newArray = selectedOptions.filter(item => item !== valueToDelete);
+                            setSelectedColors(newArray);
+                            onColorChange(newArray);
+                        }
+                        else {
+                            setSelectedColors(selectedOptions);
+                            onColorChange(selectedOptions);
+                        }
+                    }
                 }}
             >
-                <Option value="" key={-1}>
+                <Option value="All Colors" key={-1}>
                     All Colors
                 </Option>
                 {colors.map((spec: Color) => (
@@ -239,6 +257,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                     <DateTimePicker
                         views={['year', 'day']}
                         label="Date missing"
+                        value={selectedDateTime}
                         onChange={(newDateTime) => handleDateTimeChange(newDateTime)}
                     />
                 </DemoContainer>
@@ -247,7 +266,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
             <ButtonGroup aria-label="outlined primary button group">
                 <Button onClick={onApplyFilters}>Apply Filters</Button>
-                <Button onClick={() => { onClearFilters(); handleClearFilters(); }}>Clear Filters</Button>
+                <Button onClick={() => { onClearFilters(); handleClearFilters(); setInputtedName('');}}>Clear Filters</Button>
             </ButtonGroup>
         </div>
     );

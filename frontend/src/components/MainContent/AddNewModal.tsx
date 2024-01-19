@@ -140,6 +140,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const [browsedFile, setBrowsedFile]=useState('');
     const [counter, setCounter]=useState(fileBase64Array.length);
     const [isChecked, setIsChecked] = useState(false);
+
     //problem sa county, oni ga ne salju
     const [data, setData]=useState<Data>({
         age:ageFill, name:nameFill, species:speciesFill, colors:colorsFill,
@@ -355,7 +356,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         updatedFiles.splice(index, 1);
         setFileBase64Array(updatedFiles);
     };
-    const formValidation = ()=>{
+    const formValidation = ():FormValidation=>{
         if(speciesFill===''){
             const forma = {
                 age:changed.age&&(data.age>=0)&&(!isNaN(data.age)), name:(data.name!==''), species:changed.species&&(data.species!==''),
@@ -364,6 +365,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 images:(fileBase64Array.length<4)&&(fileBase64Array.length>0), county:(data.county!==''), city:(data.city!=='')
             }
             setValidation(forma);
+            return forma;
         }
         else{
             const forma = {
@@ -373,15 +375,25 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 images:(fileBase64Array.length<4)&&(fileBase64Array.length>0), county:(data.county!==''), city:(data.city!=='')
             }
             setValidation(forma);
+            return forma;
         }
     };
 
     const handleSubmit=async ()=>{
         // @ts-ignore
         event.preventDefault();
-        formValidation();
+        const radi=formValidation();
+        console.log("validacija",radi);
         console.log(markerPosition);
-        if (fileBase64Array.length>0) {
+        let allInputsFilled=true;
+        Object.entries(radi).forEach(([key, value]) => {
+            if (!value) {
+                console.log(key)
+                console.error('Missing input values');
+                allInputsFilled=false;
+            }
+        });
+        if (fileBase64Array.length>0 && allInputsFilled) {
             formData.inShelter = isChecked ? "2" : "1";
             formData.pet.speciesName = data.species;
             formData.pet.age = data.age;
@@ -411,7 +423,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                     window.location.reload();
                     console.log('Images uploaded successfully');
 
-                    // You can handle the response from the server here
                     setFileBase64Array([]);
                     setCounter(0);
                 } else {
@@ -455,7 +466,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             }
 
         } else {
-            //formData.append('images', JSON.stringify([]));
             console.log('No files to submit');
         }
     };
@@ -568,8 +578,10 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         type="number"
                                         value={data.age}
                                         onChange={(event)=>{
-                                            setChanged({...validation, age:true})
-                                            setData({...data, age: parseInt(event.target.value) });
+                                            if(parseInt(event.target.value)>=0) {
+                                                setChanged({...validation, age:true})
+                                                setData({...data, age: parseInt(event.target.value) });
+                                            }
                                         }}
                                     />
                                     {!validation.age && <p className="error-message" style={{color:"red"}}>Age is required!</p>}
