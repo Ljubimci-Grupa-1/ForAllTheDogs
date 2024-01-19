@@ -171,7 +171,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         pet: {
             speciesName: "",
             petName: "",
-            age: -1,
+            age: 0,
             colors: [],
             dateTimeMissing: "",
             description: "",
@@ -359,20 +359,30 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const formValidation = ():FormValidation=>{
         if(speciesFill===''){
             const forma = {
-                age:changed.age&&(data.age>=0)&&(!isNaN(data.age)), name:(data.name!==''), species:changed.species&&(data.species!==''),
-                description:(data.description!==''), datetime:(data.datetime!==''),
+                age:(data.age>=0)&&(!isNaN(data.age)), name:(data.name.trim()!==''), species:changed.species&&(data.species!==''),
+                description:(data.description.trim()!==''), datetime:(data.datetime!==''),
                 colors:(data.colors.length!==0), latitude:(data.latitude!==190), longitude:(data.longitude!==190),
                 images:(fileBase64Array.length<4)&&(fileBase64Array.length>0), county:(data.county!==''), city:(data.city!=='')
+            }
+            if(user.userType===2){
+                //ne mora nuzno ispunit ime age
+                forma.name=true;
+                forma.age=true;
             }
             setValidation(forma);
             return forma;
         }
         else{
             const forma = {
-                age:(!isNaN(data.age))&&(data.age>=0), name:(data.name!==''), species:(data.species!==''),
-                description:(data.description!==''), datetime:(data.datetime!==''),
+                age:(!isNaN(data.age))&&(data.age>=0), name:(data.name.trim()!==''), species:(data.species!==''),
+                description:(data.description.trim()!==''), datetime:(data.datetime!==''),
                 colors:(data.colors.length!==0), latitude:(data.latitude!==190), longitude:(data.longitude!==190),
                 images:(fileBase64Array.length<4)&&(fileBase64Array.length>0), county:(data.county!==''), city:(data.city!=='')
+            }
+            if(user.userType===2){
+                //ne mora nuzno ispunit ime age
+                forma.name=true;
+                forma.age=true;
             }
             setValidation(forma);
             return forma;
