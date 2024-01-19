@@ -3,7 +3,7 @@
 		
 		\section{Korištene tehnologije i alati}
 		
-			Komunikacija u timu ostvarena je pomoću platforme Discord\footnote{\url{https://discord.com}} koja nudi opcije tekstualnog dopisivanja, glasovnog poziva i videopoziva. U serveru našeg projektnog tima postojalo je nekoliko kanala koji su se bavili različitim temama (back-end, front-end, dokumentacija…) što nam je pomoglo u podjeli posla i filtriranju zadataka. Za izradu UML dijagrama koristili smo se aplikacijom Astah\footnote{\url{https://astah.net}} pomoću koje smo vrlo jednostavno napravili željene dijagrame i time pokazali ideju projektnog zadatka, kao i način rada naše aplikacije. Kao sustav za upravljanje izvornim kodom koristili smo Git\footnote{\url{https://git-scm.com}}. Udaljeni repozitorij projekta dostupan je na web platformi GitHub\footnote{\url{https://github.com}}. \\
+			Komunikacija u timu ostvarena je pomoću platforme Discord\footnote{\url{https://discord.com}} koja nudi opcije tekstualnog dopisivanja, glasovnog poziva i videopoziva. U serveru našeg projektnog tima postojalo je nekoliko kanala koji su se bavili različitim temama (back-end, front-end, dokumentacija…) što nam je pomoglo u podjeli posla i filtriranju zadataka. Za izradu UML dijagrama koristili smo se aplikacijom Astah\footnote{\url{https://astah.net}} pomoću koje smo vrlo jednostavno napravili željene dijagrame i time pokazali ideju projektnog zadatka, kao i način rada naše aplikacije. Za rad s LaTeX-om poslužio nam je Texmaker\footnote{\url{https://www.xm1math.net/texmaker}}. Kao sustav za upravljanje izvornim kodom koristili smo Git\footnote{\url{https://git-scm.com}}. Udaljeni repozitorij projekta dostupan je na web platformi GitHub\footnote{\url{https://github.com}}. \\
 Za razvojno okruženje koristili smo Visual Studio Code\footnote{\url{https://code.visualstudio.com}} i IntelliJ IDEA\footnote{\url{https://jetbrains.com/idea}}. VSC nudi široku podršku za jezike i ekstenzije, integraciju s Git-om i različitim alatima i servisima (Docker\footnote{\url{https://docker.com}}) te snimanje koraka za debuggiranje. Također, dolazi s ugrađenom podrškom za JavaScript i TypeScript. IntelliJ IDEA nudi naprednu podršku za pisanje koda (Code Assistance), odličan debugger, refaktoriranje koda te podršku za različite tehnologije (Spring Framework, JavaScript, HTML, CSS, TypeScript, React, SQL) i jezike (Java, Kotlin, Groovy). \\
 Klijentska strana aplikacije (\textit{front-end}) napisana je React\footnote{\url{https://react.dev}}-om preko TypeScript\footnote{\url{https://typescriptlang.org}}-a i Vite.js\footnote{\url{https://vitejs.dev}}-om. Material UI\footnote{\url{https://mui.com/material-ui}} je biblioteka React komponenata koja pruža implementaciju Google-ovog Material Design koncepta u React aplikacijama, a fokusiran je na stvaranje dosljednih i intuitivnih korisničkih sučelja.\\
 Poslužiteljska strana aplikacije (\textit{back-end}) napisana je u Kotlinu\footnote{\url{https://kotlinlang.org}} koristeći Spring Framework\footnote{\url{https://spring.io/projects/spring-framework}}. Kotlin omogućuje interoperabilnost s jezikom Java\footnote{\url{https://java.com/en}} (može se koristiti zajedno s njim u sklopu istog projekta te koristiti njegove biblioteke). Spring Framework je open-source radni okvir za razvoj aplikacija baziranih na Javi. On implementira inverziju kontrole (IoC), uvođenje ovisnosti (DI), Model-View-Controller (MVC), pristup podacima, sigurnost i Spring Boot. \\
@@ -70,7 +70,7 @@ Proveli smo sveukupno 6 unit testova te u nastavku slijede njihovi opisi i slike
 		\begin{figure}[H]
 			\includegraphics[scale=0.5]{slike/unit5.PNG} 
 			\centering
-			\caption{Unit test 5 - dohvaćanje rute svih korisnika}
+			\caption{Unit test 5 - ruta dohvaćanja svih korisnika}
 			\label{unit5}
 		\end{figure}
 		
@@ -98,7 +98,7 @@ Prvih 5 unit testova (loginValidTest, loginInvalidTest, registerValidTest, regis
 		\end{figure}
 		
 		
-Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo mogućnost dodavanja novog oglasa. Test je također bio uspješan.
+Zadnji test (addNewAd) služi za testiranje metode iz AdService-a koja omogućuje dodavanje novog oglasa. Test je također bio uspješan.
 
 		\begin{figure}[H]
 			\includegraphics[scale=0.45]{slike/1unitrez.PNG} 
@@ -128,7 +128,7 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			\textbf{Očekivani rezultat:}
 			
 				\begin{enumerate}
-					\item Nije došlo do greške - svi su podaci uspješno uneseni. Test je prošao.
+					\item Nije došlo do greške - svi su podaci uspješno uneseni.
 					\item Došlo je do greške. I dalje smo na sign-up dijelu dok se ne unesu svi podaci ispravno.
 					\item Došlo je do greške. I dalje smo na sign-up dijelu dok se ne unesu svi podaci ispravno.
 				\end{enumerate}
@@ -152,7 +152,7 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			
 			\textbf{Ispitni slučaj 2: provjera ispravnosti ulogiravanja}
 			
-			Ovaj system test provjerava ispravnost sustava ulogiravanja. Korisnik čeka dok se ne pojavi gumb za log-in, a kad se pojavi unosi svoj e-mail i password. Zatim klikne gumb za predaju te se odvija provjera ispravnosti dobivenog URL-a. Nakon toga se prepoznaje i dohvaća username korisnika i ispisuje se poruka „Hello, \textit{username}“. \\
+			Ovaj system test provjerava ispravnost sustava ulogiravanja. Korisnik čeka dok se ne pojavi gumb za log-in, a kad se pojavi unosi svoj e-mail i password. Zatim klikne gumb za predaju te se odvija provjera ispravnosti dobivenog URL-a. Nakon toga se prepoznaje i dohvaća username korisnika i ispisuje se poruka "Hello, \textit{username}". \\
 			
 			\textbf{Ulaz:}
 			
@@ -165,7 +165,7 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			\textbf{Očekivani rezultat:}
 			
 				\begin{enumerate}
-					\item Nije došlo do greške - svi su podaci uspješno uneseni. Test je prošao.
+					\item Nije došlo do greške - svi su podaci uspješno uneseni.
 					\item Došlo je do greške i ispisa "Wrong Credentials!" pri predaji promjena (submit).
 					\item Došlo je do greške. I dalje smo na log-in dijelu dok se ne unesu svi podaci ispravno.
 				\end{enumerate}
@@ -201,7 +201,7 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			\textbf{Očekivani rezultat:}
 			
 				\begin{enumerate}
-					\item Nije došlo do greške - promjena je uspjela. Test je prošao.
+					\item Nije došlo do greške - promjena je uspjela.
 					\item Došlo je do greške i ispisa "At least 1 image!" pri predaji promjena (submit).
 				\end{enumerate}
 			
@@ -217,7 +217,7 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 				\includegraphics[scale=0.7]{slike/sysedit2.PNG} 
 				\centering
 				\caption{System test: pokušaj brisanja jedine slike unutar oglasa}
-				\label{sysedit1}
+				\label{sysedit2}
 			\end{figure}
 			
 			\textbf{Rezultat:}
@@ -236,14 +236,14 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			\textbf{Očekivani rezultat:}
 			
 				\begin{enumerate}
-					\item Nije došlo do greške - oglas je uspješno obrisan. Test je prošao.
+					\item Nije došlo do greške - oglas je uspješno obrisan.
 				\end{enumerate}
 			
 			\begin{figure}[H]
 				\includegraphics[scale=0.7]{slike/sysdeletepost.PNG} 
 				\centering
 				\caption{System test: prikaz brisanja postojećeg oglasa}
-				\label{sysedit1}
+				\label{sysdeletepost}
 			\end{figure}
 			
 			
@@ -263,14 +263,14 @@ Zadnji test (addNewAd) služi za testiranje metode iz AdService-a s kojom imamo 
 			\textbf{Očekivani rezultat:}
 			
 				\begin{enumerate}
-					\item Nije došlo do greške - korisnik se uspješno odjavio. Test je prošao.
+					\item Nije došlo do greške - korisnik se uspješno odjavio.
 				\end{enumerate}
 			
 			\begin{figure}[H]
 				\includegraphics[scale=0.7]{slike/syslogout.PNG} 
 				\centering
 				\caption{System test: prikaz odjave postojećeg računa}
-				\label{sysedit1}
+				\label{syslogout}
 			\end{figure}
 			
 			
