@@ -8,11 +8,11 @@ describe('Login test', () => {
         const emailInput = await $('#email');
         await emailInput.waitForExist();
         expect(emailInput).toBeDisplayed();
-        await emailInput.setValue('wdioTest@testtt.com');
+        await emailInput.setValue('wdioTest@test.com');
         const passwordInput = await $('#password');
         await passwordInput.waitForExist();
         expect(passwordInput).toBeDisplayed();
-        await passwordInput.setValue('wdio');
+        await passwordInput.setValue('wdiooo');
         const submitLogin = await $('#submitLogin');
         await submitLogin.waitForExist();
         expect(submitLogin).toBeDisplayed();

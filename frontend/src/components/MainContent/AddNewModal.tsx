@@ -546,7 +546,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                             </Option>
                                         ))}
                                     </Select>
-                                    {!validation.species && <p className="error-message" style={{color:"red"}}>Species is required!</p>}
+                                    {!validation.species && <p id="error-message" className="error-message" style={{color:"red"}}>Species is required!</p>}
                                 </div>
 
 
@@ -860,6 +860,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
                                             <span>Image {index + 1}</span>
                                             <button
+                                                id="deleteImage"
                                                 type="button"
                                                 onClick={() => handleDeleteImage(index)}
                                                 style={{ marginLeft: '8px', cursor: 'pointer', background: 'none', border: 'none', color: 'blue' }}

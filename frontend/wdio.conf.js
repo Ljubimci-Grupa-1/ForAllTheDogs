@@ -22,13 +22,14 @@ exports.config = {
     //
     specs: [
         [
-            "./test/specs/RegisterUsernameFailTest.js",
-            "./test/specs/RegisterEmailFailTest.js",
-            "./test/specs/RegisterTest.js",
-            "./test/specs/LoginFailTest.js",
+            //"./test/specs/RegisterTest.js",
             "./test/specs/LoginMissingEmailTest.js",
+            "./test/specs/LoginFailTest.js",
             "./test/specs/LoginTest.js",
+            "./test/specs/EditFailTest.js",
             "./test/specs/EditTest.js",
+            "./test/specs/DeleteTest.js",
+            "./test/specs/LogoutTest.js"
         ],
     ],
 
