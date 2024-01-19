@@ -158,7 +158,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     />
                 )}
                 {pet.images && pet.images[0] && (
-                    <AspectRatio minHeight="120px" maxHeight="200px">
+                    <AspectRatio objectFit="contain" minHeight="120px" maxHeight="200px">
                         <img
                             // @ts-ignore
                             src={pet.images[0].image} alt={pet.petName}/>

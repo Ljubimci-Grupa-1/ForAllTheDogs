@@ -868,7 +868,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                 {/*showing images, possibility of deleting*/}
                                 <div className="input-container">
                                     {fileBase64Array.map((_, index) => (
-                                        <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                                        <div key={index} style={{ display: 'flex', flexDirection:"column", alignItems: 'center', marginBottom: '8px' }}>
                                             <span>Image {index + 1}</span>
                                             <button
                                                 id="deleteImage"

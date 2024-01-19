@@ -2,7 +2,8 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const corsOptions = {
-    origin: 'https://forallthedogs-omw5.onrender.com',
+    //origin: 'https://forallthedogs-omw5.onrender.com',
+    origin:'http://localhost:5173',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 };

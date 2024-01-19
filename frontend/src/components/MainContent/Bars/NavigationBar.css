@@ -1,15 +1,13 @@
 .buttonGroup{
     margin:10px;
 }
-    .navbar {
+.navbar {
     background-color: #007bff;
     color: #fff;
     padding: 10px 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    flex-direction: row;
     border-radius: 10px; /* Add border-radius for rounded corners */
 }
 
