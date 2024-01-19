@@ -137,15 +137,15 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         <>
             <Card sx={{ width: 320, backgroundColor: pet.inShelter === 2 ? 'lightblue' : 'inherit' }}>
                 {(currUser.email === pet.user.email) && isLoggedIn && (
-                    <Button onClick={handleMore}>
+                    <Button id="more" onClick={handleMore}>
                         <i className="bi bi-three-dots"></i>
                     </Button>
                 )}
                 {menuState[cardId] && (
                     <ButtonGroup aria-label="outlined primary button group">
-                        <Button onClick={handleDelete} sx={{width: '80px', ml: 2.5}}>Delete</Button>
-                        <Button onClick={handleUpdate} sx={{width: '80px'}}>Update</Button>
-                        <Button onClick={handleChangeCategory} sx={{width: '80px'}}>Change Category</Button>
+                        <Button id="delete" onClick={handleDelete} sx={{width: '80px', ml: 2.5}}>Delete</Button>
+                        <Button id="update" onClick={handleUpdate} sx={{width: '80px'}}>Update</Button>
+                        <Button id="changeCat" onClick={handleChangeCategory} sx={{width: '80px'}}>Change Category</Button>
                     </ButtonGroup>
                 )}
                 {categoriesVisibility[cardId] && (
@@ -164,8 +164,8 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     </AspectRatio>
                 )}
                 <div>
-                    <Typography level="title-lg">{pet.petName}</Typography>
-                    <Typography level="body-sm">{pet.speciesName}</Typography>
+                    <Typography id="petName" level="title-lg">{pet.petName}</Typography>
+                    <Typography id="petSpecies" level="body-sm">{pet.speciesName}</Typography>
                     <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                         <Typography level="body-sm">{pet.location.cityName}</Typography>
                         <Typography level="body-sm">, {pet.location.countyName}</Typography>

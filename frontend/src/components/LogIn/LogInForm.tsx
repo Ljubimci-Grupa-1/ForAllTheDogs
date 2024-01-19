@@ -104,7 +104,7 @@ const LoginForm: FC = () => {
                                 />
                             </div>
                             {error && <Typography
-                                color="danger" level="title-lg" variant="plain">{error}</Typography>}
+                                id="error" color="danger" level="title-lg" variant="plain">{error}</Typography>}
                             <Button
                                 id="submitLogin"
                                 variant="solid"

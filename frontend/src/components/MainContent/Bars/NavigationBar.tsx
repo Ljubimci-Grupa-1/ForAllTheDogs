@@ -147,7 +147,7 @@ const NavigationBar = ({
                         <Sheet className={"sheet"} sx={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}>
                             <Typography id={"showUsername"} sx={{ width: '100%',
                                 color:"white"}} level="title-lg">Hello, {username}</Typography>
-                            <Button size="lg" component={Link} to="/" onClick={handleSignOut}>Sign out</Button>
+                            <Button id="signout" size="lg" component={Link} to="/" onClick={handleSignOut}>Sign out</Button>
                             {!shelterAdsShow && mainContentState&&<Button size="lg" component={Link} to="/" onClick={handleProfile}><i className="bi bi-person-circle"></i></Button>}
                             {!mainContentState&&<Button size="lg" component={Link} to="/" onClick={handleBackToMain}><i className="bi bi-arrow-left-circle"></i></Button>}
                             {!mainContentState&&!shelterAdsShow&&
@@ -159,7 +159,7 @@ const NavigationBar = ({
                     )}
                     {!isLoggedIn && (
                         <Sheet sx={{ backgroundColor: 'rgba(255, 255, 255, 0)'}}>
-                            <Typography sx={{ width: '100%', color:"white" }} level="title-lg">Please login or signup</Typography></Sheet>
+                            <Typography id="loginText" sx={{ width: '100%', color:"white" }} level="title-lg">Please login or signup</Typography></Sheet>
                     )}
                 </Grid>
             </Grid>
