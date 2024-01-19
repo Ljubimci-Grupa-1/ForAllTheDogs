@@ -22,15 +22,14 @@
 		\subsection{MVC stil arhitekture}
 		Arhitektura razrađena u nastavku prati stil arhitekture MVC (model-view-controller).\\
 		
-		Osnovna	karakteristika ovog stila je	nezavisan razvoj pojedinih dijelova aplikacije što pojednostavljuje testiranje	i razvijanje dijelova sustava te	njihove	dorade. Korisničko sučelje je odvojeno od ostatka sustava, a kohezija elemenata se postiže kroz tri sloja: jedan na klijentskoj strani - pogled (\textit{View}) te dva na serverskoj strani – upravitelj (\textit{Controller}) i model (\textit{Model}).
+		Osnovna	karakteristika ovog stila je	nezavisan razvoj pojedinih dijelova aplikacije što pojednostavljuje testiranje	i razvijanje dijelova sustava te	njihove	dorade. Korisničko sučelje je odvojeno od ostatka sustava, a kohezija elemenata postiže se kroz 3 sloja: 2 na serverskoj strani –  model (\textit{Model}) i upravitelj (\textit{Controller}) te 1 na klijentskoj strani - pogled (\textit{View}).
 
-		\begin{packed_enum}
+		\begin{packed_item}
 			\item\textit{Model} - Predstavlja glavnu komponentu sustava koja sadrži dinamičke strukture podataka odnosno razrede koji opisuju domenu primjene te sadrže pravila i aplikacijsku logiku. Usko je vezan uz bazu podataka aplikacije.
-			\item\textit{Pogled (View)} - Sadrži komponente koje služe za prikaz podataka modela i interakciju s korisnikom kroz grafičko korisničko sučelje.
-			\item\textit{Upravitelj (Controller)} - Upravlja korisničkim zahtjevima prema modelu i odgovorima modela natrag prema pogledima. Povezuje serversku i korisničku stranu.
-		\end{packed_enum}
+			\item\textit{View} - Sadrži komponente koje služe za prikaz podataka modela i interakciju kroz grafičko korisničko sučelje.
+			\item\textit{Controller} - Povezuje serversku i korisničku stranu: upravlja korisničkim zahtjevima prema modelu i odgovorima modela nazad prema pogledima.
+		\end{packed_item}
 
-		%unos slike
 		\begin{figure}[H]
 			\includegraphics[scale=0.7]{slike/mvc-framework.PNG} 
 			\centering
