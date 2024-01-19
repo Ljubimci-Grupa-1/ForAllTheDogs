@@ -66,9 +66,9 @@ const LoginForm: FC = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundImage: 'url("/FATD_BG.png")',
-                backgroundRepeat: 'repeat',
-                backgroundSize: '10%',
+                height: '100vh',
+                width: '100%',
+                backgroundColor: '#f5f5f5',
             }}>
             <div className="login-form">
                 <Stack spacing={3}>
