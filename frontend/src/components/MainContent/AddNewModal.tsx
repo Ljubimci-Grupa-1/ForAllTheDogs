@@ -138,6 +138,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const [counties, setCounties] = useState<County[]>([]);
     const [countyCities, setCountyCities] = useState([]);
     const [isUploaded, setIsUploaded] = useState(false);
+    // @ts-ignore
     const [markerPosition, setMarkerPosition] = useState({ latitude: 45.813257, longitude: 15.976448 });
     const [fileBase64Array, setFileBase64Array] = useState<string[]>(imagesFill);
     const [browsedFile, setBrowsedFile]=useState('');
@@ -398,6 +399,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         event.preventDefault();
         const radi=formValidation();
         let allInputsFilled=true;
+        // @ts-ignore
         Object.entries(radi).forEach(([key, value]) => {
             if (!value) {
                 console.error('Missing input values');
