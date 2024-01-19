@@ -62,12 +62,30 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
     const [areFiltersApplied, setAreFiltersApplied] = useState(false);
+    const [areFiltersAppliedAgain, setAreFiltersAppliedAgain] = useState(false);
+    const [areFiltersAppliedAgainHelp, setAreFiltersAppliedAgainHelp] = useState(false);
+
     const [filterName, setFilterName] = useState('');
     const [filterSpecies, setFilterSpecies] = useState('');
     const [filterDateLost, setFilterDateLost] = useState('');
     const [filterCounty, setFilterCounty] = useState('');
     const [filterCity, setFilterCity] = useState('');
     const [filterColors, setFilterColors] = useState<string[]>([]);
+
+    const [filterNameBefore, setFilterNameBefore] = useState('');
+    const [filterSpeciesBefore, setFilterSpeciesBefore] = useState('');
+    const [filterDateLostBefore, setFilterDateLostBefore] = useState('');
+    const [filterCountyBefore, setFilterCountyBefore] = useState('');
+    const [filterCityBefore, setFilterCityBefore] = useState('');
+    const [filterColorsBefore, setFilterColorsBefore] = useState<string[]>([]);
+
+    const [filterNameChanged, setFilterNameChanged] = useState(false);
+    const [filterSpeciesChanged, setFilterSpeciesChanged] = useState(false);
+    const [filterDateLostChanged, setFilterDateLostChanged] = useState(false);
+    const [filterCountyChanged, setFilterCountyChanged] = useState(false);
+    const [filterCityChanged, setFilterCityChanged] = useState(false);
+    const [filterColorsChanged, setFilterColorsChanged] = useState(false);
+
     const [lostPets, setLostPets] = useState<LostPet[]>([]);
     const [lostPetsUserProfile, setLostPetsUserProfile] = useState<LostPet[]>([]);
     const [lostPetsInactive, setLostPetsInactive] = useState<LostPet[]>([]);
@@ -101,6 +119,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                         petsData[i].activityName = data[i].activityName;
                         petsData[i].user=data[i].user
                         petsData[i].inShelter=data[i].inShelter;
+                        console.log("datum test", i, petsData[i].dateTimeMissing)
                     }
                 }
                 const filtriraniShelter:LostPet[]=[];
@@ -203,16 +222,65 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
         setCurrentPet(null);
     };
 
-    const filteredPets = lostPets ? lostPets.filter((pet) => {
+    const filtering=(pet:LostPet):boolean=>{
+        const nameMatch=filterNameBefore=== ''
+            ? filterNameChanged ?pet.petName.toLowerCase().includes(filterNameBefore.toLowerCase())
+                :pet.petName.toLowerCase().includes(filterName.toLowerCase())
+            :areFiltersAppliedAgainHelp?pet.petName.toLowerCase().includes(filterName.toLowerCase()):
+                pet.petName.toLowerCase().includes(filterNameBefore.toLowerCase());
+        const speciesMatch=filterSpeciesBefore=== ''
+            ? filterSpeciesChanged ?pet.speciesName.toLowerCase().includes(filterSpeciesBefore.toLowerCase())
+                :pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase())
+            :areFiltersAppliedAgainHelp?pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase()):
+                pet.speciesName.toLowerCase().includes(filterSpeciesBefore.toLowerCase());
+        //console.log("matchevi",nameMatch, speciesMatch);
+        const dateOnlyPet=pet.dateTimeMissing.substring(0, 10);
+        const dateOnlyFilter=filterDateLost.substring(0, 10);
+        const dateOnlyFilterBefore=filterDateLostBefore.substring(0, 10);
+        const dateLostMatch=filterDateLostBefore=== ''
+            ? filterDateLostChanged ?dateOnlyPet.includes(dateOnlyFilterBefore)
+                :pet.dateTimeMissing.includes(dateOnlyFilter)
+            :areFiltersAppliedAgainHelp?dateOnlyPet.includes(dateOnlyFilter):
+                dateOnlyPet.includes(dateOnlyFilterBefore);
+        const countyMatch=filterCountyBefore=== ''
+            ? filterCountyChanged ?pet.location.countyName.includes(filterCountyBefore)
+                :pet.location.countyName.includes(filterCounty)
+            :areFiltersAppliedAgainHelp?pet.location.countyName.includes(filterCounty):
+                pet.location.countyName.includes(filterCountyBefore);
+        const cityMatch=filterCityBefore=== ''
+            ? filterCityChanged ?pet.location.cityName.includes(filterCityBefore)
+                :pet.location.cityName.includes(filterCity)
+            :areFiltersAppliedAgainHelp?pet.location.cityName.includes(filterCity):
+                pet.location.cityName.includes(filterCityBefore);
+        const colorMatch=filterColorsBefore.length===0
+            ? filterColorsChanged?filterColorsBefore.every(color => pet.colors.includes(color))
+                :filterColors.every(color => pet.colors.includes(color))
+            :areFiltersAppliedAgainHelp?filterColors.every(color => pet.colors.includes(color)):
+                filterColorsBefore.every(color => pet.colors.includes(color));
+        return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch && colorMatch;
+    };
+
+    const filteringEasy=(pet:LostPet):boolean=>{
         const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
         const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
-        const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
+        const dateOnlyPet=pet.dateTimeMissing.substring(0, 10);
+        const dateOnlyFilter=filterDateLost.substring(0, 10);
+        const dateLostMatch = dateOnlyPet.includes(dateOnlyFilter);
         const countyMatch = pet.location.countyName.includes(filterCounty);
         const cityMatch = pet.location.cityName.includes(filterCity);
         const colorMatch = filterColors.every(color => pet.colors.includes(color));
 
-        if (areFiltersApplied){
-            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch && colorMatch;
+        return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch && colorMatch;
+    };
+
+    const filteredPets = lostPets ? lostPets.filter((pet) => {
+        if(areFiltersApplied){
+            if(areFiltersAppliedAgain){
+                return filtering(pet);
+            }
+            else{
+                return filteringEasy(pet);
+            }
         }
         else{
             return lostPets;
@@ -220,15 +288,13 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     }) : [];
 
     const filteredPetsInactive = lostPetsInactive ? lostPetsInactive.filter((pet) => {
-        const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
-        const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
-        const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
-        const countyMatch = pet.location.countyName.includes(filterCounty);
-        const cityMatch = pet.location.cityName.includes(filterCity);
-        const colorMatch = filterColors.every(color => pet.colors.includes(color));
-
-        if (areFiltersApplied){
-            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch && colorMatch;
+        if(areFiltersApplied){
+            if(areFiltersAppliedAgain){
+                return filtering(pet);
+            }
+            else{
+                return filteringEasy(pet);
+            }
         }
         else{
             return lostPetsInactive;
@@ -236,15 +302,13 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     }) : [];
 
     const filteredPetsUserProfile = lostPetsUserProfile ? lostPetsUserProfile.filter((pet) => {
-        const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
-        const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
-        const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
-        const countyMatch = pet.location.countyName.includes(filterCounty);
-        const cityMatch = pet.location.cityName.includes(filterCity);
-        const colorMatch = filterColors.every(color => pet.colors.includes(color));
-
-        if (areFiltersApplied){
-            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch && colorMatch;
+        if(areFiltersApplied){
+            if(areFiltersAppliedAgain){
+                return filtering(pet);
+            }
+            else{
+                return filteringEasy(pet);
+            }
         }
         else{
             return lostPetsUserProfile;
@@ -252,52 +316,174 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     }) : [];
 
     const filteredPetsInactiveUserProfile = lostPetsInactiveUserProfile ? lostPetsInactiveUserProfile.filter((pet) => {
-        const nameMatch = pet.petName.toLowerCase().includes(filterName.toLowerCase());
-        const speciesMatch = pet.speciesName.toLowerCase().includes(filterSpecies.toLowerCase());
-        const dateLostMatch = pet.dateTimeMissing.includes(filterDateLost);
-        const countyMatch = pet.location.countyName.includes(filterCounty);
-        const cityMatch = pet.location.cityName.includes(filterCity);
-        const colorMatch = filterColors.every(color => pet.colors.includes(color));
-
-        if (areFiltersApplied){
-            return nameMatch && speciesMatch && dateLostMatch && countyMatch && cityMatch && colorMatch;
+        if(areFiltersApplied){
+            if(areFiltersAppliedAgain){
+                return filtering(pet);
+            }
+            else{
+                return filteringEasy(pet);
+            }
         }
         else{
             return lostPetsInactiveUserProfile;
         }
     }) : [];
 
-    const handleNameChange = (name: string) => {
-        setFilterName(name);
-    };
+    const filteredPetsShelterActive = lostPetsShelterActive ? lostPetsShelterActive.filter((pet) => {
+        if(areFiltersApplied){
+            if(areFiltersAppliedAgain){
+                return filtering(pet);
+            }
+            else{
+                return filteringEasy(pet);
+            }
+        }
+        else{
+            return lostPetsShelterActive;
+        }
+    }) : [];
 
+    const filteredPetsShelterInactive = lostPetsShelterInactive ? lostPetsShelterInactive.filter((pet) => {
+        if(areFiltersApplied){
+            if(areFiltersAppliedAgain){
+                return filtering(pet);
+            }
+            else{
+                return filteringEasy(pet);
+            }
+        }
+        else{
+            return lostPetsShelterInactive;
+        }
+    }) : [];
+
+    const handleNameChange = (name: string) => {
+        if(!areFiltersApplied){
+            //nema problema, settamo filter
+            setFilterName(name);
+        }
+        else{
+            //vec su aktivni neki filteri, sad ih ponovno postavljamo, ali prije klika na apply moramo spremit stare
+            setAreFiltersAppliedAgain(true);
+            if(!filterNameChanged){
+                setFilterNameBefore(filterName);//samo u prvom slucaju set
+            }
+            setFilterNameChanged(true);
+            setFilterName(name);
+        }
+        setAreFiltersAppliedAgainHelp(false);
+
+    };
     const handleSpeciesChange = (species: string) => {
-        console.log('Species:', species);
-        // Ensure species is always a string, even if it's initially a number
-        setFilterSpecies(String(species));
+        if(!areFiltersApplied){
+            //nema problema, settamo filter
+            setFilterSpecies(String(species));
+        }
+        else{
+            //vec su aktivni neki filteri, sad ih ponovno postavljamo, ali prije klika na apply moramo spremit stare
+            setAreFiltersAppliedAgain(true);
+            if(!filterSpeciesChanged){
+                setFilterSpeciesBefore(filterSpecies);//samo u prvom slucaju set
+            }
+            setFilterSpeciesChanged(true);
+            setFilterSpecies(String(species));
+        }
+        setAreFiltersAppliedAgainHelp(false);
     };
 
 
     const handleDateLostChange = (dateLost: string) => {
-        setFilterDateLost(dateLost);
+        if(!areFiltersApplied){
+            //nema problema, settamo filter
+            setFilterDateLost(dateLost);
+        }
+        else{
+            //vec su aktivni neki filteri, sad ih ponovno postavljamo, ali prije klika na apply moramo spremit stare
+            setAreFiltersAppliedAgain(true);
+            if(!filterDateLostChanged){
+                setFilterDateLostBefore(filterDateLost);//samo u prvom slucaju set
+            }
+            setFilterDateLostChanged(true);
+            setFilterDateLost(dateLost);
+        }
+        setAreFiltersAppliedAgainHelp(false);
     };
 
     const handleCountyChange=(county : string)=>{
-        console.log('County:', county);
-        setFilterCounty(county);
+        if(!areFiltersApplied){
+            //nema problema, settamo filter
+            setFilterCounty(String(county));
+        }
+        else{
+            //vec su aktivni neki filteri, sad ih ponovno postavljamo, ali prije klika na apply moramo spremit stare
+            setAreFiltersAppliedAgain(true);
+            if(!filterCountyChanged){
+                setFilterCountyBefore(filterCounty);//samo u prvom slucaju set
+            }
+            setFilterCountyChanged(true);
+            setFilterCounty(String(county));
+        }
+        setAreFiltersAppliedAgainHelp(false);
     };
 
     const handleCityChange=(city : string)=>{
-        setFilterCity(city);
+        if(!areFiltersApplied){
+            //nema problema, settamo filter
+            setFilterCity(String(city));
+        }
+        else{
+            //vec su aktivni neki filteri, sad ih ponovno postavljamo, ali prije klika na apply moramo spremit stare
+            setAreFiltersAppliedAgain(true);
+            if(!filterCityChanged){
+                setFilterCityBefore(filterCity);//samo u prvom slucaju set
+            }
+            setFilterCityChanged(true);
+            setFilterCity(String(city));
+        }
+        setAreFiltersAppliedAgainHelp(false);
 
     };
     const handleColorChange = (colors: string[]) => {
-        setFilterColors(colors);
+        if(!areFiltersApplied){
+            //nema problema, settamo filter
+            setFilterColors(colors);
+        }
+        else{
+            //vec su aktivni neki filteri, sad ih ponovno postavljamo, ali prije klika na apply moramo spremit stare
+            setAreFiltersAppliedAgain(true);
+            if(!filterColorsChanged){
+                setFilterColorsBefore(filterColors);//samo u prvom slucaju set
+            }
+            setFilterColorsChanged(true);
+            setFilterColors(colors);
+        }
+        setAreFiltersAppliedAgainHelp(false);
+
     };
 
     const handleApplyFilters = () => {
-        // API call ovdje
+        if(areFiltersApplied){
+            setAreFiltersAppliedAgainHelp(true);
+        }
+        else{
+            //pri put applyjamo, jel potrebno ovo?
+            setAreFiltersAppliedAgainHelp(false);
+
+        }
         setAreFiltersApplied(true);
+        setAreFiltersAppliedAgain(false);
+        setFilterNameBefore('');
+        setFilterSpeciesBefore('');
+        setFilterDateLostBefore('');
+        setFilterCountyBefore('');
+        setFilterCityBefore('');
+        setFilterColorsBefore([]);
+        setFilterNameChanged(false);
+        setFilterSpeciesChanged(false);
+        setFilterDateLostChanged(false);
+        setFilterCountyChanged(false);
+        setFilterCityChanged(false);
+        setFilterColorsChanged(false);
     };
     const handleClearFilters = () => {
         setFilterName('');
@@ -305,7 +491,22 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
         setFilterDateLost('');
         setFilterCounty('');
         setFilterCity('');
+        setFilterColors([]);
+        setFilterNameBefore('');
+        setFilterSpeciesBefore('');
+        setFilterDateLostBefore('');
+        setFilterCountyBefore('');
+        setFilterCityBefore('');
+        setFilterColorsBefore([]);
         setAreFiltersApplied(false);
+        setAreFiltersAppliedAgain(false);
+        setAreFiltersAppliedAgainHelp(false);
+        setFilterNameChanged(false);
+        setFilterSpeciesChanged(false);
+        setFilterDateLostChanged(false);
+        setFilterCountyChanged(false);
+        setFilterCityChanged(false);
+        setFilterColorsChanged(false);
     };
     const handleLoggedIn=(user:adUser)=>{
         setIsLoggedIn(true);
@@ -442,7 +643,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
             }
             {
                 shelterAdsShow&&<div className="lost-pets-list" >
-                    {lostPetsShelterActive.map((pet) => (
+                    {filteredPetsShelterActive.map((pet) => (
                         <LostPetCard
                             klasa={"lost-pet-card"}
                             currUser={currentUser}
@@ -460,7 +661,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                             onCategoriesToggle={handleCategoriesToggle}
                         />
                     ))}
-                    {isLoggedIn&&lostPetsShelterInactive.map((pet) => (
+                    {isLoggedIn&&filteredPetsShelterInactive.map((pet) => (
                         <LostPetCard
                             klasa={"lost-pet-card-inactive"}
                             currUser={currentUser}
