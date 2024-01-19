@@ -9,6 +9,7 @@ import Typography from '@mui/joy/Typography';
 import Box from '@mui/joy/Box';
 import AspectRatio from '@mui/joy/AspectRatio';
 import Card from '@mui/joy/Card';
+import Chip from '@mui/joy/Chip';
 
 {/*
 1.LostPetCardProps-explained in MainContent; klasa-lost-pet-card or lost-pet-card-inactive, currUser-user who is logged in
@@ -86,8 +87,9 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         setSelectedValue(category);
     };
     const handleCategoryFinish=async ()=>{
+        const inShelterString = JSON.stringify(pet.inShelter);
         const formData :fdata={
-            inShelter: pet.inShelter,
+            inShelter: inShelterString,
             user: {
                 name: pet.user.name,
                 email: pet.user.email,
@@ -134,9 +136,9 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     };
     return (
         <>
-            <Card sx={{width: 320}}>
-                {(currUser.email === pet.user.email) && isLoggedIn && (
-                    <Button id="more" onClick={handleMore}>
+            <Card sx={{ width: 320, backgroundColor: pet.inShelter === 2 ? 'lightblue' : 'inherit' }}>
+                {(currUser.email == pet.user.email) && isLoggedIn && (
+                    <Button onClick={handleMore}>
                         <i className="bi bi-three-dots"></i>
                     </Button>
                 )}
@@ -169,6 +171,9 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                         <Typography level="body-sm">{pet.location.cityName}</Typography>
                         <Typography level="body-sm">, {pet.location.countyName}</Typography>
                     </Box>
+                    {pet.inShelter === 2 && (
+                        <Chip variant="soft" >In Shelter</Chip>
+                    )}
                 </div>
 
                 <Button onClick={onDetailsClick}>View Details</Button>

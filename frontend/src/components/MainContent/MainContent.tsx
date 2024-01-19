@@ -39,7 +39,7 @@ export interface LostPet {
     description: string;
     location:locationData;
     user:adUser;
-    inShelter: string;
+    inShelter: number;
 }
 interface PetData {
     pet: LostPet;
