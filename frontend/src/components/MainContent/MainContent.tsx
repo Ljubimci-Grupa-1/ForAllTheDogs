@@ -39,7 +39,7 @@ export interface LostPet {
     description: string;
     location:locationData;
     user:adUser;
-    inShelter:number;
+    inShelter: string;
 }
 interface PetData {
     pet: LostPet;
@@ -58,6 +58,12 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                         mainContentState, shelterAdsShow, handleShelterAdsShow}:MainContentProps) => {
     const location = useLocation();
     const shelterIdFromState = location.state && location.state.shelterId;
+
+    useEffect(() => {
+        if (shelterIdFromState) {
+            console.log('Shelter ID:', shelterIdFromState);
+        }
+    }, [shelterIdFromState, /* other dependencies */]);
     // Rest of the code...
     const [isModalOpen, setModalOpen] = useState(false);
     const [currentPet, setCurrentPet] = useState<LostPet | null>(null);
@@ -100,13 +106,21 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     const [menuState, setMenuState] = useState<{ [key: string]: boolean }>({}); // Menu state dictionary
     const [categoriesVisibility, setCategoriesVisibility] = useState<{ [key: string]: boolean }>({});
 
+    //const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //    const size = parseInt(e.target.value, 10);
+    //    setPageSize(size);
+    //    setCurrentPage(0); // Reset to the first page when changing page size
+    //};
+
+    //const handlePageChange = (newPage: number) => {
+    //    setCurrentPage(newPage);
+    //};
 
     useEffect(() => {
         document.title = "For All The Dogs";
-        fetch(`http://localhost:8080/ad/all`)
+        fetch(`https://forallthedogs.onrender.com/ad/all`)
             .then((response) => response.json())
             .then((data) => {
-                console.log("joooj", data);
                 const petsData: LostPet[] = data.map((item: PetData) => {
                     const pet: LostPet = item.pet;
                     // @ts-ignore
@@ -117,16 +131,16 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                     if (data[i] && data[i].adId !== undefined) {
                         petsData[i].adId = data[i].adId;
                         petsData[i].activityName = data[i].activityName;
-                        petsData[i].user=data[i].user
+                        petsData[i].user=data[i].user;
                         petsData[i].inShelter=data[i].inShelter;
                         console.log("datum test", i, petsData[i].dateTimeMissing)
                     }
                 }
+
                 const filtriraniShelter:LostPet[]=[];
-                console.log(shelterIdFromState)
                 for (let i = 0; i < petsData.length; i++) {
                     if (petsData[i].user.email===shelterIdFromState) {
-                            filtriraniShelter.push(petsData[i]);
+                        filtriraniShelter.push(petsData[i]);
                     }
                 }
                 const separatedArraysShelter = filtriraniShelter.reduce<{
@@ -146,7 +160,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
 
                 const filteredPetsShelter = separatedArraysShelter.activeAds;
                 const filteredPetsInactiveShelter = separatedArraysShelter.inactiveAds;
-                console.log("ovo", filteredPetsShelter);
 
                 const filtrirani:LostPet[]=[];
                 for (let i = 0; i < petsData.length; i++) {
@@ -538,6 +551,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
             [cardId]: state,
         }));
     };
+
     return (
         <main className="main">
             <p>Welcome to For All The Dogs, a platform to help find lost pets...</p>
@@ -560,8 +574,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                 onApplyFilters={handleApplyFilters}
                 onClearFilters={handleClearFilters}
             />
-            {mainContentState&&!shelterAdsShow&&
-                <div className="lost-pets-list" >
+            {mainContentState&&!shelterAdsShow&&<div className="lost-pets-list" >
                 {filteredPets.map((pet) => (
                     <LostPetCard
                         klasa={"lost-pet-card"}
@@ -573,7 +586,6 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
                             setCurrentPet(pet);
                             setModalOpen(true);
                         }}
-
                         cardId={pet.petId.toString()} // Use petId as the card identifier
                         menuState={menuState}
                         categoriesVisibility={categoriesVisibility}

@@ -64,21 +64,13 @@ const NavigationBar = ({
         setModalOpen(false);
     };
     const handleProfile=()=>{
-        console.log("show profile")
-        console.log(mainContentState);
         setMainContentState(false);
         handleShelterAdsShow(false);
-        console.log(mainContentState);
     };
-
     const handleBackToMain=()=>{
-        console.log("back to main")
-        console.log(mainContentState);
         setMainContentState(true);
         handleShelterAdsShow(false);
-        console.log(mainContentState);
     };
-
     const handleSignOut=()=>{
         setLoginState(false);
         localStorage.removeItem('jwt');

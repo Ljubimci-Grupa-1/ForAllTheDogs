@@ -167,7 +167,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             email: user.email,
             telephoneNumber: user.telephoneNumber,
         },
-        activityName: "Za ljubimcem se traga",
+        activityName: "Search in progress",
         pet: {
             speciesName: "",
             petName: "",
@@ -187,7 +187,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     useEffect(() => {
         const fetchColors = async () => {
             try {
-                const response = await fetch("http://localhost:8080/color/all");
+                const response = await fetch("https://forallthedogs.onrender.com/color/all");
                 const data = await response.json();
                 setColors(data);
             } catch (error) {
@@ -202,7 +202,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     useEffect(() => {
         const fetchSpecies = async () => {
             try {
-                const response = await fetch("http://localhost:8080/species/all");
+                const response = await fetch("https://forallthedogs.onrender.com/species/all");
                 const data = await response.json();
                 setSpecies(data);
             } catch (error) {
@@ -216,14 +216,14 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:8080/county/all");
+                const response = await fetch("https://forallthedogs.onrender.com/county/all");
                 const data1 = await response.json();
                 setCounties(data1);
 
                 if (data.county !== '') {
                     const targetCounty = data1.find((county:County) => county.countyName === data.county);
                     const myId = targetCounty ? targetCounty.countyId : null;
-                    const responseCities = await fetch(`http://localhost:8080/county/${myId}`);
+                    const responseCities = await fetch(`https://forallthedogs.onrender.com/county/${myId}`);
                     const data2 = await responseCities.json();
                     setCountyCities(data2.cities);
                 }
@@ -284,7 +284,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             const myId = targetCounty ? targetCounty.countyId : null;
             const fetchCitiesByCounties = async () => {
                 try {
-                    const response = await fetch(`http://localhost:8080/county/${myId}`);
+                    const response = await fetch(`https://forallthedogs.onrender.com/county/${myId}`);
                     const data = await response.json();
                     setCountyCities(data.cities);
                 } catch (error) {
@@ -313,6 +313,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 }))})
         }
     };
+    // @ts-ignore
     const handleDateTimeChange = (newDateTime) => {
         setSelectedDateTime(newDateTime);
         const formattedDateTime = dayjs(newDateTime).format('YYYY-MM-DDTHH:mm:ss');
@@ -340,6 +341,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         }
     };
 
+    // @ts-ignore
     const handleUpload :React.MouseEventHandler<HTMLButtonElement>= (event) => {
         //event.preventDefault();
         // Here, you can save the selectedFile or perform any other action
@@ -420,7 +422,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 formData.images = fileBase64Array;
                 console.log(formData);
                 const token = localStorage.getItem('jwt');
-                const response = await fetch('http://localhost:8080/ad/add', {
+                const response = await fetch('https://forallthedogs.onrender.com/ad/add', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -453,7 +455,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 console.log(formData);
                 try {
                     const token = localStorage.getItem('jwt');
-                    const response = await fetch(`http://localhost:8080/ad/edit/${adIdFill}`, {
+                    const response = await fetch(`https://forallthedogs.onrender.com/ad/edit/${adIdFill}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -483,6 +485,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
+
 
     return (
         <>
@@ -609,7 +612,9 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap:'wrap', gap: '0.1rem' }}>
                                                 {selected.map((selectedOption) => (
-                                                    <Chip variant="solid" color="primary"
+                                                    <Chip variant="solid"
+                                                          color="primary"
+                                                          // @ts-ignore
                                                           key={selectedOption.label}>
                                                         {selectedOption.label}
                                                     </Chip>
@@ -876,6 +881,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                         </div>
                                     ))}
                                 </div>
+
                                 {user.userType==2 &&
                                 <div className="input-container">
                                     <label htmlFor="inShelter">In shelter:</label>

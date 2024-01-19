@@ -11,6 +11,7 @@ import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 import {ButtonGroup} from "@mui/joy";
+import {Icon} from "leaflet";
 
 interface PetDetailsModalProps {
     pet: LostPet | null;
@@ -37,6 +38,14 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
 
     const modalContentClass = `modal-content${messageBoardVisibility ? ' shifted' : ''}`;
 
+    const customIcon = new Icon({
+        iconUrl: "https://cdn0.iconfinder.com/data/icons/creatype-pet-shop-outline/64/1_pin_gps_paw_pet_animal_map-512.png",
+        iconSize: [50, 50],
+        iconAnchor: [12.5, 12.5],
+        popupAnchor: [0, 0]
+    });
+
+
     return (
         <div className="modal-background" >
             <div className={modalContentClass}>
@@ -54,7 +63,8 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
                             <MessageBoardModal onClose={() => setMessageBoardVisibility(false)} adId={pet.adId} currUser={currUser} />
                         )}
 
-                        <img src={pet.images[imageIndex].image} alt={pet.petName} style={{ width: '100%', maxWidth: '100%',borderRadius: '10px'}} />
+                        <img src={// @ts-ignore
+                            pet.images[imageIndex].image} alt={pet.petName} style={{ width: '100%', maxWidth: '100%',borderRadius: '10px'}} />
 
                         <div>
                             <Button onClick={handleLeft}>
@@ -99,13 +109,14 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
                         <MapContainer
                             center={[pet.location.latitude, pet.location.longitude]}
                             zoom={13}
+                            // @ts-ignore
                             style={{ height: '300px', width: '100%', marginTop: '16px', mb: 2 }}
                         >
                             <TileLayer
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             />
-                            <Marker position={[pet.location.latitude, pet.location.longitude]}>
+                            <Marker position={[pet.location.latitude, pet.location.longitude]} icon={customIcon}>
                                 <Popup>{pet.location.cityName}, {pet.location.countyName}</Popup>
                             </Marker>
                         </MapContainer>

@@ -56,6 +56,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
     const [selectedColors, setSelectedColors] = useState<string[]>([]);
     const [selectedCounty, setSelectedCounty] = useState<string>('');
     const [selectedCity, setSelectedCity] = useState<string>('');
+    // @ts-ignore
     const [selectedDateTime, setSelectedDateTime] = useState<Date | null>(null);
     const handleClearFilters = () => {
         onNameChange('');
@@ -75,7 +76,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
     useEffect(() => {
         const fetchSpecies = async () => {
             try {
-                const response = await fetch('http://localhost:8080/species/all');
+                const response = await fetch('https://forallthedogs.onrender.com/species/all');
                 const data = await response.json();
                 setSpecies(data);
             } catch (error) {
@@ -85,7 +86,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
         const fetchCounties = async () => {
             try {
-                const response = await fetch('http://localhost:8080/county/all');
+                const response = await fetch('https://forallthedogs.onrender.com/county/all');
                 const data = await response.json();
                 setCounties(data);
             } catch (error) {
@@ -95,7 +96,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
         const fetchCities = async () => {
             try {
-                const response = await fetch('http://localhost:8080/city/all');
+                const response = await fetch('https://forallthedogs.onrender.com/city/all');
                 const data = await response.json();
                 const filteredData = data.filter((value: City) => value.cityName !== 'Ostalo');
                 setCities(filteredData);
@@ -106,7 +107,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
 
         const fetchColors = async () => {
             try {
-                const response = await fetch('http://localhost:8080/color/all');
+                const response = await fetch('https://forallthedogs.onrender.com/color/all');
                 const data = await response.json();
                 setColors(data);
             } catch (error) {
@@ -120,6 +121,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         fetchColors();
     }, []);
 
+    // @ts-ignore
     const handleDateTimeChange = (newDateTime) => {
         setSelectedDateTime(newDateTime);
 
@@ -127,6 +129,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         console.log(formattedDateTime);
         onDateLostChange(formattedDateTime);
     };
+
 
 
 
@@ -147,6 +150,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 placeholder="Choose one…"
                 size="md"
                 variant="outlined"
+                // @ts-ignore
                 onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string | null) => {
                         const selectedOption = value || "";
                             setSelectedSpecies(selectedOption);
@@ -174,6 +178,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 variant="outlined"
                 multiple
                 id="colorSelect"
+                // @ts-ignore
                 onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string[] | null) => {
                     if (value?.includes("All Colors") && value[value?.length-1]==="All Colors") {
                         console.log("help")
@@ -212,6 +217,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 placeholder="Choose one…"
                 size="md"
                 variant="outlined"
+                // @ts-ignore
                 onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string | null) => {
                     const selectedValue = value || '';
                     setSelectedCounty(selectedValue);
@@ -235,6 +241,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
                 placeholder="Choose one…"
                 size="md"
                 variant="outlined"
+                // @ts-ignore
                 onChange={(event: React.ChangeEvent<{ value: unknown }>, value: string | null) => {
                     const selectedValue = value || '';
                     setSelectedCity(selectedValue);

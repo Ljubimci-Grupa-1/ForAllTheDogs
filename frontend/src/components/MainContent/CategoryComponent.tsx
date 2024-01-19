@@ -19,10 +19,10 @@ export const CategoryComponent = ({pet, handleCategoryClose, handleChangeCategor
         defaultValue={pet.activityName}
         onChange={(e) =>handleChangeCategory(e.target.value)}
     >
-        <option value="Za ljubimcem se traga">Za ljubimcem se traga</option>
-        <option value="Sretno pronađen">Sretno pronađen</option>
-        <option value="Nije pronađen, potraga nije više u tijeku">Nije pronađen, potraga nije više u tijeku</option>
-        <option value="Nesretno pronađen">Nesretno pronađen</option>
+        <option value="Search in progress">Search in progress</option>
+        <option value="Happily found">Happily found</option>
+        <option value="Not found, search discontinued">Not found, search discontinued</option>
+        <option value="Found under unhappy circumstances">Found under unhappy circumstances</option>
         {/* Add more species as needed */}
     </select>
         <button onClick={handleChanged}>done</button>

@@ -19,11 +19,6 @@ import hr.fer.progi.forAllTheDogsbackend.image.repository.ImageRepository
 import hr.fer.progi.forAllTheDogsbackend.location.controller.dto.AddLocationDTO
 import hr.fer.progi.forAllTheDogsbackend.location.entity.Location
 import hr.fer.progi.forAllTheDogsbackend.location.repository.LocationRepository
-import hr.fer.progi.forAllTheDogsbackend.message.controller.dto.AddMessageDTO
-import hr.fer.progi.forAllTheDogsbackend.message.controller.dto.MessageDTO
-import hr.fer.progi.forAllTheDogsbackend.message.entity.Message
-import hr.fer.progi.forAllTheDogsbackend.message.repository.MessageRepository
-import hr.fer.progi.forAllTheDogsbackend.message.service.MessageService
 import hr.fer.progi.forAllTheDogsbackend.pet.controller.dto.AddPetDTO
 import hr.fer.progi.forAllTheDogsbackend.pet.entity.Pet
 import hr.fer.progi.forAllTheDogsbackend.pet.repository.PetRepository
@@ -46,16 +41,12 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.core.context.SecurityContextHolder
 import java.time.LocalDateTime
-import java.util.Date
 
 @SpringBootTest
-class AdMessageServiceTest {
+class AdServiceTest {
 
     @Autowired
     private lateinit var adService: AdService
-
-    @Autowired
-    private lateinit var messageService: MessageService
 
     @MockBean
     private lateinit var adRepository: AdRepository
@@ -87,8 +78,6 @@ class AdMessageServiceTest {
     @MockBean
     private lateinit var imageRepository: ImageRepository
 
-    @MockBean
-    private lateinit var messageRepository: MessageRepository
 
     private lateinit var county1: County
     private lateinit var city1: City
@@ -103,8 +92,6 @@ class AdMessageServiceTest {
     private lateinit var addLocationDTO1: AddLocationDTO
     private lateinit var ad1: Ad
     private lateinit var image1: Image
-    private lateinit var message1: Message
-    private lateinit var addMessageDTO1: AddMessageDTO
 
 
     @BeforeEach
@@ -208,24 +195,6 @@ class AdMessageServiceTest {
             ad = ad1,
             message = null
         )
-
-        message1 = Message(
-            messageId = 1L,
-            text = "Message",
-            date = Date(122, 0, 1),
-            ad = ad1,
-            user = user1,
-            location = location1
-        )
-
-        addMessageDTO1 = AddMessageDTO(
-            text = message1.text,
-            date = message1.date,
-            adId = message1.ad.adId,
-            location = addLocationDTO1,
-            image = "img1"
-        )
-
     }
 
     @Test
@@ -281,42 +250,4 @@ class AdMessageServiceTest {
         assertEquals(addAdDTO1.pet.location.countyName, result.pet.location.countyName)
         assertEquals(addAdDTO1.images, result.images.map { it.image })
     }
-
-    @Test
-    fun addNewMessage() {
-        // mocking SecurityContextHolder and SecurityContext for spring security authentication
-        val authentication = mock(Authentication::class.java)
-        val securityContext = mock(SecurityContext::class.java)
-        SecurityContextHolder.setContext(securityContext)
-
-        // defining behavior of mocked repositories
-        `when`(securityContext.authentication).thenReturn(authentication)
-        `when`(authentication.name).thenReturn(user1.email)
-        `when`(userRepository.findByEmail(authentication.name)).thenReturn(user1)
-        `when`(adRepository.findById(ad1.adId)).thenReturn(java.util.Optional.of(ad1))
-        `when`(cityRepository.findByCityName(city1.cityName)).thenReturn(city1)
-        `when`(locationRepository.findMaxLocationId()).thenReturn(0L)
-        `when`(locationRepository.save(any<Location>())).thenReturn(location1)
-        `when`(messageRepository.findMaxMessageId()).thenReturn(0L)
-        `when`(messageRepository.save(any<Message>())).thenReturn(message1)
-        `when`(imageRepository.findMaxImageId()).thenReturn(0L)
-        `when`(imageRepository.save(image1)).thenReturn(image1)
-
-        val result = messageService.addMessage(addMessageDTO1)
-
-        assertNotNull(result)
-        checkIfEqual2(addMessageDTO1, result)
-    }
-
-    fun checkIfEqual2(addMessageDTO: AddMessageDTO, result: MessageDTO) {
-        assertEquals(addMessageDTO.text, result.text)
-        assertEquals(addMessageDTO.date, result.date)
-        assertEquals(addMessageDTO.adId, result.adId)
-        assertEquals(addMessageDTO.location?.longitude, result.location.longitude)
-        assertEquals(addMessageDTO.location?.latitude, result.location.latitude)
-        assertEquals(addMessageDTO.location?.cityName, result.location.cityName)
-        assertEquals(addMessageDTO.location?.countyName, result.location.countyName)
-        assertEquals(addMessageDTO.image, result.image?.image ?: "")
-    }
-
 }

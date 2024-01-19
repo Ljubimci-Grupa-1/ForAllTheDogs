@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './SheltersComponent.css';
 import NavigationBar from '../MainContent/Bars/NavigationBar';
 import {useNavigate} from 'react-router-dom';
-import {Typography, Stack, Card} from "@mui/joy";
 
 interface ShelterComponentProps {
     handleLoggedIn: () => void;
@@ -17,7 +16,6 @@ interface Shelter{
     userId:number;
     username:string;
     email:string;
-
 }
 
 const ShelterComponent: React.FC<ShelterComponentProps> = ({
@@ -36,7 +34,7 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
         handleShelterAdsShow(false);
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/user/shelter/all');
+                const response = await fetch('https://forallthedogs.onrender.com/user/shelter/all');
                 const data = await response.json();
                 console.log(data); // Log shelter objects
                 setShelters(data);
@@ -46,8 +44,8 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
         };
 
         fetchData();
-
     }, []);
+
     const handleShelterClick = (shelterId: string) => {
         // Use navigate function to navigate and pass state
         handleShelterAdsShow(true);
@@ -66,32 +64,18 @@ const ShelterComponent: React.FC<ShelterComponentProps> = ({
                 shelterAdsShow={shelterAdsShow}
                 handleShelterAdsShow={handleShelterAdsShow}
             />
+            <h2>Shelter Usernames</h2>
+            <div className="shelter-container">
+                {shelters.map((shelter: Shelter) => (
+                    <div
+                        onClick={() => handleShelterClick(shelter.email)}
+                        key={shelter.userId}
+                        className="shelterUser-container">
+                        {shelter.username}
+                    </div>
+                ))}
 
-            <Stack
-                spacing={2}
-                sx={{
-                    width: '100%', // Set the width to 100%
-                    margin: '0 auto', // Center the Stack horizontally
-                }}
-            >
-                <Card sx={{ p: 2, borderRadius: 2, boxShadow: '0 0 10px rgba(0,0,0,0.2)' }}>
-                    <Typography level="h1" sx={{ fontSize: '2rem', fontWeight: 'bold', color: '#2196F3', marginBottom: '1rem' }}>
-                        All Shelters
-                    </Typography>
-                    <Card color="primary" className="shelter-container" sx={{ p: 2, borderRadius: 5, boxShadow: '0 0 10px rgba(0,0,0,0.2)'}}>
-                        {shelters.map((shelter: Shelter) => (
-                            <Typography
-                                key={shelter.userId}
-                                onClick={() => handleShelterClick(shelter.email)}
-                                className="shelterUser-container"
-                                level={'h3'}
-                            >
-                                {shelter.username}
-                            </Typography>
-                        ))}
-                    </Card>
-                </Card>
-            </Stack>
+            </div>
         </main>
     );
 };

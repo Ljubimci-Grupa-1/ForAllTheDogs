@@ -31,7 +31,7 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         document.title = "For All The Dogs";
-        fetch('http://localhost:8080/ad/all')
+        fetch('https://forallthedogs.onrender.com/ad/all')
             .then((response) => response.json())
             .then((data) => {
                 if(!isLoggedIn){
@@ -51,6 +51,7 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
                         petsData.map((pet) => ({
                             title: pet.petName,
                             description: pet.description,
+                            // @ts-ignore
                             imageUrl: pet.images[0]?.image || "",
                             long: pet.location.longitude,
                             lat: pet.location.latitude,
@@ -68,6 +69,7 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
                     petsData.map((pet) => ({
                         title: pet.petName,
                         description: pet.description,
+                        // @ts-ignore
                         imageUrl: pet.images[0]?.image || "",
                         long: pet.location.longitude,
                         lat: pet.location.latitude,

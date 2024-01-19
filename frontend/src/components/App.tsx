@@ -28,7 +28,6 @@ function App() {
     };
     const handleShowShelterAds=(state:boolean)=>{
         setShelterAdsShow(state);
-        console.log("shelter ads show: "+state);
     };
     return (
         <BrowserRouter>
@@ -44,8 +43,8 @@ function App() {
                 <Route path="/map" element={<Map isLoggedIn={isLoggedIn}/>} />
                 <Route path="/shelters" element={<SheltersComponent
                     handleLoggedIn={handleLoggedInAppC} handleLoggedOut={handleLoggedOutAppC}
-                mainContentState={mainContentState} setMainContentState={handlemainContentStateChange}
-                handleShelterAdsShow={handleShowShelterAds} shelterAdsShow={shelterAdsShow}/>}/>
+                    mainContentState={mainContentState} setMainContentState={handlemainContentStateChange}
+                    handleShelterAdsShow={handleShowShelterAds} shelterAdsShow={shelterAdsShow}/>}/>
             </Routes>
 
         </BrowserRouter>

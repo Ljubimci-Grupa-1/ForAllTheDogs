@@ -9,7 +9,6 @@ import Typography from '@mui/joy/Typography';
 import Box from '@mui/joy/Box';
 import AspectRatio from '@mui/joy/AspectRatio';
 import Card from '@mui/joy/Card';
-import Chip from '@mui/joy/Chip';
 
 {/*
 1.LostPetCardProps-explained in MainContent; klasa-lost-pet-card or lost-pet-card-inactive, currUser-user who is logged in
@@ -50,11 +49,11 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     const handleDelete = async () => {
         try {
             const token = localStorage.getItem('jwt');
-            const response = await fetch(`http://localhost:8080/ad/delete/${pet.adId}`, {
+            const response = await fetch(`https://forallthedogs.onrender.com/ad/delete/${pet.adId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
@@ -88,7 +87,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     };
     const handleCategoryFinish=async ()=>{
         const formData :fdata={
-            inShelter: "1",
+            inShelter: pet.inShelter,
             user: {
                 name: pet.user.name,
                 email: pet.user.email,
@@ -114,7 +113,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
         console.log(formData);
         try {
             const token = localStorage.getItem('jwt');
-            const response = await fetch(`http://localhost:8080/ad/edit/${pet.adId}`, {
+            const response = await fetch(`https://forallthedogs.onrender.com/ad/edit/${pet.adId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -135,7 +134,7 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
     };
     return (
         <>
-            <Card sx={{ width: 320, backgroundColor: pet.inShelter === 2 ? 'lightblue' : 'inherit' }}>
+            <Card sx={{width: 320}}>
                 {(currUser.email === pet.user.email) && isLoggedIn && (
                     <Button id="more" onClick={handleMore}>
                         <i className="bi bi-three-dots"></i>
@@ -158,9 +157,9 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                 )}
                 {pet.images && pet.images[0] && (
                     <AspectRatio minHeight="120px" maxHeight="200px">
-                        <img src={
+                        <img
                             // @ts-ignore
-                            pet.images[0].image} alt={pet.petName}/>
+                            src={pet.images[0].image} alt={pet.petName}/>
                     </AspectRatio>
                 )}
                 <div>
@@ -170,9 +169,6 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                         <Typography level="body-sm">{pet.location.cityName}</Typography>
                         <Typography level="body-sm">, {pet.location.countyName}</Typography>
                     </Box>
-                    {pet.inShelter === 2 && (
-                        <Chip variant="soft" >In Shelter</Chip>
-                    )}
                 </div>
 
                 <Button onClick={onDetailsClick}>View Details</Button>
@@ -186,8 +182,8 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     datetimeFill={pet.dateTimeMissing} cityFill={pet.location.cityName} text="Edit this ad"
                     colorsFill={pet.colors.map(colorName => ({ colorName }))}
                     countyFill={pet.location.countyName}
-                    imagesFill={ // @ts-ignore
-                    pet.images.map(image=>image.image)} adIdFill={pet.adId}
+                    // @ts-ignore
+                    imagesFill={pet.images.map(image=>image.image)} adIdFill={pet.adId}
                     isLoggedIn={isLoggedIn}
                     // @ts-ignore
                     user={{
