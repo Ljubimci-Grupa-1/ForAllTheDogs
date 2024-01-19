@@ -37,7 +37,7 @@ const Map : FC<MapProps> = ({ isLoggedIn }) => {
                 if(!isLoggedIn){
                     const filtrirani:DataFetched[]=[];
                     for(let i=0; i<data.length; i++){
-                        if(data[i].activityName==='Za ljubimcem se traga'){
+                        if(data[i].activityName==='Search in progress'){
                             filtrirani.push(data[i]);
                         }
                     }

@@ -77,11 +77,12 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
 
                         <Box
                             sx={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-                                gap: 2,
-                                mb: 2,
-                                mx: 'auto', // Center horizontally
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                minWidth:'300px',
+                                maxWidth:'100%'
                             }}
                         >
                             <Card variant="outlined">
