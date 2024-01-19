@@ -69,7 +69,7 @@ interface AddNewModalProps {
     adIdFill:number;
     speciesFill:string;
     colorsFill:Color[];
-    ageFill:number;
+    ageFill:number | string;
     nameFill:string;
     latitudeFill:number;
     longitudeFill:number;
@@ -82,7 +82,7 @@ interface AddNewModalProps {
     user:adUser;
 }
 export interface Data{
-    age:number;
+    age:number | string;
     name:string;
     species:string;
     colors:Color[];
@@ -102,7 +102,7 @@ export interface locationData{
 interface petData{
     speciesName:string;
     petName:string;
-    age:number;
+    age:number | string;
     colors:Color[];
     dateTimeMissing:string;
     description:string;
@@ -361,7 +361,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const formValidation = ():FormValidation=>{
         if(speciesFill===''){
             const forma = {
-                age:(data.age>=0)&&(!isNaN(data.age)), name:(data.name.trim()!==''), species:changed.species&&(data.species!==''),
+                age:typeof data.age==='number'?(data.age>=0):false, name:(data.name.trim()!==''), species:changed.species&&(data.species!==''),
                 description:(data.description.trim()!==''), datetime:(data.datetime!==''),
                 colors:(data.colors.length!==0), latitude:(data.latitude!==190), longitude:(data.longitude!==190),
                 images:(fileBase64Array.length<4)&&(fileBase64Array.length>0), county:(data.county!==''), city:(data.city!=='')
@@ -376,7 +376,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         }
         else{
             const forma = {
-                age:(!isNaN(data.age))&&(data.age>=0), name:(data.name.trim()!==''), species:(data.species!==''),
+                age:typeof data.age==='number'?(data.age>=0):false, name:(data.name.trim()!==''), species:(data.species!==''),
                 description:(data.description.trim()!==''), datetime:(data.datetime!==''),
                 colors:(data.colors.length!==0), latitude:(data.latitude!==190), longitude:(data.longitude!==190),
                 images:(fileBase64Array.length<4)&&(fileBase64Array.length>0), county:(data.county!==''), city:(data.city!=='')
@@ -590,6 +590,10 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                                             if(parseInt(event.target.value)>=0) {
                                                 setChanged({...validation, age:true})
                                                 setData({...data, age: parseInt(event.target.value) });
+                                            }
+                                            if(event.target.value===''){
+                                                setChanged({...validation, age:true})
+                                                setData({...data, age:""});
                                             }
                                         }}
                                     />

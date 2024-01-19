@@ -101,7 +101,7 @@ const MainContent= ({handleLoggedInAppC, handleLoggedOutAppC, handleMainContentS
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     // @ts-ignore
     const [currentUser, setCurrentUser] = useState<adUser>({
-        email:"", name:"", telephoneNumber:""
+        email:"", name:"", telephoneNumber:"", userType:-1
     });
     const [menuState, setMenuState] = useState<{ [key: string]: boolean }>({}); // Menu state dictionary
     const [categoriesVisibility, setCategoriesVisibility] = useState<{ [key: string]: boolean }>({});

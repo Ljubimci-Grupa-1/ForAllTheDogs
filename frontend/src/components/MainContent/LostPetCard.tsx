@@ -194,7 +194,8 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                     user={{
                         name:currUser.name,
                         email: currUser.email,
-                        telephoneNumber: currUser.telephoneNumber
+                        telephoneNumber: currUser.telephoneNumber,
+                        userType: currUser.userType,
                     }
                     }
                 ></AddNewModal>

@@ -4,7 +4,8 @@ import './MessageBoardModal.css'
 import {Button, styled, SvgIcon, Textarea} from "@mui/joy";
 import DraggableMapForm from "./Map/DraggableMapForm";
 import {adUser} from "./AddNewModal";
-import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet"; // You may need to install this library
+import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
+import {Icon} from "leaflet"; // You may need to install this library
 interface MessageBoardModalProps {
     onClose: () => void;
     adId: number;
@@ -257,6 +258,15 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
         }
     };
 
+
+    const customIcon = new Icon({
+        iconUrl: "https://cdn0.iconfinder.com/data/icons/creatype-pet-shop-outline/64/1_pin_gps_paw_pet_animal_map-512.png",
+        iconSize: [50, 50],
+        iconAnchor: [12.5, 12.5],
+        popupAnchor: [0, 0]
+    });
+
+
     return (
         <div className="message-board-modal">
             {messages.map((message) => (
@@ -297,7 +307,7 @@ const MessageBoardModal: React.FC<MessageBoardModalProps> = ({ onClose, adId, cu
                             />
 
                             <Marker // @ts-ignore
-                                position={[message.location.latitude, message.location.longitude]}>
+                                position={[message.location.latitude, message.location.longitude]} icon={customIcon}>
                                 <Popup>{// @ts-ignore
                                     message.location.cityName}, {message.location.countyName}</Popup>
                             </Marker>
