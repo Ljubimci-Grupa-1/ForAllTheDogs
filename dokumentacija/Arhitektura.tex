@@ -22,15 +22,14 @@
 		\subsection{MVC stil arhitekture}
 		Arhitektura razrađena u nastavku prati stil arhitekture MVC (model-view-controller).\\
 		
-		Osnovna	karakteristika ovog stila je	nezavisan razvoj pojedinih dijelova aplikacije što pojednostavljuje testiranje	i razvijanje dijelova sustava te	njihove	dorade. Korisničko sučelje je odvojeno od ostatka sustava, a kohezija elemenata se postiže kroz tri sloja: jedan na klijentskoj strani - pogled (\textit{View}) te dva na serverskoj strani – upravitelj (\textit{Controller}) i model (\textit{Model}).
+		Osnovna	karakteristika ovog stila je	nezavisan razvoj pojedinih dijelova aplikacije što pojednostavljuje testiranje	i razvijanje dijelova sustava te	njihove	dorade. Korisničko sučelje je odvojeno od ostatka sustava, a kohezija elemenata postiže se kroz 3 sloja: 2 na serverskoj strani –  model (\textit{Model}) i upravitelj (\textit{Controller}) te 1 na klijentskoj strani - pogled (\textit{View}).
 
-		\begin{packed_enum}
+		\begin{packed_item}
 			\item\textit{Model} - Predstavlja glavnu komponentu sustava koja sadrži dinamičke strukture podataka odnosno razrede koji opisuju domenu primjene te sadrže pravila i aplikacijsku logiku. Usko je vezan uz bazu podataka aplikacije.
-			\item\textit{Pogled (View)} - Sadrži komponente koje služe za prikaz podataka modela i interakciju s korisnikom kroz grafičko korisničko sučelje.
-			\item\textit{Upravitelj (Controller)} - Upravlja korisničkim zahtjevima prema modelu i odgovorima modela natrag prema pogledima. Povezuje serversku i korisničku stranu.
-		\end{packed_enum}
+			\item\textit{View} - Sadrži komponente koje služe za prikaz podataka modela i interakciju kroz grafičko korisničko sučelje.
+			\item\textit{Controller} - Povezuje serversku i korisničku stranu: upravlja korisničkim zahtjevima prema modelu i odgovorima modela nazad prema pogledima.
+		\end{packed_item}
 
-		%unos slike
 		\begin{figure}[H]
 			\includegraphics[scale=0.7]{slike/mvc-framework.PNG} 
 			\centering
@@ -72,7 +71,7 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 				
 		\section{Baza podataka}
 			
-		Između više tipova baza podataka (relacijska, hijerarhijska, objektno-orijentirana), za našu smo web aplikaciju odabrali koristiti relacijsku bazu podataka. Odlučili smo se za tu vrstu baze jer s njom imamo najviše iskustva, a jednostavna je, jasna i praktična za naše potrebe (upravljanje podacima o korisnicima koji postavljaju, izmjenjuju, brišu ili komentiraju oglase za izgubljene odnosno pronađene ljubimce) i implementaciju (klase u Springu su preslikane relacije iz baze) i omogućavaju jednostavan vizualni prikaz točnih međuovisnosti relacija, a time i veću razumljivost. Bazu podataka koristimo za efikasnu pohranu i dohvat podataka za obradu. Elementi baze podataka su relacije, odnosno tablice i njihovi vlastiti atributi. Baza podataka ove aplikacije sadrži 12 tablica:
+		Između više tipova baza podataka (relacijska, hijerarhijska, objektno-orijentirana), za našu smo web aplikaciju odabrali koristiti relacijsku bazu podataka. Odlučili smo se za tu vrstu baze jer s njom imamo najviše iskustva, a jednostavna je, jasna i praktična za naše potrebe (upravljanje podacima o korisnicima koji postavljaju, izmjenjuju, brišu ili komentiraju oglase za izgubljene odnosno pronađene ljubimce) i implementaciju (klase u Springu su preslikane relacije iz baze) i omogućavaju jednostavan vizualni prikaz točnih međuovisnosti relacija, a time i veću razumljivost. Bazu podataka koristimo za efikasnu pohranu i dohvat podataka za obradu. Elementi baze podataka su relacije, odnosno tablice i njihovi vlastiti atributi. Baza podataka ove aplikacije sadrži 13 tablica:
 		
 		\begin{packed_item}
 			\item User
@@ -87,6 +86,7 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 			\item Image
 			\item City
 			\item County
+			\item Location
 		\end{packed_item}
 
 			\subsection{Opis tablica}
@@ -102,7 +102,7 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{APP\_USER}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}userId & BIGINT	&  	jedinstveni ID korisnika  	\\ \hline
 					username	& VARCHAR &   korisničko ime (jedinstveno)	\\ \hline 
@@ -123,13 +123,13 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{USER\_TYPE}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}userTypeId & BIGINT	&  	jedinstveni ID tipa korisnika  	\\ \hline
 					name	& VARCHAR &   ime tipa korisnika	\\ \hline 
 				\end{longtblr}
 				
-				\noindent\textbf{MESSAGE} Poruka koju korisnici mogu ostavljati u komunikaciji ispod oglasa, u \textit{@ManyToOne} vezi s \textbf{AD} preko \textit{adId}, \textit{@ManyToOne} vezi s \textbf{USER} preko \textit{userId}, \textit{@OneToOne} vezi s \textbf{IMAGE} preko \textit{imageId}.
+				\noindent\textbf{MESSAGE} Poruka koju korisnici mogu ostavljati u komunikaciji ispod oglasa, u \textit{@ManyToOne} vezi s \textbf{AD} preko \textit{adId}, \textit{@ManyToOne} vezi s \textbf{USER} preko \textit{userId}, \textit{@OneToOne} vezi s \textbf{LOCATION} preko \textit{locationId}.
 				
 				\begin{longtblr}[
 					label=none,
@@ -138,17 +138,14 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{MESSAGE}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}messageId & BIGINT	&  	jedinstveni ID poruke  	\\ \hline
 					text	& VARCHAR &   sadržaj poruke	\\ \hline 
 					date	& DATE &   datum kada je poruka ostavljena ispod oglasa	\\ \hline 
-					latitude	& DOUBLE PRECISION &   geografska širina	\\ \hline 
-					longitude	& DOUBLE PRECISION &   geografska dužina	\\ \hline 
 					\SetCell{LightBlue}adId	& BIGINT &   jedinstveni ID oglasa ispod kojeg je poruka ostavljena	\\ \hline 
+					\SetCell{LightBlue}locationId	& BIGINT &   jedinstveni ID lokacije 	\\ \hline 
 					\SetCell{LightBlue}userId	& BIGINT &   jedinstveni ID korisnika koji je ostavio poruku	\\ \hline 
-					\SetCell{LightBlue}imageId	& BIGINT &   jedinstveni ID slike ostavljene uz poruku	\\ \hline 
-					\SetCell{LightBlue}cityId	& BIGINT &   jedinstveni ID grada u kojem je poruka ostavljena	\\ \hline 
 				\end{longtblr}
 				
 				\noindent\textbf{IMAGE} Tablica u koju se spremaju slike koje se dohvaćaju preko URL.
@@ -160,10 +157,12 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{IMAGE}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}imageId & BIGINT	&  	jedinstveni ID slike  	\\ \hline
 					imageUrl	& VARCHAR &   URL slike	\\ \hline 
+					\SetCell{LightBlue}adId & BIGINT	&  	jedinstveni ID pripadajućeg oglasa  	\\ \hline
+					\SetCell{LightBlue}messageId & BIGINT	&  	jedinstveni ID pripadajuće poruke  	\\ \hline
 				\end{longtblr}
 				
 				\noindent\textbf{ACTIVITY} Predstavlja kategoriju oglasa.
@@ -175,13 +174,13 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{ACTIVITY}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}activityId & BIGINT	&  	jedinstveni ID kategorije  	\\ \hline
 					activityCategory	& VARCHAR &   naziv kategorije	\\ \hline 
 				\end{longtblr}
 				
-				\noindent\textbf{AD} Predstavlja oglas, u \textit{@ManyToOne} vezi s \textbf{ACTIVITY}, \textit{@ManyToOne} vezi s \textbf{USER} preko \textit{userId}, \textit{@OneToOne} vezi s \textbf{IMAGE} (moguće 3 slike po oglasu), \textit{@OneToOne} vezi s \textbf{PET}.
+				\noindent\textbf{AD} Predstavlja oglas, u \textit{@ManyToOne} vezi s \textbf{ACTIVITY}, \textit{@ManyToOne} vezi s \textbf{USER} preko \textit{userId}, \textit{@OneToOne} vezi s \textbf{PET}.
 				
 				\begin{longtblr}[
 					label=none,
@@ -190,19 +189,17 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{AD}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}adId & BIGINT	&  	jedinstveni ID oglasa  	\\ \hline
 					inShelter	& INT &   1 ako je oglas od skloništa, inače 0 	\\ \hline 
-					\SetCell{LightBlue}userId	& BIGINT &   jedinstveni ID korisnika koji je postavio oglas 	\\ \hline 
+					deleted	& INT &   1 ako je oglas obrisan, inače 0 	\\ \hline 
 					\SetCell{LightBlue}activityId	& BIGINT &   jedinstveni ID kategorije oglasa 	\\ \hline
-					\SetCell{LightBlue}image1Id	& BIGINT &   jedinstveni ID prve slike 	\\ \hline
-					\SetCell{LightBlue}image2Id	& BIGINT &   jedinstveni ID druge slike 	\\ \hline
-					\SetCell{LightBlue}image3Id	& BIGINT &   jedinstveni ID treće slike 	\\ \hline
 					\SetCell{LightBlue}petId	& BIGINT &   jedinstveni ID ljubimca u oglasu 	\\ \hline
+					\SetCell{LightBlue}userId	& BIGINT &   jedinstveni ID korisnika koji je postavio oglas 	\\ \hline 
 				\end{longtblr}
 				
-				\noindent\textbf{PET} Predstavlja ljubimca, u \textit{@ManyToMany} vezi s \textbf{COLOR}, \textit{@ManyToOne} vezi sa \textbf{SPECIES}, \textit{@ManyToOne} vezi sa \textbf{CITY}.
+				\noindent\textbf{PET} Predstavlja ljubimca, u \textit{@ManyToMany} vezi s \textbf{COLOR}, \textit{@ManyToOne} vezi sa \textbf{SPECIES}, \textit{@OneToOne} vezi s \textbf{LOCATION}.
 				
 				\begin{longtblr}[
 					label=none,
@@ -211,18 +208,15 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{PET}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}petId & BIGINT	&  	jedinstveni ID ljubimca  	\\ \hline
-					hourMissing	& INT &   sat nestanka ljubimca	\\ \hline 
-					dateMissing	& DATE &   datum nestanka ljubimca	\\ \hline 
-					age	& INT &   starost ljubimca	\\ \hline 
-					description	& VARCHAR &   opis ljubimca	\\ \hline 
-					latitude	& DOUBLE PRECISION &   geografska širina lokacije nestanka ljubimca	\\ \hline 
-					longitude	& DOUBLE PRECISION &   geografska dužina lokacije nestanka ljubimca	\\ \hline 
 					petName	& VARCHAR &   ime na koje se ljubimac odaziva	\\ \hline 
+					petAge	& INT &   starost ljubimca	\\ \hline 
+					dateTimeMissing	& DATETIME &   datum i vrijeme nestanka ljubimca	\\ \hline 
+					description	& VARCHAR &   opis ljubimca	\\ \hline 
 					\SetCell{LightBlue}speciesId	& BIGINT &   jedinstveni ID vrste ljubimca	\\ \hline 
-					\SetCell{LightBlue}cityId	& BIGINT &   jedinstveni ID grada	\\ \hline 
+					\SetCell{LightBlue}locationId	& BIGINT &   ID lokacije nestanka ljubimca	\\ \hline 
 				\end{longtblr}
 				
 				\noindent\textbf{SPECIES} Tablica vrsta ljubimaca.
@@ -234,7 +228,7 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{SPECIES}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}speciesId & BIGINT	&  	jedinstveni ID vrste ljubimca  	\\ \hline
 					speciesName	& VARCHAR &   naziv vrste ljubimca	\\ \hline 
@@ -249,7 +243,7 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{COLOR}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}colorId & BIGINT	&  	jedinstveni ID boje  	\\ \hline
 					colorName	& VARCHAR &   naziv boje	\\ \hline 
@@ -264,7 +258,7 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{OF\_COLOR}}	 \\ \hline[3pt]
 					\SetCell{LightBlue}colorId & BIGINT	&  	jedinstveni ID boje  	\\ \hline
 					\SetCell{LightBlue}petId & BIGINT	&  	jedinstveni ID ljubimca	\\ \hline
@@ -279,7 +273,7 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{COUNTY}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}countyId & BIGINT	&  	jedinstveni ID županije  	\\ \hline
 					countyName & VARCHAR	&  	naziv županije	\\ \hline
@@ -294,7 +288,7 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 						width = \textwidth,
 						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
-					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					}
 					\hline \SetCell[c=3]{c}{\textbf{CITY}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}cityId & BIGINT	&  	jedinstveni ID grada  	\\ \hline
 					cityName & VARCHAR	&  	naziv grada	\\ \hline
@@ -302,17 +296,35 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 					
 				\end{longtblr}
 				
+				\noindent\textbf{LOCATION} Predstavlja točne lokacije, u \textit{@ManyToOne} vezi sa \textbf{CITY}.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
+						rowhead = 1,
+					}
+					\hline \SetCell[c=3]{c}{\textbf{LOCATION}}	 \\ \hline[3pt]
+					\SetCell{LightGreen}locationId & BIGINT	&  	jedinstveni ID lokacije  	\\ \hline
+					longitude & DOUBLE PRECISION	&  	geografska dužina	\\ \hline
+					latitude & DOUBLE PRECISION	&  	geografska širina	\\ \hline
+					\SetCell{LightBlue}cityId & BIGINT	&  	jedinstveni ID grada  	\\ \hline
+					
+				\end{longtblr}
+				
 			
 			\subsection{Dijagram baze podataka}
 			\begin{figure}[H]
-				\includegraphics[scale=0.33]{slike/ER_diagram.PNG} 
+				\includegraphics[scale=0.33]{slike/ER_DIAGRAM_FINAL.PNG} 
 				\centering
 				\caption{ER dijagram baze podataka}
 				\label{ER_diagram}
 			\end{figure}
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.34]{slike/relational_diagram.PNG} 
+				\includegraphics[scale=0.34]{slike/REL_DIAGRAM_FINAL.PNG} 
 				\centering
 				\caption{Relacijski dijagram baze podataka}
 				\label{relational_diagram}
@@ -325,91 +337,120 @@ Konačno, za pisanje \textit{TypeScript} koda koristi se \textit{IntelliJ}, moć
 
 			Na dijagramima su prikazani razredi vezani uz serversku stranu aplikacije.
 			
-			Dijagram na slici \ref{dijagram_model} prikazuje razrede entitete (modele) koji odgovaraju tablicama u bazi podataka.
+			Dijagram na slici \ref{class_model} prikazuje razrede entitete (modele) koji odgovaraju tablicama u bazi podataka.
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.3]{slike/dijagram_model.PNG} 
+				\includegraphics[scale=0.225]{slike/class_model.PNG} 
 				\centering
 				\caption{Dijagram razreda entiteta}
-				\label{dijagram_model}
+				\label{class_model}
 			\end{figure}
 			
-			Na slici \ref{dijagram_repository} prikazana su sučelja \textit{Repository} (npr. UserRepository, MessageRepository), odgovorna za komuniciranje s bazom podataka. Radi preglednosti je na slici \ref{dijagram_user_service_repository} prikazan samo odnos UserService i UserRepository, ostali se ponašaju analogno.
+			Na slici \ref{class_repo} prikazana su sučelja \textit{Repository} (npr. UserRepository, MessageRepository), odgovorna za komuniciranje s bazom podataka. Radi preglednosti je na slici \ref{class_service_repo} prikazan samo odnos UserService i UserRepository, ostali se ponašaju analogno.
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.2]{slike/dijagram_repository.PNG} 
+				\includegraphics[scale=0.25]{slike/class_repo.PNG} 
 				\centering
 				\caption{Dijagram razreda \textit{Repository}}
-				\label{dijagram_repository}
+				\label{class_repo}
 			\end{figure}
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.3]{slike/dijagram_user_service_repository.PNG} 
+				\includegraphics[scale=0.35]{slike/class_service_repo.PNG} 
 				\centering
 				\caption{UserService i UserRepository}
-				\label{dijagram_user_service_repository}
+				\label{class_service_repo}
 			\end{figure}
 			
-			Dijagram \ref{dijagram_controller_service_dto} prikazuje odnose između \textit{Controller}, \textit{Service} i \textit{Data Transfer Object} (DTO) razreda. Razredi i pripadne metode, naročito one koje pokrivaju funkcionalnosti van generičkih, podložne su izmjenama.
+			Dijagrami \ref{class_ad}, \ref{class_add_ad_message}, \ref{class_message}, \ref{class_user}, \ref{class_city_county}, \ref{class_species_color} prikazuju odnose između \textit{Controller}, \textit{Service} i \textit{Data Transfer Object} (DTO) razreda vezanih uz oglase, poruke, korisnike, gradove i županije te boje i vrste ljubimaca.
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.18]{slike/dijagram_controller_service_dto.PNG} 
+				\includegraphics[scale=0.225]{slike/class_ad.PNG} 
 				\centering
-				\caption{\textit{Controller}, \textit{Service} i \textit{DTO} razredi}
-				\label{dijagram_controller_service_dto}
-			\end{figure}
-			
-			Na \ref{dijagram_exception_handler} i \ref{dijagram_security} prikazani su razredi odgovorni za upravljanje iznimkama te autorizaciju.
-			
-			\begin{figure}[H]
-				\includegraphics[scale=0.4]{slike/dijagram_exception_handler.PNG} 
-				\centering
-				\caption{Upravljač iznimkama}
-				\label{dijagram_exception_handler}
+				\caption{Razredi - oglasi}
+				\label{class_ad}
 			\end{figure}
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.2]{slike/dijagram_security.PNG} 
+				\includegraphics[scale=0.25]{slike/class_add_ad_message.PNG} 
 				\centering
-				\caption{Autorizacija}
-				\label{dijagram_security}
+				\caption{Razredi - dodavanje oglasa i poruka}
+				\label{class_add_ad_message}
 			\end{figure}
 			
-			\iffalse
-			\textbf{\textit{dio 2. revizije}}\\			
+			\begin{figure}[H]
+				\includegraphics[scale=0.25]{slike/class_message.PNG} 
+				\centering
+				\caption{Razredi - poruke}
+				\label{class_message}
+			\end{figure}
 			
-			\textit{Prilikom druge predaje projekta dijagram razreda i opisi moraju odgovarati stvarnom stanju implementacije}
-			\fi
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/class_user.PNG} 
+				\centering
+				\caption{Razredi - korisnici}
+				\label{class_user}
+			\end{figure}
 			
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/class_city_county.PNG} 
+				\centering
+				\caption{Razredi - gradovi i županije}
+				\label{class_city_county}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/class_species_color.PNG} 
+				\centering
+				\caption{Razredi - vrste i boje ljubimaca}
+				\label{class_species_color}
+			\end{figure}
+			
+			Na slici \ref{class_security_exc_cors} prikazani su razredi odgovorni za autorizaciju, upravljanje iznimkama te \textit{cross-origin resource sharing (CORS)}.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/class_security_exc_cors.PNG} 
+				\centering
+				\caption{Autorizacija, upravljanje iznimkama i CORS}
+				\label{class_security_exc_cors}
+			\end{figure}
 			
 			\eject
 		
-		\iffalse
 		\section{Dijagram stanja}
 			
+			Slika \ref{dijagram_stanja} prikazuje dijagram stanja za prijavljenog korisnika. Nakon prijave, korisniku se prikazuje početna stranica na kojoj može vidjeti oglase o nestalim ljubimcima. Korisnik ima mogućnost pregledati detalje nekog oglasa, kao i kontakt podatke korisnika koji je objavio oglas te pregledati poruke i sudjelovati u komunikaciji slanjem vlastite poruke. Klik na "Shelters" vodi korisnika na prikaz popisa skloništa čije oglase zatim može pregledati (nazad se vraća klikom na "Posts"). Gumb s ikonicom "Account" prikazuje korisniku osobne podatke i postavljene oglase, koje korisnik može (klikom na "...") obrisati ili urediti (izmijeniti podatke, promijeniti kategoriju). Gumb "Post new ad" otvara formu za stvaranje novog oglasa. Klikom na gumb "Map" korisniku se prikazuje karta na kojoj su označene lokacije nestalih ljubimaca. Na njih se može kliknuti i vidjeti pojednostavljeni prikaz oglasa.
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
+			\begin{figure}[H]
+				\includegraphics[scale=0.5]{slike/dijagram_stanja.PNG} 
+				\centering
+				\caption{Dijagram stanja}
+				\label{dijagram_stanja}
+			\end{figure}
 			
 			
 			\eject 
-		\fi		
 		
-		\iffalse
 		\section{Dijagram aktivnosti}
 			
-			\textbf{\textit{dio 2. revizije}}\\
-			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			Dijagram aktivnosti na slici \ref{dijagram_aktivnosti} prikazuje proces objave oglasa o nestalom ljubimcu. Korisnik se prijavi u sustav, odabere opciju stvaranja novog oglasa te ispunjava formu za oglas. Nakon što korisnik unese sve potrebne podatke i preda formu, oglas se pohranjuje u bazu podataka te se korisnika vraća na početnu stranicu.
+			 
+			 \begin{figure}[H]
+				\includegraphics[scale=0.5]{slike/dijagram_aktivnosti.PNG} 
+				\centering
+				\caption{Dijagram aktivnosti}
+				\label{dijagram_aktivnosti}
+			\end{figure}
 			
 			\eject
-		\fi
 		
-		\iffalse
 		\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
-		\fi
+			Dijagram komponenti na slici \ref{dijagram_komponenti} prikazuje ustroj i međuovisnost komponenti, interne strukture i odnose prema okolini. Dva su sučelja putem kojih se pristupa sustavu. Sučelje za dohvat CSS, JS i TS datoteka odgovorno je za posluživanje datoteka vezanih uz \textit{frontend}. Sve TS odnosno JS datoteke ovise o React biblioteci. Sučeljem za dohvat JSON podataka se pristupa REST API komponenti, odgovornoj za posluživanje podataka vezanih uz \textit{backend}. Tablice se iz baze podataka dohvaćaju pomoću JPA (\textit{Jakarta Persistence}). Podaci iz baze se prosljeđuju kao DTO (\textit{data transfer object}).
+			 
+			 \begin{figure}[H]
+				\includegraphics[scale=0.4]{slike/dijagram_komponenti.PNG} 
+				\centering
+				\caption{Dijagram komponenti}
+				\label{dijagram_komponenti}
+			\end{figure}
