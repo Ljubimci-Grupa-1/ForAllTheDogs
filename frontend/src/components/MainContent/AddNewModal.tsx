@@ -142,7 +142,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const [fileBase64Array, setFileBase64Array] = useState<string[]>(imagesFill);
     const [browsedFile, setBrowsedFile]=useState('');
     const [counter, setCounter]=useState(fileBase64Array.length);
-    const [isChecked, setIsChecked] = useState(inShelterFill===2?true:false);
+    const [isChecked, setIsChecked] = useState(inShelterFill===2?false:true);
 
     //problem sa county, oni ga ne salju
     const [data, setData]=useState<Data>({
@@ -189,6 +189,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         images: [],
     };
     useEffect(() => {
+        handleCheckboxChange();
         const fetchColors = async () => {
             try {
                 const response = await fetch("https://forallthedogs.onrender.com/color/all");
@@ -218,6 +219,7 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     }, []);
 
     useEffect(() => {
+
         const fetchData = async () => {
             try {
                 const response = await fetch("https://forallthedogs.onrender.com/county/all");
