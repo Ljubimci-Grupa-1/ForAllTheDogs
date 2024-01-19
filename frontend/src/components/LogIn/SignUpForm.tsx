@@ -81,7 +81,7 @@ const SignUpForm: React.FC<Props> = () => {
             <form className="Auth-form" onSubmit={handleSubmit}>
                 <Stack spacing={2}>
                     <h3 className="Auth-form-title">Sign up</h3>
-                    <div className="input-container">
+                    <div className="input-container-signup">
                         <label>Username</label>
                         <Input
                             size="md"
@@ -95,7 +95,7 @@ const SignUpForm: React.FC<Props> = () => {
                             onChange={handleInputChange}
                         />
                     </div>
-                    <div className="input-container">
+                    <div className="input-container-signup">
                         <label>Email</label>
                         <Input
                             size="md"
@@ -110,7 +110,7 @@ const SignUpForm: React.FC<Props> = () => {
                             required
                         />
                     </div>
-                    <div className="input-container">
+                    <div className="input-container-signup">
                         <label>Password</label>
                         <Input
                             size="md"
@@ -125,7 +125,7 @@ const SignUpForm: React.FC<Props> = () => {
                             required
                         />
                     </div>
-                    <div className="input-container">
+                    <div className="input-container-signup">
                         <label>Name</label>
                         <Input
                             size="md"
@@ -139,7 +139,7 @@ const SignUpForm: React.FC<Props> = () => {
                             required
                         />
                     </div>
-                    <div className="input-container">
+                    <div className="input-container-signup">
                         <label>Telephone number</label>
                         <input
                             pattern="[0-9]{9,10}"

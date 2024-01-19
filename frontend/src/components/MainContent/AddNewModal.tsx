@@ -489,8 +489,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             <div className="modal-container">
                 {}
                 <Sheet className="modal-content">
-
-
                     {/*CLOSE BUTTON*/}
                     <i className="bi bi-x-circle"
                        style={{
@@ -510,8 +508,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                         <h2>{text}</h2>
                         <form onSubmit={handleSubmit}>
                             <Stack spacing={3} direction="row" justifyContent="center" flexWrap="wrap" useFlexGap>
-
-
                                 {/*SPECIES INPUT*/}
                                 <div className="input-container">
                                     <label htmlFor="species2">Species:</label>

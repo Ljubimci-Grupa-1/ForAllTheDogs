@@ -40,7 +40,7 @@ const PetDetailsModal: React.FC<PetDetailsModalProps> = ({ pet, onClose, currUse
     return (
         <div className="modal-background" >
             <div className={modalContentClass}>
-                <Card sx={{ maxWidth: 800, mx: 'auto', mb: 2 }}>
+                <Card className="cardContainer" sx={{mx: 'auto', mb: 2 }}>
                     <CardContent>
                         <ButtonGroup spacing={0.5} aria-label="spacing button group" sx={{ mb: 2 }}>
                             <Button onClick={handleShowUserDetails}>
