@@ -37,3 +37,26 @@
     padding: 5px;
     width: 40%;
 }
+
+.input-container-images {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    width: 40%;
+}
+
+.input-container-shelter{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    width: 15%
+}
+
+.input-container-button{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    width: 20%;
+}
