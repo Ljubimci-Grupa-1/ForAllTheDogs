@@ -198,7 +198,6 @@ const LostPetCard: React.FC<LostPetCardProps> = ({ pet, onDetailsClick, isLogged
                         userType: currUser.userType,
                     }
                     }
-                    inShelterFill={pet.inShelter}
                 ></AddNewModal>
             )
             }

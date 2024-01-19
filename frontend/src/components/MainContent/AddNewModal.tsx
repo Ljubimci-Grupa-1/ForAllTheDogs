@@ -80,7 +80,7 @@ interface AddNewModalProps {
     imagesFill:string[];
     isLoggedIn:boolean;
     user:adUser;
-    inShelterFill:number;
+
 }
 export interface Data{
     age:number | string;
@@ -93,7 +93,7 @@ export interface Data{
     description:string;
     city:string;
     county:string;
-    inShelter:number;
+
 }
 export interface locationData{
     latitude:number;
@@ -132,7 +132,7 @@ interface FormValidation{
 }
 export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colorsFill, descriptionFill,
                                 latitudeFill, longitudeFill, cityFill, datetimeFill,
-                                imagesFill, countyFill, text, adIdFill, user, inShelterFill }: AddNewModalProps) =>{
+                                imagesFill, countyFill, text, adIdFill, user }: AddNewModalProps) =>{
     const [colors, setColors] = useState([]);
     const [species, setSpecies]=useState([]);
     const [counties, setCounties] = useState<County[]>([]);
@@ -142,13 +142,13 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
     const [fileBase64Array, setFileBase64Array] = useState<string[]>(imagesFill);
     const [browsedFile, setBrowsedFile]=useState('');
     const [counter, setCounter]=useState(fileBase64Array.length);
-    const [isChecked, setIsChecked] = useState(inShelterFill===2?false:true);
+    const [isChecked, setIsChecked] = useState(false);
 
     //problem sa county, oni ga ne salju
     const [data, setData]=useState<Data>({
         age:ageFill, name:nameFill, species:speciesFill, colors:colorsFill,
         latitude:latitudeFill, longitude:longitudeFill, datetime:datetimeFill, description:descriptionFill,
-        city:cityFill, county:countyFill, inShelter:inShelterFill
+        city:cityFill, county:countyFill
     })
 
     const [selectedDateTime, setSelectedDateTime] =useState(null);
@@ -189,7 +189,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         images: [],
     };
     useEffect(() => {
-        handleCheckboxChange();
         const fetchColors = async () => {
             try {
                 const response = await fetch("https://forallthedogs.onrender.com/color/all");
@@ -259,7 +258,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         closeModal();
     }
     const handleDragEnd = (latlng: L.LatLng) => {
-        console.log(latlng.lng, latlng.lat);
         setMarkerPosition({
             latitude: latlng.lat,
             longitude: latlng.lng,
@@ -355,8 +353,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             setFileBase64Array(prevArray => [...prevArray, browsedFile]);
             setCounter(counter+1)
             setIsUploaded(false)
-        } else {
-            console.log('No file selected');
         }
     };
     const handleDeleteImage=(index:number)=>{
@@ -401,12 +397,9 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
         // @ts-ignore
         event.preventDefault();
         const radi=formValidation();
-        console.log("validacija",radi);
-        console.log(markerPosition);
         let allInputsFilled=true;
         Object.entries(radi).forEach(([key, value]) => {
             if (!value) {
-                console.log(key)
                 console.error('Missing input values');
                 allInputsFilled=false;
             }
@@ -426,7 +419,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
             if(speciesFill===''){
             try {
                 formData.images = fileBase64Array;
-                console.log(formData);
                 const token = localStorage.getItem('jwt');
                 const response = await fetch('https://forallthedogs.onrender.com/ad/add', {
                     method: 'POST',
@@ -439,8 +431,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
 
                 if (response.ok) {
                     window.location.reload();
-                    console.log('Images uploaded successfully');
-
                     setFileBase64Array([]);
                     setCounter(0);
                 } else {
@@ -458,7 +448,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 else{
                     formData.images=fileBase64Array;
                 }
-                console.log(formData);
                 try {
                     const token = localStorage.getItem('jwt');
                     const response = await fetch(`https://forallthedogs.onrender.com/ad/edit/${adIdFill}`, {
@@ -472,10 +461,8 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
 
                     if (response.ok) {
                         window.location.reload();
-                        console.log('Images uploaded successfully');
                         // You can handle the response from the server here
                     } else {
-                        console.log(Error);
                         console.error('Failed to add the ad');
                     }
                 } catch (error) {
@@ -483,8 +470,6 @@ export const AddNewModal = ({ closeModal, speciesFill, nameFill, ageFill, colors
                 }
             }
 
-        } else {
-            console.log('No files to submit');
         }
     };
 
